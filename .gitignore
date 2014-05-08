@@ -1,3 +1,5 @@
 /nbproject/
 *.xml
 *.mf
+/build/
+/dist/
