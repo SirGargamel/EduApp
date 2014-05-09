@@ -5,9 +5,9 @@ import com.jme3.animation.AnimControl;
 import com.jme3.animation.AnimEventListener;
 import com.jme3.animation.LoopMode;
 import com.jme3.app.SimpleApplication;
+import com.jme3.bounding.BoundingBox;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.AnalogListener;
-import com.jme3.math.FastMath;
 import com.jme3.scene.Spatial;
 
 /**
@@ -16,7 +16,7 @@ import com.jme3.scene.Spatial;
  */
 public class PlayerAvatar implements AnimEventListener {
 
-    private static final float PLAYER_SCALE = 0.002f;
+    private static final float PLAYER_HEIGHT = 1.5f;    
     private final Spatial model;
     private final AnimChannel channel;
     private final AnimControl control;
@@ -24,8 +24,10 @@ public class PlayerAvatar implements AnimEventListener {
 
     public PlayerAvatar(final SimpleApplication app) {
         model = app.getAssetManager().loadModel("models/ninja/Ninja.mesh.xml");
-        model.scale(PLAYER_SCALE, PLAYER_SCALE, PLAYER_SCALE);        
-        app.getRootNode().attachChild(model);
+        final BoundingBox plB = (BoundingBox) model.getWorldBound();
+        final float playerScale = PLAYER_HEIGHT / (plB.getYExtent() * 2.0f);
+        model.scale(playerScale, playerScale, playerScale);          
+        
 
         control = model.getControl(AnimControl.class);
         control.addListener(this);
@@ -58,7 +60,7 @@ public class PlayerAvatar implements AnimEventListener {
             @Override
             public void onAnalog(String name, float value, float tpf) {
                 if (isRunning) {
-                    if (name.equals(Actions.LEFT.toString()) || name.equals(Actions.RIGHT.toString())) {
+                    if (name.equals(Actions.LEFT.toString()) || name.equals(Actions.RIGHT.toString())) {                        
                         if (!channel.getAnimationName().equals("Walk")) {
                             channel.setAnim("Walk", 0.50f);
                             channel.setLoopMode(LoopMode.Loop);
