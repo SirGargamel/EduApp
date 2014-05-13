@@ -1,5 +1,7 @@
 package eduapp;
 
+import eduapp.level.LevelLoader;
+import eduapp.level.Level;
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.CollisionShape;
@@ -10,50 +12,41 @@ import com.jme3.input.ChaseCamera;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
+import com.jme3.light.SpotLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
-import com.jogamp.newt.Window;
-import java.awt.Desktop;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  *
  * @author Petr Jecmen
  */
 public class TestScene extends SimpleApplication {
-
-    private static final float PLAYER_POSITION_Z = 0.05f;
+    
     private static final float PLAYER_SPEED = 1.0f;
-    private final List<Level> levels;
-    private ItemSpawner is;
+    private final Vector3f LEFT = new Vector3f(-1, 0, 0);
+    private final Vector3f UP = new Vector3f(0, 0, -1);
     private BulletAppState bulletAppState;
     private BetterCharacterControl player;
     private PlayerAvatar playerAvatar;
     private RigidBodyControl landscape;
     private final Vector3f walkDirection = new Vector3f();
-    private final Vector3f moveLeft = new Vector3f(-2.0f, 0, 0);
-    boolean left, right;
+    private final Vector3f viewDirection = new Vector3f();
+    boolean left, right, up, down;
     private boolean isRunning = true;
-    private Node world;
-
-    public TestScene() {
-        levels = new LinkedList<>();
-    }
+    private Level currentLevel;
 
     @Override
     public void simpleInitApp() {
-        is = new ItemSpawner(assetManager);
-        world = new Node("world");
-        rootNode.attachChild(world);
-
-        initWorld(world);
-        initSceneItems();
+        assetManager.registerLoader(LevelLoader.class, Level.LEVEL_FILE_EXTENSION);                
+     
         initPlayer();
+        initWorld();
+        currentLevel.getRootNode().attachChild(playerAvatar.getModel());
 
         initKeys();
         initCamera();
@@ -63,89 +56,104 @@ public class TestScene extends SimpleApplication {
         speed = PLAYER_SPEED;
     }
 
-    private void initCamera() {
-//        cam.setParallelProjection(true);        
-//        final float halfY = 1.5f;
-//        final float aspect = 4 / 3.0f;
-//        cam.setFrustum(-100, 100, -halfY * aspect, halfY * aspect, 1.5f*halfY, -halfY);
+    private void initCamera() {                            
+//        final Vector3f playerLocation = playerAvatar.getModel().getWorldTranslation();
+//        cam.setLocation(playerLocation.add(CAMERA_OFFSET));
+//        cam.lookAt(playerLocation, Vector3f.UNIT_Y);
+//        flyCam.setRotationSpeed(0);
+//
+//        cam.setParallelProjection(true);
+//        final float halfY = 3.5f;
+//        final float aspect = settings.getWidth() / settings.getHeight();
+//        cam.setFrustum(-100, 100, -halfY * aspect, halfY * aspect, halfY, -halfY);
 
         flyCam.setEnabled(false);
-        final ChaseCamera chaseCam = new ChaseCamera(cam, playerAvatar.getModel(), inputManager);
-        chaseCam.setTrailingEnabled(true);
-        chaseCam.setDownRotateOnCloseViewOnly(false);
-        chaseCam.setSmoothMotion(true);
-        chaseCam.setDefaultDistance(5.5f);
-        chaseCam.setMaxDistance(5.5f);
-        chaseCam.setDragToRotate(false);
+        final ChaseCamera chaseCam = new ChaseCamera(cam, playerAvatar.getModel(), inputManager);        
+//        chaseCam.setTrailingEnabled(true);
+//        chaseCam.setDownRotateOnCloseViewOnly(false);
+//        chaseCam.setSmoothMotion(true);
+        chaseCam.setDefaultDistance(7.5f);
+//        chaseCam.setMaxDistance(15.5f);
+//        chaseCam.setDragToRotate(true);
+//        chaseCam.setInvertVerticalAxis(true);
+//        chaseCam.setInvertHorizontalAxis(true);
         chaseCam.setDefaultHorizontalRotation(90 * FastMath.DEG_TO_RAD);
-        chaseCam.setDefaultVerticalRotation(12.5f * FastMath.DEG_TO_RAD);
-        chaseCam.setLookAtOffset(new Vector3f(0, 1.0f, 0));
+        chaseCam.setDefaultVerticalRotation(89.9f * FastMath.DEG_TO_RAD);
+//        chaseCam.setLookAtOffset(new Vector3f(0, 1.0f, 0));        
     }
 
     private void initPlayer() {
         playerAvatar = new PlayerAvatar(this);
-//        playerAvatar.getModel().setLocalTranslation(0.0f, Level.LEVEL_HEIGHT / 2.0f, -Level.FLOOR_DEPTH / 2.0f);
-//        playerAvatar.getModel().setLocalTranslation(0.0f, 0, 0.15f);
-        final Level l = levels.get(0);
-        l.getRootNode().attachChild(playerAvatar.getModel());
     }
 
-    private void initWorld(final Node node) {
+    private void initWorld() {
         viewPort.setBackgroundColor(ColorRGBA.LightGray);
-        levels.add(new Egypt(assetManager, Vector3f.ZERO));
-        levels.add(new Egypt(assetManager, new Vector3f(0, Level.LEVEL_HEIGHT, 0)));
-        levels.add(new Egypt(assetManager, new Vector3f(0, 2 * Level.LEVEL_HEIGHT, 0)));
 
-        for (Level l : levels) {
-            node.attachChild(l.getRootNode());
-        }
+        currentLevel = Level.loadLevel("egypt", assetManager);
+        rootNode.attachChild(currentLevel.getRootNode());
 
+        final AmbientLight ambient = new AmbientLight();
+        ambient.setColor(ColorRGBA.White.multLocal(0.5f));
+        rootNode.addLight(ambient);
+        
         final DirectionalLight sun = new DirectionalLight();
-        sun.setDirection(new Vector3f(0, -0.01f, -1).normalizeLocal());
-        sun.setColor(ColorRGBA.White);
+        sun.setDirection(new Vector3f(0, -1, 0).normalizeLocal());
+        sun.setColor(ColorRGBA.White.multLocal(0.5f));
         rootNode.addLight(sun);
-    }
 
-    private void initSceneItems() {
-        final float boxSize = Level.LEVEL_HEIGHT / 4.0f;
+        SpotLight l = new SpotLight();
+        l.setColor(ColorRGBA.White.mult(10));
+        l.setPosition(new Vector3f(1.5f, 1.5f, 1.5f));
+        l.setDirection(Vector3f.UNIT_Y);
+        l.setSpotRange(100);
+        l.setSpotInnerAngle(10f * FastMath.DEG_TO_RAD);
+        l.setSpotOuterAngle(15f * FastMath.DEG_TO_RAD);
+        rootNode.addLight(l);                
 
-        Spatial box = is.spawnBox(boxSize, boxSize, Level.FLOOR_DEPTH / 4.0f * 3);
-        box.move(new Vector3f(3, Level.FLOOR_THICKNESS, Level.FLOOR_DEPTH / 8.0f));
-        levels.get(0).attachChild(box);
+//        Spatial table = assetManager.loadModel("models/bench2-table.j3o");
+//        table.scale(0.5f);
+//        table.move(1, 0, 3);
+//        currentLevel.addItem(table);
 
-        box = is.spawnBox(boxSize, boxSize, Level.FLOOR_DEPTH / 4.0f * 3);
-        box.move(new Vector3f(1, Level.FLOOR_THICKNESS + 0.01f, Level.FLOOR_DEPTH / 8.0f));
-        levels.get(0).attachChild(box);
     }
 
     private void initCollisions() {
         bulletAppState = new BulletAppState();
         bulletAppState.setThreadingType(BulletAppState.ThreadingType.PARALLEL);
         stateManager.attach(bulletAppState);
-//        bulletAppState.setDebugEnabled(true);
+//        bulletAppState.setDebugEnabled(true);        
 
         final CollisionShape sceneShape
-                = CollisionShapeFactory.createMeshShape(world);
+                = CollisionShapeFactory.createMeshShape(currentLevel.getWorldNode());
         landscape = new RigidBodyControl(sceneShape, 0);
 
-        player = new BetterCharacterControl(.1f, .35f, 50f);
+        player = new BetterCharacterControl(.15f, 1.5f, 50f);
         player.setJumpForce(new Vector3f(0, 250f, 0));
 
         playerAvatar.getModel().addControl(player);
-        player.warp(new Vector3f(0, Level.FLOOR_THICKNESS + Level.LEVEL_HEIGHT / 2.0f, Level.FLOOR_DEPTH / 2.0f));
-        player.setViewDirection(Vector3f.UNIT_Z.negate());
-
+        player.warp(currentLevel.getInitialPlayerPos());
+        player.setViewDirection(Vector3f.UNIT_Z);
+        
         bulletAppState.getPhysicsSpace().add(landscape);
         bulletAppState.getPhysicsSpace().add(player);
+        
+        CollisionShape cs;
+        RigidBodyControl rbc;
+        for (Spatial s : currentLevel.getItems()) {
+            cs = CollisionShapeFactory.createBoxShape((Node) s);
+            rbc = new RigidBodyControl(cs, 0);
+            s.addControl(rbc);
+            bulletAppState.getPhysicsSpace().add(rbc);
+        }
     }
 
     private void initKeys() {
-        // You can map one or several inputs to one named action
-        inputManager.addMapping("Level", new KeyTrigger(KeyInput.KEY_UP));
+        // You can map one or several inputs to one named action        
         inputManager.addMapping(Actions.PAUSE.toString(), new KeyTrigger(KeyInput.KEY_P));
         inputManager.addMapping(Actions.LEFT.toString(), new KeyTrigger(KeyInput.KEY_J));
         inputManager.addMapping(Actions.RIGHT.toString(), new KeyTrigger(KeyInput.KEY_L));
-        inputManager.addMapping(Actions.JUMP.toString(), new KeyTrigger(KeyInput.KEY_I));
+        inputManager.addMapping(Actions.UP.toString(), new KeyTrigger(KeyInput.KEY_I));
+        inputManager.addMapping(Actions.DOWN.toString(), new KeyTrigger(KeyInput.KEY_K));
         // Add the names to the action listener.
         final ActionListener actionListener = new ActionListener() {
 
@@ -158,37 +166,53 @@ public class TestScene extends SimpleApplication {
                     left = isPressed;
                 } else if (name.equals(Actions.RIGHT.toString())) {
                     right = isPressed;
-                } else if (name.equals(Actions.JUMP.toString())) {
-                    if (isPressed) {
-                        player.jump();
-                    }
-                } else if (name.equals("Level")) {
-                    if (!isPressed) {
-                        player.warp(playerAvatar.getModel().getLocalTranslation().add(0, Level.LEVEL_HEIGHT, 0));
-                    }
+                } else if (name.equals(Actions.UP.toString())) {
+                    up = isPressed;
+                } else if (name.equals(Actions.DOWN.toString())) {
+                    down = isPressed;
                 }
             }
         };
-        inputManager.addListener(actionListener, "Level");
         inputManager.addListener(actionListener, Actions.PAUSE.toString());
         inputManager.addListener(actionListener, Actions.LEFT.toString());
         inputManager.addListener(actionListener, Actions.RIGHT.toString());
-        inputManager.addListener(actionListener, Actions.JUMP.toString());
+        inputManager.addListener(actionListener, Actions.UP.toString());
+        inputManager.addListener(actionListener, Actions.DOWN.toString());
 
     }
 
     @Override
     public void simpleUpdate(float tpf) {
+        boolean upd = false;
         walkDirection.set(0, 0, 0);
+        viewDirection.set(0, 0, 0);
         if (left) {
-            walkDirection.addLocal(moveLeft);
-            player.setViewDirection(moveLeft.negate());
+            walkDirection.addLocal(LEFT);
+            viewDirection.addLocal(LEFT.negate());
+            upd = true;
         }
         if (right) {
-            walkDirection.addLocal(moveLeft.negate());
-            player.setViewDirection(moveLeft);
+            walkDirection.addLocal(LEFT.negate());
+            viewDirection.addLocal(LEFT);
+            upd = true;
+        }
+        if (up) {
+            upd = true;
+            walkDirection.addLocal(UP);
+            viewDirection.addLocal(UP.negate());
+        }
+        if (down) {
+            upd = true;
+            walkDirection.addLocal(UP.negate());
+            viewDirection.addLocal(UP);
+        }
+        if (upd) {
+            player.setViewDirection(viewDirection);
         }
         player.setWalkDirection(walkDirection);
+        final Vector3f p = playerAvatar.getModel().getWorldTranslation();        
+        currentLevel.visitNode(p.x, p.z);
+        System.out.println(p);
     }
 
 }

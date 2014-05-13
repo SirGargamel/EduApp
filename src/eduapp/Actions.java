@@ -8,6 +8,7 @@ public enum Actions {
 
     LEFT,
     RIGHT,
-    JUMP,
+    UP,
+    DOWN,
     PAUSE
 }

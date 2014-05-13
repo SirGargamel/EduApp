@@ -8,6 +8,8 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.bounding.BoundingBox;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.AnalogListener;
+import com.jme3.math.FastMath;
+import com.jme3.math.Matrix3f;
 import com.jme3.scene.Spatial;
 
 /**
@@ -16,7 +18,7 @@ import com.jme3.scene.Spatial;
  */
 public class PlayerAvatar implements AnimEventListener {
 
-    private static final float PLAYER_HEIGHT = 1.5f;    
+    private static final float PLAYER_HEIGHT = 1.5f;
     private final Spatial model;
     private final AnimChannel channel;
     private final AnimControl control;
@@ -26,8 +28,7 @@ public class PlayerAvatar implements AnimEventListener {
         model = app.getAssetManager().loadModel("models/ninja/Ninja.mesh.xml");
         final BoundingBox plB = (BoundingBox) model.getWorldBound();
         final float playerScale = PLAYER_HEIGHT / (plB.getYExtent() * 2.0f);
-        model.scale(playerScale, playerScale, playerScale);          
-        
+        model.scale(playerScale);
 
         control = model.getControl(AnimControl.class);
         control.addListener(this);
@@ -42,25 +43,30 @@ public class PlayerAvatar implements AnimEventListener {
                     if (name.equals(Actions.PAUSE.toString())) {
                         isRunning = !isRunning;
                     } else if (name.equals(Actions.LEFT.toString())
-                            || name.equals(Actions.RIGHT.toString())) {
+                            || name.equals(Actions.RIGHT.toString())
+                            || name.equals(Actions.UP.toString())
+                            || name.equals(Actions.DOWN.toString())) {
                         channel.setTime(channel.getAnimMaxTime());
-                    }
-                } else {
-                    if (name.equals(Actions.JUMP.toString())) {
-                        channel.setAnim("Jump", 0.50f);
-                        channel.setLoopMode(LoopMode.DontLoop);
-                        channel.setSpeed(1f);
                     }
                 }
             }
         };
-        app.getInputManager().addListener(actionListener, Actions.PAUSE.toString(), Actions.LEFT.toString(), Actions.RIGHT.toString(), Actions.JUMP.toString());
+        app.getInputManager().addListener(
+                actionListener,
+                Actions.PAUSE.toString(),
+                Actions.LEFT.toString(),
+                Actions.RIGHT.toString(),
+                Actions.UP.toString(),
+                Actions.DOWN.toString());
         final AnalogListener analogListener = new AnalogListener() {
 
             @Override
             public void onAnalog(String name, float value, float tpf) {
                 if (isRunning) {
-                    if (name.equals(Actions.LEFT.toString()) || name.equals(Actions.RIGHT.toString())) {                        
+                    if (name.equals(Actions.LEFT.toString())
+                            || name.equals(Actions.RIGHT.toString())
+                            || name.equals(Actions.UP.toString())
+                            || name.equals(Actions.DOWN.toString())) {
                         if (!channel.getAnimationName().equals("Walk")) {
                             channel.setAnim("Walk", 0.50f);
                             channel.setLoopMode(LoopMode.Loop);
@@ -69,7 +75,12 @@ public class PlayerAvatar implements AnimEventListener {
                 }
             }
         };
-        app.getInputManager().addListener(analogListener, Actions.LEFT.toString(), Actions.RIGHT.toString());
+        app.getInputManager().addListener(
+                analogListener,
+                Actions.LEFT.toString(),
+                Actions.RIGHT.toString(),
+                Actions.UP.toString(),
+                Actions.DOWN.toString());
 
         isRunning = true;
     }
