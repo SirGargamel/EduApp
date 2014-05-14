@@ -12,9 +12,6 @@ import com.jme3.input.ChaseCamera;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
-import com.jme3.light.AmbientLight;
-import com.jme3.light.DirectionalLight;
-import com.jme3.light.SpotLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
@@ -26,7 +23,7 @@ import com.jme3.scene.Spatial;
  * @author Petr Jecmen
  */
 public class TestScene extends SimpleApplication {
-    
+
     private static final float PLAYER_SPEED = 1.0f;
     private final Vector3f LEFT = new Vector3f(-1, 0, 0);
     private final Vector3f UP = new Vector3f(0, 0, -1);
@@ -42,8 +39,8 @@ public class TestScene extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
-        assetManager.registerLoader(LevelLoader.class, Level.LEVEL_FILE_EXTENSION);                
-     
+        assetManager.registerLoader(LevelLoader.class, Level.LEVEL_FILE_EXTENSION);
+
         initPlayer();
         initWorld();
         currentLevel.getRootNode().attachChild(playerAvatar.getModel());
@@ -56,30 +53,17 @@ public class TestScene extends SimpleApplication {
         speed = PLAYER_SPEED;
     }
 
-    private void initCamera() {                            
-//        final Vector3f playerLocation = playerAvatar.getModel().getWorldTranslation();
-//        cam.setLocation(playerLocation.add(CAMERA_OFFSET));
-//        cam.lookAt(playerLocation, Vector3f.UNIT_Y);
-//        flyCam.setRotationSpeed(0);
-//
-//        cam.setParallelProjection(true);
-//        final float halfY = 3.5f;
-//        final float aspect = settings.getWidth() / settings.getHeight();
-//        cam.setFrustum(-100, 100, -halfY * aspect, halfY * aspect, halfY, -halfY);
-
+    private void initCamera() {
         flyCam.setEnabled(false);
-        final ChaseCamera chaseCam = new ChaseCamera(cam, playerAvatar.getModel(), inputManager);        
+        final ChaseCamera chaseCam = new ChaseCamera(cam, playerAvatar.getModel(), inputManager);
 //        chaseCam.setTrailingEnabled(true);
 //        chaseCam.setDownRotateOnCloseViewOnly(false);
 //        chaseCam.setSmoothMotion(true);
         chaseCam.setDefaultDistance(7.5f);
 //        chaseCam.setMaxDistance(15.5f);
 //        chaseCam.setDragToRotate(true);
-//        chaseCam.setInvertVerticalAxis(true);
-//        chaseCam.setInvertHorizontalAxis(true);
         chaseCam.setDefaultHorizontalRotation(90 * FastMath.DEG_TO_RAD);
         chaseCam.setDefaultVerticalRotation(89.9f * FastMath.DEG_TO_RAD);
-//        chaseCam.setLookAtOffset(new Vector3f(0, 1.0f, 0));        
     }
 
     private void initPlayer() {
@@ -91,30 +75,6 @@ public class TestScene extends SimpleApplication {
 
         currentLevel = Level.loadLevel("egypt", assetManager);
         rootNode.attachChild(currentLevel.getRootNode());
-
-        final AmbientLight ambient = new AmbientLight();
-        ambient.setColor(ColorRGBA.White.multLocal(0.5f));
-        rootNode.addLight(ambient);
-        
-        final DirectionalLight sun = new DirectionalLight();
-        sun.setDirection(new Vector3f(0, -1, 0).normalizeLocal());
-        sun.setColor(ColorRGBA.White.multLocal(0.5f));
-        rootNode.addLight(sun);
-
-        SpotLight l = new SpotLight();
-        l.setColor(ColorRGBA.White.mult(10));
-        l.setPosition(new Vector3f(1.5f, 1.5f, 1.5f));
-        l.setDirection(Vector3f.UNIT_Y);
-        l.setSpotRange(100);
-        l.setSpotInnerAngle(10f * FastMath.DEG_TO_RAD);
-        l.setSpotOuterAngle(15f * FastMath.DEG_TO_RAD);
-        rootNode.addLight(l);                
-
-//        Spatial table = assetManager.loadModel("models/bench2-table.j3o");
-//        table.scale(0.5f);
-//        table.move(1, 0, 3);
-//        currentLevel.addItem(table);
-
     }
 
     private void initCollisions() {
@@ -133,10 +93,10 @@ public class TestScene extends SimpleApplication {
         playerAvatar.getModel().addControl(player);
         player.warp(currentLevel.getInitialPlayerPos());
         player.setViewDirection(Vector3f.UNIT_Z);
-        
+
         bulletAppState.getPhysicsSpace().add(landscape);
         bulletAppState.getPhysicsSpace().add(player);
-        
+
         CollisionShape cs;
         RigidBodyControl rbc;
         for (Spatial s : currentLevel.getItems()) {
@@ -210,9 +170,9 @@ public class TestScene extends SimpleApplication {
             player.setViewDirection(viewDirection);
         }
         player.setWalkDirection(walkDirection);
-        final Vector3f p = playerAvatar.getModel().getWorldTranslation();        
+        final Vector3f p = playerAvatar.getModel().getWorldTranslation();
         currentLevel.visitNode(p.x, p.z);
-        System.out.println(p);
+//        System.out.println(p);
     }
 
 }

@@ -15,18 +15,11 @@ public class Level {
 
     public static final String LEVEL_FILE_EXTENSION = "xml";
     public static final int TILE_SIZE = 1;
-    private static final float[] TILE_NORMALS = {
-        0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, // back
-        1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, // right
-        0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, // front
-        -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, // left
-        0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, // top
-        0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0 // bottom
-    };    
     private final Node rootNode;
     private final Background background;
     private final Player player;
     private final Set<Item> items;
+    private final Set<Light> lights;
     private final Set<Spatial> itemModels;
 
     public static Level loadLevel(final String levelName, final AssetManager assetManager) {
@@ -36,24 +29,28 @@ public class Level {
         return result;
     }
 
-    Level(final Background background, final Player player, final Set<Item> items) {        
+    Level(final Background background, final Player player, final Set<Item> items, final Set<Light> lights) {
         this.background = background;
         this.player = player;
         this.items = items;
+        this.lights = lights;
         itemModels = new HashSet<>();
-        
+
         rootNode = new Node(this.getClass().getSimpleName());
     }
 
     private void generateLevel(final AssetManager assetManager) {
         background.generateBackground(assetManager);
         rootNode.attachChild(background.getRootNode());
-        
+
         Spatial s;
         for (Item i : items) {
             s = i.generateItem(assetManager);
             itemModels.add(s);
             rootNode.attachChild(s);
+        }
+        for (Light l : lights) {
+            rootNode.addLight(l.generateLight());
         }
     }
 
@@ -84,7 +81,5 @@ public class Level {
     public void visitNode(final float x, final float y) {
         // TODO
     }
-
-
 
 }

@@ -3,7 +3,10 @@ package eduapp.level;
 import com.jme3.asset.AssetInfo;
 import com.jme3.asset.AssetLoader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -26,6 +29,7 @@ public class LevelLoader implements AssetLoader {
     private static final String NODE_EMPTY = "Empty";
     private static final String NODE_ITEM = "Item";
     private static final String NODE_ITEMS = "Items";
+    private static final String NODE_LIGHTS = "Lights";
     private static final String NODE_NAME = "Name";
     private static final String NODE_PLAYER = "Player";
     private static final String NODE_SCALE = "Scale";
@@ -47,7 +51,8 @@ public class LevelLoader implements AssetLoader {
             final Background background = loadBackground(doc);
             final Player player = loadPlayer(doc);
             final Set<Item> items = loadItems(doc);
-            result = new Level(background, player, items);
+            final Set<Light> lights = loadLights(doc);
+            result = new Level(background, player, items, lights);
         } catch (NullPointerException | ParserConfigurationException | SAXException ex) {
             ex.printStackTrace(System.err);
         }
@@ -119,6 +124,31 @@ public class LevelLoader implements AssetLoader {
         } else {
             throw new SAXException("Illegal items node - " + itemsNode);
         }
+        return result;
+    }
+
+    private static Set<Light> loadLights(final Document doc) {
+        final Set<Light> result = new LinkedHashSet<>();
+
+        final Node lightsNode = doc.getElementsByTagName(NODE_LIGHTS).item(0);
+        final NodeList lights = lightsNode.getChildNodes();
+        Node node, subNode;
+        NodeList nl;
+        Map<String, String> params;
+        for (int i = 0; i < lights.getLength(); i++) {
+            params = new HashMap<>();
+
+            node = lights.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                nl = node.getChildNodes();
+                for (int j = 0; j < nl.getLength(); j++) {
+                    subNode = nl.item(j);
+                    params.put(subNode.getNodeName(), subNode.getTextContent());
+                }
+                result.add(new Light(node.getNodeName(), params));
+            }
+        }
+
         return result;
     }
 
