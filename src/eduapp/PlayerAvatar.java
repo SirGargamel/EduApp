@@ -8,8 +8,6 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.bounding.BoundingBox;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.AnalogListener;
-import com.jme3.math.FastMath;
-import com.jme3.math.Matrix3f;
 import com.jme3.scene.Spatial;
 
 /**
@@ -19,7 +17,7 @@ import com.jme3.scene.Spatial;
 public class PlayerAvatar implements AnimEventListener {
 
     private static final float PLAYER_HEIGHT = 1.5f;
-    private final Spatial model;
+    private final Spatial model;   
     private final AnimChannel channel;
     private final AnimControl control;
     private boolean isRunning;

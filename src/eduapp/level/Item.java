@@ -11,10 +11,11 @@ import com.jme3.scene.Spatial;
 public class Item {
     
     private final String modelName;
+    private final String id;
     private final Vector3f position;
     private final float scale;
     
-    public static Item generateItem(final String modelName, final String position, final String scale) {
+    public static Item generateItem(final String modelName, final String position, final String scale, final String id) {
         final String[] split = position.split(";");
         final Vector3f pos;
         if (split.length == 2) {
@@ -27,19 +28,21 @@ public class Item {
         
         final float scaleF = Float.valueOf(scale);
         
-        return new Item(modelName, pos, scaleF);
+        return new Item(modelName, pos, scaleF, id);
     }
 
-    private Item(String modelName, Vector3f position, float scale) {
+    private Item(String modelName, Vector3f position, float scale, String id) {
         this.modelName = modelName;
         this.position = position;
         this.scale = scale;
+        this.id = id;
     }
     
     public Spatial generateItem(final AssetManager assetManager) {
         final Spatial result = assetManager.loadModel("models/".concat(modelName));
         result.scale(scale);
         result.move(position);
+        result.setName(id);
         return result;
     }
 }

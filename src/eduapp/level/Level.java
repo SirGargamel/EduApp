@@ -5,6 +5,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -14,13 +15,16 @@ import java.util.Set;
 public class Level {
 
     public static final String LEVEL_FILE_EXTENSION = "xml";
+    public static final float LEVEL_HEIGHT = 2.5f;
     public static final int TILE_SIZE = 1;
+    private static final float RADIUS_INTERACTION = 1.5f;
     private final Node rootNode;
     private final Background background;
     private final Player player;
     private final Set<Item> items;
     private final Set<Light> lights;
     private final Set<Spatial> itemModels;
+    private final Set<ActionItem> actionItems;
 
     public static Level loadLevel(final String levelName, final AssetManager assetManager) {
         final String path = "levels/".concat(levelName).concat(".").concat(LEVEL_FILE_EXTENSION);
@@ -29,13 +33,14 @@ public class Level {
         return result;
     }
 
-    Level(final Background background, final Player player, final Set<Item> items, final Set<Light> lights) {
+    Level(final Background background, final Player player, final Set<Item> items, final Set<Light> lights, final Set<ActionItem> actionItems) {
         this.background = background;
         this.player = player;
         this.items = items;
         this.lights = lights;
-        itemModels = new HashSet<>();
+        this.actionItems = actionItems;
 
+        itemModels = new HashSet<>();
         rootNode = new Node(this.getClass().getSimpleName());
     }
 
@@ -51,6 +56,10 @@ public class Level {
         }
         for (Light l : lights) {
             rootNode.addLight(l.generateLight());
+        }
+        // generate action items
+        for (ActionItem ai : actionItems) {
+            ai.generateAction(itemModels);
         }
     }
 
@@ -70,6 +79,10 @@ public class Level {
         items.add(item);
     }
 
+    public void addActionItem(final ActionItem item) {
+        actionItems.add(item);
+    }
+
     public Set<Spatial> getItems() {
         return itemModels;
     }
@@ -78,8 +91,18 @@ public class Level {
         rootNode.attachChild(item);
     }
 
-    public void visitNode(final float x, final float y) {
-        // TODO
+    public void visit(final Vector3f pos) {
+        final Iterator<ActionItem> it = actionItems.iterator();
+        ActionItem ai;
+        while (it.hasNext()) {
+            ai = it.next();
+            if (ai.getVolume().distanceTo(pos) < RADIUS_INTERACTION) {
+                System.out.println("Close to " + ai.toString());
+                if (ai.isOnce()) {
+                    it.remove();
+                }
+            }
+        }
     }
 
 }

@@ -4,8 +4,10 @@ import eduapp.level.LevelLoader;
 import eduapp.level.Level;
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
+import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.BetterCharacterControl;
+import com.jme3.bullet.control.GhostControl;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.util.CollisionShapeFactory;
 import com.jme3.input.ChaseCamera;
@@ -87,15 +89,15 @@ public class TestScene extends SimpleApplication {
                 = CollisionShapeFactory.createMeshShape(currentLevel.getWorldNode());
         landscape = new RigidBodyControl(sceneShape, 0);
 
-        player = new BetterCharacterControl(.15f, 1.5f, 50f);
-        player.setJumpForce(new Vector3f(0, 250f, 0));
+        player = new BetterCharacterControl(.15f, 1.5f, 50f);        
+        playerAvatar.getModel().addControl(player);        
 
-        playerAvatar.getModel().addControl(player);
+        player.setJumpForce(new Vector3f(0, 250f, 0));
         player.warp(currentLevel.getInitialPlayerPos());
         player.setViewDirection(Vector3f.UNIT_Z);
 
         bulletAppState.getPhysicsSpace().add(landscape);
-        bulletAppState.getPhysicsSpace().add(player);
+        bulletAppState.getPhysicsSpace().add(player);        
 
         CollisionShape cs;
         RigidBodyControl rbc;
@@ -171,8 +173,8 @@ public class TestScene extends SimpleApplication {
         }
         player.setWalkDirection(walkDirection);
         final Vector3f p = playerAvatar.getModel().getWorldTranslation();
-        currentLevel.visitNode(p.x, p.z);
-//        System.out.println(p);
+        currentLevel.visit(p);
+//        System.out.println(p);        
     }
 
 }

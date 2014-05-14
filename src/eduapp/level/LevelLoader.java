@@ -23,7 +23,10 @@ import org.xml.sax.SAXException;
  */
 public class LevelLoader implements AssetLoader {
 
+    private static final String ATTR_ID = "id";
     private static final String ATTR_TEXTURE = "tag";
+    private static final String NODE_ACTION_ITEMS = "ActionItems";
+    private static final String NODE_ACTION = "Action";
     private static final String NODE_BACKGROUND = "Background";
     private static final String NODE_COORDS = "Coords";
     private static final String NODE_EMPTY = "Empty";
@@ -31,10 +34,12 @@ public class LevelLoader implements AssetLoader {
     private static final String NODE_ITEMS = "Items";
     private static final String NODE_LIGHTS = "Lights";
     private static final String NODE_NAME = "Name";
+    private static final String NODE_ONCE = "Once";
     private static final String NODE_PLAYER = "Player";
     private static final String NODE_SCALE = "Scale";
     private static final String NODE_TEXTURE = "Texture";
     private static final String NODE_VALUES = "Values";
+    private static final String NODE_VOLUME = "Volume";
     private static final String NODE_WALL = "Wall";
     private static final String NODE_WIDTH = "Width";
 
@@ -52,7 +57,8 @@ public class LevelLoader implements AssetLoader {
             final Player player = loadPlayer(doc);
             final Set<Item> items = loadItems(doc);
             final Set<Light> lights = loadLights(doc);
-            result = new Level(background, player, items, lights);
+            final Set<ActionItem> actionItems = loadActionItems(doc);
+            result = new Level(background, player, items, lights, actionItems);
         } catch (NullPointerException | ParserConfigurationException | SAXException ex) {
             ex.printStackTrace(System.err);
         }
@@ -119,7 +125,8 @@ public class LevelLoader implements AssetLoader {
                 result.add(Item.generateItem(
                         element.getElementsByTagName(NODE_NAME).item(0).getTextContent(),
                         element.getElementsByTagName(NODE_COORDS).item(0).getTextContent(),
-                        element.getElementsByTagName(NODE_SCALE).item(0).getTextContent()));
+                        element.getElementsByTagName(NODE_SCALE).item(0).getTextContent(),
+                        element.getAttribute(ATTR_ID)));
             }
         } else {
             throw new SAXException("Illegal items node - " + itemsNode);
@@ -149,6 +156,30 @@ public class LevelLoader implements AssetLoader {
             }
         }
 
+        return result;
+    }
+
+    private static Set<ActionItem> loadActionItems(final Document doc) throws SAXException {
+        final Set<ActionItem> result = new HashSet<>();
+        final Node itemsNode = doc.getElementsByTagName(NODE_ACTION_ITEMS).item(0);
+        Node node;
+        Element element;
+        if (itemsNode.getNodeType() == Node.ELEMENT_NODE) {
+            // texture mappings
+            NodeList nl = itemsNode.getChildNodes();
+            for (int i = 0; i < nl.getLength(); i++) {
+                node = nl.item(i);
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    element = (Element) node;
+                    result.add(new ActionItem(
+                            element.getElementsByTagName(NODE_VOLUME).item(0).getTextContent(),
+                            element.getElementsByTagName(NODE_ACTION).item(0).getTextContent(),
+                            element.getElementsByTagName(NODE_ONCE).getLength() > 0));
+                }
+            }
+        } else {
+            throw new SAXException("Illegal action items node - " + itemsNode);
+        }
         return result;
     }
 
