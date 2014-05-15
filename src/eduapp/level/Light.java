@@ -57,7 +57,7 @@ public final class Light extends ActionItem {
             default:
                 throw new IllegalArgumentException("Unsupported type of light - " + type);
         }
-        
+
         if (params.containsKey(PARAM_COLOR)) {
             try {
                 final String name = params.get(PARAM_COLOR);
@@ -158,13 +158,16 @@ public final class Light extends ActionItem {
     }
 
     @Override
-    public void preformAction(String action) {
+    public void preformActionEnter(String action) {
         if (action.equals("Switch")) {
-            if (light.getColor().a == 0) {
-                light.setColor(color);
-            } else {
-                light.setColor(ColorRGBA.BlackNoAlpha);
-            }
+            light.setColor(color);
+        }
+    }
+
+    @Override
+    public void preformActionLeave(String action) {
+        if (action.equals("Switch")) {
+            light.setColor(ColorRGBA.BlackNoAlpha);
         }
     }
 

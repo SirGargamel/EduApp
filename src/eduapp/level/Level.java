@@ -18,14 +18,15 @@ public class Level {
     public static final String LEVEL_FILE_EXTENSION = "xml";
     public static final float LEVEL_HEIGHT = 2.5f;
     public static final int TILE_SIZE = 1;
-    private static final float RADIUS_INTERACTION = 1.5f;
+    private static final float RADIUS_INTERACTION = 0.25f;
     private final Node rootNode;
     private final Background background;
     private final Player player;
     private final Set<Item> items;
     private final Set<Light> lights;
     private final Set<Spatial> itemModels;
-    private final Set<ActionTrigger> actionItems;
+    private final Set<ActionTrigger> actionTriggers;
+    private final Set<ActionTrigger> activeTriggers;
     private final ActionItemRegistry itemRegistry;
 
     public static Level loadLevel(final String levelName, final AssetManager assetManager) {
@@ -40,11 +41,12 @@ public class Level {
         this.player = player;
         this.items = items;
         this.lights = lights;
-        this.actionItems = actionItems;
+        this.actionTriggers = actionItems;
 
         itemModels = new HashSet<>();
         rootNode = new Node(this.getClass().getSimpleName());
         itemRegistry = new ActionItemRegistry();
+        activeTriggers = new HashSet<>();
     }
 
     private void generateLevel(final AssetManager assetManager) {
@@ -64,7 +66,7 @@ public class Level {
             itemRegistry.put(l.getId(), l);
         }
         // generate action items
-        for (ActionTrigger ai : actionItems) {
+        for (ActionTrigger ai : actionTriggers) {
             ai.generateAction(itemRegistry);
             itemRegistry.put(ai.getId(), ai);
         }
@@ -87,7 +89,7 @@ public class Level {
     }
 
     public void addActionItem(final ActionTrigger item) {
-        actionItems.add(item);
+        actionTriggers.add(item);
     }
 
     public Set<Spatial> getItems() {
@@ -99,24 +101,53 @@ public class Level {
     }
 
     public void visit(final Vector3f pos) {
-        final Iterator<ActionTrigger> it = actionItems.iterator();
+        Iterator<ActionTrigger> it = actionTriggers.iterator();
         ActionTrigger trigger;
         List<ActionItem> list;
         while (it.hasNext()) {
             trigger = it.next();
-            if (trigger.getVolume().distanceTo(pos) < RADIUS_INTERACTION) {
+            if (trigger.getVolume().distanceToEdge(pos) <= RADIUS_INTERACTION) {
+                activeTriggers.add(trigger);
+
                 list = itemRegistry.get(trigger.getTarget());
                 if (list != null) {
                     for (ActionItem item : list) {
                         if (item != null) {
-                            item.preformAction(trigger.getAction());
+                            item.preformActionEnter(trigger.getAction());
                         } else {
                             System.err.println("Illegal target for trigger " + trigger.toString());
                         }
-                        System.out.println("Action triggered - " + trigger);
+                        System.out.println("Action triggered on enter " + trigger + " at " + pos);
                     }
-                    if (trigger.isOnce()) {
-                        it.remove();
+
+                    it.remove();
+                }
+            }
+        }
+
+        it = activeTriggers.iterator();
+        while (it.hasNext()) {
+            trigger = it.next();
+            if (trigger.getVolume().distanceToEdge(pos) > RADIUS_INTERACTION) {
+                list = itemRegistry.get(trigger.getTarget());
+                if (list != null) {
+                    for (ActionItem item : list) {
+                        if (item != null) {
+                            item.preformActionLeave(trigger.getAction());
+                        } else {
+                            System.err.println("Illegal target for trigger " + trigger.toString());
+                        }
+                        System.out.println("Action triggered on exit " + trigger + " at " + pos);
+                    }
+
+                    it.remove();
+                    if (!trigger.isOnce()) {
+                        actionTriggers.add(trigger);
+                    }
+                    
+                    for (Light l : lights) {
+                        rootNode.removeLight(l.getLight());
+                        rootNode.addLight(l.getLight());                        
                     }
                 }
             }

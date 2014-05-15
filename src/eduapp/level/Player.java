@@ -17,7 +17,12 @@ public class Player extends ActionItem {
     }
 
     @Override
-    public void preformAction(String action) {
+    public void preformActionEnter(String action) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void preformActionLeave(String action) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

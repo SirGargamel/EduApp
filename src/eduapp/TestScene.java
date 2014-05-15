@@ -15,6 +15,7 @@ import com.jme3.input.controls.KeyTrigger;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
+import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
@@ -87,15 +88,15 @@ public class TestScene extends SimpleApplication {
                 = CollisionShapeFactory.createMeshShape(currentLevel.getWorldNode());
         landscape = new RigidBodyControl(sceneShape, 0);
 
-        player = new BetterCharacterControl(.15f, 1.5f, 50f);        
-        playerAvatar.getModel().addControl(player);        
+        player = new BetterCharacterControl(.15f, 1.5f, 50f);
+        playerAvatar.getModel().addControl(player);
 
         player.setJumpForce(new Vector3f(0, 250f, 0));
         player.warp(currentLevel.getInitialPlayerPos());
         player.setViewDirection(Vector3f.UNIT_Z);
 
         bulletAppState.getPhysicsSpace().add(landscape);
-        bulletAppState.getPhysicsSpace().add(player);        
+        bulletAppState.getPhysicsSpace().add(player);
 
         CollisionShape cs;
         RigidBodyControl rbc;
@@ -170,7 +171,7 @@ public class TestScene extends SimpleApplication {
             player.setViewDirection(viewDirection);
         }
         player.setWalkDirection(walkDirection);
-        final Vector3f p = playerAvatar.getModel().getWorldTranslation();
+        final Vector3f p = playerAvatar.getModel().getWorldBound().getCenter();
         currentLevel.visit(p);
 //        System.out.println(p);        
     }

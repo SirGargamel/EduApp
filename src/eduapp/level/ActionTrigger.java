@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class ActionTrigger extends ActionItem {
 
+    private static final float DEFAULT_PLAYER_HEIGHT = 0.75f;
     private final String volumeDescription;
     private final String target;
     private final String action;
@@ -33,25 +34,28 @@ public class ActionTrigger extends ActionItem {
             if (split.length == 3) {
                 volume = new BoundingSphere(
                         Float.valueOf(split[2]),
-                        new Vector3f(Float.valueOf(split[0]), Level.LEVEL_HEIGHT / 2.0f, Float.valueOf(split[1])));
+                        new Vector3f(Float.valueOf(split[0]), DEFAULT_PLAYER_HEIGHT, Float.valueOf(split[1])));
             } else if (split.length == 4) {
                 volume = new BoundingBox(
                         new Vector3f(Float.valueOf(split[0]), 0, Float.valueOf(split[1])),
-                        new Vector3f(Float.valueOf(split[2]), Level.LEVEL_HEIGHT, Float.valueOf(split[3])));
+                        new Vector3f(Float.valueOf(split[2]), DEFAULT_PLAYER_HEIGHT * 2, Float.valueOf(split[3])));
             } else {
                 throw new IllegalArgumentException("Unsupported bounding volume definition - " + Arrays.toString(split));
             }
         } else {
             // item id
             final List<ActionItem> itemList = items.get(volumeDescription);
-            if (itemList != null && !itemList.isEmpty()) {       
-                volume = new BoundingBox();
+            if (itemList != null && !itemList.isEmpty()) {
                 for (ActionItem it : itemList) {
                     if (it != null && (it instanceof Item)) {
                         Item i = (Item) it;
-                        volume.mergeLocal(i.getModel().getWorldBound());
+                        if (volume == null) {
+                            volume = i.getModel().getWorldBound();
+                        } else {
+                            volume.mergeLocal(i.getModel().getWorldBound());
+                        }
                     }
-                }                
+                }
             } else {
                 System.err.println("No targets for volumeBound " + volumeDescription);
             }
@@ -83,7 +87,12 @@ public class ActionTrigger extends ActionItem {
     }
 
     @Override
-    public void preformAction(String action) {
+    public void preformActionEnter(String action) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void preformActionLeave(String action) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
