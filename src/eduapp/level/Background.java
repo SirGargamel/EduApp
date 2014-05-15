@@ -30,19 +30,9 @@ public class Background {
     private final Set<Character> walls;
     private final Map<Character, String> textureMapping;
     private char empty;
-    private Node rootNode;
+    private Node rootNode;    
 
-    public static Background buildBackground(String values, String pointZero, String width) {
-        final String[] pz = pointZero.split(";");
-        if (pz.length != 2) {
-            throw new IllegalArgumentException("Point zero must be 2D - " + pointZero);
-        }
-        final float[] pointZeroA = new float[]{Float.valueOf(pz[0]), Float.valueOf(pz[1])};
-        final int widthI = Integer.valueOf(width);
-        return new Background(values, pointZeroA, widthI);
-    }
-
-    private Background(String values, float[] pointZero, int width) {
+    public Background(String values, float[] pointZero, int width) {
         this.values = values;
         this.pointZero = pointZero;
         this.width = width;

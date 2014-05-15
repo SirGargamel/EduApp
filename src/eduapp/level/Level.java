@@ -6,6 +6,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -24,7 +25,8 @@ public class Level {
     private final Set<Item> items;
     private final Set<Light> lights;
     private final Set<Spatial> itemModels;
-    private final Set<ActionItem> actionItems;
+    private final Set<ActionTrigger> actionItems;
+    private final ActionItemRegistry itemRegistry;
 
     public static Level loadLevel(final String levelName, final AssetManager assetManager) {
         final String path = "levels/".concat(levelName).concat(".").concat(LEVEL_FILE_EXTENSION);
@@ -33,7 +35,7 @@ public class Level {
         return result;
     }
 
-    Level(final Background background, final Player player, final Set<Item> items, final Set<Light> lights, final Set<ActionItem> actionItems) {
+    public Level(final Background background, final Player player, final Set<Item> items, final Set<Light> lights, final Set<ActionTrigger> actionItems) {
         this.background = background;
         this.player = player;
         this.items = items;
@@ -42,6 +44,7 @@ public class Level {
 
         itemModels = new HashSet<>();
         rootNode = new Node(this.getClass().getSimpleName());
+        itemRegistry = new ActionItemRegistry();
     }
 
     private void generateLevel(final AssetManager assetManager) {
@@ -53,13 +56,17 @@ public class Level {
             s = i.generateItem(assetManager);
             itemModels.add(s);
             rootNode.attachChild(s);
+            itemRegistry.put(i.getId(), i);
         }
+        // create lights
         for (Light l : lights) {
-            rootNode.addLight(l.generateLight());
+            rootNode.addLight(l.getLight());
+            itemRegistry.put(l.getId(), l);
         }
         // generate action items
-        for (ActionItem ai : actionItems) {
-            ai.generateAction(itemModels);
+        for (ActionTrigger ai : actionItems) {
+            ai.generateAction(itemRegistry);
+            itemRegistry.put(ai.getId(), ai);
         }
     }
 
@@ -79,7 +86,7 @@ public class Level {
         items.add(item);
     }
 
-    public void addActionItem(final ActionItem item) {
+    public void addActionItem(final ActionTrigger item) {
         actionItems.add(item);
     }
 
@@ -92,14 +99,25 @@ public class Level {
     }
 
     public void visit(final Vector3f pos) {
-        final Iterator<ActionItem> it = actionItems.iterator();
-        ActionItem ai;
+        final Iterator<ActionTrigger> it = actionItems.iterator();
+        ActionTrigger trigger;
+        List<ActionItem> list;
         while (it.hasNext()) {
-            ai = it.next();
-            if (ai.getVolume().distanceTo(pos) < RADIUS_INTERACTION) {
-                System.out.println("Close to " + ai.toString());
-                if (ai.isOnce()) {
-                    it.remove();
+            trigger = it.next();
+            if (trigger.getVolume().distanceTo(pos) < RADIUS_INTERACTION) {
+                list = itemRegistry.get(trigger.getTarget());
+                if (list != null) {
+                    for (ActionItem item : list) {
+                        if (item != null) {
+                            item.preformAction(trigger.getAction());
+                        } else {
+                            System.err.println("Illegal target for trigger " + trigger.toString());
+                        }
+                        System.out.println("Action triggered - " + trigger);
+                    }
+                    if (trigger.isOnce()) {
+                        it.remove();
+                    }
                 }
             }
         }

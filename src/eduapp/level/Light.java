@@ -12,7 +12,7 @@ import java.util.Map;
  *
  * @author Petr Jecmen
  */
-public class Light {
+public final class Light extends ActionItem {
 
     private static final float DEFAULT_ANGLE_INNER = 10.0f;
     private static final float DEFAULT_ANGLE_OUTER = 15.0f;
@@ -25,18 +25,22 @@ public class Light {
     private static final String PARAM_ANGLE_INNER = "InnerAngle";
     private static final String PARAM_ANGLE_OUTER = "OuterAngle";
     private static final String PARAM_INTENSITY = "Intensity";
+    private static final String PARAM_OFF = "Off";
     private static final String PARAM_POSITION = "Coords";
     private static final String PARAM_RANGE = "Range";
-    private final String type;
-    private final Map<String, String> params;
+    private final com.jme3.light.Light light;
+    private ColorRGBA color;
 
     public Light(String type, Map<String, String> params) {
-        this.type = type;
-        this.params = params;
+        light = generateLight(type, params);
     }
 
-    public com.jme3.light.Light generateLight() {
-        final com.jme3.light.Light result;
+    public com.jme3.light.Light getLight() {
+        return light;
+    }
+
+    private com.jme3.light.Light generateLight(String type, Map<String, String> params) {
+        com.jme3.light.Light result;
         switch (type) {
             case "Ambient":
                 result = generateAmbientLight();
@@ -53,27 +57,26 @@ public class Light {
             default:
                 throw new IllegalArgumentException("Unsupported type of light - " + type);
         }
-        ColorRGBA color;
+        
         if (params.containsKey(PARAM_COLOR)) {
             try {
                 final String name = params.get(PARAM_COLOR);
                 color = (ColorRGBA) ColorRGBA.class.getDeclaredField(name).get(name);
             } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
                 System.err.println("Illegal light color - " + ex.getLocalizedMessage());
-                color = DEFAULT_COLOR;
             }
         } else {
             color = DEFAULT_COLOR;
         }
-        if (color != null) {
-            if (params.containsKey(PARAM_INTENSITY)) {
-                final float intensity = Float.valueOf(params.get(PARAM_INTENSITY));
-                color.multLocal(intensity);
-            }
-
+        if (params.containsKey(PARAM_INTENSITY)) {
+            final float intensity = Float.valueOf(params.get(PARAM_INTENSITY));
+            color.multLocal(intensity);
+        }
+        if (params.containsKey(PARAM_OFF)) {
+            result.setColor(ColorRGBA.BlackNoAlpha);
+        } else {
             result.setColor(color);
         }
-
         return result;
     }
 
@@ -152,6 +155,17 @@ public class Light {
             throw new IllegalArgumentException("Coords must be 2D or 3D separated by \';\' - " + coords);
         }
         return result;
+    }
+
+    @Override
+    public void preformAction(String action) {
+        if (action.equals("Switch")) {
+            if (light.getColor().a == 0) {
+                light.setColor(color);
+            } else {
+                light.setColor(ColorRGBA.BlackNoAlpha);
+            }
+        }
     }
 
 }
