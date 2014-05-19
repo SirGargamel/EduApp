@@ -4,8 +4,9 @@ import com.jme3.animation.AnimChannel;
 import com.jme3.animation.AnimControl;
 import com.jme3.animation.AnimEventListener;
 import com.jme3.animation.LoopMode;
-import com.jme3.app.SimpleApplication;
+import com.jme3.asset.AssetManager;
 import com.jme3.bounding.BoundingBox;
+import com.jme3.input.InputManager;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.AnalogListener;
 import com.jme3.scene.Spatial;
@@ -22,8 +23,8 @@ public class PlayerAvatar implements AnimEventListener {
     private final AnimControl control;
     private boolean isRunning;
 
-    public PlayerAvatar(final SimpleApplication app) {
-        model = app.getAssetManager().loadModel("models/ninja/Ninja.mesh.xml");
+    public PlayerAvatar(final AssetManager assetManager, final InputManager inputManager) {
+        model = assetManager.loadModel("models/ninja/Ninja.mesh.xml");
         final BoundingBox plB = (BoundingBox) model.getWorldBound();
         final float playerScale = PLAYER_HEIGHT / (plB.getYExtent() * 2.0f);
         model.scale(playerScale);
@@ -49,7 +50,7 @@ public class PlayerAvatar implements AnimEventListener {
                 }
             }
         };
-        app.getInputManager().addListener(
+        inputManager.addListener(
                 actionListener,
                 Actions.PAUSE.toString(),
                 Actions.LEFT.toString(),
@@ -73,7 +74,7 @@ public class PlayerAvatar implements AnimEventListener {
                 }
             }
         };
-        app.getInputManager().addListener(
+        inputManager.addListener(
                 analogListener,
                 Actions.LEFT.toString(),
                 Actions.RIGHT.toString(),
