@@ -29,5 +29,9 @@ public class ActionItemRegistry {
     public List<ActionItem> get(final String id) {
         return data.get(id);
     }
+    
+    public void clear() {
+        data.clear();
+    }
 
 }

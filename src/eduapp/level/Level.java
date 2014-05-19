@@ -1,9 +1,13 @@
 package eduapp.level;
 
+import com.jme3.asset.AssetKey;
 import com.jme3.asset.AssetManager;
+import com.jme3.asset.DesktopAssetManager;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+import eduapp.AppContext;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -25,14 +29,15 @@ public class Level {
     private final Set<Item> items;
     private final Set<Light> lights;
     private final Set<Spatial> itemModels;
-    private final Set<ActionTrigger> actionTriggers;
-    private final Set<ActionTrigger> activeTriggers;
+    private final Set<ActionTrigger> actionTriggers, activeTriggers;
     private final ActionItemRegistry itemRegistry;
 
     public static Level loadLevel(final String levelName, final AssetManager assetManager) {
         final String path = "levels/".concat(levelName).concat(".").concat(LEVEL_FILE_EXTENSION);
-        final Level result = (Level) assetManager.loadAsset(path);
+        final AssetKey<Level> key = new AssetKey<>(path);
+        final Level result = assetManager.loadAsset(key);
         result.generateLevel(assetManager);
+        ((DesktopAssetManager) assetManager).clearCache();
         return result;
     }
 
@@ -44,7 +49,7 @@ public class Level {
         this.actionTriggers = actionItems;
 
         itemModels = new HashSet<>();
-        rootNode = new Node(this.getClass().getSimpleName());
+        rootNode = new Node(String.valueOf(Math.random()));
         itemRegistry = new ActionItemRegistry();
         activeTriggers = new HashSet<>();
     }
@@ -144,14 +149,22 @@ public class Level {
                     if (!trigger.isOnce()) {
                         actionTriggers.add(trigger);
                     }
-                    
+
                     for (Light l : lights) {
                         rootNode.removeLight(l.getLight());
-                        rootNode.addLight(l.getLight());                        
+                        rootNode.addLight(l.getLight());
                     }
                 }
             }
         }
     }
 
+    public void destroy() {
+        for (Light l : lights) {
+            l.getLight().setColor(ColorRGBA.BlackNoAlpha);
+        }
+        
+        rootNode.detachAllChildren();
+        rootNode.removeFromParent();        
+    }
 }

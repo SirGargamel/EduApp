@@ -25,10 +25,11 @@ public class TestScene extends SimpleApplication {
         guiViewPort.addProcessor(niftyDisplay);
         // disable the fly cam
         flyCam.setDragToRotate(true);
+        
 //        inputManager.setCursorVisible(true);        
         
         AppContext.setApp(this);
-        GuiManager.setNifty(nifty);        
+        GuiManager.setNifty(nifty);                     
     }
 
     

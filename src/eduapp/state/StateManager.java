@@ -8,31 +8,29 @@ import eduapp.AppContext;
  */
 public class StateManager {
 
-    private static StateManager instance;
-    private final GameScreen gameScreen;
-    private final StartScreen startScreen;
-    private String levelName;
+    private static final GameScreen gameScreen;
+    private static final StartScreen startScreen;
 
     static {
-        instance = new StateManager();
-    }
-
-    public static StateManager getInstance() {
-        return instance;
-    }
-
-    private StateManager() {
         gameScreen = new GameScreen();
         startScreen = new StartScreen();
 
         AppContext.getApp().getStateManager().attach(startScreen);
     }
 
-    public void setLevelName(String levelName) {
-        this.levelName = levelName;
-
-        AppContext.getApp().getStateManager().detach(startScreen);
+    public static void loadLevel(String levelName) {
+        AppContext.getApp().getStateManager().detach(startScreen);        
         gameScreen.setLevelName(levelName);
-        AppContext.getApp().getStateManager().attach(gameScreen);
+        gameScreen.setEnabled(true);
+        AppContext.getApp().getStateManager().attach(gameScreen);         
+    }
+
+    public static void enableGame(boolean isEnabled) {
+        gameScreen.setEnabled(isEnabled);
+    }
+
+    public static void displayMainMenu() {        
+        AppContext.getApp().getStateManager().detach(gameScreen);        
+        AppContext.getApp().getStateManager().attach(startScreen);
     }
 }

@@ -15,7 +15,6 @@ import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
-import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
@@ -23,6 +22,7 @@ import com.jme3.scene.Spatial;
 import eduapp.Actions;
 import eduapp.AppContext;
 import eduapp.PlayerAvatar;
+import eduapp.gui.GuiManager;
 import eduapp.level.Level;
 
 /**
@@ -39,7 +39,7 @@ public class GameScreen extends AbstractAppState {
     private BulletAppState bulletAppState;
     private BetterCharacterControl player;
     private PlayerAvatar playerAvatar;
-    private RigidBodyControl landscape;
+    private RigidBodyControl landscape;    
     private Level currentLevel;
     boolean left, right, up, down;
     private ActionListener keyListener;
@@ -51,8 +51,7 @@ public class GameScreen extends AbstractAppState {
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
         super.initialize(stateManager, app);
-        System.out.println("Init GameScreen.");
-        loadLevel(app);
+        loadLevel(AppContext.getApp());        
     }
 
     private void loadLevel(Application app) {
@@ -66,22 +65,56 @@ public class GameScreen extends AbstractAppState {
         initCollisions(app);
     }
 
-    private void initCamera(Application app) {
-        final ChaseCamera chaseCam = new ChaseCamera(app.getCamera(), playerAvatar.getModel(), app.getInputManager());
-        chaseCam.setDefaultDistance(7.5f);
-        chaseCam.setDefaultHorizontalRotation(90 * FastMath.DEG_TO_RAD);
-        chaseCam.setDefaultVerticalRotation(89.9f * FastMath.DEG_TO_RAD);
-    }
-
     private void initPlayer(final AssetManager assetManager, final InputManager inputManager) {
         playerAvatar = new PlayerAvatar(assetManager, inputManager);
     }
 
     private void initWorld(Application app) {
-        app.getViewPort().setBackgroundColor(ColorRGBA.LightGray);
-
         currentLevel = Level.loadLevel(levelName, app.getAssetManager());
         ((SimpleApplication) app).getRootNode().attachChild(currentLevel.getRootNode());
+    }
+
+    private void initKeys(final InputManager inputManager) {
+        // You can map one or several inputs to one named action        
+        inputManager.addMapping(Actions.PAUSE.toString(), new KeyTrigger(KeyInput.KEY_P));
+        inputManager.addMapping(Actions.LEFT.toString(), new KeyTrigger(KeyInput.KEY_J));
+        inputManager.addMapping(Actions.RIGHT.toString(), new KeyTrigger(KeyInput.KEY_L));
+        inputManager.addMapping(Actions.UP.toString(), new KeyTrigger(KeyInput.KEY_I));
+        inputManager.addMapping(Actions.DOWN.toString(), new KeyTrigger(KeyInput.KEY_K));
+        // Add the names to the action listener.
+        keyListener = new ActionListener() {
+            @Override
+            public void onAction(String name, boolean isPressed, float tpf) {
+                if (name.equals(Actions.PAUSE.toString()) && !isPressed) {
+                    boolean state = isEnabled();
+                    StateManager.enableGame(!state);
+                    GuiManager.enableGame(!state);
+                }
+                if (name.equals(Actions.LEFT.toString())) {
+                    left = isPressed;
+                } else if (name.equals(Actions.RIGHT.toString())) {
+                    right = isPressed;
+                } else if (name.equals(Actions.UP.toString())) {
+                    up = isPressed;
+                } else if (name.equals(Actions.DOWN.toString())) {
+                    down = isPressed;
+                }
+            }
+        };
+        inputManager.addListener(keyListener, Actions.PAUSE.toString());
+        inputManager.addListener(keyListener, Actions.LEFT.toString());
+        inputManager.addListener(keyListener, Actions.RIGHT.toString());
+        inputManager.addListener(keyListener, Actions.UP.toString());
+        inputManager.addListener(keyListener, Actions.DOWN.toString());
+
+    }
+
+    private void initCamera(Application app) {
+        final ChaseCamera chaseCam = new ChaseCamera(app.getCamera(), playerAvatar.getModel(), app.getInputManager());
+        chaseCam.setDefaultDistance(7.5f);
+        chaseCam.setDefaultHorizontalRotation(90 * FastMath.DEG_TO_RAD);
+        chaseCam.setDefaultVerticalRotation(89.9f * FastMath.DEG_TO_RAD);
+
     }
 
     private void initCollisions(Application app) {
@@ -111,39 +144,6 @@ public class GameScreen extends AbstractAppState {
             s.addControl(rbc);
             bulletAppState.getPhysicsSpace().add(rbc);
         }
-    }
-
-    private void initKeys(final InputManager inputManager) {
-        // You can map one or several inputs to one named action        
-        inputManager.addMapping(Actions.PAUSE.toString(), new KeyTrigger(KeyInput.KEY_P));
-        inputManager.addMapping(Actions.LEFT.toString(), new KeyTrigger(KeyInput.KEY_J));
-        inputManager.addMapping(Actions.RIGHT.toString(), new KeyTrigger(KeyInput.KEY_L));
-        inputManager.addMapping(Actions.UP.toString(), new KeyTrigger(KeyInput.KEY_I));
-        inputManager.addMapping(Actions.DOWN.toString(), new KeyTrigger(KeyInput.KEY_K));
-        // Add the names to the action listener.
-        keyListener = new ActionListener() {
-            @Override
-            public void onAction(String name, boolean isPressed, float tpf) {
-                if (name.equals(Actions.PAUSE.toString()) && !isPressed) {
-                    setEnabled(!isEnabled());
-                }
-                if (name.equals(Actions.LEFT.toString())) {
-                    left = isPressed;
-                } else if (name.equals(Actions.RIGHT.toString())) {
-                    right = isPressed;
-                } else if (name.equals(Actions.UP.toString())) {
-                    up = isPressed;
-                } else if (name.equals(Actions.DOWN.toString())) {
-                    down = isPressed;
-                }
-            }
-        };
-        inputManager.addListener(keyListener, Actions.PAUSE.toString());
-        inputManager.addListener(keyListener, Actions.LEFT.toString());
-        inputManager.addListener(keyListener, Actions.RIGHT.toString());
-        inputManager.addListener(keyListener, Actions.UP.toString());
-        inputManager.addListener(keyListener, Actions.DOWN.toString());
-
     }
 
     @Override
@@ -182,14 +182,20 @@ public class GameScreen extends AbstractAppState {
 
     @Override
     public void cleanup() {
-        super.cleanup();
-        AppContext.getApp().getInputManager().clearMappings();
-        AppContext.getApp().getRootNode().detachAllChildren();
-        AppContext.getApp().getRootNode().getWorldLightList().clear();
-        playerAvatar = null;
-        player = null;
-        bulletAppState = null;
-        landscape = null;
-        currentLevel = null;
+        super.cleanup();        
+
+        bulletAppState.getPhysicsSpace().remove(landscape);
+        bulletAppState.getPhysicsSpace().remove(player);
+        AppContext.getApp().getStateManager().detach(bulletAppState);
+
+        final InputManager inputManager = AppContext.getApp().getInputManager();
+        inputManager.removeListener(keyListener);
+        inputManager.deleteMapping(Actions.PAUSE.toString());
+        inputManager.deleteMapping(Actions.LEFT.toString());
+        inputManager.deleteMapping(Actions.RIGHT.toString());
+        inputManager.deleteMapping(Actions.DOWN.toString());
+        inputManager.deleteMapping(Actions.UP.toString());
+
+        currentLevel.destroy();
     }
 }

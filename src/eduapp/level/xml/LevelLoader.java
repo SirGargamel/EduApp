@@ -85,7 +85,7 @@ public class LevelLoader implements AssetLoader {
         final Set<Item> result = new HashSet<>();
         Element el;
         Item item;
-        if (itemsNode.getNodeType() == Node.ELEMENT_NODE) {
+        if (itemsNode != null && itemsNode.getNodeType() == Node.ELEMENT_NODE) {
             el = (Element) itemsNode;
             NodeList nl = el.getElementsByTagName(NODE_ITEM);
             for (int i = 0; i < nl.getLength(); i++) {

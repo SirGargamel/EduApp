@@ -61,12 +61,12 @@ public final class Light extends ActionItem {
         if (params.containsKey(PARAM_COLOR)) {
             try {
                 final String name = params.get(PARAM_COLOR);
-                color = (ColorRGBA) ColorRGBA.class.getDeclaredField(name).get(name);
+                color = ((ColorRGBA) ColorRGBA.class.getDeclaredField(name).get(name)).clone();
             } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
                 System.err.println("Illegal light color - " + ex.getLocalizedMessage());
             }
         } else {
-            color = DEFAULT_COLOR;
+            color = DEFAULT_COLOR.clone();
         }
         if (params.containsKey(PARAM_INTENSITY)) {
             final float intensity = Float.valueOf(params.get(PARAM_INTENSITY));
@@ -170,5 +170,4 @@ public final class Light extends ActionItem {
             light.setColor(ColorRGBA.BlackNoAlpha);
         }
     }
-
 }

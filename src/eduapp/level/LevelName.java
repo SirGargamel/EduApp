@@ -7,6 +7,7 @@ package eduapp.level;
 public enum LevelName {
 
     Egypt,
+    Empty,
     Factory;
     
 }

@@ -33,7 +33,7 @@ public class XmlBackground extends XmlEntity<Background> {
         }
         final float[] pointZeroA = new float[]{Float.valueOf(pz[0]), Float.valueOf(pz[1])};
         final int widthI = Integer.valueOf(element.getElementsByTagName(NODE_WIDTH).item(0).getTextContent());
-        final String values = element.getElementsByTagName(NODE_VALUES).item(0).getTextContent().replaceAll("[\n\t]", "");
+        final String values = element.getElementsByTagName(NODE_VALUES).item(0).getTextContent().replaceAll("[\n\t ]", "");
         final Background result = new Background(values, pointZeroA, widthI);
         // texture mappings
         NodeList nl = element.getElementsByTagName(NODE_TEXTURE);
