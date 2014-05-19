@@ -49,4 +49,12 @@
             </panel>
         </layer>       
     </screen>
+    <screen id="quest" controller="eduapp.gui.GuiQuest">        
+        <layer id="centerColumn" childLayout="vertical">
+            <panel width="100%" height="10%" childLayout="vertical" />            
+            <panel id="panelQuest" height="80%" width="80%" align="center" backgroundColor="#aaaa" childLayout="center" visibleToMouse="true">                                
+                <text id="textQuest" font="aurulent-sans-16.fnt" color="#000f" text="... TEXT WILL BE HERE ..." align="center" valign="center" />
+            </panel>
+        </layer>       
+    </screen>
 </nifty>

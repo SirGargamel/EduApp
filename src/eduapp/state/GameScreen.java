@@ -39,7 +39,7 @@ public class GameScreen extends AbstractAppState {
     private BulletAppState bulletAppState;
     private BetterCharacterControl player;
     private PlayerAvatar playerAvatar;
-    private RigidBodyControl landscape;    
+    private RigidBodyControl landscape;
     private Level currentLevel;
     boolean left, right, up, down;
     private ActionListener keyListener;
@@ -51,7 +51,7 @@ public class GameScreen extends AbstractAppState {
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
         super.initialize(stateManager, app);
-        loadLevel(AppContext.getApp());        
+        loadLevel(AppContext.getApp());
     }
 
     private void loadLevel(Application app) {
@@ -81,14 +81,25 @@ public class GameScreen extends AbstractAppState {
         inputManager.addMapping(Actions.RIGHT.toString(), new KeyTrigger(KeyInput.KEY_L));
         inputManager.addMapping(Actions.UP.toString(), new KeyTrigger(KeyInput.KEY_I));
         inputManager.addMapping(Actions.DOWN.toString(), new KeyTrigger(KeyInput.KEY_K));
+        inputManager.addMapping("Quest", new KeyTrigger(KeyInput.KEY_Q));
         // Add the names to the action listener.
         keyListener = new ActionListener() {
             @Override
             public void onAction(String name, boolean isPressed, float tpf) {
-                if (name.equals(Actions.PAUSE.toString()) && !isPressed) {
-                    boolean state = isEnabled();
-                    StateManager.enableGame(!state);
-                    GuiManager.enableGame(!state);
+                if (!isPressed) {
+                    if (name.equals(Actions.PAUSE.toString()) && !isPressed) {
+                        boolean state = isEnabled();
+                        StateManager.enableGame(!state);
+                        GuiManager.enableGame(!state);
+                    } else if (name.equals("Quest")) {
+                        if (isEnabled()) {
+                            StateManager.enableGame(false);
+                            GuiManager.displayQuest("TestQuest");
+                        } else {
+                            StateManager.enableGame(true);
+                            GuiManager.gotoGameScreen();
+                        }
+                    }
                 }
                 if (name.equals(Actions.LEFT.toString())) {
                     left = isPressed;
@@ -106,6 +117,7 @@ public class GameScreen extends AbstractAppState {
         inputManager.addListener(keyListener, Actions.RIGHT.toString());
         inputManager.addListener(keyListener, Actions.UP.toString());
         inputManager.addListener(keyListener, Actions.DOWN.toString());
+        inputManager.addListener(keyListener, "Quest");
 
     }
 
@@ -182,7 +194,7 @@ public class GameScreen extends AbstractAppState {
 
     @Override
     public void cleanup() {
-        super.cleanup();        
+        super.cleanup();
 
         bulletAppState.getPhysicsSpace().remove(landscape);
         bulletAppState.getPhysicsSpace().remove(player);
