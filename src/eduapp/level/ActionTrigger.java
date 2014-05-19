@@ -87,12 +87,12 @@ public class ActionTrigger extends ActionItem {
     }
 
     @Override
-    public void preformActionEnter(String action) {
+    public void performActionEnter(String action) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void preformActionLeave(String action) {
+    public void performActionLeave(String action) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

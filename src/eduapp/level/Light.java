@@ -158,14 +158,14 @@ public final class Light extends ActionItem {
     }
 
     @Override
-    public void preformActionEnter(String action) {
+    public void performActionEnter(String action) {
         if (action.equals("Switch")) {
             light.setColor(color);
         }
     }
 
     @Override
-    public void preformActionLeave(String action) {
+    public void performActionLeave(String action) {
         if (action.equals("Switch")) {
             light.setColor(ColorRGBA.BlackNoAlpha);
         }

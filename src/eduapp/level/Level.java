@@ -118,7 +118,7 @@ public class Level {
                 if (list != null) {
                     for (ActionItem item : list) {
                         if (item != null) {
-                            item.preformActionEnter(trigger.getAction());
+                            item.performActionEnter(trigger.getAction());
                         } else {
                             System.err.println("Illegal target for trigger " + trigger.toString());
                         }
@@ -138,7 +138,7 @@ public class Level {
                 if (list != null) {
                     for (ActionItem item : list) {
                         if (item != null) {
-                            item.preformActionLeave(trigger.getAction());
+                            item.performActionLeave(trigger.getAction());
                         } else {
                             System.err.println("Illegal target for trigger " + trigger.toString());
                         }

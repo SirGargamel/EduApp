@@ -12,9 +12,9 @@ public abstract class ActionItem {
         id = "";
     }
     
-    public abstract void preformActionEnter(final String action);
+    public abstract void performActionEnter(final String action);
     
-    public abstract void preformActionLeave(final String action);
+    public abstract void performActionLeave(final String action);        
     
     public String getId() {
         return id;
