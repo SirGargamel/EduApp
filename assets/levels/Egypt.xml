@@ -1,0 +1,62 @@
+<Level>
+    <Background>
+        <Coords>0;0</Coords>
+        <Width>8</Width>
+        <Values>AAC-----
+            AACCCCCC
+            AAAAAAAA
+            CCCAACCC
+            CBBBBBBC
+            CBBBBBBC
+            CBBBBBBC
+            CCCCCCCC</Values>
+        <Texture tag="A">floorSand.png</Texture>
+        <Texture tag="B">floorIce.png</Texture>
+        <Texture tag="C">wallStone.png</Texture>
+        <Wall>C</Wall>
+        <Empty>-</Empty>
+    </Background>
+    <Player>
+        <Coords>0.5;-6.5</Coords>
+    </Player>
+    <Items>
+        <Item id="table">
+            <Name>bench2-table.j3o</Name>
+            <Coords>6;0;-2.5</Coords>
+            <Scale>0.5</Scale>
+        </Item>
+    </Items>
+    <Lights>				
+        <Point id="lTable">
+            <Coords>6.0;1.0;-2.5</Coords>
+            <Color>Red</Color>
+            <Intensity>20</Intensity>
+            <Range>1</Range>
+            <Off/>
+        </Point>
+        <Point id="lRoom"> 
+            <Coords>4.0;2.5;-1.5</Coords>
+            <Color>White</Color>
+            <Intensity>5</Intensity>
+            <Range>5</Range>
+            <Off/>
+        </Point>		
+        <Ambient>
+            <Intensity>0.5</Intensity>
+        </Ambient>
+				
+    </Lights>
+    <ActionItems>
+        <ActionItem>
+            <Volume>table</Volume>
+            <Target>lTable</Target>
+            <Action>Switch</Action>			
+        </ActionItem>
+        <ActionItem>
+            <Volume>1;-0.5;7;-3.5</Volume>
+            <Target>lRoom</Target>
+            <Action>Switch</Action>
+            <!-- <Once/> -->
+        </ActionItem>
+    </ActionItems>
+</Level>
