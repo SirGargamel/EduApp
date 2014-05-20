@@ -1,7 +1,9 @@
 package eduapp.gui;
 
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.NiftyEventSubscriber;
 import de.lessvoid.nifty.controls.ListBox;
+import de.lessvoid.nifty.controls.ListBoxSelectionChangedEvent;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import eduapp.level.LevelName;
@@ -36,5 +38,12 @@ public class GuiMainMenu implements ScreenController {
         System.out.println("Starting the game !!!");
         StateManager.loadLevel(listBox.getFocusItem().toString());
         GuiManager.gotoGameScreen();
+    }
+
+    @NiftyEventSubscriber(pattern = "LevelList.*")
+    public void onListBoxSelectionChanged(final String id,
+            final ListBoxSelectionChangedEvent<LevelName> changed) {
+        System.out.println("selection changed");
+        startGame();
     }
 }
