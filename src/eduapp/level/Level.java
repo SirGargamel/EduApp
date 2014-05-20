@@ -7,10 +7,12 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
-import eduapp.AppContext;
+import eduapp.level.trigger.ActionTrigger;
+import eduapp.level.trigger.MoveTrigger;
+import eduapp.level.trigger.Trigger;
+import eduapp.level.trigger.TriggerStub;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -26,11 +28,12 @@ public class Level {
     private final Node rootNode;
     private final Background background;
     private final Player player;
-    private final Set<Item> items;
+    private final Set<Model> items;
     private final Set<Light> lights;
     private final Set<Spatial> itemModels;
-    private final Set<ActionTrigger> actionTriggers, activeTriggers;
-    private final ActionItemRegistry itemRegistry;
+    private final Set<TriggerStub> stubs;
+    private final Set<Trigger> triggers, activeTriggers;
+    private final ItemRegistry itemRegistry;
 
     public static Level loadLevel(final String levelName, final AssetManager assetManager) {
         final String path = "levels/".concat(levelName).concat(".").concat(LEVEL_FILE_EXTENSION);
@@ -41,16 +44,17 @@ public class Level {
         return result;
     }
 
-    public Level(final Background background, final Player player, final Set<Item> items, final Set<Light> lights, final Set<ActionTrigger> actionItems) {
+    public Level(final Background background, final Player player, final Set<Model> items, final Set<Light> lights, final Set<TriggerStub> triggerStubs) {
         this.background = background;
         this.player = player;
         this.items = items;
         this.lights = lights;
-        this.actionTriggers = actionItems;
+        this.stubs = triggerStubs;
 
         itemModels = new HashSet<>();
         rootNode = new Node(String.valueOf(Math.random()));
-        itemRegistry = new ActionItemRegistry();
+        itemRegistry = new ItemRegistry();
+        triggers = new HashSet<>();
         activeTriggers = new HashSet<>();
     }
 
@@ -59,7 +63,7 @@ public class Level {
         rootNode.attachChild(background.getRootNode());
 
         Spatial s;
-        for (Item i : items) {
+        for (Model i : items) {
             s = i.generateItem(assetManager);
             itemModels.add(s);
             rootNode.attachChild(s);
@@ -71,9 +75,9 @@ public class Level {
             itemRegistry.put(l.getId(), l);
         }
         // generate action items
-        for (ActionTrigger ai : actionTriggers) {
-            ai.generateAction(itemRegistry);
-            itemRegistry.put(ai.getId(), ai);
+        for (TriggerStub ts : stubs) {
+            triggers.add(ts.generateTrigger(itemRegistry));
+
         }
     }
 
@@ -89,14 +93,6 @@ public class Level {
         return player.initialPosition;
     }
 
-    public void addItem(final Item item) {
-        items.add(item);
-    }
-
-    public void addActionItem(final ActionTrigger item) {
-        actionTriggers.add(item);
-    }
-
     public Set<Spatial> getItems() {
         return itemModels;
     }
@@ -106,55 +102,55 @@ public class Level {
     }
 
     public void visit(final Vector3f pos) {
-        Iterator<ActionTrigger> it = actionTriggers.iterator();
-        ActionTrigger trigger;
-        List<ActionItem> list;
-        while (it.hasNext()) {
-            trigger = it.next();
-            if (trigger.getVolume().distanceToEdge(pos) <= RADIUS_INTERACTION) {
-                activeTriggers.add(trigger);
-
-                list = itemRegistry.get(trigger.getTarget());
-                if (list != null) {
-                    for (ActionItem item : list) {
-                        if (item != null) {
-                            item.performActionEnter(trigger.getAction());
-                        } else {
-                            System.err.println("Illegal target for trigger " + trigger.toString());
-                        }
-                        System.out.println("Action triggered on enter " + trigger + " at " + pos);
-                    }
-
-                    it.remove();
-                }
-            }
-        }
+        Iterator<Trigger> it;
+        Trigger trigger;
+        MoveTrigger mt;
 
         it = activeTriggers.iterator();
         while (it.hasNext()) {
             trigger = it.next();
             if (trigger.getVolume().distanceToEdge(pos) > RADIUS_INTERACTION) {
-                list = itemRegistry.get(trigger.getTarget());
-                if (list != null) {
-                    for (ActionItem item : list) {
-                        if (item != null) {
-                            item.performActionLeave(trigger.getAction());
-                        } else {
-                            System.err.println("Illegal target for trigger " + trigger.toString());
-                        }
-                        System.out.println("Action triggered on exit " + trigger + " at " + pos);
-                    }
-
-                    it.remove();
-                    if (!trigger.isOnce()) {
-                        actionTriggers.add(trigger);
-                    }
-
-                    for (Light l : lights) {
-                        rootNode.removeLight(l.getLight());
-                        rootNode.addLight(l.getLight());
-                    }
+                it.remove();
+                if (!trigger.isOnce()) {
+                    triggers.add(trigger);
                 }
+
+                if (trigger instanceof MoveTrigger) {
+                    if (trigger instanceof MoveTrigger) {
+                    mt = (MoveTrigger) trigger;
+                    mt.onEnter();
+                    System.out.println("Action triggered on enter " + mt + " at " + pos);
+                }
+                }
+            }
+        }
+
+        it = triggers.iterator();        
+        while (it.hasNext()) {
+            trigger = it.next();
+            if (trigger.getVolume().distanceToEdge(pos) <= RADIUS_INTERACTION) {
+                it.remove();
+                activeTriggers.add(trigger);
+
+                if (trigger instanceof MoveTrigger) {
+                    mt = (MoveTrigger) trigger;
+                    mt.onEnter();
+                    System.out.println("Action triggered on enter " + mt + " at " + pos);
+                }
+            }
+        }
+    }
+
+    public void activate(final Vector3f pos) {
+        final Iterator<Trigger> it = activeTriggers.iterator();
+        Trigger trg;
+        ActionTrigger at;
+        while (it.hasNext()) {
+            trg = it.next();
+            if (trg instanceof ActionTrigger) {
+                at = (ActionTrigger) trg;
+                at.onActivate();
+                System.out.println("Action triggered on activation " + at + " at " + pos);
             }
         }
     }
@@ -163,8 +159,8 @@ public class Level {
         for (Light l : lights) {
             l.getLight().setColor(ColorRGBA.BlackNoAlpha);
         }
-        
+
         rootNode.detachAllChildren();
-        rootNode.removeFromParent();        
+        rootNode.removeFromParent();
     }
 }

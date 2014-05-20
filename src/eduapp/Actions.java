@@ -10,5 +10,6 @@ public enum Actions {
     RIGHT,
     UP,
     DOWN,
-    PAUSE
+    PAUSE,
+    ACTION,;
 }

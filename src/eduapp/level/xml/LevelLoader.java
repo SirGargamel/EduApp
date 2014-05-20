@@ -2,12 +2,12 @@ package eduapp.level.xml;
 
 import com.jme3.asset.AssetInfo;
 import com.jme3.asset.AssetLoader;
-import eduapp.level.ActionTrigger;
 import eduapp.level.Background;
-import eduapp.level.Item;
+import eduapp.level.Model;
 import eduapp.level.Level;
 import eduapp.level.Light;
 import eduapp.level.Player;
+import eduapp.level.trigger.TriggerStub;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -47,9 +47,9 @@ public class LevelLoader implements AssetLoader {
 
             final Background background = loadBackground(doc);
             final Player player = loadPlayer(doc);
-            final Set<Item> items = loadItems(doc);
+            final Set<Model> items = loadItems(doc);
             final Set<Light> lights = loadLights(doc);
-            final Set<ActionTrigger> actionItems = loadActionTriggers(doc);
+            final Set<TriggerStub> actionItems = loadTriggers(doc);
             result = new Level(background, player, items, lights, actionItems);
         } catch (NullPointerException | ParserConfigurationException | SAXException ex) {
             ex.printStackTrace(System.err);
@@ -80,11 +80,11 @@ public class LevelLoader implements AssetLoader {
         return result;
     }
 
-    private static Set<Item> loadItems(final Document doc) throws SAXException {
+    private static Set<Model> loadItems(final Document doc) throws SAXException {
         final Node itemsNode = doc.getElementsByTagName(NODE_ITEMS).item(0);
-        final Set<Item> result = new HashSet<>();
+        final Set<Model> result = new HashSet<>();
         Element el;
-        Item item;
+        Model item;
         if (itemsNode != null && itemsNode.getNodeType() == Node.ELEMENT_NODE) {
             el = (Element) itemsNode;
             NodeList nl = el.getElementsByTagName(NODE_ITEM);
@@ -123,21 +123,18 @@ public class LevelLoader implements AssetLoader {
         return result;
     }
 
-    private static Set<ActionTrigger> loadActionTriggers(final Document doc) throws SAXException {
-        final Set<ActionTrigger> result = new HashSet<>();
+    private static Set<TriggerStub> loadTriggers(final Document doc) throws SAXException {
+        final Set<TriggerStub> result = new HashSet<>();
         final Node itemsNode = doc.getElementsByTagName(NODE_ACTION_ITEMS).item(0);
         Node node;
         Element el;
-        ActionTrigger at;
         if (itemsNode.getNodeType() == Node.ELEMENT_NODE) {
             NodeList nl = itemsNode.getChildNodes();
             for (int i = 0; i < nl.getLength(); i++) {
                 node = nl.item(i);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     el = (Element) node;
-                    at = new XmlActionTrigger(el).generateGameEntity();
-                    at.setId(el.getAttribute(ATTR_ID));
-                    result.add(at);
+                    result.add(new XmlTrigger(el).generateGameEntity());
                 }
             }
         } else {
@@ -145,5 +142,4 @@ public class LevelLoader implements AssetLoader {
         }
         return result;
     }
-
 }

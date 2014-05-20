@@ -47,16 +47,17 @@
 				
     </Lights>
     <ActionItems>
-        <ActionItem>
+        <MoveTrigger>
             <Volume>table</Volume>
             <Target>lTable</Target>
-            <Action>Switch</Action>			
-        </ActionItem>
-        <ActionItem>
+            <Action>Switch</Action>            			
+        </MoveTrigger>
+        <ActionTrigger>
             <Volume>1;-0.5;7;-3.5</Volume>
             <Target>lRoom</Target>
             <Action>Switch</Action>
+            <Move/>
             <!-- <Once/> -->
-        </ActionItem>
+        </ActionTrigger>
     </ActionItems>
 </Level>

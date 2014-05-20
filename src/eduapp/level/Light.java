@@ -12,7 +12,7 @@ import java.util.Map;
  *
  * @author Petr Jecmen
  */
-public final class Light extends ActionItem {
+public final class Light extends Item {
 
     private static final float DEFAULT_ANGLE_INNER = 10.0f;
     private static final float DEFAULT_ANGLE_OUTER = 15.0f;
@@ -156,18 +156,8 @@ public final class Light extends ActionItem {
         }
         return result;
     }
-
-    @Override
-    public void performActionEnter(String action) {
-        if (action.equals("Switch")) {
-            light.setColor(color);
-        }
-    }
-
-    @Override
-    public void performActionLeave(String action) {
-        if (action.equals("Switch")) {
-            light.setColor(ColorRGBA.BlackNoAlpha);
-        }
-    }
+    
+    public ColorRGBA getColor() {
+        return color;
+    }    
 }

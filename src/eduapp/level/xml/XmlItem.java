@@ -1,14 +1,14 @@
 package eduapp.level.xml;
 
 import com.jme3.math.Vector3f;
-import eduapp.level.Item;
+import eduapp.level.Model;
 import org.w3c.dom.Element;
 
 /**
  *
  * @author Petr Jecmen
  */
-public class XmlItem extends XmlEntity<Item> {
+public class XmlItem extends XmlEntity<Model> {
     
     private static final String NODE_COORDS = "Coords";
     private static final String NODE_NAME = "Name";
@@ -19,7 +19,7 @@ public class XmlItem extends XmlEntity<Item> {
     }
 
     @Override
-    public Item generateGameEntity() {
+    public Model generateGameEntity() {
         final String modelName = element.getElementsByTagName(NODE_NAME).item(0).getTextContent();
         final String position = element.getElementsByTagName(NODE_COORDS).item(0).getTextContent();
         
@@ -34,7 +34,7 @@ public class XmlItem extends XmlEntity<Item> {
         }
         final float scaleF = Float.valueOf(element.getElementsByTagName(NODE_SCALE).item(0).getTextContent());
 
-        return new Item(modelName, pos, scaleF);
+        return new Model(modelName, pos, scaleF);
     }
 
 }

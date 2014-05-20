@@ -81,6 +81,7 @@ public class GameScreen extends AbstractAppState {
         inputManager.addMapping(Actions.RIGHT.toString(), new KeyTrigger(KeyInput.KEY_L));
         inputManager.addMapping(Actions.UP.toString(), new KeyTrigger(KeyInput.KEY_I));
         inputManager.addMapping(Actions.DOWN.toString(), new KeyTrigger(KeyInput.KEY_K));
+        inputManager.addMapping(Actions.ACTION.toString(), new KeyTrigger(KeyInput.KEY_U));
         inputManager.addMapping("Quest", new KeyTrigger(KeyInput.KEY_Q));
         // Add the names to the action listener.
         keyListener = new ActionListener() {
@@ -99,6 +100,8 @@ public class GameScreen extends AbstractAppState {
                             StateManager.enableGame(true);
                             GuiManager.gotoGameScreen();
                         }
+                    } else if (name.equals(Actions.ACTION.toString())) {
+                        currentLevel.activate(playerAvatar.getModel().getWorldBound().getCenter());
                     }
                 }
                 if (name.equals(Actions.LEFT.toString())) {
@@ -117,6 +120,7 @@ public class GameScreen extends AbstractAppState {
         inputManager.addListener(keyListener, Actions.RIGHT.toString());
         inputManager.addListener(keyListener, Actions.UP.toString());
         inputManager.addListener(keyListener, Actions.DOWN.toString());
+        inputManager.addListener(keyListener, Actions.ACTION.toString());
         inputManager.addListener(keyListener, "Quest");
 
     }
@@ -187,9 +191,8 @@ public class GameScreen extends AbstractAppState {
             player.setViewDirection(viewDirection);
         }
         player.setWalkDirection(walkDirection);
-        final Vector3f p = playerAvatar.getModel().getWorldBound().getCenter();
-        currentLevel.visit(p);
-//        System.out.println(p); 
+        currentLevel.visit(playerAvatar.getModel().getWorldBound().getCenter());
+//        System.out.println(playerAvatar.getModel().getWorldBound().getCenter()); 
     }
 
     @Override
@@ -202,11 +205,9 @@ public class GameScreen extends AbstractAppState {
 
         final InputManager inputManager = AppContext.getApp().getInputManager();
         inputManager.removeListener(keyListener);
-        inputManager.deleteMapping(Actions.PAUSE.toString());
-        inputManager.deleteMapping(Actions.LEFT.toString());
-        inputManager.deleteMapping(Actions.RIGHT.toString());
-        inputManager.deleteMapping(Actions.DOWN.toString());
-        inputManager.deleteMapping(Actions.UP.toString());
+        for (Actions a : Actions.values()) {
+            inputManager.deleteMapping(a.toString());
+        }
 
         currentLevel.destroy();
     }
