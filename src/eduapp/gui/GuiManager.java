@@ -1,6 +1,8 @@
 package eduapp.gui;
 
 import de.lessvoid.nifty.Nifty;
+import eduapp.level.Quest;
+import eduapp.state.StateManager;
 
 /**
  *
@@ -25,18 +27,40 @@ public class GuiManager {
     public static void gotoMainMenu() {
         nifty.gotoScreen(SCREEN_MAIN);
     }
+    
+    public static void gotoQuestScreen() {
+        nifty.gotoScreen(SCREEN_QUEST);
+    }
+    
+    public static void gotoPauseScreen() {
+        nifty.gotoScreen(SCREEN_PAUSE);
+    }
 
     public static void enableGame(boolean isRunning) {
         if (isRunning) {
-            nifty.gotoScreen(SCREEN_GAME);
+            gotoGameScreen();
         } else {
-            nifty.gotoScreen(SCREEN_PAUSE);
+            gotoPauseScreen();
         }
     }
 
-    public static void displayQuest(final String questName) {
+    public static void displayQuest(final Quest quest) {
         final GuiQuest control = (GuiQuest) nifty.getScreen(SCREEN_QUEST).getScreenController();
-        control.setQuestText(questName);
-        nifty.gotoScreen(SCREEN_QUEST);
+        final StringBuilder sb = new StringBuilder(quest.getId());
+        for (String s : quest.getData()) {
+            sb.append("\n");
+            sb.append(s);
+        }
+        control.setQuestText(sb.toString());
+        StateManager.enableGame(false);
+        gotoQuestScreen();
+    }
+    
+    public static void questAction() {
+        if (nifty.getCurrentScreen().getScreenId().equals(SCREEN_QUEST)) {
+            gotoGameScreen();
+        } else {
+            gotoQuestScreen();
+        }
     }
 }

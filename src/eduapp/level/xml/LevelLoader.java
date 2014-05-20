@@ -7,6 +7,7 @@ import eduapp.level.Model;
 import eduapp.level.Level;
 import eduapp.level.Light;
 import eduapp.level.Player;
+import eduapp.level.Quest;
 import eduapp.level.trigger.TriggerStub;
 import java.io.IOException;
 import java.util.HashSet;
@@ -34,6 +35,7 @@ public class LevelLoader implements AssetLoader {
     private static final String NODE_ITEM = "Item";
     private static final String NODE_LIGHTS = "Lights";
     private static final String NODE_PLAYER = "Player";
+    private static final String NODE_QUEST = "Quests";
 
     @Override
     public Object load(AssetInfo assetInfo) throws IOException {
@@ -50,7 +52,8 @@ public class LevelLoader implements AssetLoader {
             final Set<Model> items = loadItems(doc);
             final Set<Light> lights = loadLights(doc);
             final Set<TriggerStub> actionItems = loadTriggers(doc);
-            result = new Level(background, player, items, lights, actionItems);
+            final Set<Quest> quests = loadQuests(doc);
+            result = new Level(background, player, items, lights, actionItems, quests);
         } catch (NullPointerException | ParserConfigurationException | SAXException ex) {
             ex.printStackTrace(System.err);
         }
@@ -135,6 +138,29 @@ public class LevelLoader implements AssetLoader {
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     el = (Element) node;
                     result.add(new XmlTrigger(el).generateGameEntity());
+                }
+            }
+        } else {
+            throw new SAXException("Illegal action items node - " + itemsNode);
+        }
+        return result;
+    }
+
+    private static Set<Quest> loadQuests(final Document doc) throws SAXException {
+        final Set<Quest> result = new HashSet<>();
+        final Node itemsNode = doc.getElementsByTagName(NODE_QUEST).item(0);
+        Node node;
+        Element el;
+        Quest q;
+        if (itemsNode.getNodeType() == Node.ELEMENT_NODE) {
+            NodeList nl = itemsNode.getChildNodes();
+            for (int i = 0; i < nl.getLength(); i++) {
+                node = nl.item(i);
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    el = (Element) node;
+                    q = new XmlQuest(el).generateGameEntity();
+                    q.setId(el.getAttribute(ATTR_ID));
+                    result.add(q);
                 }
             }
         } else {

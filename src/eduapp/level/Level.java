@@ -30,6 +30,7 @@ public class Level {
     private final Player player;
     private final Set<Model> items;
     private final Set<Light> lights;
+    private final Set<Quest> quests;
     private final Set<Spatial> itemModels;
     private final Set<TriggerStub> stubs;
     private final Set<Trigger> triggers, activeTriggers;
@@ -44,12 +45,13 @@ public class Level {
         return result;
     }
 
-    public Level(final Background background, final Player player, final Set<Model> items, final Set<Light> lights, final Set<TriggerStub> triggerStubs) {
+    public Level(final Background background, final Player player, final Set<Model> items, final Set<Light> lights, final Set<TriggerStub> triggerStubs, final Set<Quest> quests) {
         this.background = background;
         this.player = player;
         this.items = items;
         this.lights = lights;
         this.stubs = triggerStubs;
+        this.quests = quests;
 
         itemModels = new HashSet<>();
         rootNode = new Node(String.valueOf(Math.random()));
@@ -62,23 +64,26 @@ public class Level {
         background.generateBackground(assetManager);
         rootNode.attachChild(background.getRootNode());
 
+        for (Quest q : quests) {
+            itemRegistry.put(q);
+        }
+        
         Spatial s;
         for (Model i : items) {
             s = i.generateItem(assetManager);
             itemModels.add(s);
             rootNode.attachChild(s);
-            itemRegistry.put(i.getId(), i);
+            itemRegistry.put(i);
         }
         // create lights
         for (Light l : lights) {
             rootNode.addLight(l.getLight());
-            itemRegistry.put(l.getId(), l);
+            itemRegistry.put(l);
         }
         // generate action items
         for (TriggerStub ts : stubs) {
             triggers.add(ts.generateTrigger(itemRegistry));
-
-        }
+        }        
     }
 
     public Node getRootNode() {
@@ -117,15 +122,15 @@ public class Level {
 
                 if (trigger instanceof MoveTrigger) {
                     if (trigger instanceof MoveTrigger) {
-                    mt = (MoveTrigger) trigger;
-                    mt.onEnter();
-                    System.out.println("Action triggered on enter " + mt + " at " + pos);
-                }
+                        mt = (MoveTrigger) trigger;
+                        mt.onEnter();
+                        System.out.println("Action triggered on enter " + mt + " at " + pos);
+                    }
                 }
             }
         }
 
-        it = triggers.iterator();        
+        it = triggers.iterator();
         while (it.hasNext()) {
             trigger = it.next();
             if (trigger.getVolume().distanceToEdge(pos) <= RADIUS_INTERACTION) {

@@ -8,6 +8,7 @@ import eduapp.level.Item;
 import eduapp.level.ItemRegistry;
 import eduapp.level.Light;
 import eduapp.level.Model;
+import eduapp.level.Quest;
 import java.util.Arrays;
 
 /**
@@ -41,6 +42,8 @@ public class TriggerStub {
             case NODE_ACTION:
                 if (target instanceof Light) {
                     result = new LightActionTrigger(volume, (Light) target, action, once);
+                } else if (target instanceof Quest) {
+                    result = new QuestActionTrigger(volume, (Quest) target, action, once);
                 } else {
                     throw new IllegalArgumentException("Unsupported trigger target - " + target);
                 }

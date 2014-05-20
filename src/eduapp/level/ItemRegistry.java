@@ -15,8 +15,8 @@ public class ItemRegistry {
         data = new HashMap<>();
     }
 
-    public void put(final String id, final Item item) {
-        data.put(id, item);
+    public void put(final Item item) {
+        data.put(item.getId(), item);
     }
     
     public Item get(final String id) {

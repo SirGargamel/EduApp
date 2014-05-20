@@ -11,5 +11,6 @@ public enum Actions {
     UP,
     DOWN,
     PAUSE,
-    ACTION,;
+    ACTION,
+    QUEST;
 }

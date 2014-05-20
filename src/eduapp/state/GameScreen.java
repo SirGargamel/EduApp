@@ -77,29 +77,24 @@ public class GameScreen extends AbstractAppState {
     private void initKeys(final InputManager inputManager) {
         // You can map one or several inputs to one named action        
         inputManager.addMapping(Actions.PAUSE.toString(), new KeyTrigger(KeyInput.KEY_P));
-        inputManager.addMapping(Actions.LEFT.toString(), new KeyTrigger(KeyInput.KEY_J));
-        inputManager.addMapping(Actions.RIGHT.toString(), new KeyTrigger(KeyInput.KEY_L));
-        inputManager.addMapping(Actions.UP.toString(), new KeyTrigger(KeyInput.KEY_I));
-        inputManager.addMapping(Actions.DOWN.toString(), new KeyTrigger(KeyInput.KEY_K));
-        inputManager.addMapping(Actions.ACTION.toString(), new KeyTrigger(KeyInput.KEY_U));
-        inputManager.addMapping("Quest", new KeyTrigger(KeyInput.KEY_Q));
+        inputManager.addMapping(Actions.LEFT.toString(), new KeyTrigger(KeyInput.KEY_LEFT));
+        inputManager.addMapping(Actions.RIGHT.toString(), new KeyTrigger(KeyInput.KEY_RIGHT));
+        inputManager.addMapping(Actions.UP.toString(), new KeyTrigger(KeyInput.KEY_UP));
+        inputManager.addMapping(Actions.DOWN.toString(), new KeyTrigger(KeyInput.KEY_DOWN));
+        inputManager.addMapping(Actions.ACTION.toString(), new KeyTrigger(KeyInput.KEY_SPACE));
+        inputManager.addMapping(Actions.QUEST.toString(), new KeyTrigger(KeyInput.KEY_Q));
         // Add the names to the action listener.
         keyListener = new ActionListener() {
             @Override
             public void onAction(String name, boolean isPressed, float tpf) {
                 if (!isPressed) {
-                    if (name.equals(Actions.PAUSE.toString()) && !isPressed) {
+                    if (name.equals(Actions.PAUSE.toString())) {
                         boolean state = isEnabled();
                         StateManager.enableGame(!state);
                         GuiManager.enableGame(!state);
-                    } else if (name.equals("Quest")) {
-                        if (isEnabled()) {
-                            StateManager.enableGame(false);
-                            GuiManager.displayQuest("TestQuest");
-                        } else {
-                            StateManager.enableGame(true);
-                            GuiManager.gotoGameScreen();
-                        }
+                    } else if (name.equals(Actions.QUEST.toString())) {
+                        StateManager.enableGame(!isEnabled());
+                        GuiManager.questAction();
                     } else if (name.equals(Actions.ACTION.toString())) {
                         currentLevel.activate(playerAvatar.getModel().getWorldBound().getCenter());
                     }
@@ -121,7 +116,7 @@ public class GameScreen extends AbstractAppState {
         inputManager.addListener(keyListener, Actions.UP.toString());
         inputManager.addListener(keyListener, Actions.DOWN.toString());
         inputManager.addListener(keyListener, Actions.ACTION.toString());
-        inputManager.addListener(keyListener, "Quest");
+        inputManager.addListener(keyListener, Actions.QUEST.toString());
 
     }
 
