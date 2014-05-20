@@ -1,6 +1,7 @@
 package eduapp.state;
 
 import eduapp.AppContext;
+import eduapp.PlayerAvatar;
 
 /**
  *
@@ -10,12 +11,17 @@ public class StateManager {
 
     private static final GameScreen gameScreen;
     private static final StartScreen startScreen;
+    private static PlayerAvatar player;
 
     static {
         gameScreen = new GameScreen();
         startScreen = new StartScreen();
 
         AppContext.getApp().getStateManager().attach(startScreen);
+    }
+    
+    public static void assignPlayerAvatar(final PlayerAvatar player) {
+        StateManager.player = player;
     }
 
     public static void loadLevel(String levelName) {
@@ -27,6 +33,7 @@ public class StateManager {
 
     public static void enableGame(boolean isEnabled) {
         gameScreen.setEnabled(isEnabled);
+        player.setIsRunning(isEnabled);
     }
 
     public static void displayMainMenu() {        

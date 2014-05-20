@@ -67,6 +67,7 @@ public class GameScreen extends AbstractAppState {
 
     private void initPlayer(final AssetManager assetManager, final InputManager inputManager) {
         playerAvatar = new PlayerAvatar(assetManager, inputManager);
+        StateManager.assignPlayerAvatar(playerAvatar);
     }
 
     private void initWorld(Application app) {
@@ -91,8 +92,8 @@ public class GameScreen extends AbstractAppState {
                     if (name.equals(Actions.PAUSE.toString())) {
                         boolean state = isEnabled();
                         StateManager.enableGame(!state);
-                        GuiManager.enableGame(!state);
-                    } else if (name.equals(Actions.QUEST.toString())) {
+                        GuiManager.enableGame(!state);                        
+                    } else if (name.equals(Actions.QUEST.toString())) {                        
                         StateManager.enableGame(!isEnabled());
                         GuiManager.questAction();
                     } else if (name.equals(Actions.ACTION.toString())) {

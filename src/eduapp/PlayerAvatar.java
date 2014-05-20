@@ -38,7 +38,7 @@ public class PlayerAvatar implements AnimEventListener {
 
             @Override
             public void onAction(String name, boolean isPressed, float tpf) {
-                if (!isPressed) {
+                if (isRunning && !isPressed) {
                     if (name.equals(Actions.PAUSE.toString())) {
                         isRunning = !isRunning;
                     } else if (name.equals(Actions.LEFT.toString())
@@ -86,6 +86,10 @@ public class PlayerAvatar implements AnimEventListener {
 
     public Spatial getModel() {
         return model;
+    }
+
+    public void setIsRunning(boolean isRunning) {
+        this.isRunning = isRunning;
     }
 
     @Override
