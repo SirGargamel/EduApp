@@ -1,5 +1,6 @@
 package eduapp.level;
 
+import eduapp.level.quest.Quest;
 import com.jme3.asset.AssetKey;
 import com.jme3.asset.AssetManager;
 import com.jme3.asset.DesktopAssetManager;
@@ -34,7 +35,7 @@ public class Level {
     private final Set<Spatial> itemModels;
     private final Set<TriggerStub> stubs;
     private final Set<Trigger> triggers, activeTriggers;
-    private final ItemRegistry itemRegistry;
+    private final ItemRegistry itemRegistry;    
 
     public static Level loadLevel(final String levelName, final AssetManager assetManager) {
         final String path = "levels/".concat(levelName).concat(".").concat(LEVEL_FILE_EXTENSION);
@@ -123,8 +124,8 @@ public class Level {
                 if (trigger instanceof MoveTrigger) {
                     if (trigger instanceof MoveTrigger) {
                         mt = (MoveTrigger) trigger;
-                        mt.onEnter();
-                        System.out.println("Action triggered on enter " + mt + " at " + pos);
+                        mt.onLeave();
+                        System.out.println("Action triggered on exit " + mt + " at " + pos);
                     }
                 }
             }

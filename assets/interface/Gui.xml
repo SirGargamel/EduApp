@@ -57,4 +57,13 @@
             </panel>
         </layer>       
     </screen>
+    <screen id="questInput" controller="eduapp.gui.GuiQuestInput">        
+        <layer id="centerColumn" childLayout="vertical">
+            <panel width="100%" height="70%" childLayout="vertical" />            
+            <panel id="panelQuest" width="30%" height="10%"  align="center" backgroundColor="#aaaa" childLayout="vertical" visibleToMouse="true">                                
+                <text id="questText" height="50%" font="aurulent-sans-16.fnt" color="#000f" text="... DESCRIPTION OF REQUSTED TEXT ..."/>
+                <control id="questInput" height="50%" name="textfield"/>
+            </panel>
+        </layer>       
+    </screen>
 </nifty>

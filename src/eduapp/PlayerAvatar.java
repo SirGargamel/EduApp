@@ -10,6 +10,7 @@ import com.jme3.input.InputManager;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.AnalogListener;
 import com.jme3.scene.Spatial;
+import eduapp.level.quest.Quest;
 
 /**
  *
@@ -22,6 +23,7 @@ public class PlayerAvatar implements AnimEventListener {
     private final AnimChannel channel;
     private final AnimControl control;
     private boolean isRunning;
+    private Quest currentQuest;
 
     public PlayerAvatar(final AssetManager assetManager, final InputManager inputManager) {
         model = assetManager.loadModel("models/ninja/Ninja.mesh.xml");
@@ -102,6 +104,14 @@ public class PlayerAvatar implements AnimEventListener {
     @Override
     public void onAnimChange(AnimControl control, AnimChannel channel, String animName) {
 
+    }
+
+    public Quest getCurrentQuest() {
+        return currentQuest;
+    }
+
+    public void setCurrentQuest(Quest currentQuest) {
+        this.currentQuest = currentQuest;
     }
 
 }

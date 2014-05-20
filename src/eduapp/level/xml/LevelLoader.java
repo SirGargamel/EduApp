@@ -7,7 +7,7 @@ import eduapp.level.Model;
 import eduapp.level.Level;
 import eduapp.level.Light;
 import eduapp.level.Player;
-import eduapp.level.Quest;
+import eduapp.level.quest.Quest;
 import eduapp.level.trigger.TriggerStub;
 import java.io.IOException;
 import java.util.HashSet;

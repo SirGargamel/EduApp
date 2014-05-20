@@ -84,6 +84,7 @@ public class GameScreen extends AbstractAppState {
         inputManager.addMapping(Actions.DOWN.toString(), new KeyTrigger(KeyInput.KEY_DOWN));
         inputManager.addMapping(Actions.ACTION.toString(), new KeyTrigger(KeyInput.KEY_SPACE));
         inputManager.addMapping(Actions.QUEST.toString(), new KeyTrigger(KeyInput.KEY_Q));
+        inputManager.addMapping("Debug", new KeyTrigger(KeyInput.KEY_TAB));
         // Add the names to the action listener.
         keyListener = new ActionListener() {
             @Override
@@ -92,12 +93,14 @@ public class GameScreen extends AbstractAppState {
                     if (name.equals(Actions.PAUSE.toString())) {
                         boolean state = isEnabled();
                         StateManager.enableGame(!state);
-                        GuiManager.enableGame(!state);                        
-                    } else if (name.equals(Actions.QUEST.toString())) {                        
+                        GuiManager.enableGame(!state);
+                    } else if (name.equals(Actions.QUEST.toString())) {
                         StateManager.enableGame(!isEnabled());
                         GuiManager.questAction();
                     } else if (name.equals(Actions.ACTION.toString())) {
                         currentLevel.activate(playerAvatar.getModel().getWorldBound().getCenter());
+                    } else if (name.equals("Debug")) {
+                        debugAction();
                     }
                 }
                 if (name.equals(Actions.LEFT.toString())) {
@@ -118,6 +121,7 @@ public class GameScreen extends AbstractAppState {
         inputManager.addListener(keyListener, Actions.DOWN.toString());
         inputManager.addListener(keyListener, Actions.ACTION.toString());
         inputManager.addListener(keyListener, Actions.QUEST.toString());
+        inputManager.addListener(keyListener, "Debug");
 
     }
 
@@ -206,5 +210,9 @@ public class GameScreen extends AbstractAppState {
         }
 
         currentLevel.destroy();
+    }
+
+    public void debugAction() {
+        
     }
 }

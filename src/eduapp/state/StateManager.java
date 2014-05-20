@@ -19,25 +19,27 @@ public class StateManager {
 
         AppContext.getApp().getStateManager().attach(startScreen);
     }
-    
+
     public static void assignPlayerAvatar(final PlayerAvatar player) {
         StateManager.player = player;
     }
 
     public static void loadLevel(String levelName) {
-        AppContext.getApp().getStateManager().detach(startScreen);        
+        AppContext.getApp().getStateManager().detach(startScreen);
         gameScreen.setLevelName(levelName);
         gameScreen.setEnabled(true);
-        AppContext.getApp().getStateManager().attach(gameScreen);         
+        AppContext.getApp().getStateManager().attach(gameScreen);
     }
 
     public static void enableGame(boolean isEnabled) {
         gameScreen.setEnabled(isEnabled);
-        player.setIsRunning(isEnabled);
+        if (player != null) {
+            player.setIsRunning(isEnabled);
+        }
     }
 
-    public static void displayMainMenu() {        
-        AppContext.getApp().getStateManager().detach(gameScreen);        
+    public static void displayMainMenu() {
+        AppContext.getApp().getStateManager().detach(gameScreen);
         AppContext.getApp().getStateManager().attach(startScreen);
     }
 }
