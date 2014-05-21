@@ -73,4 +73,10 @@
 
     -->
     
+    <target name="-post-clean">
+        <copy todir="dist/Jmol">  
+            <fileset dir="Jmol" includes="**"/>  
+        </copy>
+    </target>
+    
 </project>

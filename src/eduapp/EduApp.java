@@ -23,5 +23,4 @@ public class EduApp {
             System.out.println(ex);
         }
     }
-
 }
