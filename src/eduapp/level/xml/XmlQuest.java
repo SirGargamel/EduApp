@@ -1,5 +1,6 @@
 package eduapp.level.xml;
 
+import eduapp.level.quest.JmolQuestion;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
 import eduapp.level.quest.Question;
@@ -17,6 +18,7 @@ import org.w3c.dom.NodeList;
 public class XmlQuest extends XmlEntity<Quest> {
 
     private static final String ITEM_QUESTION = "Question";
+    private static final String ITEM_QUESTION_JMOL = "Jmol";
     private static final String ITEM_TASK = "Task";
     private static final String QUESTION_SEPARATOR = "::";
 
@@ -40,13 +42,22 @@ public class XmlQuest extends XmlEntity<Quest> {
 
     private QuestItem generateQuestItem(final Node node) {
         final QuestItem result;
+        final String[] split;
         switch (node.getNodeName()) {
             case ITEM_QUESTION:
-                final String[] split = node.getTextContent().split(QUESTION_SEPARATOR);
+                split = node.getTextContent().split(QUESTION_SEPARATOR);
                 if (split.length == 2) {
                     result = new Question(split[0], split[1]);
                 } else {
                     throw new IllegalArgumentException("Unsupported question text - " + node.getTextContent());
+                }
+                break;
+            case ITEM_QUESTION_JMOL:
+                split = node.getTextContent().split(QUESTION_SEPARATOR);
+                if (split.length == 3) {
+                    result = new JmolQuestion(split[0], split[1], split[2]);
+                } else {
+                    throw new IllegalArgumentException("Unsupported Jmol question text - " + node.getTextContent());
                 }
                 break;
             case ITEM_TASK:

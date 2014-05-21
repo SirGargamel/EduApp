@@ -1,5 +1,6 @@
 package eduapp.level.quest;
 
+import eduapp.JmolUtils;
 import eduapp.gui.GuiManager;
 import eduapp.level.Item;
 import java.util.List;
@@ -21,6 +22,12 @@ public class Quest extends Item {
     }
     
     public void displayQuestion(Question question) {
+        GuiManager.displayQuestion(question);
+    }
+    
+    public void displayJmolQuestion(JmolQuestion question) {
+        // TODO
+        JmolUtils.launchJmol(question.getModelName());
         GuiManager.displayQuestion(question);
     }
 
