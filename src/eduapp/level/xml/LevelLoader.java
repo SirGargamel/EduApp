@@ -2,6 +2,7 @@ package eduapp.level.xml;
 
 import com.jme3.asset.AssetInfo;
 import com.jme3.asset.AssetLoader;
+import com.jme3.math.Vector3f;
 import eduapp.level.Background;
 import eduapp.level.Model;
 import eduapp.level.Level;
@@ -78,7 +79,7 @@ public class LevelLoader implements AssetLoader {
         if (playerNode.getNodeType() == Node.ELEMENT_NODE) {
             result = new XmlPlayer((Element) playerNode).generateGameEntity();
         } else {
-            throw new SAXException("Illegal background node - " + playerNode);
+            result = new Player(Vector3f.ZERO);
         }
         return result;
     }
@@ -99,8 +100,6 @@ public class LevelLoader implements AssetLoader {
                     result.add(item);
                 }
             }
-        } else {
-            throw new SAXException("Illegal items node - " + itemsNode);
         }
         return result;
     }
@@ -140,8 +139,6 @@ public class LevelLoader implements AssetLoader {
                     result.add(new XmlTrigger(el).generateGameEntity());
                 }
             }
-        } else {
-            throw new SAXException("Illegal action items node - " + itemsNode);
         }
         return result;
     }
@@ -163,8 +160,6 @@ public class LevelLoader implements AssetLoader {
                     result.add(q);
                 }
             }
-        } else {
-            throw new SAXException("Illegal action items node - " + itemsNode);
         }
         return result;
     }
