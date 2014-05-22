@@ -35,7 +35,7 @@ public class Level {
     private final Set<Spatial> itemModels;
     private final Set<TriggerStub> stubs;
     private final Set<Trigger> triggers, activeTriggers;
-    private final ItemRegistry itemRegistry;    
+    private final ItemRegistry itemRegistry;
 
     public static Level loadLevel(final String levelName, final AssetManager assetManager) {
         final String path = "levels/".concat(levelName).concat(".").concat(LEVEL_FILE_EXTENSION);
@@ -68,7 +68,7 @@ public class Level {
         for (Quest q : quests) {
             itemRegistry.put(q);
         }
-        
+
         Spatial s;
         for (Model i : items) {
             s = i.generateItem(assetManager);
@@ -84,7 +84,7 @@ public class Level {
         // generate action items
         for (TriggerStub ts : stubs) {
             triggers.add(ts.generateTrigger(itemRegistry));
-        }        
+        }
     }
 
     public Node getRootNode() {
@@ -95,8 +95,8 @@ public class Level {
         return background.getRootNode();
     }
 
-    public Vector3f getInitialPlayerPos() {
-        return player.initialPosition;
+    public Player getPlayer() {
+        return player;
     }
 
     public Set<Spatial> getItems() {

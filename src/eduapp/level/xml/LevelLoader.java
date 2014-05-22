@@ -68,7 +68,7 @@ public class LevelLoader implements AssetLoader {
         if (backNode.getNodeType() == Node.ELEMENT_NODE) {
             result = new XmlBackground((Element) backNode).generateGameEntity();
         } else {
-            throw new SAXException("Illegal player node - " + backNode);
+            throw new SAXException("Illegal background node - " + backNode);
         }
         return result;
     }
@@ -79,7 +79,7 @@ public class LevelLoader implements AssetLoader {
         if (playerNode.getNodeType() == Node.ELEMENT_NODE) {
             result = new XmlPlayer((Element) playerNode).generateGameEntity();
         } else {
-            result = new Player(Vector3f.ZERO);
+            throw new SAXException("Illegal player node - " + playerNode);
         }
         return result;
     }

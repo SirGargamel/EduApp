@@ -19,25 +19,36 @@ import eduapp.level.quest.Quest;
 public class PlayerAvatar implements AnimEventListener {
 
     private static final float PLAYER_HEIGHT = 1.5f;
-    private final Spatial model;   
+    private Spatial model;
+    private String animationIdle, animationWalk;
     private final AnimChannel channel;
     private final AnimControl control;
     private boolean isRunning;
     private Quest currentQuest;
 
-    public PlayerAvatar(final AssetManager assetManager, final InputManager inputManager) {
-        model = assetManager.loadModel("models/ninja/Ninja.mesh.xml");
+    public PlayerAvatar(final AssetManager assetManager, final InputManager inputManager, final String modelName) {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("models/");
+        sb.append(modelName);
+        sb.append(".j3o");
+        model = assetManager.loadModel(sb.toString());
         final BoundingBox plB = (BoundingBox) model.getWorldBound();
         final float playerScale = PLAYER_HEIGHT / (plB.getYExtent() * 2.0f);
         model.scale(playerScale);
+        iniAnimations(modelName);
 
         control = model.getControl(AnimControl.class);
         control.addListener(this);
         channel = control.createChannel();
-        channel.setAnim("Idle1");
+        channel.setAnim(animationIdle);
+
+        if (modelName.equals("Ninja")) {
+            final Spatial backup = model;
+            model = new com.jme3.scene.Node();
+            ((com.jme3.scene.Node) model).attachChild(backup);
+        }
 
         final ActionListener actionListener = new ActionListener() {
-
             @Override
             public void onAction(String name, boolean isPressed, float tpf) {
                 if (isRunning && !isPressed) {
@@ -60,7 +71,6 @@ public class PlayerAvatar implements AnimEventListener {
                 Actions.UP.toString(),
                 Actions.DOWN.toString());
         final AnalogListener analogListener = new AnalogListener() {
-
             @Override
             public void onAnalog(String name, float value, float tpf) {
                 if (isRunning) {
@@ -68,8 +78,8 @@ public class PlayerAvatar implements AnimEventListener {
                             || name.equals(Actions.RIGHT.toString())
                             || name.equals(Actions.UP.toString())
                             || name.equals(Actions.DOWN.toString())) {
-                        if (!channel.getAnimationName().equals("Walk")) {
-                            channel.setAnim("Walk", 0.50f);
+                        if (!channel.getAnimationName().equals(animationWalk)) {
+                            channel.setAnim(animationWalk, 0.50f);
                             channel.setLoopMode(LoopMode.Loop);
                         }
                     }
@@ -86,6 +96,23 @@ public class PlayerAvatar implements AnimEventListener {
         isRunning = true;
     }
 
+    private void iniAnimations(final String modelName) {
+        switch (modelName) {
+            case "Ninja":
+                animationIdle = "Idle";
+                animationWalk = "Walk";
+                break;
+            case "Goblin":
+                animationIdle = "idleA";
+                animationWalk = "walk";
+                break;
+            case "Oto":
+                animationIdle = "stand";
+                animationWalk = "Walk";
+                break;
+        }
+    }
+
     public Spatial getModel() {
         return model;
     }
@@ -96,14 +123,13 @@ public class PlayerAvatar implements AnimEventListener {
 
     @Override
     public void onAnimCycleDone(AnimControl control, AnimChannel channel, String animName) {
-        channel.setAnim("Idle1", 0.50f);
+        channel.setAnim(animationIdle, 0.50f);
         channel.setLoopMode(LoopMode.DontLoop);
         channel.setSpeed(1f);
     }
 
     @Override
     public void onAnimChange(AnimControl control, AnimChannel channel, String animName) {
-
     }
 
     public Quest getCurrentQuest() {
@@ -113,5 +139,4 @@ public class PlayerAvatar implements AnimEventListener {
     public void setCurrentQuest(Quest currentQuest) {
         this.currentQuest = currentQuest;
     }
-
 }

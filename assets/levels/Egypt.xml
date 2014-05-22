@@ -18,6 +18,7 @@
     </Background>
     <Player>
         <Coords>0.5;-6.5</Coords>
+        <Model>Ninja</Model>
     </Player>
     <Items>
         <Item id="table">
@@ -42,9 +43,11 @@
             <Off/>
         </Point>		
         <Ambient>
-            <Intensity>0.5</Intensity>
+            <Intensity>0.25</Intensity>
         </Ambient>
-				
+        <Directional>
+            <Intensity>0.25</Intensity>            
+        </Directional>        				
     </Lights>
     <ActionItems>
         <MoveTrigger>

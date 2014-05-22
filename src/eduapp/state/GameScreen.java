@@ -55,8 +55,9 @@ public class GameScreen extends AbstractAppState {
     }
 
     private void loadLevel(Application app) {
-        initPlayer(app.getAssetManager(), app.getInputManager());
         initWorld(app);
+        initPlayer(app.getAssetManager(), app.getInputManager());
+
         currentLevel.getRootNode().attachChild(playerAvatar.getModel());
 
         initKeys(app.getInputManager());
@@ -66,7 +67,7 @@ public class GameScreen extends AbstractAppState {
     }
 
     private void initPlayer(final AssetManager assetManager, final InputManager inputManager) {
-        playerAvatar = new PlayerAvatar(assetManager, inputManager);
+        playerAvatar = new PlayerAvatar(assetManager, inputManager, currentLevel.getPlayer().getModelName());
         StateManager.assignPlayerAvatar(playerAvatar);
     }
 
@@ -146,7 +147,7 @@ public class GameScreen extends AbstractAppState {
         playerAvatar.getModel().addControl(player);
 
         player.setJumpForce(new Vector3f(0, 250f, 0));
-        player.warp(currentLevel.getInitialPlayerPos());
+        player.warp(currentLevel.getPlayer().getInitialPosition());
         player.setViewDirection(Vector3f.UNIT_Z);
 
         bulletAppState.getPhysicsSpace().add(landscape);
@@ -169,23 +170,23 @@ public class GameScreen extends AbstractAppState {
         viewDirection.set(0, 0, 0);
         if (left) {
             walkDirection.addLocal(LEFT);
-            viewDirection.addLocal(LEFT.negate());
+            viewDirection.addLocal(LEFT);
             upd = true;
         }
         if (right) {
             walkDirection.addLocal(LEFT.negate());
-            viewDirection.addLocal(LEFT);
+            viewDirection.addLocal(LEFT.negate());
             upd = true;
         }
         if (up) {
             upd = true;
             walkDirection.addLocal(UP);
-            viewDirection.addLocal(UP.negate());
+            viewDirection.addLocal(UP);
         }
         if (down) {
             upd = true;
             walkDirection.addLocal(UP.negate());
-            viewDirection.addLocal(UP);
+            viewDirection.addLocal(UP.negate());
         }
         if (upd) {
             player.setViewDirection(viewDirection);
@@ -213,6 +214,5 @@ public class GameScreen extends AbstractAppState {
     }
 
     public void debugAction() {
-        
     }
 }
