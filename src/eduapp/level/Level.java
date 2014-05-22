@@ -8,6 +8,7 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+import eduapp.gui.GuiManager;
 import eduapp.level.trigger.ActionTrigger;
 import eduapp.level.trigger.MoveTrigger;
 import eduapp.level.trigger.Trigger;
@@ -145,6 +146,17 @@ public class Level {
                 }
             }
         }
+        
+        // check for action triggers
+        boolean show = false;
+        for (Trigger t : activeTriggers) {
+            if (t instanceof ActionTrigger) {
+                // show icon
+                show = true;
+                break;
+            }
+        }
+        GuiManager.showTriggerMarker(show);
     }
 
     public void activate(final Vector3f pos) {

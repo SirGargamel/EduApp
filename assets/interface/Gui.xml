@@ -17,15 +17,16 @@
             </panel>
         </layer>
     </screen>
-    <screen id="game">        
+    <screen id="game" controller="eduapp.gui.GuiGame">        
         <layer id="foreground" childLayout="horizontal">
-            <panel id="panel_left" width="85%" height="100%" childLayout="vertical" />                              
-            <panel id="panel_right" width="20%" height="100%" childLayout="vertical">                  
-                <panel id="panel_top_right2" width="100%" height="15%" childLayout="center">
+            <panel id="leftFiller" width="40%" height="100%" childLayout="vertical" />                              
+            <panel id="panelWithImage" width="20%" height="100%" childLayout="vertical">                  
+                <panel id="filler" width="100%" height="80%" valign="center" />                  
+                <panel id="panelImage" width="100%" height="15%" childLayout="center">
                     <image filename="interface/face1.png" valign="center" align="center" height="50%" width="30%" >
                     </image>  
                 </panel>
-                <panel id="panel_bot_right" width="100%" height="70%" valign="center" />                  
+                
             </panel>
         </layer>        
     </screen>
