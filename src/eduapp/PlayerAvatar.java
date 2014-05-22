@@ -31,7 +31,7 @@ public class PlayerAvatar implements AnimEventListener {
         sb.append("models/");
         sb.append(modelName);
         sb.append(".j3o");
-        model = assetManager.loadModel(sb.toString());
+        model = assetManager.loadModel(sb.toString());        
         final BoundingBox plB = (BoundingBox) model.getWorldBound();
         final float playerScale = PLAYER_HEIGHT / (plB.getYExtent() * 2.0f);
         model.scale(playerScale);
