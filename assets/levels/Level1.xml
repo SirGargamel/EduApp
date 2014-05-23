@@ -1,0 +1,99 @@
+<Level>
+    <Background>
+        <Coords>0;0</Coords>
+        <Width>12</Width>
+        <Values>
+            ------------
+            ---WWWWWWWW-
+            PPPWFFFFFFW-
+            PPPFFFFFFFW-
+            PPPWFFFFFFW-
+            ---WWWWWWWW-
+            ------------
+        </Values>
+        <Texture tag="F">floorWhiteStone.png</Texture>
+        <Texture tag="P">floorBrick.png</Texture>
+        <Texture tag="W">wallConcrete.png</Texture>        
+        <Wall>W</Wall>
+        <Empty>-</Empty>
+    </Background>
+    <Player>
+        <Coords>0.5;-2.5</Coords>
+        <Model>Goblin</Model>
+    </Player>
+    <Items>
+        <Item id="table1">
+            <Name>bench2-table.j3o</Name>
+            <Coords>9;0;-1.5</Coords>
+            <Scale>0.5</Scale>
+        </Item>
+        <Item id="table2">
+            <Name>bench2-table.j3o</Name>
+            <Coords>9;0;-3.5</Coords>
+            <Scale>0.5</Scale>
+        </Item>
+    </Items>
+    <Lights>						
+        <Point id="lTable1">
+            <Coords>9.0;1.0;-1.5</Coords>
+            <Color>Green</Color>
+            <Intensity>5</Intensity>
+            <Range>1</Range>            
+        </Point>
+        <Point id="lTable2">
+            <Coords>9.0;1.0;-3.5</Coords>
+            <Color>Green</Color>
+            <Intensity>5</Intensity>
+            <Range>1</Range>            
+        </Point>
+        <Point id="lEntrance">
+            <Coords>2.5;2.0;-2.5</Coords>
+            <Color>White</Color>
+            <Intensity>4</Intensity>
+            <Range>1</Range>			
+        </Point>
+        <Point id="lRoom"> 
+            <Coords>7.0;2.5;-2.5</Coords>
+            <Color>White</Color>
+            <Intensity>1</Intensity>
+            <Range>10</Range>
+            <Off/>
+        </Point>	
+        <Ambient>
+            <Intensity>0.5</Intensity>
+        </Ambient>
+        <Directional>
+            <Intensity>0.25</Intensity>            
+        </Directional>   							
+    </Lights>
+    <ActionItems>        
+        <ActionTrigger>
+            <Volume>table1</Volume>
+            <Target>hlavniQuest</Target>
+            <Action>DisplayQ1</Action>            	
+        </ActionTrigger>
+        <ActionTrigger>
+            <Volume>table2</Volume>
+            <Target>hlavniQuest</Target>
+            <Action>DisplayJ1</Action>            	
+        </ActionTrigger>
+        <MoveTrigger>
+            <Volume>0.5;-3.5;0.5;-3.5</Volume>
+            <Target>hlavniQuest</Target>
+            <Action></Action>    
+            <Once/>        			
+        </MoveTrigger>
+        <MoveTrigger>
+            <Volume>3.5;-0.5;11.5;-5.5</Volume>
+            <Target>lRoom</Target>
+            <Action>Switch</Action>            
+        </MoveTrigger>
+    </ActionItems>
+    <Quests>
+        <Quest id="hlavniQuest">
+            <Task>Vejděte do budovy</Task>            
+            <Question>Zadejte vzorec kyseliny sírové::H2SO4</Question>
+            <Jmol>Zadejte počet atomů molekuly kyseliny sírové::7::kyselinaSirova.pdb</Jmol>
+        </Quest>
+    </Quests>
+</Level>
