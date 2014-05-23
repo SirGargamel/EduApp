@@ -49,7 +49,7 @@ public class XmlQuest extends XmlEntity<Quest> {
                 if (split.length == 2) {
                     result = new Question(split[0], split[1]);
                 } else {
-                    throw new IllegalArgumentException("Unsupported question text - " + node.getTextContent());
+                    throw new IllegalArgumentException("Unsupported question text, separator must be :: - " + node.getTextContent());
                 }
                 break;
             case ITEM_QUESTION_JMOL:
@@ -57,7 +57,7 @@ public class XmlQuest extends XmlEntity<Quest> {
                 if (split.length == 3) {
                     result = new JmolQuestion(split[0], split[1], split[2]);
                 } else {
-                    throw new IllegalArgumentException("Unsupported Jmol question text - " + node.getTextContent());
+                    throw new IllegalArgumentException("Unsupported Jmol question text, separator must be :: - " + node.getTextContent());
                 }
                 break;
             case ITEM_TASK:
