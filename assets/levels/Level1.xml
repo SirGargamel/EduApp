@@ -1,15 +1,13 @@
 <Level>
     <Background>
         <Coords>0;0</Coords>
-        <Width>12</Width>
-        <Values>
-            ------------
-            ---WWWWWWWW-
-            PPPWFFFFFFW-
-            PPPFFFFFFFW-
-            PPPWFFFFFFW-
-            ---WWWWWWWW-
-            ------------
+        <Width>11</Width>
+        <Values>            
+            ---WWWWWWWW
+            PPPWFFFFFFW
+            PPPFFFFFFFW
+            PPPWFFFFFFW
+            ---WWWWWWWW            
         </Values>
         <Texture tag="F">floorWhiteStone.png</Texture>
         <Texture tag="P">floorBrick.png</Texture>
@@ -24,12 +22,12 @@
     <Items>
         <Item id="table1">
             <Name>bench2-table.j3o</Name>
-            <Coords>9;0;-1.5</Coords>
+            <Coords>9;0;-0.5</Coords>
             <Scale>0.5</Scale>
         </Item>
         <Item id="table2">
             <Name>bench2-table.j3o</Name>
-            <Coords>9;0;-3.5</Coords>
+            <Coords>9;0;-2.5</Coords>
             <Scale>0.5</Scale>
         </Item>
     </Items>

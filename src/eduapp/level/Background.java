@@ -7,12 +7,17 @@ package eduapp.level;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
+import com.jme3.material.RenderState.BlendMode;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
+import com.jme3.renderer.queue.RenderQueue.Bucket;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -24,13 +29,14 @@ public class Background {
 
     private static final Vector3f TILE_SIZE_FLOOR = new Vector3f(Level.TILE_SIZE, -0.01f, Level.TILE_SIZE);
     private static final Vector3f TILE_SIZE_WALL = new Vector3f(Level.TILE_SIZE, 2.0f, Level.TILE_SIZE);
+    private static final char CHAR_BLOCK = ';';
     private final String values;
     private final float[] pointZero;
     private final int width;
     private final Set<Character> walls;
     private final Map<Character, String> textureMapping;
     private char empty;
-    private Node rootNode;    
+    private Node rootNode;
 
     public Background(String values, float[] pointZero, int width) {
         this.values = values;
@@ -54,14 +60,32 @@ public class Background {
 
     void generateBackground(final AssetManager assetManager) {
         rootNode = new Node("background");
-        final int height = values.length() / width;
         final Map<Character, Material> matCache = new HashMap<>();
-        float x = pointZero[0];
-        float y = pointZero[1] - height;
         Material mat;
         Box tile;
         char ch;
         Geometry g;
+        // load all tiles
+        List<char[]> tiles = new LinkedList<>();
+        char[] line = null;
+        for (int index = 0; index < values.length(); index++) {
+            if (index % width == 0) {
+                line = new char[width];
+                tiles.add(line);
+            }
+            line[index % width] = values.charAt(index);
+        }
+        // generte tiles        
+        for (int y = 0; y < tiles.size(); y++) {
+            line = tiles.get(y);
+            for (int x = 0; x < line.length; x++) {
+                ch = line[x];
+            }
+        }
+
+        final int height = tiles.size();
+        float x = pointZero[0];
+        float y = pointZero[1] - height;
         for (int index = 0; index < values.length(); index++) {
             if (index % width == 0) {
                 x = pointZero[0];
@@ -90,12 +114,56 @@ public class Background {
                 g.move(x, 0, y);
                 g.setMaterial(mat);
                 rootNode.attachChild(g);
+            } else {
+                if (matCache.containsKey(CHAR_BLOCK)) {
+                    mat = matCache.get(CHAR_BLOCK);
+                } else {
+                    mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+                    mat.setColor("Color", new ColorRGBA(1.0f, 0, 0, 0.0f));
+                    mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
+                    matCache.put(CHAR_BLOCK, mat);
+                }
+                tile = new Box(Vector3f.ZERO, TILE_SIZE_WALL);
+                g = new Geometry("block", tile);
+                g.setMaterial(mat);
+                g.setQueueBucket(Bucket.Transparent);
+                g.move(x, 0, y);
+                rootNode.attachChild(g);
             }
         }
+        // generate fence around the level
+        mat = matCache.get(CHAR_BLOCK);
+        // left
+        tile = new Box(Vector3f.ZERO, new Vector3f(1.0f, 2.0f, height + 2));
+        g = new Geometry("blockL", tile);
+        g.setMaterial(mat);
+        g.setQueueBucket(Bucket.Transparent);
+        g.move(-1, 0, -height);
+        rootNode.attachChild(g);
+        // right
+        tile = new Box(Vector3f.ZERO, new Vector3f(1.0f, 2.0f, height + 2));
+        g = new Geometry("blockR", tile);
+        g.setMaterial(mat);
+        g.setQueueBucket(Bucket.Transparent);
+        g.move(width, 0, -height);
+        rootNode.attachChild(g);
+        // bottom
+        tile = new Box(Vector3f.ZERO, new Vector3f(width, 2.0f, 1.0f));
+        g = new Geometry("block", tile);
+        g.setMaterial(mat);
+        g.setQueueBucket(Bucket.Transparent);
+        g.move(0, 0, 1);
+        rootNode.attachChild(g);
+        // top
+        tile = new Box(Vector3f.ZERO, new Vector3f(width, 2.0f, 1.0f));
+        g = new Geometry("block", tile);
+        g.setMaterial(mat);
+        g.setQueueBucket(Bucket.Transparent);
+        g.move(0, 0, -height);
+        rootNode.attachChild(g);
     }
 
     public Node getRootNode() {
         return rootNode;
     }
-
 }
