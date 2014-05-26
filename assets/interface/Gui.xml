@@ -61,8 +61,13 @@
         <layer id="centerColumn" childLayout="vertical">
             <panel width="100%" height="70%" childLayout="vertical" />            
             <panel id="panelQuest" width="30%" height="10%"  align="center" backgroundColor="#aaaa" childLayout="vertical" visibleToMouse="true">                                
-                <text id="questText" height="50%" font="interface/Fonts/Base.fnt" color="#000f" text="... DESCRIPTION OF REQUSTED TEXT ..."/>
-                <control id="questInput" height="50%" name="textfield"/>
+                <text id="questText" height="50%" font="interface/Fonts/Base.fnt" align="center" color="#ffffff" text=".."/>
+                <control id="questInput" height="50%" name="textfield" />
+                <effect>
+                    <onCustom customKey="Start" name="move" mode="in" direction="bottom" length="300" startDelay="0" inherit="true" />
+                    <onCustom customKey="Ok" name="move" mode="out" direction="bottom" length="300" startDelay="0" inherit="true"/>
+                    <onCustom customKey="Wrong" name="shake" distance="5.0" global="true" />
+                </effect>
             </panel>
         </layer>       
     </screen>
