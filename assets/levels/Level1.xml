@@ -33,19 +33,19 @@
     </Items>
     <Lights>						
         <Point id="lTable1">
-            <Coords>9.0;1.0;-1.5</Coords>
+            <Coords>9.0;1.0;-0.5</Coords>
             <Color>Green</Color>
             <Intensity>5</Intensity>
             <Range>1</Range>            
         </Point>
         <Point id="lTable2">
-            <Coords>9.0;1.0;-3.5</Coords>
+            <Coords>9.0;1.0;-2.5</Coords>
             <Color>Green</Color>
             <Intensity>5</Intensity>
             <Range>1</Range>            
         </Point>
         <Point id="lEntrance">
-            <Coords>2.5;2.0;-2.5</Coords>
+            <Coords>2.5;2.0;-1.5</Coords>
             <Color>White</Color>
             <Intensity>4</Intensity>
             <Range>1</Range>			
@@ -76,13 +76,13 @@
             <Action>DisplayJ1</Action>            	
         </ActionTrigger>
         <MoveTrigger>
-            <Volume>0.0;-2.0;1.0;-3.0</Volume>
+            <Volume>0.5;-2.5;0.25</Volume>
             <Target>hlavniQuest</Target>
             <Action></Action>    
             <Once/>        			
         </MoveTrigger>
         <MoveTrigger>
-            <Volume>3.5;-0.5;11.5;-5.5</Volume>
+            <Volume>7.0;-1.5;3.5;1.5</Volume>
             <Target>lRoom</Target>
             <Action>Switch</Action>            
         </MoveTrigger>

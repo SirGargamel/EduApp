@@ -1,6 +1,7 @@
 package eduapp.level.trigger;
 
 import com.jme3.bounding.BoundingVolume;
+import com.jme3.scene.Spatial;
 
 /**
  *
@@ -11,9 +12,9 @@ public abstract class Trigger<T> {
     protected final String action;
     protected T target;
     private final boolean once;
-    private BoundingVolume volume;
+    private Spatial volume;
 
-    public Trigger(BoundingVolume volume, T target, String action, boolean once) {
+    public Trigger(Spatial volume, T target, String action, boolean once) {
         this.volume = volume;
         this.target = target;
         this.action = action;
@@ -25,6 +26,10 @@ public abstract class Trigger<T> {
     }
 
     public BoundingVolume getVolume() {
+        return volume.getWorldBound();
+    }
+    
+    public Spatial getGeometry() {
         return volume;
     }
 

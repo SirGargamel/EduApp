@@ -1,6 +1,6 @@
 package eduapp.level.trigger;
 
-import com.jme3.bounding.BoundingVolume;
+import com.jme3.scene.Spatial;
 
 /**
  *
@@ -8,7 +8,7 @@ import com.jme3.bounding.BoundingVolume;
  */
 public abstract class MoveTrigger<T> extends Trigger<T> {
     
-    public MoveTrigger(BoundingVolume volume, T target, String action, boolean once) {
+    public MoveTrigger(Spatial volume, T target, String action, boolean once) {
         super(volume, target, action, once);
     }
     

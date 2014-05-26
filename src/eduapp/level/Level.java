@@ -83,8 +83,11 @@ public class Level {
             itemRegistry.put(l);
         }
         // generate action items
+        Trigger t;
         for (TriggerStub ts : stubs) {
-            triggers.add(ts.generateTrigger(itemRegistry));
+            t = ts.generateTrigger(itemRegistry, assetManager);
+            triggers.add(t);
+            rootNode.attachChild(t.getGeometry());
         }
     }
 

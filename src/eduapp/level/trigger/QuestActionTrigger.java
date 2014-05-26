@@ -1,6 +1,6 @@
 package eduapp.level.trigger;
 
-import com.jme3.bounding.BoundingVolume;
+import com.jme3.scene.Spatial;
 import eduapp.level.quest.JmolQuestion;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
@@ -46,7 +46,7 @@ public class QuestActionTrigger extends ActionTrigger<Quest> {
         }
     }
 
-    public QuestActionTrigger(BoundingVolume volume, Quest target, String action, boolean once) {
+    public QuestActionTrigger(Spatial volume, Quest target, String action, boolean once) {
         super(volume, target, action, once);
     }
 }

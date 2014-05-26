@@ -1,7 +1,6 @@
 package eduapp.level.trigger;
 
-import com.jme3.bounding.BoundingVolume;
-import com.jme3.math.ColorRGBA;
+import com.jme3.scene.Spatial;
 import eduapp.level.quest.Quest;
 
 
@@ -16,7 +15,7 @@ public class QuestMoveTrigger extends MoveTrigger<Quest> {
     public void onLeave() {        
     }
 
-    public QuestMoveTrigger(BoundingVolume volume, Quest target, String action, boolean once) {
+    public QuestMoveTrigger(Spatial volume, Quest target, String action, boolean once) {
         super(volume, target, action, once);                
     }
     

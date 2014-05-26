@@ -1,7 +1,7 @@
 package eduapp.level.trigger;
 
-import com.jme3.bounding.BoundingVolume;
 import com.jme3.math.ColorRGBA;
+import com.jme3.scene.Spatial;
 import eduapp.level.Light;
 
 
@@ -18,7 +18,7 @@ public class LightActionTrigger extends ActionTrigger<Light> {
         }
     }
 
-    public LightActionTrigger(BoundingVolume volume, Light target, String action, boolean once) {
+    public LightActionTrigger(Spatial volume, Light target, String action, boolean once) {
         super(volume, target, action, once);        
     }
     
