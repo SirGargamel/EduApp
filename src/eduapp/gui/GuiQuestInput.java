@@ -45,8 +45,7 @@ public class GuiQuestInput implements ScreenController {
                             if (question.isFinished()) {
                                 panelQuest.startEffect(EffectEventId.onCustom, new EndNotify() {
                                     @Override
-                                    public void perform() {
-                                        panelQuest.hide();
+                                    public void perform() {                                        
                                         GuiManager.gotoGameScreen();
                                     }
                                 }, "Ok");
