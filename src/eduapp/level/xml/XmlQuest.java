@@ -72,6 +72,7 @@ public class XmlQuest extends XmlEntity<Quest> {
             default:
                 throw new IllegalArgumentException("Unsupported quest item type - " + node.getNodeName());
         }
+        result.setId(((Element)node).getAttribute(LevelLoader.ATTR_ID));
         return result;
     }
 }

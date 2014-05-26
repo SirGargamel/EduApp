@@ -3,6 +3,7 @@ package eduapp.level.quest;
 import eduapp.JmolUtils;
 import eduapp.gui.GuiManager;
 import eduapp.level.Item;
+import eduapp.level.Level;
 import java.util.List;
 
 /**
@@ -46,5 +47,11 @@ public class Quest extends Item {
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public void setLevel(final Level level) {
+        for (QuestItem qi : data) {            
+            qi.setLevel(level);
+        }
     }
 }

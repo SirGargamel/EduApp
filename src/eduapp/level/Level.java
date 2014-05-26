@@ -68,6 +68,7 @@ public class Level {
 
         for (Quest q : quests) {
             itemRegistry.put(q);
+            q.setLevel(this);
         }
 
         Spatial s;
@@ -119,7 +120,7 @@ public class Level {
         it = activeTriggers.iterator();
         while (it.hasNext()) {
             trigger = it.next();
-            if (trigger.isActive() && trigger.getVolume().distanceToEdge(pos) > RADIUS_INTERACTION) {
+            if (trigger.getVolume().distanceToEdge(pos) > RADIUS_INTERACTION) {
                 it.remove();
                 if (!trigger.isOnce()) {
                     triggers.add(trigger);
@@ -138,7 +139,7 @@ public class Level {
         it = triggers.iterator();
         while (it.hasNext()) {
             trigger = it.next();
-            if (trigger.getVolume().distanceToEdge(pos) <= RADIUS_INTERACTION) {
+            if (trigger.isActive() && trigger.getVolume().distanceToEdge(pos) <= RADIUS_INTERACTION) {
                 it.remove();
                 activeTriggers.add(trigger);
 
@@ -149,7 +150,7 @@ public class Level {
                 }
             }
         }
-        
+
         // check for action triggers
         boolean show = false;
         for (Trigger t : activeTriggers) {
@@ -183,5 +184,24 @@ public class Level {
 
         rootNode.detachAllChildren();
         rootNode.removeFromParent();
+    }
+
+    public void deactivateTrigger(final String triggerId) {        
+        if (triggerId != null && !triggerId.isEmpty()) {
+            for (Trigger t : triggers) {
+                if (triggerId.equals(t.getId())) {
+                    t.setActive(false);
+                }
+            }
+            Iterator<Trigger> it = activeTriggers.iterator();
+            Trigger t;
+            while (it.hasNext()) {
+                t = it.next();
+                if (triggerId.equals(t.getId())) {
+                    t.setActive(false);
+                    it.remove();
+                }
+            }            
+        }
     }
 }

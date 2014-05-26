@@ -25,19 +25,20 @@ public class TriggerStub {
     private static final String NODE_ACTION = "ActionTrigger";
     private static final float DEFAULT_HEIGHT = 0.75f;
     private static Material MAT_MOVE, MAT_ACTION;
-    private final String nodeName;
+    private final String nodeName, id;
     private final String volumeDescription;
     private final String targetDescription;
     private final String action;
     private final boolean once, active;    
 
-    public TriggerStub(String nodeName, String volumeDescription, String targetDescription, String action, boolean once, boolean active) {
+    public TriggerStub(String nodeName, String id, String volumeDescription, String targetDescription, String action, boolean once, boolean active) {
         this.volumeDescription = volumeDescription;
         this.targetDescription = targetDescription;
         this.action = action;
         this.once = once;
         this.nodeName = nodeName;
         this.active = active;
+        this.id = id;
     }
 
     public Trigger generateTrigger(final ItemRegistry registry, final AssetManager assetManager) {
@@ -72,6 +73,7 @@ public class TriggerStub {
                 throw new IllegalArgumentException("Unsupported trigger type - " + nodeName);
         }
 
+        result.setId(id);
         return result;
     }
 

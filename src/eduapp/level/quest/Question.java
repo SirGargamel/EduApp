@@ -2,10 +2,11 @@ package eduapp.level.quest;
 
 import eduapp.level.Item;
 
-public class Question extends Item implements QuestItem {
+public class Question extends QuestItem {
 
     private final String question, answer;
     private String userInput;
+    private boolean finished;
 
     public Question(String question, String answer) {
         this.question = question;
@@ -23,11 +24,15 @@ public class Question extends Item implements QuestItem {
 
     public void setUserInput(String userInput) {
         this.userInput = userInput.trim();
+        if (answer.equalsIgnoreCase(userInput)) {
+            finished = true;
+            level.deactivateTrigger(getId());
+        }
     }
 
     @Override
     public boolean isFinished() {
-        return answer.equalsIgnoreCase(userInput);
+        return finished;
     }
 
     @Override

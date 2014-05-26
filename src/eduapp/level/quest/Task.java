@@ -1,6 +1,6 @@
 package eduapp.level.quest;
 
-public class Task implements QuestItem {
+public class Task extends QuestItem {
 
     private final String task;
     private boolean done;
@@ -11,6 +11,7 @@ public class Task implements QuestItem {
 
     public void setDone(boolean done) {
         this.done = done;
+        level.deactivateTrigger(getId());
     }
 
     @Override

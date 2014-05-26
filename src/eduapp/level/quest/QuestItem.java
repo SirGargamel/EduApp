@@ -1,13 +1,22 @@
 package eduapp.level.quest;
 
+import eduapp.level.Item;
+import eduapp.level.Level;
+
 /**
  *
  * @author Petr Ječmen
  */
-public interface QuestItem {
+public abstract class QuestItem extends Item {
 
-    boolean isFinished();
+    protected Level level;    
+    
+    public abstract boolean isFinished();
         
-    String toNiftyString();
+    public abstract String toNiftyString();
+    
+    public void setLevel(final Level level) {
+        this.level = level;
+    }
     
 }

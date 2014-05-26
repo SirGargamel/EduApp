@@ -65,12 +65,12 @@
         </Directional>   							
     </Lights>
     <ActionItems>        
-        <ActionTrigger>
+        <ActionTrigger id="q1">
             <Volume>table1</Volume>
             <Target>hlavniQuest</Target>
             <Action>DisplayQ1</Action>            	
         </ActionTrigger>
-        <ActionTrigger>
+        <ActionTrigger id="j1">
             <Volume>table2</Volume>
             <Target>hlavniQuest</Target>
             <Action>DisplayJ1</Action>            	
@@ -90,8 +90,8 @@
     <Quests>
         <Quest id="hlavniQuest" name="Hlavní quest">
             <Task>Vejděte do budovy</Task>            
-            <Question>Zadejte vzorec kyseliny sírové::H2SO4</Question>
-            <Jmol>Zadejte počet atomů molekuly kyseliny sírové::7::kyselinaSirova.pdb</Jmol>
+            <Question id="q1">Zadejte vzorec kyseliny sírové::H2SO4</Question>
+            <Jmol id="j1">Zadejte počet atomů molekuly kyseliny sírové::7::kyselinaSirova.pdb</Jmol>
         </Quest>
     </Quests>
 </Level>
