@@ -8,8 +8,8 @@ import com.jme3.scene.Spatial;
  */
 public abstract class ActionTrigger<T> extends Trigger<T> {        
     
-    public ActionTrigger(Spatial volume, T target, String action, boolean once) {
-        super(volume, target, action, once);
+    public ActionTrigger(Spatial volume, T target, String action, boolean once, boolean active) {
+        super(volume, target, action, once, active);
     }
     
     public abstract void onActivate();

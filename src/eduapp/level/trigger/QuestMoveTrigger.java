@@ -15,8 +15,8 @@ public class QuestMoveTrigger extends MoveTrigger<Quest> {
     public void onLeave() {        
     }
 
-    public QuestMoveTrigger(Spatial volume, Quest target, String action, boolean once) {
-        super(volume, target, action, once);                
+    public QuestMoveTrigger(Spatial volume, Quest target, String action, boolean once, boolean active) {
+        super(volume, target, action, once, active);                
     }
     
 }

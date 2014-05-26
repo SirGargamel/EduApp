@@ -46,7 +46,7 @@ public class QuestActionTrigger extends ActionTrigger<Quest> {
         }
     }
 
-    public QuestActionTrigger(Spatial volume, Quest target, String action, boolean once) {
-        super(volume, target, action, once);
+    public QuestActionTrigger(Spatial volume, Quest target, String action, boolean once, boolean active) {
+        super(volume, target, action, once, active);
     }
 }

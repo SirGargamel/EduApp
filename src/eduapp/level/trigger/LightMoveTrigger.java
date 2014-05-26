@@ -21,8 +21,8 @@ public class LightMoveTrigger extends MoveTrigger<Light> {
         }
     }
 
-    public LightMoveTrigger(Spatial volume, Light target, String action, boolean once) {
-        super(volume, target, action, once);                
+    public LightMoveTrigger(Spatial volume, Light target, String action, boolean once, boolean active) {
+        super(volume, target, action, once, active);                
     }
     
 }

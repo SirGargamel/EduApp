@@ -29,14 +29,15 @@ public class TriggerStub {
     private final String volumeDescription;
     private final String targetDescription;
     private final String action;
-    private final boolean once;
+    private final boolean once, active;    
 
-    public TriggerStub(String nodeName, String volumeDescription, String targetDescription, String action, boolean once) {
+    public TriggerStub(String nodeName, String volumeDescription, String targetDescription, String action, boolean once, boolean active) {
         this.volumeDescription = volumeDescription;
         this.targetDescription = targetDescription;
         this.action = action;
         this.once = once;
         this.nodeName = nodeName;
+        this.active = active;
     }
 
     public Trigger generateTrigger(final ItemRegistry registry, final AssetManager assetManager) {
@@ -50,9 +51,9 @@ public class TriggerStub {
             case NODE_ACTION:
                 volume.setMaterial(MAT_ACTION);
                 if (target instanceof Light) {
-                    result = new LightActionTrigger(volume, (Light) target, action, once);
+                    result = new LightActionTrigger(volume, (Light) target, action, once, active);
                 } else if (target instanceof Quest) {
-                    result = new QuestActionTrigger(volume, (Quest) target, action, once);
+                    result = new QuestActionTrigger(volume, (Quest) target, action, once, active);
                 } else {
                     throw new IllegalArgumentException("Unsupported trigger target - " + target);
                 }
@@ -60,9 +61,9 @@ public class TriggerStub {
             case NODE_MOVE:
                 volume.setMaterial(MAT_MOVE);
                 if (target instanceof Light) {
-                    result = new LightMoveTrigger(volume, (Light) target, action, once);
+                    result = new LightMoveTrigger(volume, (Light) target, action, once, active);
                 } else if (target instanceof Quest) {
-                    result = new QuestMoveTrigger(volume, (Quest) target, action, once);
+                    result = new QuestMoveTrigger(volume, (Quest) target, action, once, active);
                 } else {
                     throw new IllegalArgumentException("Unsupported trigger target - " + target);
                 }

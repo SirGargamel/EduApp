@@ -11,6 +11,7 @@ import org.w3c.dom.NodeList;
 public class XmlTrigger extends XmlEntity<TriggerStub> {
 
     private static final String NODE_ACTION = "Action";    
+    private static final String NODE_OFF = "Off";
     private static final String NODE_ONCE = "Once";
     private static final String NODE_TARGET = "Target";
     private static final String NODE_VOLUME = "Volume";
@@ -34,7 +35,8 @@ public class XmlTrigger extends XmlEntity<TriggerStub> {
                 element.getElementsByTagName(NODE_VOLUME).item(0).getTextContent(),
                 target,
                 element.getElementsByTagName(NODE_ACTION).item(0).getTextContent(),
-                element.getElementsByTagName(NODE_ONCE).getLength() > 0);
+                element.getElementsByTagName(NODE_ONCE).getLength() > 0,
+                element.getElementsByTagName(NODE_OFF).getLength() == 0);
     }
 
 }

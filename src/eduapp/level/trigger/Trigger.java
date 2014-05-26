@@ -10,15 +10,18 @@ import com.jme3.scene.Spatial;
 public abstract class Trigger<T> {
 
     protected final String action;
-    protected T target;
+    protected final T target;
     private final boolean once;
-    private Spatial volume;
+    private final Spatial volume;
+    private boolean active;
+    
 
-    public Trigger(Spatial volume, T target, String action, boolean once) {
+    public Trigger(Spatial volume, T target, String action, boolean once, boolean active) {
         this.volume = volume;
         this.target = target;
         this.action = action;
         this.once = once;
+        active = true;
     }
 
     public boolean isOnce() {
@@ -28,9 +31,17 @@ public abstract class Trigger<T> {
     public BoundingVolume getVolume() {
         return volume.getWorldBound();
     }
-    
+
     public Spatial getGeometry() {
         return volume;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override

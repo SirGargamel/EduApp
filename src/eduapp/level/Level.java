@@ -119,7 +119,7 @@ public class Level {
         it = activeTriggers.iterator();
         while (it.hasNext()) {
             trigger = it.next();
-            if (trigger.getVolume().distanceToEdge(pos) > RADIUS_INTERACTION) {
+            if (trigger.isActive() && trigger.getVolume().distanceToEdge(pos) > RADIUS_INTERACTION) {
                 it.remove();
                 if (!trigger.isOnce()) {
                     triggers.add(trigger);

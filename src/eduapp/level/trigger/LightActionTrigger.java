@@ -18,8 +18,8 @@ public class LightActionTrigger extends ActionTrigger<Light> {
         }
     }
 
-    public LightActionTrigger(Spatial volume, Light target, String action, boolean once) {
-        super(volume, target, action, once);        
+    public LightActionTrigger(Spatial volume, Light target, String action, boolean once, boolean active) {
+        super(volume, target, action, once, active);        
     }
     
 }
