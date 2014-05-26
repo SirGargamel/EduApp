@@ -33,13 +33,13 @@
     </Items>
     <Lights>						
         <Point id="lTable1">
-            <Coords>9.0;1.0;-0.5</Coords>
+            <Coords>table1</Coords>
             <Color>Green</Color>
-            <Intensity>5</Intensity>
+            <Intensity>3</Intensity>
             <Range>1</Range>            
         </Point>
         <Point id="lTable2">
-            <Coords>9.0;1.0;-2.5</Coords>
+            <Coords>table2</Coords>
             <Color>Green</Color>
             <Intensity>5</Intensity>
             <Range>1</Range>            

@@ -28,10 +28,13 @@ public final class Light extends Item {
     private static final String PARAM_OFF = "Off";
     private static final String PARAM_POSITION = "Coords";
     private static final String PARAM_RANGE = "Range";
+    private static final String SPLIT = ";";
     private final com.jme3.light.Light light;
+    private String pos;
     private ColorRGBA color;
 
     public Light(String type, Map<String, String> params) {
+        pos = null;
         light = generateLight(type, params);
     }
 
@@ -88,7 +91,7 @@ public final class Light extends Item {
         final DirectionalLight result = new DirectionalLight();
 
         if (params.containsKey(PARAM_DIRECTION)) {
-            result.setDirection(generatePosition(params.get(PARAM_DIRECTION)).normalizeLocal());
+            result.setDirection(generateDirection(params.get(PARAM_DIRECTION)).normalizeLocal());
         } else {
             result.setDirection(DEFAULT_DIRECTION);
         }
@@ -96,7 +99,21 @@ public final class Light extends Item {
         return result;
     }
 
-    private static com.jme3.light.Light generateSpotLight(final Map<String, String> params) {
+    private static Vector3f generateDirection(final String coords) {
+        final Vector3f result;
+        final String split[] = coords.split(SPLIT);
+        if (split.length == 2) {
+            result = new Vector3f(Float.valueOf(split[0]), DEFAULT_HEIGHT, Float.valueOf(split[1]));
+        } else if (split.length == 3) {
+            result = new Vector3f(Float.valueOf(split[0]), Float.valueOf(split[1]), Float.valueOf(split[2]));
+        } else {
+            throw new IllegalArgumentException("Coords must be 2D or 3D separated by \';\' - " + coords);
+        }
+
+        return result;
+    }
+
+    private com.jme3.light.Light generateSpotLight(final Map<String, String> params) {
         final SpotLight result = new SpotLight();
         if (params.containsKey(PARAM_POSITION)) {
             result.setPosition(generatePosition(params.get(PARAM_POSITION)));
@@ -127,7 +144,7 @@ public final class Light extends Item {
         return result;
     }
 
-    private static com.jme3.light.Light generatePointLight(final Map<String, String> params) {
+    private com.jme3.light.Light generatePointLight(final Map<String, String> params) {
         final PointLight result = new PointLight();
 
         if (params.containsKey(PARAM_POSITION)) {
@@ -144,20 +161,49 @@ public final class Light extends Item {
         return result;
     }
 
-    private static Vector3f generatePosition(final String coords) {
-        final String split[] = coords.split(";");
+    private Vector3f generatePosition(final String coords) {
         final Vector3f result;
-        if (split.length == 2) {
-            result = new Vector3f(Float.valueOf(split[0]), DEFAULT_HEIGHT, Float.valueOf(split[1]));
-        } else if (split.length == 3) {
-            result = new Vector3f(Float.valueOf(split[0]), Float.valueOf(split[1]), Float.valueOf(split[2]));
+        if (coords.contains(SPLIT)) {
+            final String split[] = coords.split(SPLIT);
+            if (split.length == 2) {
+                result = new Vector3f(Float.valueOf(split[0]), DEFAULT_HEIGHT, Float.valueOf(split[1]));
+            } else if (split.length == 3) {
+                result = new Vector3f(Float.valueOf(split[0]), Float.valueOf(split[1]), Float.valueOf(split[2]));
+            } else {
+                throw new IllegalArgumentException("Coords must be 2D or 3D separated by \';\' - " + coords);
+            }
         } else {
-            throw new IllegalArgumentException("Coords must be 2D or 3D separated by \';\' - " + coords);
+            result = Vector3f.NAN;
+            pos = coords;
         }
         return result;
     }
-    
+
     public ColorRGBA getColor() {
         return color;
-    }    
+    }
+
+    public void actualizePos(final ItemRegistry reg) {
+        if (pos != null) {
+            if (light instanceof SpotLight) {
+                final SpotLight l = (SpotLight) light;
+                final Item i = reg.get(pos);
+                if (i != null && i instanceof Model) {
+                    Model m = (Model) i;
+                    l.setPosition(m.getModel().getWorldBound().getCenter());
+                } else {
+                    System.err.println("Illegal target for light - " + pos);
+                }
+            } else if (light instanceof PointLight) {
+                PointLight l = (PointLight) light;
+                final Item i = reg.get(pos);
+                if (i != null && i instanceof Model) {
+                    Model m = (Model) i;
+                    l.setPosition(m.getModel().getWorldBound().getCenter().add(0,0.5f,0));
+                } else {
+                    System.err.println("Illegal target for light - " + pos);
+                }
+            }
+        }
+    }
 }

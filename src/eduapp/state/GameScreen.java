@@ -193,7 +193,7 @@ public class GameScreen extends AbstractAppState {
         }
         player.setWalkDirection(walkDirection);
         currentLevel.visit(playerAvatar.getModel().getWorldBound().getCenter());
-//        System.out.println(playerAvatar.getModel().getWorldBound().getCenter()); 
+        System.out.println(playerAvatar.getModel().getWorldBound().getCenter()); 
     }
 
     @Override

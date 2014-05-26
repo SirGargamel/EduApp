@@ -80,6 +80,7 @@ public class Level {
         }
         // create lights
         for (Light l : lights) {
+            l.actualizePos(itemRegistry);
             rootNode.addLight(l.getLight());
             itemRegistry.put(l);
         }
