@@ -17,6 +17,7 @@ import org.w3c.dom.NodeList;
  */
 public class XmlQuest extends XmlEntity<Quest> {
 
+    private static final String ATTR_NAME = "name";
     private static final String ITEM_QUESTION = "Question";
     private static final String ITEM_QUESTION_JMOL = "Jmol";
     private static final String ITEM_TASK = "Task";
@@ -37,7 +38,12 @@ public class XmlQuest extends XmlEntity<Quest> {
                 lines.add(generateQuestItem(nl.item(i)));
             }
         }
-        return new Quest(lines);
+        final Quest result = new Quest(lines);
+        final String name = element.getAttribute(ATTR_NAME);
+        if (!name.isEmpty()) {                    
+            result.setName(name);
+        }
+        return result;
     }
 
     private QuestItem generateQuestItem(final Node node) {

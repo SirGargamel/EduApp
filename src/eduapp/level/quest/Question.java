@@ -33,9 +33,9 @@ public class Question extends Item implements QuestItem {
     @Override
     public String toNiftyString() {
         final StringBuilder sb = new StringBuilder();
-        sb.append(question);
-        sb.append(" - ");
+        sb.append(question);        
         if (isFinished()) {
+            sb.append(" - ");
             sb.append(userInput);
         }
         return sb.toString();

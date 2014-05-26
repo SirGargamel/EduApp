@@ -78,7 +78,7 @@
             <Action>DisplayJ1</Action>            	
         </ActionTrigger>
         <MoveTrigger>
-            <Volume>0.5;-3.5;0.5;-3.5</Volume>
+            <Volume>0.0;-2.0;1.0;-3.0</Volume>
             <Target>hlavniQuest</Target>
             <Action></Action>    
             <Once/>        			
@@ -90,7 +90,7 @@
         </MoveTrigger>
     </ActionItems>
     <Quests>
-        <Quest id="hlavniQuest">
+        <Quest id="hlavniQuest" name="Hlavní quest">
             <Task>Vejděte do budovy</Task>            
             <Question>Zadejte vzorec kyseliny sírové::H2SO4</Question>
             <Jmol>Zadejte počet atomů molekuly kyseliny sírové::7::kyselinaSirova.pdb</Jmol>
