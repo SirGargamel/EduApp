@@ -95,7 +95,7 @@ public class LevelLoader implements AssetLoader {
             for (int i = 0; i < nl.getLength(); i++) {
                 if (nl.item(i).getNodeType() == Node.ELEMENT_NODE) {
                     el = (Element) nl.item(i);
-                    item = new XmlItem(el).generateGameEntity();
+                    item = new XmlModel(el).generateGameEntity();
                     item.setId(el.getAttribute(ATTR_ID));
                     result.add(item);
                 }
