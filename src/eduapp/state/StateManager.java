@@ -40,6 +40,10 @@ public class StateManager {
 
     public static void displayMainMenu() {
         AppContext.getApp().getStateManager().detach(gameScreen);
-        AppContext.getApp().getStateManager().attach(startScreen);
+        AppContext.getApp().getStateManager().attach(startScreen);        
+    }
+    
+    public static void exitGame() {
+        AppContext.getApp().stop();
     }
 }

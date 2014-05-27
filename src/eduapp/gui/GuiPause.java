@@ -27,9 +27,13 @@ public class GuiPause implements ScreenController {
         StateManager.displayMainMenu();
         GuiManager.gotoMainMenu();
     }
-    
+
     public void backToGame() {
         StateManager.enableGame(true);
         GuiManager.enableGame(true);
+    }
+
+    public void exit() {
+        StateManager.exitGame();
     }
 }
