@@ -65,11 +65,13 @@ public class Background {
         Geometry g;
         // load all tiles
         final int[] shift = new int[2];
+        int width = 0;
         List<List<Character>> tiles = new LinkedList<>();
-        List<Character> line = null;
+        List<Character> line = new LinkedList<>();
         for (int index = 0; index < values.length(); index++) {
             ch = values.charAt(index);
-            if (ch == '\n') {
+            if (ch == '\n') {                
+                width = Math.max(width, line.size());
                 line = new LinkedList<>();
                 tiles.add(line);
             } else {
@@ -131,8 +133,7 @@ public class Background {
                 }
             }
         }
-        // generate fence around the level
-        final int width = tiles.get(0).size();
+        // generate fence around the level        
         mat = matCache.get(CHAR_BLOCK);
         // left
         tile = new Box(Vector3f.ZERO, new Vector3f(1.0f, 2.0f, height + 2));
