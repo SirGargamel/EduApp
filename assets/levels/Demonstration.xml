@@ -1,11 +1,13 @@
 <Level>
     <Background>                
-        <Values>            
-            ---WWWWWWWW
-            PPPWFFFFFFW
-            PPPFFFFFFFW
-            PPPWFFFFFFW
-            0--WWWWWWWW                                
+        <Values> 
+            --------WWWWWWWWWWW
+            --------WFFFFFFFFFW
+            ---WWWWWWFWFFFFFFFW
+            PPPWFFFFFFWWWFFWWWW
+            PPPFFFFFFFWFFFFFFFW
+            PPPWFFFFFFWFFFFFFFW
+            0--WWWWWWWWWWWWWWWW                         
         </Values>
         <Texture tag="F">floorWhiteStone.png</Texture>
         <Texture tag="P">floorBrick.png</Texture>
@@ -14,7 +16,7 @@
         <Empty>-</Empty>
     </Background>
     <Player>
-        <Coords>0.5;-1.5</Coords>
+        <Coords>14.5;-4.5</Coords>
         <Model>Goblin</Model>
     </Player>
     <Items>
@@ -25,8 +27,26 @@
         </Item>
         <Item id="table2">
             <Name>bench2-table.j3o</Name>
-            <Coords>9;0;-2.5</Coords>
+            <Coords>8;0;-2.5</Coords>
             <Scale>0.5</Scale>
+        </Item>
+        <Item id="shelf1">
+            <Name>bench2-shelf.j3o</Name>
+            <Coords>17.75;0;-4.0</Coords>
+            <Scale>0.75</Scale>
+            <Rotate>0;-90;0</Rotate>
+        </Item>
+        <Item id="shelf2">
+            <Name>bench2-shelf.j3o</Name>
+            <Coords>17.75;0;-1.0</Coords>
+            <Scale>0.75</Scale>
+            <Rotate>0;-90;0</Rotate>
+        </Item>
+        <Item id="shelf3">
+            <Name>bench2-shelf.j3o</Name>
+            <Coords>11.25;0;-1.0</Coords>
+            <Scale>0.75</Scale>
+            <Rotate>0;90;0</Rotate>
         </Item>
     </Items>
     <Lights>						
@@ -48,18 +68,37 @@
             <Intensity>4</Intensity>
             <Range>1</Range>			
         </Point>
-        <Point id="lRoom"> 
+        <Point id="lRoom1"> 
             <Coords>7.0;2.5;-2.5</Coords>
             <Color>White</Color>
             <Intensity>1</Intensity>
-            <Range>10</Range>
-            <Off/>
+            <Range>10</Range>            
+        </Point>
+        <Point id="lRoom2a"> 
+            <Coords>13.0;2.5;-4.0</Coords>            
+            <Intensity>0.75</Intensity>
+            <Range>5</Range>            
+        </Point>
+        <Point id="lRoom2b"> 
+            <Coords>16.0;2.5;-4.0</Coords>            
+            <Intensity>0.75</Intensity>
+            <Range>5</Range>            
+        </Point>
+        <Point id="lRoom3a"> 
+            <Coords>13.0;2.5;-2.0</Coords>            
+            <Intensity>0.75</Intensity>
+            <Range>5</Range>            
+        </Point>
+        <Point id="lRoom3b"> 
+            <Coords>16.0;2.5;-2.0</Coords>            
+            <Intensity>0.75</Intensity>
+            <Range>5</Range>            
         </Point>	
         <Ambient>
-            <Intensity>0.5</Intensity>
+            <Intensity>0.3</Intensity>
         </Ambient>
         <Directional>
-            <Intensity>0.25</Intensity>            
+            <Intensity>0.1</Intensity>            
         </Directional>   							
     </Lights>
     <ActionItems>        
@@ -84,12 +123,7 @@
             <Target>hlavniQuest</Target>
             <Action>FinishT1</Action>    
             <Once/>  			
-        </MoveTrigger>
-        <MoveTrigger>
-            <Volume>7.0;-1.5;3.5;1.5</Volume>
-            <Target>lRoom</Target>
-            <Action>Switch</Action>            
-        </MoveTrigger>
+        </MoveTrigger>        
     </ActionItems>
     <Quests>
         <Quest id="hlavniQuest" name="Hlavní úkol">
