@@ -31,7 +31,7 @@ public class PlayerAvatar implements AnimEventListener {
         sb.append("models/");
         sb.append(modelName);
         sb.append(".j3o");
-        model = assetManager.loadModel(sb.toString());        
+        model = assetManager.loadModel(sb.toString());
         final BoundingBox plB = (BoundingBox) model.getWorldBound();
         final float playerScale = PLAYER_HEIGHT / (plB.getYExtent() * 2.0f);
         model.scale(playerScale);
@@ -51,10 +51,8 @@ public class PlayerAvatar implements AnimEventListener {
         final ActionListener actionListener = new ActionListener() {
             @Override
             public void onAction(String name, boolean isPressed, float tpf) {
-                if (isRunning && !isPressed) {
-                    if (name.equals(Actions.PAUSE.toString())) {
-                        isRunning = !isRunning;
-                    } else if (name.equals(Actions.LEFT.toString())
+                if (!isPressed && isRunning) {
+                    if (name.equals(Actions.LEFT.toString())
                             || name.equals(Actions.RIGHT.toString())
                             || name.equals(Actions.UP.toString())
                             || name.equals(Actions.DOWN.toString())) {

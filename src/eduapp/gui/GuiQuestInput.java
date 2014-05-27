@@ -2,6 +2,7 @@ package eduapp.gui;
 
 import de.lessvoid.nifty.EndNotify;
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.controls.NiftyInputControl;
 import de.lessvoid.nifty.controls.TextField;
 import de.lessvoid.nifty.effects.EffectEventId;
 import de.lessvoid.nifty.elements.Element;
@@ -38,6 +39,7 @@ public class GuiQuestInput implements ScreenController {
         questionInput.getElement().addInputHandler(new KeyInputHandler() {
             @Override
             public boolean keyEvent(NiftyInputEvent nie) {
+                boolean result = false;
                 if (nie != null) {
                     switch (nie) {
                         case SubmitText:
@@ -45,17 +47,18 @@ public class GuiQuestInput implements ScreenController {
                             if (question.isFinished()) {
                                 panelQuest.startEffect(EffectEventId.onCustom, new EndNotify() {
                                     @Override
-                                    public void perform() {                                        
+                                    public void perform() {
                                         GuiManager.gotoGameScreen();
                                     }
                                 }, "Ok");
+                                result = true;
                             } else {
                                 panelQuest.startEffect(EffectEventId.onCustom, null, "Wrong");
                             }
                             break;
                     }
                 }
-                return true;
+                return result;
             }
         });
     }

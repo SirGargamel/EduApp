@@ -31,7 +31,7 @@ public class StateManager {
         AppContext.getApp().getStateManager().attach(gameScreen);
     }
 
-    public static void enableGame(boolean isEnabled) {
+    public static void enableGame(boolean isEnabled) {        
         gameScreen.setEnabled(isEnabled);
         if (player != null) {
             player.setIsRunning(isEnabled);
