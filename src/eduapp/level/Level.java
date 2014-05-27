@@ -84,15 +84,20 @@ public class Level {
         for (Light l : lights) {
             l.actualizePos(itemRegistry);
             rootNode.addLight(l.getLight());
-            itemRegistry.put(l);
+            itemRegistry.put(l);            
         }
         // generate action items
         Trigger t;
+        ActionTrigger at;
         for (TriggerStub ts : stubs) {
             t = ts.generateTrigger(itemRegistry, assetManager);
             triggers.add(t);
             rootNode.attachChild(t.getGeometry());
             itemRegistry.put(t);
+            if (t instanceof ActionTrigger) {
+                at = (ActionTrigger) t;
+                rootNode.addLight(at.getLight());
+            }
         }
     }
 
