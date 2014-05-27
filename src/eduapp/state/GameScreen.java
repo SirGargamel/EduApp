@@ -77,7 +77,7 @@ public class GameScreen extends AbstractAppState {
     }
 
     private void initKeys(final InputManager inputManager) {
-        inputManager.deleteMapping("SIMPLEAPP_Exit");        
+        inputManager.deleteMapping("SIMPLEAPP_Exit");
         // You can map one or several inputs to one named action        
         inputManager.addMapping(Actions.PAUSE.toString(), new KeyTrigger(KeyInput.KEY_ESCAPE));
         inputManager.addMapping(Actions.LEFT.toString(), new KeyTrigger(KeyInput.KEY_LEFT));
@@ -92,7 +92,7 @@ public class GameScreen extends AbstractAppState {
             @Override
             public void onAction(String name, boolean isPressed, float tpf) {
                 if (!isPressed) {
-                    if (name.equals(Actions.PAUSE.toString())) {                                        
+                    if (name.equals(Actions.PAUSE.toString())) {
                         GuiManager.enableGame(!isEnabled());
                     } else if (name.equals(Actions.QUEST.toString())) {
                         GuiManager.questAction();

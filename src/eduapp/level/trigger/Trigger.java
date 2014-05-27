@@ -15,7 +15,6 @@ public abstract class Trigger<T> extends Item {
     private final boolean once;
     private final Spatial volume;
     private boolean active;
-    
 
     public Trigger(Spatial volume, T target, String action, boolean once, boolean active) {
         this.volume = volume;

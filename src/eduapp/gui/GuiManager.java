@@ -70,7 +70,7 @@ public class GuiManager {
         } else {
             displayQuest(currentQuest);
         }
-    }       
+    }
 
     public static void showTriggerMarker(boolean show) {
         final GuiGame control = (GuiGame) nifty.getScreen(SCREEN_GAME).getScreenController();

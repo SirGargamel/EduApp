@@ -24,7 +24,7 @@ public class XmlBackground extends XmlEntity<Background> {
     }
 
     @Override
-    public Background generateGameEntity() throws SAXException {        
+    public Background generateGameEntity() throws SAXException {
         final String values = element.getElementsByTagName(NODE_VALUES).item(0).getTextContent().replaceAll("[\t ]", "");
         final Background result = new Background(values);
         // texture mappings

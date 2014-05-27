@@ -18,7 +18,7 @@ public class Model extends Item {
     public Model(String modelName, Vector3f position, float scale) {
         this.modelName = modelName;
         this.position = position;
-        this.scale = scale;        
+        this.scale = scale;
     }
 
     public Spatial generateItem(final AssetManager assetManager) {

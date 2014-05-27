@@ -15,7 +15,6 @@ public abstract class XmlEntity<T> {
     public XmlEntity(Element element) {
         this.element = element;
     }
-    
+
     public abstract T generateGameEntity() throws SAXException;
-    
 }

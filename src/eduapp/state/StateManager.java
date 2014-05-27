@@ -31,7 +31,7 @@ public class StateManager {
         AppContext.getApp().getStateManager().attach(gameScreen);
     }
 
-    public static void enableGame(boolean isEnabled) {        
+    public static void enableGame(boolean isEnabled) {
         gameScreen.setEnabled(isEnabled);
         if (player != null) {
             player.setIsRunning(isEnabled);
@@ -40,9 +40,9 @@ public class StateManager {
 
     public static void displayMainMenu() {
         AppContext.getApp().getStateManager().detach(gameScreen);
-        AppContext.getApp().getStateManager().attach(startScreen);        
+        AppContext.getApp().getStateManager().attach(startScreen);
     }
-    
+
     public static void exitGame() {
         AppContext.getApp().stop();
     }

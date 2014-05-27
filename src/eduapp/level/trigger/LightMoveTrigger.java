@@ -4,8 +4,7 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Spatial;
 import eduapp.level.Light;
 
-
-public class LightMoveTrigger extends MoveTrigger<Light> {        
+public class LightMoveTrigger extends MoveTrigger<Light> {
 
     @Override
     public void onEnter() {
@@ -22,7 +21,6 @@ public class LightMoveTrigger extends MoveTrigger<Light> {
     }
 
     public LightMoveTrigger(Spatial volume, Light target, String action, boolean once, boolean active) {
-        super(volume, target, action, once, active);                
+        super(volume, target, action, once, active);
     }
-    
 }

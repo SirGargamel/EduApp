@@ -37,13 +37,13 @@ public class GuiQuest implements ScreenController {
     private void buildQuestText() {
         for (Element e : panelQuest.getElements()) {
             e.markForRemoval();
-        }        
+        }
 
         final Screen current = nifty.getCurrentScreen();
         TextBuilder tb = new TextBuilder();
         tb.text(quest.getName());
         tb.font("interface/Fonts/BaseB.fnt");
-        tb.alignCenter();        
+        tb.alignCenter();
         tb.color(Color.BLACK);
         Element e = tb.build(nifty, current, panelQuest);
         panelQuest.add(e);
@@ -54,12 +54,12 @@ public class GuiQuest implements ScreenController {
             tb.font("interface/Fonts/Base.fnt");
             if (qi.isFinished()) {
                 tb.color(Color.BLACK);
-            }            
+            }
             tb.marginLeft("5");
             e = tb.build(nifty, current, panelQuest);
             panelQuest.add(e);
         }
-        
+
         panelQuest.layoutElements();
     }
 

@@ -117,7 +117,7 @@ public class TriggerStub {
                     result.setLocalTranslation(p.getInitialPosition());
                 } else {
                     System.err.println("Illegal target for volumeBound " + item);
-                result = new Geometry("wireframe sphere", new WireSphere(0));
+                    result = new Geometry("wireframe sphere", new WireSphere(0));
                 }
             } else {
                 System.err.println("No target for volumeBound " + volumeDescription);

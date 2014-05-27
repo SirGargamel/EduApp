@@ -3,8 +3,7 @@ package eduapp.level.trigger;
 import com.jme3.scene.Spatial;
 import eduapp.level.Light;
 
-
-public class LightActionTrigger extends ActionTrigger<Light> {       
+public class LightActionTrigger extends ActionTrigger<Light> {
 
     @Override
     public void onActivate() {
@@ -18,7 +17,6 @@ public class LightActionTrigger extends ActionTrigger<Light> {
     }
 
     public LightActionTrigger(Spatial volume, Light target, String action, boolean once, boolean active) {
-        super(volume, target, action, once, active);        
+        super(volume, target, action, once, active);
     }
-    
 }

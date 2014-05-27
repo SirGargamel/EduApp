@@ -19,13 +19,12 @@ public class ItemRegistry {
         data.put(item.getId(), item);
         item.setItemRegistry(this);
     }
-    
+
     public Item get(final String id) {
         return data.get(id);
     }
-    
+
     public void clear() {
         data.clear();
     }
-
 }

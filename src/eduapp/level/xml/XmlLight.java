@@ -28,5 +28,4 @@ public class XmlLight extends XmlEntity<Light> {
         }
         return new Light(element.getNodeName(), params);
     }
-
 }

@@ -6,7 +6,7 @@ import de.lessvoid.nifty.controls.ListBox;
 import de.lessvoid.nifty.controls.ListBoxSelectionChangedEvent;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
-import eduapp.level.LevelName;
+import eduapp.level.LevelList;
 import eduapp.state.StateManager;
 
 /**
@@ -16,12 +16,12 @@ import eduapp.state.StateManager;
 public class GuiMainMenu implements ScreenController {
 
     private static final String LISTBOX_NAME = "LevelList";
-    private ListBox<LevelName> listBox;
+    private ListBox<LevelList> listBox;
 
     @Override
     public void bind(Nifty nifty, Screen screen) {
         listBox = nifty.getCurrentScreen().findNiftyControl(LISTBOX_NAME, ListBox.class);
-        for (LevelName ln : LevelName.values()) {
+        for (LevelList ln : LevelList.values()) {
             listBox.addItem(ln);
         }
     }
@@ -42,7 +42,7 @@ public class GuiMainMenu implements ScreenController {
 
     @NiftyEventSubscriber(pattern = "LevelList.*")
     public void onListBoxSelectionChanged(final String id,
-            final ListBoxSelectionChangedEvent<LevelName> changed) {
+            final ListBoxSelectionChangedEvent<LevelList> changed) {
         System.out.println("selection changed");
         startGame();
     }

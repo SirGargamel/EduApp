@@ -4,9 +4,9 @@ package eduapp.level;
  *
  * @author Petr Ječmen
  */
-public enum LevelName {
+public enum LevelList {
 
-    Level1,
+    Demonstration,
     Egypt,
     Factory,
     Empty,;

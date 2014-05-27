@@ -15,23 +15,23 @@ public abstract class QuestItem extends Item {
 
     protected Level level;
     private final Set<String> children;
-    
+
     public QuestItem() {
         children = new HashSet<>();
-    }        
-    
+    }
+
     public abstract boolean isFinished();
-        
+
     public abstract String toNiftyString();
-    
+
     public void setLevel(final Level level) {
         this.level = level;
     }
-    
+
     public void addChild(final String id) {
         children.add(id);
     }
-    
+
     public void deactivateChildren() {
         Item i;
         for (String s : children) {
@@ -47,5 +47,4 @@ public abstract class QuestItem extends Item {
             }
         }
     }
-    
 }
