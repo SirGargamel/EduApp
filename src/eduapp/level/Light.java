@@ -1,5 +1,8 @@
 package eduapp.level;
 
+import com.jme3.bounding.BoundingBox;
+import com.jme3.bounding.BoundingSphere;
+import com.jme3.bounding.BoundingVolume;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.light.PointLight;
@@ -185,28 +188,33 @@ public final class Light extends Item {
 
     public void actualizePos(final ItemRegistry reg) {
         if (pos != null) {
-            if (light instanceof SpotLight) {
-                final SpotLight l = (SpotLight) light;
-                final Item i = reg.get(pos);
-                if (i != null && i instanceof Model) {
-                    Model m = (Model) i;
-                    l.setPosition(m.getModel().getWorldBound().getCenter());
+            final Item i = reg.get(pos);
+            if (i != null && i instanceof Model) {
+                final Model m = (Model) i;
+                final BoundingVolume bv = m.getModel().getWorldBound();
+                final float yExtent;
+                if (bv instanceof BoundingSphere) {
+                    final BoundingSphere bs = (BoundingSphere) bv;
+                    yExtent = bs.getRadius();
                 } else {
-                    System.err.println("Illegal target for light - " + pos);
+                    final BoundingBox bb = (BoundingBox) bv;
+                    yExtent = bb.getYExtent();
                 }
-            } else if (light instanceof PointLight) {
-                PointLight l = (PointLight) light;
-                final Item i = reg.get(pos);
-                if (i != null && i instanceof Model) {
-                    Model m = (Model) i;
-                    l.setPosition(m.getModel().getWorldBound().getCenter().add(0,0.5f,0));
-                } else {
-                    System.err.println("Illegal target for light - " + pos);
+
+                final Vector3f newPos = bv.getCenter().add(0, yExtent, 0);
+                if (light instanceof SpotLight) {
+                    final SpotLight l = (SpotLight) light;
+                    l.setPosition(newPos);
+                } else if (light instanceof PointLight) {
+                    PointLight l = (PointLight) light;
+                    l.setPosition(newPos);
                 }
+            } else {
+                System.err.println("Illegal target for light - " + pos);
             }
         }
     }
-    
+
     public void enableLight(boolean enable) {
         if (enable) {
             light.setColor(color);
@@ -214,7 +222,7 @@ public final class Light extends Item {
             light.setColor(ColorRGBA.BlackNoAlpha);
         }
     }
-    
+
     public boolean isLightEnabled() {
         return light.getColor().a != 0;
     }
