@@ -12,6 +12,7 @@ import eduapp.level.Item;
 import eduapp.level.ItemRegistry;
 import eduapp.level.Light;
 import eduapp.level.Model;
+import eduapp.level.Player;
 import eduapp.level.quest.Quest;
 import java.util.Arrays;
 
@@ -29,7 +30,7 @@ public class TriggerStub {
     private final String volumeDescription;
     private final String targetDescription;
     private final String action;
-    private final boolean once, active;    
+    private final boolean once, active;
 
     public TriggerStub(String nodeName, String id, String volumeDescription, String targetDescription, String action, boolean once, boolean active) {
         this.volumeDescription = volumeDescription;
@@ -106,11 +107,20 @@ public class TriggerStub {
         } else {
             // item id
             final Item item = items.get(volumeDescription);
-            if (item != null && item instanceof Model) {
-                Model i = (Model) item;
-                result = i.getModel().clone();
+            if (item != null) {
+                if (item instanceof Model) {
+                    Model i = (Model) item;
+                    result = i.getModel().clone();
+                } else if (item instanceof Player) {
+                    Player p = (Player) item;
+                    result = new Geometry("wireframe sphere", new WireSphere(0.5f));
+                    result.setLocalTranslation(p.getInitialPosition());
+                } else {
+                    System.err.println("Illegal target for volumeBound " + item);
+                result = new Geometry("wireframe sphere", new WireSphere(0));
+                }
             } else {
-                System.err.println("No targets for volumeBound " + volumeDescription);
+                System.err.println("No target for volumeBound " + volumeDescription);
                 result = new Geometry("wireframe sphere", new WireSphere(0));
             }
         }

@@ -12,6 +12,7 @@ import org.xml.sax.SAXException;
  */
 public class XmlPlayer extends XmlEntity<Player> {
 
+    private static final String NAME = "player";
     private static final String NODE_COORDS = "Coords";
     private static final String NODE_MODEL = "Model";
 
@@ -26,8 +27,10 @@ public class XmlPlayer extends XmlEntity<Player> {
         if (coords.length != 2) {
             throw new IllegalArgumentException("Initial position must be 2D - " + initialPosition);
         }
-        return new Player(
+        final Player result = new Player(
                 new Vector3f(Float.valueOf(coords[0]), 0, Float.valueOf(coords[1])),
                 element.getElementsByTagName(NODE_MODEL).item(0).getTextContent());
+        result.setId(NAME);
+        return result;
     }
 }

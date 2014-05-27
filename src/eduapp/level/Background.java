@@ -29,19 +29,17 @@ public class Background {
 
     private static final Vector3f TILE_SIZE_FLOOR = new Vector3f(Level.TILE_SIZE, -0.01f, Level.TILE_SIZE);
     private static final Vector3f TILE_SIZE_WALL = new Vector3f(Level.TILE_SIZE, 2.0f, Level.TILE_SIZE);
+    private static final char CHAR_EMPTY = ' ';
     private static final char CHAR_BLOCK = ';';
+    private static final char CHAR_PZ = '0';
     private final String values;
-    private final float[] pointZero;
-    private final int width;
     private final Set<Character> walls;
     private final Map<Character, String> textureMapping;
     private char empty;
     private Node rootNode;
 
-    public Background(String values, float[] pointZero, int width) {
+    public Background(String values) {
         this.values = values;
-        this.pointZero = pointZero;
-        this.width = width;
         walls = new HashSet<>();
         textureMapping = new HashMap<>();
     }
@@ -66,72 +64,75 @@ public class Background {
         char ch;
         Geometry g;
         // load all tiles
-        List<char[]> tiles = new LinkedList<>();
-        char[] line = null;
+        final int[] shift = new int[2];
+        List<List<Character>> tiles = new LinkedList<>();
+        List<Character> line = null;
         for (int index = 0; index < values.length(); index++) {
-            if (index % width == 0) {
-                line = new char[width];
-                tiles.add(line);
-            }
-            line[index % width] = values.charAt(index);
-        }
-        // generte tiles        
-        for (int y = 0; y < tiles.size(); y++) {
-            line = tiles.get(y);
-            for (int x = 0; x < line.length; x++) {
-                ch = line[x];
-            }
-        }
-
-        final int height = tiles.size();
-        float x = pointZero[0];
-        float y = pointZero[1] - height;
-        for (int index = 0; index < values.length(); index++) {
-            if (index % width == 0) {
-                x = pointZero[0];
-                y += Level.TILE_SIZE;
-            } else {
-                x += Level.TILE_SIZE;
-            }
             ch = values.charAt(index);
-            if (ch != empty) {
-                if (matCache.containsKey(ch)) {
-                    mat = matCache.get(ch);
-                } else {
-                    //                        mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-                    mat = new Material(assetManager, "lights/Lighting.j3md");
-                    //                        mat.setTexture("ColorMap", assetManager.loadTexture(new StringBuilder("materials").append("/").append(textureMapping.get(ch)).toString()));
-                    mat.setTexture("DiffuseMap", assetManager.loadTexture(new StringBuilder("materials").append("/").append(textureMapping.get(ch)).toString()));
-                    matCache.put(ch, mat);
-                }
-                if (walls.contains(ch)) {
-                    tile = new Box(Vector3f.ZERO, TILE_SIZE_WALL);
-                } else {
-                    tile = new Box(Vector3f.ZERO, TILE_SIZE_FLOOR);
-                }
-                //                tile.clearBuffer(Type.Normal);
-                g = new Geometry("floor", tile);
-                g.move(x, 0, y);
-                g.setMaterial(mat);
-                rootNode.attachChild(g);
+            if (ch == '\n') {
+                line = new LinkedList<>();
+                tiles.add(line);
             } else {
-                if (matCache.containsKey(CHAR_BLOCK)) {
-                    mat = matCache.get(CHAR_BLOCK);
-                } else {
-                    mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-                    mat.setColor("Color", new ColorRGBA(1.0f, 0, 0, 0.0f));
-                    mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
-                    matCache.put(CHAR_BLOCK, mat);
+                line.add(ch);
+                if (ch == CHAR_PZ) {
+                    shift[0] = line.size() - 1;
+                    shift[1] = tiles.size() - 1;
                 }
-                tile = new Box(Vector3f.ZERO, TILE_SIZE_WALL);
-                g = new Geometry("block", tile);
-                g.setMaterial(mat);
-                g.setQueueBucket(Bucket.Transparent);
-                g.move(x, 0, y);
-                rootNode.attachChild(g);
+            }
+
+        }
+        shift[1] = tiles.size() - shift[1];
+        // generte tiles        
+        int x, z;
+        final int height = tiles.size();
+        for (int dz = 0; dz < tiles.size(); dz++) {
+            line = tiles.get(dz);
+            z = -height + shift[1] + dz;
+
+            for (int dx = 0; dx < line.size(); dx++) {
+                ch = line.get(dx);
+                x = shift[0] + dx;
+
+                if (ch != empty && ch != CHAR_EMPTY && ch != CHAR_PZ) {
+                    if (matCache.containsKey(ch)) {
+                        mat = matCache.get(ch);
+                    } else {
+                        //                        mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+                        mat = new Material(assetManager, "lights/Lighting.j3md");
+                        //                        mat.setTexture("ColorMap", assetManager.loadTexture(new StringBuilder("materials").append("/").append(textureMapping.get(ch)).toString()));
+                        mat.setTexture("DiffuseMap", assetManager.loadTexture(new StringBuilder("materials").append("/").append(textureMapping.get(ch)).toString()));
+                        matCache.put(ch, mat);
+                    }
+                    if (walls.contains(ch)) {
+                        tile = new Box(Vector3f.ZERO, TILE_SIZE_WALL);
+                    } else {
+                        tile = new Box(Vector3f.ZERO, TILE_SIZE_FLOOR);
+                    }
+                    //                tile.clearBuffer(Type.Normal);
+                    g = new Geometry("floor", tile);
+                    g.move(x, 0, z);
+                    g.setMaterial(mat);
+                    rootNode.attachChild(g);
+                } else {
+                    if (matCache.containsKey(CHAR_BLOCK)) {
+                        mat = matCache.get(CHAR_BLOCK);
+                    } else {
+                        mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+                        mat.setColor("Color", new ColorRGBA(1.0f, 0, 0, 0.0f));
+                        mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
+                        matCache.put(CHAR_BLOCK, mat);
+                    }
+                    tile = new Box(Vector3f.ZERO, TILE_SIZE_WALL);
+                    g = new Geometry("block", tile);
+                    g.setMaterial(mat);
+                    g.setQueueBucket(Bucket.Transparent);
+                    g.move(dx, 0, dz);
+                    rootNode.attachChild(g);
+                }
             }
         }
         // generate fence around the level
+        final int width = tiles.get(0).size();
         mat = matCache.get(CHAR_BLOCK);
         // left
         tile = new Box(Vector3f.ZERO, new Vector3f(1.0f, 2.0f, height + 2));

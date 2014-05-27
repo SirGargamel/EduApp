@@ -65,6 +65,8 @@ public class Level {
     private void generateLevel(final AssetManager assetManager) {
         background.generateBackground(assetManager);
         rootNode.attachChild(background.getRootNode());
+        
+        itemRegistry.put(player);
 
         for (Quest q : quests) {
             itemRegistry.put(q);

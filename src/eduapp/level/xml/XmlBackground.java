@@ -13,7 +13,6 @@ import org.xml.sax.SAXException;
 public class XmlBackground extends XmlEntity<Background> {
 
     private static final String ATTR_TEXTURE = "tag";
-    private static final String NODE_COORDS = "Coords";
     private static final String NODE_EMPTY = "Empty";
     private static final String NODE_TEXTURE = "Texture";
     private static final String NODE_VALUES = "Values";
@@ -25,16 +24,9 @@ public class XmlBackground extends XmlEntity<Background> {
     }
 
     @Override
-    public Background generateGameEntity() throws SAXException {         
-        final String pointZero = element.getElementsByTagName(NODE_COORDS).item(0).getTextContent();
-        final String[] pz = pointZero.split(";");
-        if (pz.length != 2) {
-            throw new IllegalArgumentException("Point zero must be 2D - " + pointZero);
-        }
-        final float[] pointZeroA = new float[]{Float.valueOf(pz[0]), Float.valueOf(pz[1])};
-        final int widthI = Integer.valueOf(element.getElementsByTagName(NODE_WIDTH).item(0).getTextContent());
-        final String values = element.getElementsByTagName(NODE_VALUES).item(0).getTextContent().replaceAll("[\n\t ]", "");
-        final Background result = new Background(values, pointZeroA, widthI);
+    public Background generateGameEntity() throws SAXException {        
+        final String values = element.getElementsByTagName(NODE_VALUES).item(0).getTextContent().replaceAll("[\t ]", "");
+        final Background result = new Background(values);
         // texture mappings
         NodeList nl = element.getElementsByTagName(NODE_TEXTURE);
         Element el;
@@ -57,5 +49,4 @@ public class XmlBackground extends XmlEntity<Background> {
 
         return result;
     }
-
 }
