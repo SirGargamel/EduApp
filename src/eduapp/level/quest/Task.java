@@ -12,7 +12,7 @@ public class Task extends QuestItem {
     public void setDone(boolean done) {
         this.done = done;
         if (done) {
-            deactivateChildren();
+            finish();
         }
     }
 
@@ -30,5 +30,10 @@ public class Task extends QuestItem {
             result = task;
         }
         return result;
+    }
+
+    @Override
+    public String getTask() {
+        return task;
     }
 }

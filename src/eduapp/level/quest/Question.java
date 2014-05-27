@@ -1,7 +1,5 @@
 package eduapp.level.quest;
 
-import eduapp.level.Item;
-
 public class Question extends QuestItem {
 
     private final String question, answer;
@@ -26,7 +24,7 @@ public class Question extends QuestItem {
         this.userInput = userInput.trim();
         if (answer.equalsIgnoreCase(userInput)) {
             finished = true;
-            deactivateChildren();
+            finish();
         }
     }
 
@@ -44,5 +42,10 @@ public class Question extends QuestItem {
             sb.append(userInput);
         }
         return sb.toString();
+    }
+
+    @Override
+    public String getTask() {
+        return question;
     }
 }

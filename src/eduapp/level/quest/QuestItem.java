@@ -1,5 +1,6 @@
 package eduapp.level.quest;
 
+import eduapp.gui.GuiManager;
 import eduapp.level.Item;
 import eduapp.level.Level;
 import eduapp.level.Light;
@@ -23,6 +24,8 @@ public abstract class QuestItem extends Item {
     public abstract boolean isFinished();
 
     public abstract String toNiftyString();
+    
+    public abstract String getTask();
 
     public void setLevel(final Level level) {
         this.level = level;
@@ -32,7 +35,7 @@ public abstract class QuestItem extends Item {
         children.add(id);
     }
 
-    public void deactivateChildren() {
+    public void finish() {
         Item i;
         for (String s : children) {
             i = itemRegistry.get(s);
@@ -46,5 +49,6 @@ public abstract class QuestItem extends Item {
                 System.err.println("Illegal child for deactivation - " + s);
             }
         }
+        GuiManager.finishQuestItem(this);
     }
 }

@@ -2,6 +2,7 @@ package eduapp.gui;
 
 import de.lessvoid.nifty.Nifty;
 import eduapp.level.quest.Quest;
+import eduapp.level.quest.QuestItem;
 import eduapp.level.quest.Question;
 import eduapp.state.StateManager;
 
@@ -16,6 +17,7 @@ public class GuiManager {
     private static final String SCREEN_PAUSE = "pause";
     private static final String SCREEN_QUEST = "quest";
     private static final String SCREEN_QUEST_INPUT = "questInput";
+    private static final String SCREEN_QUEST_ITEM_FINISH = "questItemFinish";
     private static Nifty nifty;
     private static Quest currentQuest;
 
@@ -75,5 +77,11 @@ public class GuiManager {
     public static void showTriggerMarker(boolean show) {
         final GuiGame control = (GuiGame) nifty.getScreen(SCREEN_GAME).getScreenController();
         control.enableQuestMarker(show);
+    }
+    
+    public static void finishQuestItem(final QuestItem item) {
+        final GuiQuestItemFinish control = (GuiQuestItemFinish) nifty.getScreen(SCREEN_QUEST_ITEM_FINISH).getScreenController();
+        control.setQuestion(item);
+        nifty.gotoScreen(SCREEN_QUEST_ITEM_FINISH);
     }
 }
