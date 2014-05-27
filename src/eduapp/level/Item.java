@@ -6,6 +6,7 @@ package eduapp.level;
  */
 public class Item {
 
+    protected ItemRegistry itemRegistry;
     private String id;
 
     public String getId() {
@@ -14,5 +15,9 @@ public class Item {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public void setItemRegistry(ItemRegistry itemRegistry) {
+        this.itemRegistry = itemRegistry;
     }
 }

@@ -49,9 +49,10 @@ public class Quest extends Item {
         this.name = name;
     }
     
-    public void setLevel(final Level level) {
+    public void assignInterfaces(final Level level) {
         for (QuestItem qi : data) {            
             qi.setLevel(level);
+            qi.setItemRegistry(itemRegistry);
         }
     }
 }

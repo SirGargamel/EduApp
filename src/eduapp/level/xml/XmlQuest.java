@@ -18,6 +18,8 @@ import org.w3c.dom.NodeList;
 public class XmlQuest extends XmlEntity<Quest> {
 
     private static final String ATTR_NAME = "name";
+    private static final String ITEM_CHILD = "Child";
+    private static final String ITEM_DATA = "Data";
     private static final String ITEM_QUESTION = "Question";
     private static final String ITEM_QUESTION_JMOL = "Jmol";
     private static final String ITEM_TASK = "Task";
@@ -40,7 +42,7 @@ public class XmlQuest extends XmlEntity<Quest> {
         }
         final Quest result = new Quest(lines);
         final String name = element.getAttribute(ATTR_NAME);
-        if (!name.isEmpty()) {                    
+        if (!name.isEmpty()) {
             result.setName(name);
         }
         return result;
@@ -49,9 +51,10 @@ public class XmlQuest extends XmlEntity<Quest> {
     private QuestItem generateQuestItem(final Node node) {
         final QuestItem result;
         final String[] split;
-        switch (node.getNodeName()) {
+        final Element e = (Element) node;
+        switch (e.getNodeName()) {
             case ITEM_QUESTION:
-                split = node.getTextContent().split(QUESTION_SEPARATOR);
+                split = e.getElementsByTagName(ITEM_DATA).item(0).getTextContent().split(QUESTION_SEPARATOR);
                 if (split.length == 2) {
                     result = new Question(split[0], split[1]);
                 } else {
@@ -59,7 +62,7 @@ public class XmlQuest extends XmlEntity<Quest> {
                 }
                 break;
             case ITEM_QUESTION_JMOL:
-                split = node.getTextContent().split(QUESTION_SEPARATOR);
+                split = e.getElementsByTagName(ITEM_DATA).item(0).getTextContent().split(QUESTION_SEPARATOR);
                 if (split.length == 3) {
                     result = new JmolQuestion(split[0], split[1], split[2]);
                 } else {
@@ -67,12 +70,16 @@ public class XmlQuest extends XmlEntity<Quest> {
                 }
                 break;
             case ITEM_TASK:
-                result = new Task(node.getTextContent());
+                result = new Task(e.getElementsByTagName(ITEM_DATA).item(0).getTextContent());
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported quest item type - " + node.getNodeName());
         }
-        result.setId(((Element)node).getAttribute(LevelLoader.ATTR_ID));
+        final NodeList nl = e.getElementsByTagName(ITEM_CHILD);
+        for (int i = 0; i < nl.getLength(); i++) {
+            result.addChild(nl.item(i).getTextContent());
+        }
+        result.setId(((Element) node).getAttribute(LevelLoader.ATTR_ID));
         return result;
     }
 }

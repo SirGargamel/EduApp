@@ -17,6 +17,7 @@ public class ItemRegistry {
 
     public void put(final Item item) {
         data.put(item.getId(), item);
+        item.setItemRegistry(this);
     }
     
     public Item get(final String id) {

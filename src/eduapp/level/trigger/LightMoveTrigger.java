@@ -10,14 +10,14 @@ public class LightMoveTrigger extends MoveTrigger<Light> {
     @Override
     public void onEnter() {
         if (action.equals("Switch")) {
-            target.getLight().setColor(target.getColor());
+            target.enableLight(true);
         }
     }
 
     @Override
     public void onLeave() {
         if (action.equals("Switch")) {
-            target.getLight().setColor(ColorRGBA.BlackNoAlpha);
+            target.enableLight(false);
         }
     }
 

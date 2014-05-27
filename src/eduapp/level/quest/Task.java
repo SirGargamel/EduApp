@@ -11,7 +11,9 @@ public class Task extends QuestItem {
 
     public void setDone(boolean done) {
         this.done = done;
-        level.deactivateTrigger(getId());
+        if (done) {
+            deactivateChildren();
+        }
     }
 
     @Override

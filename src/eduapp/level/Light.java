@@ -206,4 +206,16 @@ public final class Light extends Item {
             }
         }
     }
+    
+    public void enableLight(boolean enable) {
+        if (enable) {
+            light.setColor(color);
+        } else {
+            light.setColor(ColorRGBA.BlackNoAlpha);
+        }
+    }
+    
+    public boolean isLightEnabled() {
+        return light.getColor().a != 0;
+    }
 }

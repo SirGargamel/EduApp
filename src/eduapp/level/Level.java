@@ -68,7 +68,7 @@ public class Level {
 
         for (Quest q : quests) {
             itemRegistry.put(q);
-            q.setLevel(this);
+            q.assignInterfaces(this);
         }
 
         Spatial s;
@@ -90,6 +90,7 @@ public class Level {
             t = ts.generateTrigger(itemRegistry, assetManager);
             triggers.add(t);
             rootNode.attachChild(t.getGeometry());
+            itemRegistry.put(t);
         }
     }
 
@@ -121,7 +122,9 @@ public class Level {
         it = activeTriggers.iterator();
         while (it.hasNext()) {
             trigger = it.next();
-            if (trigger.getVolume().distanceToEdge(pos) > RADIUS_INTERACTION) {
+            if (!trigger.isActive()) {
+                it.remove();
+            } else if (trigger.getVolume().distanceToEdge(pos) > RADIUS_INTERACTION) {
                 it.remove();
                 if (!trigger.isOnce()) {
                     triggers.add(trigger);
@@ -187,7 +190,7 @@ public class Level {
         rootNode.removeFromParent();
     }
 
-    public void deactivateTrigger(final String triggerId) {        
+    public void deactivateTrigger(final String triggerId) {
         if (triggerId != null && !triggerId.isEmpty()) {
             for (Trigger t : triggers) {
                 if (triggerId.equals(t.getId())) {
@@ -202,7 +205,7 @@ public class Level {
                     t.setActive(false);
                     it.remove();
                 }
-            }            
+            }
         }
     }
 }

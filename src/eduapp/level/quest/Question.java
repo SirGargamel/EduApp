@@ -26,7 +26,7 @@ public class Question extends QuestItem {
         this.userInput = userInput.trim();
         if (answer.equalsIgnoreCase(userInput)) {
             finished = true;
-            level.deactivateTrigger(getId());
+            deactivateChildren();
         }
     }
 

@@ -65,12 +65,12 @@
         </Directional>   							
     </Lights>
     <ActionItems>        
-        <ActionTrigger id="q1">
+        <ActionTrigger id="tQ1">
             <Volume>table1</Volume>
             <Target>hlavniQuest</Target>
             <Action>DisplayQ1</Action>            	
         </ActionTrigger>
-        <ActionTrigger id="j1">
+        <ActionTrigger id="tJ1">
             <Volume>table2</Volume>
             <Target>hlavniQuest</Target>
             <Action>DisplayJ1</Action>            	
@@ -82,16 +82,32 @@
             <Once/>        			
         </MoveTrigger>
         <MoveTrigger>
+            <Volume>3.5;-1.5;0.5</Volume>
+            <Target>hlavniQuest</Target>
+            <Action>FinishT1</Action>    
+            <Once/>  			
+        </MoveTrigger>
+        <MoveTrigger>
             <Volume>7.0;-1.5;3.5;1.5</Volume>
             <Target>lRoom</Target>
             <Action>Switch</Action>            
         </MoveTrigger>
     </ActionItems>
     <Quests>
-        <Quest id="hlavniQuest" name="Hlavní quest">
-            <Task>Vejděte do budovy</Task>            
-            <Question id="q1">Zadejte vzorec kyseliny sírové::H2SO4</Question>
-            <Jmol id="j1">Zadejte počet atomů molekuly kyseliny sírové::7::kyselinaSirova.pdb</Jmol>
+        <Quest id="hlavniQuest" name="Hlavní úkol">
+            <Task>
+                <Data>Vejděte do budovy</Data>                
+            </Task>            
+            <Question id="q1">
+                <Data>Zadejte vzorec kyseliny sírové::H2SO4</Data>
+                <Child>tQ1</Child>
+                <Child>lTable1</Child>
+            </Question>
+            <Jmol id="j1">
+                <Data>Zadejte počet atomů molekuly kyseliny sírové::7::kyselinaSirova.pdb</Data>
+                <Child>tJ1</Child>
+                <Child>lTable2</Child>                                                                             
+            </Jmol>
         </Quest>
     </Quests>
 </Level>
