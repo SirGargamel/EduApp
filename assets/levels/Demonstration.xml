@@ -16,7 +16,7 @@
         <Empty>-</Empty>
     </Background>
     <Player>
-        <Coords>14.5;-4.5</Coords>
+        <Coords>7.5;-0.5</Coords>
         <Model>Goblin</Model>
     </Player>
     <Items>
@@ -49,19 +49,7 @@
             <Rotate>0;90;0</Rotate>
         </Item>
     </Items>
-    <Lights>						
-        <Point id="lTable1">
-            <Coords>table1</Coords>
-            <Color>Green</Color>
-            <Intensity>3</Intensity>
-            <Range>1</Range>            
-        </Point>
-        <Point id="lTable2">
-            <Coords>table2</Coords>
-            <Color>Green</Color>
-            <Intensity>5</Intensity>
-            <Range>1</Range>            
-        </Point>
+    <Lights>						        
         <Point id="lEntrance">
             <Coords>2.5;2.0;-1.5</Coords>
             <Color>White</Color>
@@ -102,6 +90,18 @@
         </Directional>   							
     </Lights>
     <ActionItems>        
+        <MoveTrigger>
+            <Volume>3.5;-1.5;0.5</Volume>
+            <Target>hlavniQuest</Target>
+            <Action>FinishT1</Action>    
+            <Once/>  			
+        </MoveTrigger>
+        <MoveTrigger>
+            <Volume>player</Volume>
+            <Target>hlavniQuest</Target>
+            <Action></Action>    
+            <Once/>        			
+        </MoveTrigger>
         <ActionTrigger id="tQ1">
             <Volume>table1</Volume>
             <Target>hlavniQuest</Target>
@@ -111,19 +111,17 @@
             <Volume>table2</Volume>
             <Target>hlavniQuest</Target>
             <Action>DisplayJ1</Action>            	
+        </ActionTrigger>                        
+        <ActionTrigger id="tW1">
+            <Volume>shelf1</Volume>
+            <Target>hlavniQuest</Target>
+            <Action>DisplayW1</Action>            	
         </ActionTrigger>
-        <MoveTrigger>
-            <Volume>player</Volume>
+        <ActionTrigger id="tW2">
+            <Volume>shelf2</Volume>
             <Target>hlavniQuest</Target>
-            <Action></Action>    
-            <Once/>        			
-        </MoveTrigger>
-        <MoveTrigger>
-            <Volume>3.5;-1.5;0.5</Volume>
-            <Target>hlavniQuest</Target>
-            <Action>FinishT1</Action>    
-            <Once/>  			
-        </MoveTrigger>        
+            <Action>DisplayW2</Action>            	
+        </ActionTrigger>
     </ActionItems>
     <Quests>
         <Quest id="hlavniQuest" name="Hlavní úkol">
@@ -132,14 +130,20 @@
             </Task>            
             <Question id="q1">
                 <Data>Zadejte vzorec kyseliny sírové::H2SO4</Data>
-                <Child>tQ1</Child>
-                <Child>lTable1</Child>
+                <Child>tQ1</Child>                
             </Question>
             <Jmol id="j1">
                 <Data>Zadejte počet atomů molekuly kyseliny sírové::7::kyselinaSirova.pdb</Data>
-                <Child>tJ1</Child>
-                <Child>lTable2</Child>                                                                             
+                <Child>tJ1</Child>                
             </Jmol>
+            <Web>
+                <Data>Popište vzhled kyseliny sírové::bezbarvá olejovitá kapalina::http://cs.wikipedia.org/wiki/Kyselina_s%C3%ADrov%C3%A1</Data>
+                <Child>tW1</Child>
+            </Web>
+            <Web>
+                <Data>Uveďte zastaralý název kyseliny sírové::vitriol::http://cs.wikipedia.org/wiki/Kyselina_s%C3%ADrov%C3%A1</Data>
+                <Child>tW2</Child>
+            </Web>
         </Quest>
     </Quests>
 </Level>
