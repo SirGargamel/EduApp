@@ -26,7 +26,7 @@ public class Level {
     public static final String LEVEL_FILE_EXTENSION = "xml";
     public static final float LEVEL_HEIGHT = 2.5f;
     public static final int TILE_SIZE = 1;
-    private static final float RADIUS_INTERACTION = 0.25f;
+    private static final float RADIUS_INTERACTION = 0.5f;
     private final Node rootNode;
     private final Background background;
     private final Player player;

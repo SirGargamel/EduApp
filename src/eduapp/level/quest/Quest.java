@@ -4,6 +4,9 @@ import eduapp.JmolUtils;
 import eduapp.gui.GuiManager;
 import eduapp.level.Item;
 import eduapp.level.Level;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 /**
@@ -27,10 +30,18 @@ public class Quest extends Item {
         GuiManager.displayQuestion(question);
     }
 
-    public void displayJmolQuestion(JmolQuestion question) {
-        // TODO
+    public void displayJmolQuestion(JmolQuestion question) {        
         JmolUtils.launchJmol(question.getModelName());
         GuiManager.displayQuestion(question);
+    }
+    
+    public void displayWebQuestion(WebQuestion question) {
+        try {
+            java.awt.Desktop.getDesktop().browse(new URI(question.getWeb()));
+            GuiManager.displayQuestion(question);
+        } catch (IOException | URISyntaxException ex) {
+            System.err.println("Illegal web URL - " + ex);
+        }
     }
 
     public List<QuestItem> getData() {

@@ -5,12 +5,14 @@ import eduapp.level.quest.JmolQuestion;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
 import eduapp.level.quest.Question;
+import eduapp.level.quest.WebQuestion;
 
 public class QuestActionTrigger extends ActionTrigger<Quest> {
 
     private static final String ACTION_DISPLAY = "Display";
     private static final String ACTION_DISPLAY_QUESTION = "Q";
     private static final String ACTION_DISPLAY_JMOL = "J";
+    private static final String ACTION_DISPLAY_WEB = "W";
 
     @Override
     public void onActivate() {
@@ -39,6 +41,18 @@ public class QuestActionTrigger extends ActionTrigger<Quest> {
                         counter++;
                         if (counter == num) {
                             target.displayJmolQuestion((JmolQuestion) qi);
+                        }
+                    }
+                }
+            } else if (rest.startsWith(ACTION_DISPLAY_WEB)) {
+                final String number = rest.replace(ACTION_DISPLAY_WEB, "");
+                final int num = Integer.valueOf(number);
+                int counter = 0;
+                for (QuestItem qi : target.getData()) {
+                    if (qi instanceof WebQuestion) {
+                        counter++;
+                        if (counter == num) {
+                            target.displayWebQuestion((WebQuestion) qi);
                         }
                     }
                 }

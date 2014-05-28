@@ -5,6 +5,7 @@ import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
 import eduapp.level.quest.Question;
 import eduapp.level.quest.Task;
+import eduapp.level.quest.WebQuestion;
 import java.util.ArrayList;
 import java.util.List;
 import org.w3c.dom.Element;
@@ -22,6 +23,7 @@ public class XmlQuest extends XmlEntity<Quest> {
     private static final String ITEM_DATA = "Data";
     private static final String ITEM_QUESTION = "Question";
     private static final String ITEM_QUESTION_JMOL = "Jmol";
+    private static final String ITEM_QUESTION_WEB = "Web";
     private static final String ITEM_TASK = "Task";
     private static final String QUESTION_SEPARATOR = "::";
 
@@ -58,7 +60,7 @@ public class XmlQuest extends XmlEntity<Quest> {
                 if (split.length == 2) {
                     result = new Question(split[0], split[1]);
                 } else {
-                    throw new IllegalArgumentException("Unsupported question text, separator must be :: - " + node.getTextContent());
+                    throw new IllegalArgumentException("Unsupported question text, separator is ::, required 2 params - " + node.getTextContent());
                 }
                 break;
             case ITEM_QUESTION_JMOL:
@@ -66,7 +68,15 @@ public class XmlQuest extends XmlEntity<Quest> {
                 if (split.length == 3) {
                     result = new JmolQuestion(split[0], split[1], split[2]);
                 } else {
-                    throw new IllegalArgumentException("Unsupported Jmol question text, separator must be :: - " + node.getTextContent());
+                    throw new IllegalArgumentException("Unsupported Jmol question text, separator is ::, required 3 params - " + node.getTextContent());
+                }
+                break;
+            case ITEM_QUESTION_WEB:
+                split = e.getElementsByTagName(ITEM_DATA).item(0).getTextContent().split(QUESTION_SEPARATOR);
+                if (split.length == 3) {
+                    result = new WebQuestion(split[0], split[1], split[2]);
+                } else {
+                    throw new IllegalArgumentException("Unsupported Web question text, separator is ::, required 3 params - " + node.getTextContent());
                 }
                 break;
             case ITEM_TASK:
