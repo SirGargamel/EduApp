@@ -83,5 +83,6 @@ public class GuiManager {
         final GuiQuestItemFinish control = (GuiQuestItemFinish) nifty.getScreen(SCREEN_QUEST_ITEM_FINISH).getScreenController();
         control.setQuestion(item);
         nifty.gotoScreen(SCREEN_QUEST_ITEM_FINISH);
+        StateManager.enableGame(true);
     }
 }
