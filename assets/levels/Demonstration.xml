@@ -16,7 +16,7 @@
         <Empty>-</Empty>
     </Background>
     <Player>
-        <Coords>7.5;-0.5</Coords>
+        <Coords>0.5;-1.5</Coords>
         <Model>Goblin</Model>
     </Player>
     <Items>
