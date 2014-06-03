@@ -9,12 +9,12 @@ import eduapp.PlayerAvatar;
  */
 public class StateManager {
 
-    private static final GameScreen gameScreen;
+    private static final WorldScreen worldScreen;
     private static final StartScreen startScreen;
     private static PlayerAvatar player;
 
     static {
-        gameScreen = new GameScreen();
+        worldScreen = new WorldScreen();
         startScreen = new StartScreen();
 
         AppContext.getApp().getStateManager().attach(startScreen);
@@ -26,20 +26,20 @@ public class StateManager {
 
     public static void loadLevel(String levelName) {
         AppContext.getApp().getStateManager().detach(startScreen);
-        gameScreen.setLevelName(levelName);
-        gameScreen.setEnabled(true);
-        AppContext.getApp().getStateManager().attach(gameScreen);
+        worldScreen.setLevelName(levelName);
+        worldScreen.setEnabled(true);
+        AppContext.getApp().getStateManager().attach(worldScreen);
     }
 
     public static void enableGame(boolean isEnabled) {
-        gameScreen.setEnabled(isEnabled);
+        worldScreen.setEnabled(isEnabled);
         if (player != null) {
             player.setIsRunning(isEnabled);
         }
     }
 
     public static void displayMainMenu() {
-        AppContext.getApp().getStateManager().detach(gameScreen);
+        AppContext.getApp().getStateManager().detach(worldScreen);
         AppContext.getApp().getStateManager().attach(startScreen);
     }
 

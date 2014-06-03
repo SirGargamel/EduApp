@@ -29,7 +29,7 @@ import eduapp.level.Level;
  *
  * @author Petr Ječmen
  */
-public class GameScreen extends AbstractAppState {
+public class WorldScreen extends AbstractAppState {
 
     private static final float PLAYER_SPEED = 1.5f;
     private static final Vector3f LEFT = new Vector3f(-1, 0, 0);
