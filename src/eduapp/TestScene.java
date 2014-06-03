@@ -6,6 +6,7 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.lessvoid.nifty.Nifty;
 import eduapp.gui.GuiManager;
+import eduapp.state.StateManager;
 
 /**
  *
@@ -22,17 +23,18 @@ public class TestScene extends SimpleApplication {
         Nifty nifty = niftyDisplay.getNifty();
         nifty.fromXml("interface/Gui.xml", "start");
         // attach the Nifty display to the gui view port as a processor
-        guiViewPort.addProcessor(niftyDisplay);
-        // disable the fly cam
-        flyCam.setDragToRotate(true);
+        guiViewPort.addProcessor(niftyDisplay);        
 
-//        inputManager.setCursorVisible(true)
-        inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_MEMORY);
-        inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_HIDE_STATS);
-        inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_CAMERA_POS);
-        inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_EXIT);
+//        inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_MEMORY);
+//        inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_CAMERA_POS);
+        
+        inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_HIDE_STATS);        
+//        inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_EXIT);
 
         AppContext.setApp(this);
         GuiManager.setNifty(nifty);
+        
+        GuiManager.gotoGameScreen();
+        StateManager.debug();
     }
 }

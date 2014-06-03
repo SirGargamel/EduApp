@@ -11,11 +11,13 @@ public class StateManager {
 
     private static final WorldScreen worldScreen;
     private static final StartScreen startScreen;
+    private static final GroupScreen groupScreen;
     private static PlayerAvatar player;
 
     static {
         worldScreen = new WorldScreen();
         startScreen = new StartScreen();
+        groupScreen = new GroupScreen();
 
         AppContext.getApp().getStateManager().attach(startScreen);
     }
@@ -45,5 +47,15 @@ public class StateManager {
 
     public static void exitGame() {
         AppContext.getApp().stop();
+    }
+
+    public static void debug() {
+        AppContext.getApp().getStateManager().detach(startScreen);
+        AppContext.getApp().getStateManager().detach(worldScreen);
+
+        groupScreen.setGroups("Skupina A", "Skupina B", "Skup C");
+        groupScreen.setItems("H2SO4", "H20", "O2", "S");
+
+        AppContext.getApp().getStateManager().attach(groupScreen);
     }
 }
