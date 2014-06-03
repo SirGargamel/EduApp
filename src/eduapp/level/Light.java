@@ -1,5 +1,6 @@
 package eduapp.level;
 
+import eduapp.ItemRegistry;
 import com.jme3.bounding.BoundingBox;
 import com.jme3.bounding.BoundingSphere;
 import com.jme3.bounding.BoundingVolume;
@@ -186,9 +187,9 @@ public final class Light extends Item {
         return color;
     }
 
-    public void actualizePos(final ItemRegistry reg) {
+    public void actualizePos() {
         if (pos != null) {
-            final Item i = reg.get(pos);
+            final Item i = itemRegistry.get(pos);
             if (i != null && i instanceof Model) {
                 final Model m = (Model) i;
                 final BoundingVolume bv = m.getModel().getWorldBound();

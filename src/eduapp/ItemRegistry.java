@@ -1,5 +1,6 @@
-package eduapp.level;
+package eduapp;
 
+import eduapp.level.Item;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,9 +10,18 @@ import java.util.Map;
  */
 public class ItemRegistry {
 
+    private static final ItemRegistry INSTANCE;
     private final Map<String, Item> data;
+    
+    static {
+        INSTANCE = new ItemRegistry();
+    }
 
-    public ItemRegistry() {
+    public static ItemRegistry getInstance() {
+        return INSTANCE;
+    }
+
+    private ItemRegistry() {
         data = new HashMap<>();
     }
 

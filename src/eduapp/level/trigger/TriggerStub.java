@@ -9,7 +9,7 @@ import com.jme3.scene.Spatial;
 import com.jme3.scene.debug.WireBox;
 import com.jme3.scene.debug.WireSphere;
 import eduapp.level.Item;
-import eduapp.level.ItemRegistry;
+import eduapp.ItemRegistry;
 import eduapp.level.Light;
 import eduapp.level.Model;
 import eduapp.level.Player;

@@ -8,6 +8,7 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+import eduapp.AppContext;
 import eduapp.gui.GuiManager;
 import eduapp.level.trigger.ActionTrigger;
 import eduapp.level.trigger.MoveTrigger;
@@ -36,7 +37,6 @@ public class Level {
     private final Set<Spatial> itemModels;
     private final Set<TriggerStub> stubs;
     private final Set<Trigger> triggers, activeTriggers;
-    private final ItemRegistry itemRegistry;
 
     public static Level loadLevel(final String levelName, final AssetManager assetManager) {
         final String path = "levels/".concat(levelName).concat(".").concat(LEVEL_FILE_EXTENSION);
@@ -57,7 +57,6 @@ public class Level {
 
         itemModels = new HashSet<>();
         rootNode = new Node(String.valueOf(Math.random()));
-        itemRegistry = new ItemRegistry();
         triggers = new HashSet<>();
         activeTriggers = new HashSet<>();
     }
@@ -66,10 +65,10 @@ public class Level {
         background.generateBackground(assetManager);
         rootNode.attachChild(background.getRootNode());
 
-        itemRegistry.put(player);
+        AppContext.registerItem(player);
 
         for (Quest q : quests) {
-            itemRegistry.put(q);
+            AppContext.registerItem(q);
             q.assignInterfaces(this);
         }
 
@@ -78,22 +77,22 @@ public class Level {
             s = i.generateItem(assetManager);
             itemModels.add(s);
             rootNode.attachChild(s);
-            itemRegistry.put(i);
+            AppContext.registerItem(i);
         }
         // create lights
         for (Light l : lights) {
-            l.actualizePos(itemRegistry);
+            AppContext.registerItem(l);
+            l.actualizePos();
             rootNode.addLight(l.getLight());
-            itemRegistry.put(l);            
         }
         // generate action items
         Trigger t;
         ActionTrigger at;
         for (TriggerStub ts : stubs) {
-            t = ts.generateTrigger(itemRegistry, assetManager);
+            t = ts.generateTrigger(AppContext.getItemRegistry(), assetManager);
             triggers.add(t);
             rootNode.attachChild(t.getGeometry());
-            itemRegistry.put(t);
+            AppContext.registerItem(t);
             if (t instanceof ActionTrigger) {
                 at = (ActionTrigger) t;
                 rootNode.addLight(at.getLight());
