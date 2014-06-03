@@ -31,8 +31,9 @@ import eduapp.level.Level;
  */
 public class GameScreen extends AbstractAppState {
 
-    private final Vector3f LEFT = new Vector3f(-1, 0, 0);
-    private final Vector3f UP = new Vector3f(0, 0, -1);
+    private static final float PLAYER_SPEED = 1.5f;
+    private static final Vector3f LEFT = new Vector3f(-1, 0, 0);
+    private static final Vector3f UP = new Vector3f(0, 0, -1);
     private final Vector3f walkDirection = new Vector3f();
     private final Vector3f viewDirection = new Vector3f();
     private String levelName;
@@ -189,7 +190,7 @@ public class GameScreen extends AbstractAppState {
         if (upd) {
             player.setViewDirection(viewDirection);
         }
-        player.setWalkDirection(walkDirection);
+        player.setWalkDirection(walkDirection.normalizeLocal().multLocal(PLAYER_SPEED));
         currentLevel.visit(playerAvatar.getModel().getWorldBound().getCenter());
 //        System.out.println(playerAvatar.getModel().getWorldBound().getCenter()); 
     }
