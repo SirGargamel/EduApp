@@ -18,7 +18,11 @@ public class EduApp {
             settings.setHeight(768);
             app.setShowSettings(false);
             app.setSettings(settings);
-            app.start();
+
+            app.setDisplayStatView(false);
+            app.setDisplayFps(false);
+
+            app.start();            
         } catch (Exception ex) {
             System.out.println(ex);
         }
