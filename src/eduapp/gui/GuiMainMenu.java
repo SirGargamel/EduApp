@@ -6,8 +6,8 @@ import de.lessvoid.nifty.controls.ListBox;
 import de.lessvoid.nifty.controls.ListBoxSelectionChangedEvent;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
+import eduapp.FlowManager;
 import eduapp.level.LevelList;
-import eduapp.state.StateManager;
 
 /**
  *
@@ -36,8 +36,7 @@ public class GuiMainMenu implements ScreenController {
 
     public void startGame() {
         System.out.println("Starting the game !!!");
-        StateManager.loadLevel(listBox.getFocusItem().toString());
-        GuiManager.gotoGameScreen();
+        FlowManager.loadLevel(listBox.getFocusItem().toString());        
     }
 
     @NiftyEventSubscriber(pattern = "LevelList.*")

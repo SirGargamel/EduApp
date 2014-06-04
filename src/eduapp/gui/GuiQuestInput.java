@@ -2,7 +2,6 @@ package eduapp.gui;
 
 import de.lessvoid.nifty.EndNotify;
 import de.lessvoid.nifty.Nifty;
-import de.lessvoid.nifty.controls.NiftyInputControl;
 import de.lessvoid.nifty.controls.TextField;
 import de.lessvoid.nifty.effects.EffectEventId;
 import de.lessvoid.nifty.elements.Element;
@@ -11,6 +10,7 @@ import de.lessvoid.nifty.input.NiftyInputEvent;
 import de.lessvoid.nifty.screen.KeyInputHandler;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
+import eduapp.FlowManager;
 import eduapp.level.quest.Question;
 
 /**
@@ -48,7 +48,7 @@ public class GuiQuestInput implements ScreenController {
                                 panelQuest.startEffect(EffectEventId.onCustom, new EndNotify() {
                                     @Override
                                     public void perform() {
-                                        GuiManager.gotoGameScreen();
+                                        FlowManager.enableGame(true);
                                     }
                                 }, "Ok");
                                 result = true;

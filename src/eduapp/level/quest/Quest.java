@@ -1,7 +1,7 @@
 package eduapp.level.quest;
 
+import eduapp.FlowManager;
 import eduapp.JmolUtils;
-import eduapp.gui.GuiManager;
 import eduapp.level.Item;
 import eduapp.level.Level;
 import java.io.IOException;
@@ -23,22 +23,22 @@ public class Quest extends Item {
     }
 
     public void makeActive() {
-        GuiManager.displayQuest(this);
+        FlowManager.displayQuest(this);
     }
 
     public void displayQuestion(Question question) {
-        GuiManager.displayQuestion(question);
+        FlowManager.displayQuestion(question);
     }
 
     public void displayJmolQuestion(JmolQuestion question) {        
         JmolUtils.launchJmol(question.getModelName());
-        GuiManager.displayQuestion(question);
+        FlowManager.displayQuestion(question);
     }
     
     public void displayWebQuestion(WebQuestion question) {
         try {
             java.awt.Desktop.getDesktop().browse(new URI(question.getWeb()));
-            GuiManager.displayQuestion(question);
+            FlowManager.displayQuestion(question);
         } catch (IOException | URISyntaxException ex) {
             System.err.println("Illegal web URL - " + ex);
         }

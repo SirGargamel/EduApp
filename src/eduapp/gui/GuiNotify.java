@@ -7,23 +7,22 @@ import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
-import eduapp.level.quest.QuestItem;
-import eduapp.level.quest.Question;
+import eduapp.FlowManager;
 
 /**
  *
  * @author Petr Ječmen
  */
-public class GuiQuestItemFinish implements ScreenController {
+public class GuiNotify implements ScreenController {
 
     private static final String NAME_QUESTION_PANEL = "panelQuest";
     private static final String NAME_QUESTION_TEXT = "questText";    
-    private QuestItem item;
+    private String notification;
     private Element questionText;
     private Element panelQuest;
 
-    public void setQuestion(QuestItem item) {
-        this.item = item;
+    public void setMessage(String notification) {
+        this.notification = notification;
     }
 
     @Override
@@ -34,14 +33,14 @@ public class GuiQuestItemFinish implements ScreenController {
 
     @Override
     public void onStartScreen() {
-        questionText.getRenderer(TextRenderer.class).setText("Úkol \"".concat(item.getTask()).concat("\" splněn."));
+        questionText.getRenderer(TextRenderer.class).setText(notification);
         panelQuest.startEffect(EffectEventId.onCustom, new EndNotify() {
             @Override
             public void perform() {
                 panelQuest.startEffect(EffectEventId.onCustom, new EndNotify() {
                     @Override
                     public void perform() {
-                        GuiManager.gotoGameScreen();
+                        FlowManager.enableGame(true);
                     }
                 }, "Hide");
             }

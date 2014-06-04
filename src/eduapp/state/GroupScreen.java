@@ -28,10 +28,13 @@ import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Image;
 import com.jme3.texture.Texture;
 import com.zero_separation.plugins.imagepainter.ImagePainter;
+import eduapp.Actions;
 import eduapp.AppContext;
+import eduapp.FlowManager;
 import eduapp.ItemParameters;
 import eduapp.level.Item;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -72,13 +75,13 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
 
         inputManager = AppContext.getApp().getInputManager();
         inputManager.setCursorVisible(true);
-        inputManager.addMapping("LeftClick", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
-        inputManager.addMapping("MouseMove",
+        inputManager.addMapping(Actions.LEFT_CLICK.toString(), new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+        inputManager.addMapping(Actions.MOUSE_MOVE.toString(),
                 new MouseAxisTrigger(MouseInput.AXIS_X, true),
                 new MouseAxisTrigger(MouseInput.AXIS_X, false),
                 new MouseAxisTrigger(MouseInput.AXIS_Y, true),
                 new MouseAxisTrigger(MouseInput.AXIS_Y, false));
-        inputManager.addListener(this, "LeftClick", "MouseMove");
+        inputManager.addListener(this, Actions.LEFT_CLICK.toString(), Actions.MOUSE_MOVE.toString(), Actions.PAUSE.toString());
 
         rootNode = AppContext.getApp().getRootNode();
         guiNode = AppContext.getApp().getGuiNode();
@@ -155,9 +158,12 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
     @Override
     public void cleanup() {
         super.cleanup();
-        //TODO: clean up what you initialized in the initialize method,
-        //e.g. remove all spatials from rootNode
-        //this is called on the OpenGL thread after the AppState has been detached
+        rootNode.detachAllChildren();
+        guiNode.detachAllChildren();
+
+        inputManager.removeListener(this);
+        inputManager.deleteMapping(Actions.LEFT_CLICK.toString());
+        inputManager.deleteMapping(Actions.MOUSE_MOVE.toString());        
     }
 
     public void setGrouping(Item group) {
@@ -166,14 +172,12 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
 
     public void setItems(Item... items) {
         this.itemsList.clear();
-        for (Item it : items) {
-            this.itemsList.add(it);
-        }
+        this.itemsList.addAll(Arrays.asList(items));
     }
 
     @Override
     public void onAction(String name, boolean isPressed, float tpf) {
-        if (name.equals("LeftClick")) {
+        if (name.equals(Actions.LEFT_CLICK.toString())) {
             if (isPressed) {
                 CollisionResults results = new CollisionResults();
                 Vector2f click2d = inputManager.getCursorPosition();
@@ -190,12 +194,16 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
                 picked = null;
                 checkGrouping();
             }
+        } else if (name.equals(Actions.PAUSE.toString())) {
+            if (!isPressed && name.equals(Actions.PAUSE.toString())) {
+                FlowManager.enableGame(!isEnabled());
+            }
         }
     }
 
     @Override
     public void onAnalog(String name, float value, float tpf) {
-        if (name.equals("MouseMove") && picked != null) {
+        if (name.equals(Actions.MOUSE_MOVE.toString()) && picked != null) {
             CollisionResults results = new CollisionResults();
             Vector2f click2d = inputManager.getCursorPosition();
             Vector3f click3d = cam.getWorldCoordinates(
@@ -210,7 +218,7 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
         }
     }
 
-    private void checkGrouping() {
+    public int[] checkGrouping() {
         CollisionResults results = new CollisionResults();
         int counter = 0;
         String[] vals;
@@ -219,9 +227,9 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
         for (Spatial s : buckets.getChildren()) {
             results.clear();
             items.collideWith(s.getWorldBound(), results);
-            
+
             gr = s.getName();
-            for (int i = 9; i < results.size(); i += 10) {                
+            for (int i = 9; i < results.size(); i += 10) {
                 vals = results.getCollision(i).getGeometry().getName().split(ItemParameters.SPLITTER);
                 match = false;
                 for (String str : vals) {
@@ -236,5 +244,6 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
             }
         }
         System.out.println(counter + " correct");
+        return new int[]{counter, itemsList.size()};
     }
 }

@@ -4,12 +4,13 @@ import eduapp.loaders.LevelLoader;
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetKey;
 import com.jme3.asset.AssetManager;
+import com.jme3.input.KeyInput;
+import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.KeyTrigger;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.lessvoid.nifty.Nifty;
-import eduapp.gui.GuiManager;
 import eduapp.level.Item;
 import eduapp.loaders.DictionaryLoader;
-import eduapp.state.StateManager;
 import java.util.Set;
 
 /**
@@ -25,6 +26,8 @@ public class Game extends SimpleApplication {
 
         loadDictionary(assetManager, AppContext.getItemRegistry(), "Elements");
         loadDictionary(assetManager, AppContext.getItemRegistry(), "Groups");
+        
+        initGlobalKeyMappings();
 
         NiftyJmeDisplay niftyDisplay = new NiftyJmeDisplay(
                 assetManager, inputManager, audioRenderer, guiViewPort);
@@ -33,17 +36,10 @@ public class Game extends SimpleApplication {
         // attach the Nifty display to the gui view port as a processor
         guiViewPort.addProcessor(niftyDisplay);
 
-//        inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_MEMORY);
-//        inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_CAMERA_POS);
-
-        inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_HIDE_STATS);
-//        inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_EXIT);
-
         AppContext.setApp(this);
-        GuiManager.setNifty(nifty);
+        FlowManager.setNifty(nifty);
 
-        GuiManager.gotoGameScreen();        
-        StateManager.debug();
+        FlowManager.debug();
     }
 
     private void loadDictionary(final AssetManager assetManager, final ItemRegistry ir, final String dicName) {
@@ -52,5 +48,15 @@ public class Game extends SimpleApplication {
         for (Item it : elements) {
             ir.put(it);
         }
+    }
+
+    private void initGlobalKeyMappings() {
+//        inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_MEMORY);
+//        inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_CAMERA_POS);
+
+        inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_HIDE_STATS);
+        inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_EXIT);
+        
+        inputManager.addMapping(Actions.PAUSE.toString(), new KeyTrigger(KeyInput.KEY_ESCAPE));        
     }
 }

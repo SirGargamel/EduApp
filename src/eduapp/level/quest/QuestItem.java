@@ -1,6 +1,6 @@
 package eduapp.level.quest;
 
-import eduapp.gui.GuiManager;
+import eduapp.FlowManager;
 import eduapp.level.Item;
 import eduapp.level.Level;
 import eduapp.level.Light;
@@ -24,7 +24,7 @@ public abstract class QuestItem extends Item {
     public abstract boolean isFinished();
 
     public abstract String toNiftyString();
-    
+
     public abstract String getTask();
 
     public void setLevel(final Level level) {
@@ -49,6 +49,6 @@ public abstract class QuestItem extends Item {
                 System.err.println("Illegal child for deactivation - " + s);
             }
         }
-        GuiManager.finishQuestItem(this);
+        FlowManager.displayMessage("Úkol ".concat(getTask()).concat(" byl splněn."));
     }
 }

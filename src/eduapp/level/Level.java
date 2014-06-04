@@ -9,8 +9,8 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import eduapp.AppContext;
+import eduapp.FlowManager;
 import eduapp.ItemRegistry;
-import eduapp.gui.GuiManager;
 import eduapp.level.trigger.ActionTrigger;
 import eduapp.level.trigger.MoveTrigger;
 import eduapp.level.trigger.Trigger;
@@ -172,7 +172,7 @@ public class Level {
                 break;
             }
         }
-        GuiManager.showTriggerMarker(show);
+        FlowManager.showTriggerMarker(show);
     }
 
     public void activate(final Vector3f pos) {

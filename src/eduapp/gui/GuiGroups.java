@@ -9,7 +9,7 @@ import eduapp.FlowManager;
  *
  * @author Petr Ječmen
  */
-public class GuiPause implements ScreenController {
+public class GuiGroups implements ScreenController {
 
     @Override
     public void bind(Nifty nifty, Screen screen) {
@@ -23,15 +23,7 @@ public class GuiPause implements ScreenController {
     public void onEndScreen() {
     }
 
-    public void backToMenu() {       
-        FlowManager.gotoMainMenu();
-    }
-
-    public void backToGame() {        
-        FlowManager.enableGame(true);
-    }
-
-    public void exit() {
-        FlowManager.exitGame();
+    public void ok() {        
+        FlowManager.finishGroupScreen();
     }
 }

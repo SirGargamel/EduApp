@@ -4,7 +4,6 @@ import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
-import com.jme3.asset.AssetKey;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.CollisionShape;
@@ -22,13 +21,9 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import eduapp.Actions;
 import eduapp.AppContext;
-import eduapp.ItemRegistry;
+import eduapp.FlowManager;
 import eduapp.PlayerAvatar;
-import eduapp.gui.GuiManager;
-import eduapp.level.Item;
 import eduapp.level.Level;
-import eduapp.loaders.DictionaryLoader;
-import java.util.Set;
 
 /**
  *
@@ -36,13 +31,11 @@ import java.util.Set;
  */
 public class WorldScreen extends AbstractAppState {
 
-    private static final String NODE_ITEM = "Item";
     private static final float PLAYER_SPEED = 1.5f;
     private static final Vector3f LEFT = new Vector3f(-1, 0, 0);
     private static final Vector3f UP = new Vector3f(0, 0, -1);
     private final Vector3f walkDirection = new Vector3f();
     private final Vector3f viewDirection = new Vector3f();
-    private String levelName;
     private BulletAppState bulletAppState;
     private BetterCharacterControl player;
     private PlayerAvatar playerAvatar;
@@ -52,20 +45,20 @@ public class WorldScreen extends AbstractAppState {
     private ActionListener keyListener;
 
     public void setLevelName(String levelName) {
-        this.levelName = levelName;
+        currentLevel = Level.loadLevel(levelName, AppContext.getApp().getAssetManager());
     }
 
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
-        super.initialize(stateManager, app);        
-        loadLevel(AppContext.getApp());
-    }        
+        super.initialize(stateManager, app);
+        prepareWorld(app);
+    }
 
-    private void loadLevel(Application app) {
-        initWorld(app);
+    private void prepareWorld(Application app) {
         initPlayer(app.getAssetManager(), app.getInputManager());
 
         currentLevel.getRootNode().attachChild(playerAvatar.getModel());
+        ((SimpleApplication) app).getRootNode().attachChild(currentLevel.getRootNode());
 
         initKeys(app.getInputManager());
         initCamera(app);
@@ -75,18 +68,11 @@ public class WorldScreen extends AbstractAppState {
 
     private void initPlayer(final AssetManager assetManager, final InputManager inputManager) {
         playerAvatar = new PlayerAvatar(assetManager, inputManager, currentLevel.getPlayer().getModelName());
-        StateManager.assignPlayerAvatar(playerAvatar);
-    }
-
-    private void initWorld(Application app) {
-        currentLevel = Level.loadLevel(levelName, app.getAssetManager());
-        ((SimpleApplication) app).getRootNode().attachChild(currentLevel.getRootNode());
+        FlowManager.assignPlayerAvatar(playerAvatar);
     }
 
     private void initKeys(final InputManager inputManager) {
-        inputManager.deleteMapping("SIMPLEAPP_Exit");
-        // You can map one or several inputs to one named action        
-        inputManager.addMapping(Actions.PAUSE.toString(), new KeyTrigger(KeyInput.KEY_ESCAPE));
+        // You can map one or several inputs to one named action                
         inputManager.addMapping(Actions.LEFT.toString(), new KeyTrigger(KeyInput.KEY_LEFT));
         inputManager.addMapping(Actions.RIGHT.toString(), new KeyTrigger(KeyInput.KEY_RIGHT));
         inputManager.addMapping(Actions.UP.toString(), new KeyTrigger(KeyInput.KEY_UP));
@@ -100,9 +86,9 @@ public class WorldScreen extends AbstractAppState {
             public void onAction(String name, boolean isPressed, float tpf) {
                 if (!isPressed) {
                     if (name.equals(Actions.PAUSE.toString())) {
-                        GuiManager.enableGame(!isEnabled());
+                        FlowManager.enableGame(!isEnabled());
                     } else if (name.equals(Actions.QUEST.toString())) {
-                        GuiManager.questAction();
+                        FlowManager.questAction();
                     } else if (name.equals(Actions.ACTION.toString())) {
                         currentLevel.activate(playerAvatar.getModel().getWorldBound().getCenter());
                     } else if (name.equals("Debug")) {
@@ -211,11 +197,12 @@ public class WorldScreen extends AbstractAppState {
 
         final InputManager inputManager = AppContext.getApp().getInputManager();
         inputManager.removeListener(keyListener);
-        for (Actions a : Actions.values()) {
-            inputManager.deleteMapping(a.toString());
-        }
-
-        currentLevel.destroy();
+        inputManager.deleteMapping(Actions.LEFT.toString());
+        inputManager.deleteMapping(Actions.RIGHT.toString());
+        inputManager.deleteMapping(Actions.UP.toString());
+        inputManager.deleteMapping(Actions.DOWN.toString());
+        inputManager.deleteMapping(Actions.ACTION.toString());
+        inputManager.deleteMapping(Actions.QUEST.toString());
     }
 
     public void debugAction() {

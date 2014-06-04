@@ -1,7 +1,5 @@
 <Level>
-    <Background>
-        <Coords>0;0</Coords>
-        <Width>8</Width>
+    <Background>                
         <Values>
             AAAAAAAA
             AAAAAAAA
@@ -10,7 +8,7 @@
             AAAAAAAA
             AAAAAAAA
             AAAAAAAA
-            AAAAAAAA</Values>
+            0AAAAAAA</Values>
         <Texture tag="A">floorSand.png</Texture>				
     </Background>
     <Player>
