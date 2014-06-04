@@ -1,6 +1,7 @@
 package eduapp.state;
 
 import eduapp.AppContext;
+import eduapp.ItemRegistry;
 import eduapp.PlayerAvatar;
 
 /**
@@ -53,8 +54,9 @@ public class StateManager {
         AppContext.getApp().getStateManager().detach(startScreen);
         AppContext.getApp().getStateManager().detach(worldScreen);
 
-        groupScreen.setGroups("Skupina A", "Skupina B", "Skup C");
-        groupScreen.setItems("H2SO4", "H20", "O2", "S");
+        final ItemRegistry ir = AppContext.getItemRegistry();
+        groupScreen.setGrouping(ir.get("stav"));
+        groupScreen.setItems(ir.get("h2so4"), ir.get("v2o5"), ir.get("s"), ir.get("sio2"), ir.get("so2"));
 
         AppContext.getApp().getStateManager().attach(groupScreen);
     }

@@ -1,15 +1,23 @@
-package eduapp.level.xml;
+package eduapp.loaders;
 
 import com.jme3.asset.AssetInfo;
 import com.jme3.asset.AssetLoader;
-import com.jme3.math.Vector3f;
+import eduapp.AppContext;
+import eduapp.ItemRegistry;
 import eduapp.level.Background;
+import eduapp.level.Item;
 import eduapp.level.Model;
 import eduapp.level.Level;
 import eduapp.level.Light;
 import eduapp.level.Player;
 import eduapp.level.quest.Quest;
 import eduapp.level.trigger.TriggerStub;
+import eduapp.level.xml.XmlBackground;
+import eduapp.level.xml.XmlLight;
+import eduapp.level.xml.XmlModel;
+import eduapp.level.xml.XmlPlayer;
+import eduapp.level.xml.XmlQuest;
+import eduapp.level.xml.XmlTrigger;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -29,6 +37,7 @@ import org.xml.sax.SAXException;
  */
 public class LevelLoader implements AssetLoader {
 
+    public static final String EXTENSION = "xml";
     public static final String ATTR_ID = "id";
     private static final String NODE_ACTION_ITEMS = "ActionItems";
     private static final String NODE_BACKGROUND = "Background";
@@ -53,8 +62,9 @@ public class LevelLoader implements AssetLoader {
             final Set<Model> items = loadItems(doc);
             final Set<Light> lights = loadLights(doc);
             final Set<TriggerStub> actionItems = loadTriggers(doc);
-            final Set<Quest> quests = loadQuests(doc);
-            result = new Level(background, player, items, lights, actionItems, quests);
+            final Set<Quest> quests = loadQuests(doc);                       
+            
+            result = new Level(background, player, items, lights, actionItems, quests);            
         } catch (NullPointerException | ParserConfigurationException | SAXException ex) {
             ex.printStackTrace(System.err);
         }
@@ -162,5 +172,5 @@ public class LevelLoader implements AssetLoader {
             }
         }
         return result;
-    }
+    }   
 }

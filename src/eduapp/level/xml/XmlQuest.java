@@ -1,5 +1,6 @@
 package eduapp.level.xml;
 
+import eduapp.loaders.LevelLoader;
 import eduapp.level.quest.JmolQuestion;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;

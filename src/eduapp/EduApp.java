@@ -11,7 +11,7 @@ public class EduApp {
 
     public static void main(String[] args) {
         try {
-            SimpleApplication app = new TestScene();
+            SimpleApplication app = new Game();
             AppSettings settings = new AppSettings(true);
             settings.setRenderer(AppSettings.LWJGL_OPENGL_ANY);
             settings.setWidth(1024);

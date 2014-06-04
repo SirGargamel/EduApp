@@ -29,6 +29,8 @@ import com.jme3.texture.Image;
 import com.jme3.texture.Texture;
 import com.zero_separation.plugins.imagepainter.ImagePainter;
 import eduapp.AppContext;
+import eduapp.ItemParameters;
+import eduapp.level.Item;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,14 +51,14 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
     private static final float POS_OFFSET_BOX_X = -7.0f;
     private static final float POS_OFFSET_BOX_Y = -5.0f;
     private static final float POS_OFFSET_CAM_Z = 15.0f;
-    private List<String> groups, itemsList;
+    private Item group;
+    private List<Item> itemsList;
     private InputManager inputManager;
     private Camera cam;
     private Node rootNode, guiNode, floor, buckets, items;
     private Geometry picked;
 
     public GroupScreen() {
-        groups = new ArrayList<>();
         itemsList = new ArrayList<>();
     }
 
@@ -87,14 +89,18 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
         Geometry g;
 
         // generate circles for groups        
+        final String[] groups = group.getParam(ItemParameters.STATE).split(ItemParameters.SPLITTER);
+
         mat = new Material(app.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
         mat.setColor("Color", ColorRGBA.Gray);
         int i = 0;
-        int w = 1024 / groups.size();
+        int w = 1024 / groups.length;
         int gap = 10;
         buckets = new Node();
+        String sT;
         for (String s : groups) {
-            g = new Geometry(s, new Cylinder(50, 50, SIZE_GROUP_R, SIZE_GROUP_H, true));
+            sT = s.trim();
+            g = new Geometry(sT, new Cylinder(50, 50, SIZE_GROUP_R, SIZE_GROUP_H, true));
             g.setMaterial(mat);
             g.move(POS_OFFSET_GROUP_X + i * (SIZE_GROUP_R * 2 + SIZE_GAP), POS_OFFSET_GROUP_Y, -SIZE_GROUP_H / 2.0f);
             buckets.attachChild(g);
@@ -102,7 +108,7 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
             BitmapText hudText = new BitmapText(bf, false);
             hudText.setSize(bf.getCharSet().getRenderedSize());
             hudText.setColor(ColorRGBA.White);
-            hudText.setText(s);
+            hudText.setText(sT);
             hudText.setLocalTranslation(w / 2 + i * (w - gap), 768, 0);
             guiNode.attachChild(hudText);
 
@@ -113,16 +119,16 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
         // generate cubes for items                         
         i = 0;
         items = new Node("items");
-        for (String s : itemsList) {
+        for (Item it : itemsList) {
             mat = new Material(app.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
             Texture tex = assetManager.loadTexture("materials/wallConcrete.png");
             assetManager.deleteFromCache(tex.getKey());
             Image img = tex.getImage();
             ImagePainter ip = new ImagePainter(img);
-            ip.paintTextArea(0, 0, img.getWidth(), img.getHeight(), bf, s, ImagePainter.TextHAlign.Center, ImagePainter.TextVAlign.Center, ColorRGBA.Black, ImagePainter.BlendMode.SET);
+            ip.paintTextArea(0, 0, img.getWidth(), img.getHeight(), bf, it.getParam(ItemParameters.FORMULA), ImagePainter.TextHAlign.Center, ImagePainter.TextVAlign.Center, ColorRGBA.Black, ImagePainter.BlendMode.SET);
             mat.setTexture("ColorMap", tex);
 
-            g = new Geometry(s, new Box(Vector3f.ZERO, new Vector3f(SIZE_BOX_X, SIZE_BOX_Y, SIZE_BOX_Z)));
+            g = new Geometry(it.getParam(ItemParameters.STATE), new Box(Vector3f.ZERO, new Vector3f(SIZE_BOX_X, SIZE_BOX_Y, SIZE_BOX_Z)));
             g.setMaterial(mat);
             g.move(POS_OFFSET_BOX_X + i * (SIZE_BOX_X + SIZE_GAP), POS_OFFSET_BOX_Y, -SIZE_BOX_Z / 2.0f);
 
@@ -154,17 +160,14 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
         //this is called on the OpenGL thread after the AppState has been detached
     }
 
-    public void setGroups(String... groups) {
-        this.groups.clear();
-        for (String s : groups) {
-            this.groups.add(s);
-        }
+    public void setGrouping(Item group) {
+        this.group = group;
     }
 
-    public void setItems(String... items) {
+    public void setItems(Item... items) {
         this.itemsList.clear();
-        for (String s : items) {
-            this.itemsList.add(s);
+        for (Item it : items) {
+            this.itemsList.add(it);
         }
     }
 
@@ -210,13 +213,28 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
     private void checkGrouping() {
         CollisionResults results = new CollisionResults();
         int counter = 0;
+        String[] vals;
+        String gr;
+        boolean match;
         for (Spatial s : buckets.getChildren()) {
             results.clear();
             items.collideWith(s.getWorldBound(), results);
-            counter += results.size() / 10;
+            
+            gr = s.getName();
+            for (int i = 9; i < results.size(); i += 10) {                
+                vals = results.getCollision(i).getGeometry().getName().split(ItemParameters.SPLITTER);
+                match = false;
+                for (String str : vals) {
+                    if (str.trim().equalsIgnoreCase(gr)) {
+                        match = true;
+                        break;
+                    }
+                }
+                if (match) {
+                    counter += 1;
+                }
+            }
         }
-        if (counter >= items.getChildren().size()) {
-            System.out.println("All DONE");
-        }
+        System.out.println(counter + " correct");
     }
 }

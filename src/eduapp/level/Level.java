@@ -9,11 +9,13 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import eduapp.AppContext;
+import eduapp.ItemRegistry;
 import eduapp.gui.GuiManager;
 import eduapp.level.trigger.ActionTrigger;
 import eduapp.level.trigger.MoveTrigger;
 import eduapp.level.trigger.Trigger;
 import eduapp.level.trigger.TriggerStub;
+import eduapp.loaders.LevelLoader;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -24,7 +26,6 @@ import java.util.Set;
  */
 public class Level {
 
-    public static final String LEVEL_FILE_EXTENSION = "xml";
     public static final float LEVEL_HEIGHT = 2.5f;
     public static final int TILE_SIZE = 1;
     private static final float RADIUS_INTERACTION = 0.5f;
@@ -39,7 +40,7 @@ public class Level {
     private final Set<Trigger> triggers, activeTriggers;
 
     public static Level loadLevel(final String levelName, final AssetManager assetManager) {
-        final String path = "levels/".concat(levelName).concat(".").concat(LEVEL_FILE_EXTENSION);
+        final String path = "levels/".concat(levelName).concat(".").concat(LevelLoader.EXTENSION);
         final AssetKey<Level> key = new AssetKey<>(path);
         final Level result = assetManager.loadAsset(key);
         result.generateLevel(assetManager);
@@ -65,10 +66,11 @@ public class Level {
         background.generateBackground(assetManager);
         rootNode.attachChild(background.getRootNode());
 
-        AppContext.registerItem(player);
+        final ItemRegistry ir = AppContext.getItemRegistry();
+        ir.put(player);
 
         for (Quest q : quests) {
-            AppContext.registerItem(q);
+            ir.put(q);
             q.assignInterfaces(this);
         }
 
@@ -77,11 +79,11 @@ public class Level {
             s = i.generateItem(assetManager);
             itemModels.add(s);
             rootNode.attachChild(s);
-            AppContext.registerItem(i);
+            ir.put(i);
         }
         // create lights
         for (Light l : lights) {
-            AppContext.registerItem(l);
+            ir.put(l);
             l.actualizePos();
             rootNode.addLight(l.getLight());
         }
@@ -92,7 +94,7 @@ public class Level {
             t = ts.generateTrigger(AppContext.getItemRegistry(), assetManager);
             triggers.add(t);
             rootNode.attachChild(t.getGeometry());
-            AppContext.registerItem(t);
+            ir.put(t);
             if (t instanceof ActionTrigger) {
                 at = (ActionTrigger) t;
                 rootNode.addLight(at.getLight());

@@ -4,6 +4,7 @@ import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
+import com.jme3.asset.AssetKey;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.CollisionShape;
@@ -21,9 +22,13 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import eduapp.Actions;
 import eduapp.AppContext;
+import eduapp.ItemRegistry;
 import eduapp.PlayerAvatar;
 import eduapp.gui.GuiManager;
+import eduapp.level.Item;
 import eduapp.level.Level;
+import eduapp.loaders.DictionaryLoader;
+import java.util.Set;
 
 /**
  *
@@ -31,6 +36,7 @@ import eduapp.level.Level;
  */
 public class WorldScreen extends AbstractAppState {
 
+    private static final String NODE_ITEM = "Item";
     private static final float PLAYER_SPEED = 1.5f;
     private static final Vector3f LEFT = new Vector3f(-1, 0, 0);
     private static final Vector3f UP = new Vector3f(0, 0, -1);
@@ -51,9 +57,9 @@ public class WorldScreen extends AbstractAppState {
 
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
-        super.initialize(stateManager, app);
+        super.initialize(stateManager, app);        
         loadLevel(AppContext.getApp());
-    }
+    }        
 
     private void loadLevel(Application app) {
         initWorld(app);

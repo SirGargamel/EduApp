@@ -31,7 +31,7 @@ public class Item {
     }
     
     public void setParam(String id, String param) {
-        params.put(id, param);
+        params.put(id, param.trim());
     }
 
     public void setItemRegistry(ItemRegistry itemRegistry) {
