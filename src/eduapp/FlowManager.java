@@ -161,7 +161,7 @@ public class FlowManager {
         AppContext.getApp().getStateManager().detach(currentState);        
 
         final ItemRegistry ir = AppContext.getItemRegistry();
-        groupScreen.setGrouping(ir.get("stav"));
+        groupScreen.setGrouping(ir.get("skup"));
         groupScreen.setItems(ir.get("h2so4"), ir.get("v2o5"), ir.get("s"), ir.get("sio2"), ir.get("so2"));
 
         worldScreen.setLevelName("Empty");

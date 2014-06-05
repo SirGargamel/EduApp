@@ -34,7 +34,6 @@ import eduapp.FlowManager;
 import eduapp.ItemParameters;
 import eduapp.level.Item;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -163,16 +162,38 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
 
         inputManager.removeListener(this);
         inputManager.deleteMapping(Actions.LEFT_CLICK.toString());
-        inputManager.deleteMapping(Actions.MOUSE_MOVE.toString());        
+        inputManager.deleteMapping(Actions.MOUSE_MOVE.toString());
     }
 
     public void setGrouping(Item group) {
-        this.group = group;
+        if (group != null) {
+            this.group = group;
+            final String id = group.getId();
+            final String gr = group.getParam(id);
+            if (gr == null) {
+                System.err.println("Illegal group - " + group);
+            }
+        } else {
+            System.err.println("NULL group.");
+        }
     }
 
     public void setItems(Item... items) {
         this.itemsList.clear();
-        this.itemsList.addAll(Arrays.asList(items));
+        final String id = group.getId();
+        if (id == null) {
+            System.err.println("Group does not set.");
+        } else {
+            String val;
+            for (Item it : items) {
+                val = it.getParam(id);
+                if (val == null) {
+                    System.err.println("Item missing group param - " + id);
+                } else {
+                    itemsList.add(it);
+                }
+            }
+        }
     }
 
     @Override
