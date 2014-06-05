@@ -67,8 +67,7 @@ public class WorldScreen extends AbstractAppState {
     }
 
     private void initPlayer(final AssetManager assetManager, final InputManager inputManager) {
-        playerAvatar = new PlayerAvatar(assetManager, inputManager, currentLevel.getPlayer().getModelName());
-        FlowManager.assignPlayerAvatar(playerAvatar);
+        playerAvatar = new PlayerAvatar(assetManager, inputManager, currentLevel.getPlayer().getModelName());        
     }
 
     private void initKeys(final InputManager inputManager) {
@@ -151,6 +150,14 @@ public class WorldScreen extends AbstractAppState {
             rbc = new RigidBodyControl(cs, 0);
             s.addControl(rbc);
             bulletAppState.getPhysicsSpace().add(rbc);
+        }
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        if (playerAvatar != null) {
+            playerAvatar.setIsRunning(enabled);
         }
     }
 

@@ -28,8 +28,7 @@ public class FlowManager {
     private static final String SCREEN_START = "start";
     private static final WorldScreen worldScreen;
     private static final StartScreen startScreen;
-    private static final GroupScreen groupScreen;
-    private static PlayerAvatar player;
+    private static final GroupScreen groupScreen;    
     private static Nifty nifty;
     private static Quest currentQuest;
     private static AppState currentState;
@@ -44,17 +43,9 @@ public class FlowManager {
         currentState = startScreen;
     }
 
-    public static void assignPlayerAvatar(final PlayerAvatar player) {
-        FlowManager.player = player;
-    }
-
-    public static void loadLevel(String levelName) {
-        AppContext.getApp().getStateManager().detach(currentState);
+    public static void loadLevel(String levelName) {        
         worldScreen.setLevelName(levelName);
-        worldScreen.setEnabled(true);
-        AppContext.getApp().getStateManager().attach(worldScreen);
-        nifty.gotoScreen(SCREEN_WORLD);
-        currentState = worldScreen;
+        gotoWorldScreen();
     }
 
     public static void handlePause() {
@@ -69,11 +60,6 @@ public class FlowManager {
 
     public static void enableState(boolean isEnabled) {
         currentState.setEnabled(isEnabled);
-        if (currentState == worldScreen) {
-            if (player != null) {
-                player.setIsRunning(isEnabled);
-            }
-        }
     }
 
     public static void displayLastScreen() {
@@ -89,10 +75,11 @@ public class FlowManager {
     }
 
     public static void gotoWorldScreen() {
+        lastScreen = SCREEN_WORLD;
         AppContext.getApp().getStateManager().detach(currentState);
         AppContext.getApp().getStateManager().attach(worldScreen);
-        currentState = worldScreen;
-        lastScreen = SCREEN_WORLD;
+        worldScreen.setEnabled(true);
+        currentState = worldScreen;        
         nifty.gotoScreen(SCREEN_WORLD);
     }
 
@@ -106,7 +93,7 @@ public class FlowManager {
     public static void displayGroupScreen(final GroupingQuest group) {
         groupScreen.setGrouping(group.getGroup());
         groupScreen.setItems(group.getItems());
-        
+
         AppContext.getApp().getStateManager().detach(currentState);
         AppContext.getApp().getStateManager().attach(groupScreen);
         lastScreen = SCREEN_GROUPS;
