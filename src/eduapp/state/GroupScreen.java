@@ -186,11 +186,15 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
         } else {
             String val;
             for (Item it : items) {
-                val = it.getParam(id);
-                if (val == null) {
-                    System.err.println("Item missing group param - " + id);
+                if (it != null) {
+                    val = it.getParam(id);
+                    if (val == null) {
+                        System.err.println("Item missing group param - " + id);
+                    } else {
+                        itemsList.add(it);
+                    }
                 } else {
-                    itemsList.add(it);
+                    System.err.println("NULL item");
                 }
             }
         }

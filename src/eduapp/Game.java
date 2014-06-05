@@ -39,7 +39,8 @@ public class Game extends SimpleApplication {
         AppContext.setApp(this);
         FlowManager.setNifty(nifty);
 
-        FlowManager.debug();
+//        FlowManager.debug();
+//        FlowManager.gotoMainMenu();
     }
 
     private void loadDictionary(final AssetManager assetManager, final ItemRegistry ir, final String dicName) {

@@ -6,6 +6,7 @@ import eduapp.gui.GuiGame;
 import eduapp.gui.GuiQuest;
 import eduapp.gui.GuiQuestInput;
 import eduapp.gui.GuiNotify;
+import eduapp.level.quest.GroupingQuest;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.Question;
 import eduapp.state.GroupScreen;
@@ -102,12 +103,16 @@ public class FlowManager {
         currentState = startScreen;
     }
 
-    public static void gotoGroupScreen() {
+    public static void displayGroupScreen(final GroupingQuest group) {
+        groupScreen.setGrouping(group.getGroup());
+        groupScreen.setItems(group.getItems());
+        
         AppContext.getApp().getStateManager().detach(currentState);
         AppContext.getApp().getStateManager().attach(groupScreen);
         lastScreen = SCREEN_GROUPS;
         nifty.gotoScreen(SCREEN_GROUPS);
         currentState = groupScreen;
+        groupScreen.setEnabled(true);
     }
 
     public static void displayQuest(final Quest quest) {
@@ -163,6 +168,6 @@ public class FlowManager {
 
         worldScreen.setLevelName("Empty");
 
-        gotoGroupScreen();
+//        gotoGroupScreen();
     }
 }

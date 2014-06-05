@@ -1,5 +1,6 @@
 package eduapp.level.xml;
 
+import eduapp.level.quest.GroupingQuest;
 import eduapp.loaders.LevelLoader;
 import eduapp.level.quest.JmolQuestion;
 import eduapp.level.quest.Quest;
@@ -22,6 +23,7 @@ public class XmlQuest extends XmlEntity<Quest> {
     private static final String ATTR_NAME = "name";
     private static final String ITEM_CHILD = "Child";
     private static final String ITEM_DATA = "Data";
+    private static final String ITEM_GROUPS = "Group";
     private static final String ITEM_QUESTION = "Question";
     private static final String ITEM_QUESTION_JMOL = "Jmol";
     private static final String ITEM_QUESTION_WEB = "Web";
@@ -56,6 +58,14 @@ public class XmlQuest extends XmlEntity<Quest> {
         final String[] split;
         final Element e = (Element) node;
         switch (e.getNodeName()) {
+            case ITEM_GROUPS:
+                split = e.getElementsByTagName(ITEM_DATA).item(0).getTextContent().split(QUESTION_SEPARATOR);
+                if (split.length == 2) {
+                    result = new GroupingQuest(split[0], split[1]);
+                } else {
+                    throw new IllegalArgumentException("Unsupported group task, separator is ::, required 2 params - " + node.getTextContent());
+                }
+                break;
             case ITEM_QUESTION:
                 split = e.getElementsByTagName(ITEM_DATA).item(0).getTextContent().split(QUESTION_SEPARATOR);
                 if (split.length == 2) {

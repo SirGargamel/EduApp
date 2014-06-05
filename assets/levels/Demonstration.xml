@@ -16,7 +16,7 @@
         <Empty>-</Empty>
     </Background>
     <Player>
-        <Coords>0.5;-1.5</Coords>
+        <Coords>15.5;-1.5</Coords>
         <Model>Goblin</Model>
     </Player>
     <Items>
@@ -122,6 +122,11 @@
             <Target>hlavniQuest</Target>
             <Action>DisplayW2</Action>            	
         </ActionTrigger>
+        <ActionTrigger id="tG1">
+            <Volume>shelf3</Volume>
+            <Target>hlavniQuest</Target>
+            <Action>DisplayG1</Action>            	
+        </ActionTrigger>
     </ActionItems>
     <Quests>
         <Quest id="hlavniQuest" name="Hlavní úkol">
@@ -136,14 +141,18 @@
                 <Data>Zadejte počet atomů molekuly kyseliny sírové::7::kyselinaSirova.pdb</Data>
                 <Child>tJ1</Child>                
             </Jmol>
-            <Web>
+            <Web id="w1">
                 <Data>Popište vzhled kyseliny sírové::bezbarvá olejovitá kapalina::http://cs.wikipedia.org/wiki/Kyselina_s%C3%ADrov%C3%A1</Data>
                 <Child>tW1</Child>
             </Web>
-            <Web>
+            <Web id="w2">
                 <Data>Uveďte zastaralý název kyseliny sírové::vitriol::http://cs.wikipedia.org/wiki/Kyselina_s%C3%ADrov%C3%A1</Data>
                 <Child>tW2</Child>
             </Web>
+            <Group id="g1">
+                <Data>skup::h2so4;so2;so3;v2o5;k2so4;sio2</Data>
+                <Child>tG1</Child>
+            </Group>
         </Quest>
     </Quests>
 </Level>

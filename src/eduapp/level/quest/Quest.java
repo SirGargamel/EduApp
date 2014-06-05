@@ -43,6 +43,10 @@ public class Quest extends Item {
             System.err.println("Illegal web URL - " + ex);
         }
     }
+    
+    public void displayGroups(GroupingQuest group) {
+        FlowManager.displayGroupScreen(group);
+    }
 
     public List<QuestItem> getData() {
         return data;
