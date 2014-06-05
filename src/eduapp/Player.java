@@ -16,7 +16,7 @@ import eduapp.level.quest.Quest;
  *
  * @author Petr Jecmen
  */
-public class PlayerAvatar implements AnimEventListener {
+public class Player implements AnimEventListener, ActionListener, AnalogListener {
 
     private static final float PLAYER_HEIGHT = 1.5f;
     private Spatial model;
@@ -26,7 +26,7 @@ public class PlayerAvatar implements AnimEventListener {
     private boolean isRunning;
     private Quest currentQuest;
 
-    public PlayerAvatar(final AssetManager assetManager, final InputManager inputManager, final String modelName) {
+    public Player(final AssetManager assetManager, final InputManager inputManager, final String modelName) {
         final StringBuilder sb = new StringBuilder();
         sb.append("models/");
         sb.append(modelName);
@@ -48,50 +48,27 @@ public class PlayerAvatar implements AnimEventListener {
             ((com.jme3.scene.Node) model).attachChild(backup);
         }
 
-        final ActionListener actionListener = new ActionListener() {
-            @Override
-            public void onAction(String name, boolean isPressed, float tpf) {
-                if (!isPressed && isRunning) {
-                    if (name.equals(Actions.LEFT.toString())
-                            || name.equals(Actions.RIGHT.toString())
-                            || name.equals(Actions.UP.toString())
-                            || name.equals(Actions.DOWN.toString())) {
-                        channel.setTime(channel.getAnimMaxTime());
-                    }
-                }
-            }
-        };
+        isRunning = true;
+    }
+
+    public void initKeys(final InputManager inputManager) {
         inputManager.addListener(
-                actionListener,
+                this,
                 Actions.PAUSE.toString(),
                 Actions.LEFT.toString(),
                 Actions.RIGHT.toString(),
                 Actions.UP.toString(),
                 Actions.DOWN.toString());
-        final AnalogListener analogListener = new AnalogListener() {
-            @Override
-            public void onAnalog(String name, float value, float tpf) {
-                if (isRunning) {
-                    if (name.equals(Actions.LEFT.toString())
-                            || name.equals(Actions.RIGHT.toString())
-                            || name.equals(Actions.UP.toString())
-                            || name.equals(Actions.DOWN.toString())) {
-                        if (!channel.getAnimationName().equals(animationWalk)) {
-                            channel.setAnim(animationWalk, 0.50f);
-                            channel.setLoopMode(LoopMode.Loop);
-                        }
-                    }
-                }
-            }
-        };
         inputManager.addListener(
-                analogListener,
+                this,
                 Actions.LEFT.toString(),
                 Actions.RIGHT.toString(),
                 Actions.UP.toString(),
                 Actions.DOWN.toString());
-
-        isRunning = true;
+    }
+    
+    public void removeKeys(final InputManager inputManager) {
+        inputManager.removeListener(this);
     }
 
     private void iniAnimations(final String modelName) {
@@ -136,5 +113,32 @@ public class PlayerAvatar implements AnimEventListener {
 
     public void setCurrentQuest(Quest currentQuest) {
         this.currentQuest = currentQuest;
+    }
+
+    @Override
+    public void onAction(String name, boolean isPressed, float tpf) {
+        if (!isPressed && isRunning) {
+            if (name.equals(Actions.LEFT.toString())
+                    || name.equals(Actions.RIGHT.toString())
+                    || name.equals(Actions.UP.toString())
+                    || name.equals(Actions.DOWN.toString())) {
+                channel.setTime(channel.getAnimMaxTime());
+            }
+        }
+    }
+
+    @Override
+    public void onAnalog(String name, float value, float tpf) {
+        if (isRunning) {
+            if (name.equals(Actions.LEFT.toString())
+                    || name.equals(Actions.RIGHT.toString())
+                    || name.equals(Actions.UP.toString())
+                    || name.equals(Actions.DOWN.toString())) {
+                if (!channel.getAnimationName().equals(animationWalk)) {
+                    channel.setAnim(animationWalk, 0.50f);
+                    channel.setLoopMode(LoopMode.Loop);
+                }
+            }
+        }
     }
 }

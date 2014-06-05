@@ -10,7 +10,6 @@ import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.util.CollisionShapeFactory;
-import com.jme3.input.ChaseCamera;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
@@ -22,7 +21,7 @@ import com.jme3.scene.Spatial;
 import eduapp.Actions;
 import eduapp.AppContext;
 import eduapp.FlowManager;
-import eduapp.PlayerAvatar;
+import eduapp.Player;
 import eduapp.level.Level;
 
 /**
@@ -31,14 +30,15 @@ import eduapp.level.Level;
  */
 public class WorldScreen extends AbstractAppState {
 
-    private static final float PLAYER_SPEED = 1.5f;    
+    private static final float PLAYER_SPEED = 1.5f;
+    private static final float CAM_ELEVATION = 7.5f;
     private static final Vector3f LEFT = new Vector3f(-1, 0, 0);
     private static final Vector3f UP = new Vector3f(0, 0, -1);
     private final Vector3f walkDirection = new Vector3f();
     private final Vector3f viewDirection = new Vector3f();
     private BulletAppState bulletAppState;
-    private BetterCharacterControl player;
-    private PlayerAvatar playerAvatar;
+    private BetterCharacterControl playerPhysics;
+    private Player player;
     private RigidBodyControl landscape;
     private Level currentLevel;
     private boolean left, right, up, down;
@@ -59,12 +59,12 @@ public class WorldScreen extends AbstractAppState {
     }
 
     private void prepareWorld(Application app) {
-        initPlayer(app.getAssetManager(), app.getInputManager());
-
-        Spatial pl = playerAvatar.getModel();
-        if (!currentLevel.getRootNode().hasChild(pl)) {
-            currentLevel.getRootNode().attachChild(pl);
+        if (player == null) {
+            initPlayer(app.getAssetManager(), app.getInputManager());
+            currentLevel.getRootNode().attachChild(player.getModel());
             initCollisions(app);
+        } else {
+            player.setIsRunning(true);
         }
         ((SimpleApplication) app).getRootNode().attachChild(currentLevel.getRootNode());
 
@@ -73,7 +73,7 @@ public class WorldScreen extends AbstractAppState {
     }
 
     private void initPlayer(final AssetManager assetManager, final InputManager inputManager) {
-        playerAvatar = new PlayerAvatar(assetManager, inputManager, currentLevel.getPlayer().getModelName());
+        player = new Player(assetManager, inputManager, currentLevel.getPlayer().getModelName());
     }
 
     private void initKeys(final InputManager inputManager) {
@@ -84,7 +84,6 @@ public class WorldScreen extends AbstractAppState {
         inputManager.addMapping(Actions.DOWN.toString(), new KeyTrigger(KeyInput.KEY_DOWN));
         inputManager.addMapping(Actions.ACTION.toString(), new KeyTrigger(KeyInput.KEY_SPACE));
         inputManager.addMapping(Actions.QUEST.toString(), new KeyTrigger(KeyInput.KEY_Q));
-        inputManager.addMapping("Debug", new KeyTrigger(KeyInput.KEY_TAB));
         // Add the names to the action listener.
         keyListener = new ActionListener() {
             @Override
@@ -95,7 +94,7 @@ public class WorldScreen extends AbstractAppState {
                     } else if (name.equals(Actions.QUEST.toString())) {
                         FlowManager.questAction();
                     } else if (name.equals(Actions.ACTION.toString())) {
-                        currentLevel.activate(playerAvatar.getModel().getWorldBound().getCenter());
+                        currentLevel.activate(player.getModel().getWorldBound().getCenter());
                     } else if (name.equals("Debug")) {
                         debugAction();
                     }
@@ -118,16 +117,17 @@ public class WorldScreen extends AbstractAppState {
         inputManager.addListener(keyListener, Actions.DOWN.toString());
         inputManager.addListener(keyListener, Actions.ACTION.toString());
         inputManager.addListener(keyListener, Actions.QUEST.toString());
-        inputManager.addListener(keyListener, "Debug");
 
+        player.initKeys(inputManager);
     }
 
-    private void initCamera(Application app) {        
+    private void initCamera(Application app) {
         SimpleApplication appS = (SimpleApplication) app;
         appS.getFlyByCamera().setEnabled(false);
-        
-        cam = app.getCamera();        
-        cam.lookAt(playerAvatar.getModel().getWorldBound().getCenter(),Vector3f.UNIT_Z.negate());
+
+        cam = app.getCamera();
+        cam.setLocation(new Vector3f(0, CAM_ELEVATION, 0));
+        cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Z.negate());
     }
 
     private void initCollisions(Application app) {
@@ -139,15 +139,15 @@ public class WorldScreen extends AbstractAppState {
         final CollisionShape sceneShape = CollisionShapeFactory.createMeshShape(currentLevel.getWorldNode());
         landscape = new RigidBodyControl(sceneShape, 0);
 
-        player = new BetterCharacterControl(.15f, 1.5f, 50f);
-        playerAvatar.getModel().addControl(player);
+        playerPhysics = new BetterCharacterControl(.15f, 1.5f, 50f);
+        player.getModel().addControl(playerPhysics);
 
-        player.setJumpForce(new Vector3f(0, 250f, 0));
-        player.warp(currentLevel.getPlayer().getInitialPosition());
-        player.setViewDirection(Vector3f.UNIT_Z);
+        playerPhysics.setJumpForce(new Vector3f(0, 250f, 0));
+        playerPhysics.warp(currentLevel.getPlayer().getInitialPosition());
+        playerPhysics.setViewDirection(Vector3f.UNIT_Z);
 
         bulletAppState.getPhysicsSpace().add(landscape);
-        bulletAppState.getPhysicsSpace().add(player);
+        bulletAppState.getPhysicsSpace().add(playerPhysics);
 
         CollisionShape cs;
         RigidBodyControl rbc;
@@ -162,8 +162,8 @@ public class WorldScreen extends AbstractAppState {
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
-        if (playerAvatar != null) {
-            playerAvatar.setIsRunning(enabled);
+        if (player != null) {
+            player.setIsRunning(enabled);
         }
     }
 
@@ -193,23 +193,18 @@ public class WorldScreen extends AbstractAppState {
             viewDirection.addLocal(UP.negate());
         }
         if (upd) {
-            player.setViewDirection(viewDirection);
+            playerPhysics.setViewDirection(viewDirection);
         }
-        player.setWalkDirection(walkDirection.normalizeLocal().multLocal(PLAYER_SPEED));
-        final Vector3f loc = playerAvatar.getModel().getWorldBound().getCenter();
+        playerPhysics.setWalkDirection(walkDirection.normalizeLocal().multLocal(PLAYER_SPEED));
+        final Vector3f loc = player.getModel().getWorldBound().getCenter();
         currentLevel.visit(loc);
-//        System.out.println(playerAvatar.getModel().getWorldBound().getCenter()); 
-        cam.setLocation(loc.add(0, 7.5f, 0));
-        cam.lookAt(loc, Vector3f.UNIT_Z.negate());
+        cam.setLocation(loc.add(0, CAM_ELEVATION, 0));
+//        System.out.println(loc); 
     }
 
     @Override
     public void cleanup() {
         super.cleanup();
-
-        bulletAppState.getPhysicsSpace().remove(landscape);
-        bulletAppState.getPhysicsSpace().remove(player);
-        AppContext.getApp().getStateManager().detach(bulletAppState);
 
         final InputManager inputManager = AppContext.getApp().getInputManager();
         inputManager.removeListener(keyListener);
@@ -219,8 +214,9 @@ public class WorldScreen extends AbstractAppState {
         inputManager.deleteMapping(Actions.DOWN.toString());
         inputManager.deleteMapping(Actions.ACTION.toString());
         inputManager.deleteMapping(Actions.QUEST.toString());
+        player.removeKeys(inputManager);
 
-        currentLevel.getRootNode().removeFromParent();        
+        currentLevel.getRootNode().removeFromParent();
     }
 
     public void debugAction() {
