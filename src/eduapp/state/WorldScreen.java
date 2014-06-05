@@ -15,8 +15,8 @@ import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
-import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
+import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import eduapp.Actions;
@@ -31,7 +31,7 @@ import eduapp.level.Level;
  */
 public class WorldScreen extends AbstractAppState {
 
-    private static final float PLAYER_SPEED = 1.5f;
+    private static final float PLAYER_SPEED = 1.5f;    
     private static final Vector3f LEFT = new Vector3f(-1, 0, 0);
     private static final Vector3f UP = new Vector3f(0, 0, -1);
     private final Vector3f walkDirection = new Vector3f();
@@ -41,8 +41,9 @@ public class WorldScreen extends AbstractAppState {
     private PlayerAvatar playerAvatar;
     private RigidBodyControl landscape;
     private Level currentLevel;
-    boolean left, right, up, down;
+    private boolean left, right, up, down;
     private ActionListener keyListener;
+    private Camera cam;
 
     public void setLevelName(String levelName) {
         currentLevel = Level.loadLevel(levelName, AppContext.getApp().getAssetManager());
@@ -51,23 +52,28 @@ public class WorldScreen extends AbstractAppState {
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
         super.initialize(stateManager, app);
+
+        System.out.println("Gami init");
+
         prepareWorld(app);
     }
 
     private void prepareWorld(Application app) {
         initPlayer(app.getAssetManager(), app.getInputManager());
 
-        currentLevel.getRootNode().attachChild(playerAvatar.getModel());
+        Spatial pl = playerAvatar.getModel();
+        if (!currentLevel.getRootNode().hasChild(pl)) {
+            currentLevel.getRootNode().attachChild(pl);
+            initCollisions(app);
+        }
         ((SimpleApplication) app).getRootNode().attachChild(currentLevel.getRootNode());
 
         initKeys(app.getInputManager());
         initCamera(app);
-
-        initCollisions(app);
     }
 
     private void initPlayer(final AssetManager assetManager, final InputManager inputManager) {
-        playerAvatar = new PlayerAvatar(assetManager, inputManager, currentLevel.getPlayer().getModelName());        
+        playerAvatar = new PlayerAvatar(assetManager, inputManager, currentLevel.getPlayer().getModelName());
     }
 
     private void initKeys(final InputManager inputManager) {
@@ -116,12 +122,12 @@ public class WorldScreen extends AbstractAppState {
 
     }
 
-    private void initCamera(Application app) {
-        final ChaseCamera chaseCam = new ChaseCamera(app.getCamera(), playerAvatar.getModel(), app.getInputManager());
-        chaseCam.setDefaultDistance(7.5f);
-        chaseCam.setDefaultHorizontalRotation(90 * FastMath.DEG_TO_RAD);
-        chaseCam.setDefaultVerticalRotation(89.9f * FastMath.DEG_TO_RAD);
-
+    private void initCamera(Application app) {        
+        SimpleApplication appS = (SimpleApplication) app;
+        appS.getFlyByCamera().setEnabled(false);
+        
+        cam = app.getCamera();        
+        cam.lookAt(playerAvatar.getModel().getWorldBound().getCenter(),Vector3f.UNIT_Z.negate());
     }
 
     private void initCollisions(Application app) {
@@ -190,8 +196,11 @@ public class WorldScreen extends AbstractAppState {
             player.setViewDirection(viewDirection);
         }
         player.setWalkDirection(walkDirection.normalizeLocal().multLocal(PLAYER_SPEED));
-        currentLevel.visit(playerAvatar.getModel().getWorldBound().getCenter());
+        final Vector3f loc = playerAvatar.getModel().getWorldBound().getCenter();
+        currentLevel.visit(loc);
 //        System.out.println(playerAvatar.getModel().getWorldBound().getCenter()); 
+        cam.setLocation(loc.add(0, 7.5f, 0));
+        cam.lookAt(loc, Vector3f.UNIT_Z.negate());
     }
 
     @Override
@@ -210,6 +219,8 @@ public class WorldScreen extends AbstractAppState {
         inputManager.deleteMapping(Actions.DOWN.toString());
         inputManager.deleteMapping(Actions.ACTION.toString());
         inputManager.deleteMapping(Actions.QUEST.toString());
+
+        currentLevel.getRootNode().removeFromParent();        
     }
 
     public void debugAction() {

@@ -67,10 +67,13 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
         super.initialize(stateManager, app);
+        
+        System.out.println("Group init");
 
         AppContext.getApp().getFlyByCamera().setEnabled(false);
         cam = AppContext.getApp().getCamera();
         cam.setLocation(Vector3f.UNIT_Z.mult(POS_OFFSET_CAM_Z));
+        cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
 
         inputManager = AppContext.getApp().getInputManager();
         inputManager.setCursorVisible(true);
