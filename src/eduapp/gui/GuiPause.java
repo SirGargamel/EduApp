@@ -28,7 +28,7 @@ public class GuiPause implements ScreenController {
     }
 
     public void backToGame() {        
-        FlowManager.enableGame(true);
+        FlowManager.handlePause();
     }
 
     public void exit() {

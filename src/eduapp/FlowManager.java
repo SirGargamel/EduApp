@@ -32,6 +32,7 @@ public class FlowManager {
     private static Nifty nifty;
     private static Quest currentQuest;
     private static AppState currentState;
+    private static String lastScreen;
 
     static {
         worldScreen = new WorldScreen();
@@ -55,26 +56,27 @@ public class FlowManager {
         currentState = worldScreen;
     }
 
-    public static void enableGame(boolean isEnabled) {
+    public static void handlePause() {
+        boolean isEnabled = currentState.isEnabled();
+        enableState(!isEnabled);
+        if (isEnabled) {
+            nifty.gotoScreen(SCREEN_PAUSE);
+        } else {
+            displayLastScreen();
+        }
+    }
+
+    public static void enableState(boolean isEnabled) {
         currentState.setEnabled(isEnabled);
         if (currentState == worldScreen) {
             if (player != null) {
                 player.setIsRunning(isEnabled);
             }
-            if (isEnabled) {
-                nifty.gotoScreen(SCREEN_WORLD);
-            } else {
-                nifty.gotoScreen(SCREEN_PAUSE);
-            }
-        } else if (currentState == groupScreen) {
-            if (isEnabled) {
-                nifty.gotoScreen(SCREEN_GROUPS);
-            } else {
-                nifty.gotoScreen(SCREEN_PAUSE);
-            }
-        } else {
-            System.err.println("Unsupported pausing.");
         }
+    }
+
+    public static void displayLastScreen() {
+        nifty.gotoScreen(lastScreen);
     }
 
     public static void exitGame() {
@@ -88,8 +90,9 @@ public class FlowManager {
     public static void gotoWorldScreen() {
         AppContext.getApp().getStateManager().detach(currentState);
         AppContext.getApp().getStateManager().attach(worldScreen);
-        nifty.gotoScreen(SCREEN_WORLD);
         currentState = worldScreen;
+        lastScreen = SCREEN_WORLD;
+        nifty.gotoScreen(SCREEN_WORLD);
     }
 
     public static void gotoMainMenu() {
@@ -99,39 +102,33 @@ public class FlowManager {
         currentState = startScreen;
     }
 
-    public static void gotoQuestScreen() {
-        nifty.gotoScreen(SCREEN_QUEST);
-    }
-
-    public static void gotoPauseScreen() {
-        enableGame(false);
-    }
-
     public static void gotoGroupScreen() {
         AppContext.getApp().getStateManager().detach(currentState);
         AppContext.getApp().getStateManager().attach(groupScreen);
+        lastScreen = SCREEN_GROUPS;
         nifty.gotoScreen(SCREEN_GROUPS);
         currentState = groupScreen;
     }
 
     public static void displayQuest(final Quest quest) {
+        enableState(false);
         currentQuest = quest;
         final GuiQuest control = (GuiQuest) nifty.getScreen(SCREEN_QUEST).getScreenController();
         control.setQuest(quest);
-        enableGame(false);
-        gotoQuestScreen();
+        nifty.gotoScreen(SCREEN_QUEST);
     }
 
     public static void displayQuestion(final Question question) {
+        enableState(false);
         final GuiQuestInput control = (GuiQuestInput) nifty.getScreen(SCREEN_QUEST_INPUT).getScreenController();
         control.setQuestion(question);
-        enableGame(false);
         nifty.gotoScreen(SCREEN_QUEST_INPUT);
     }
 
     public static void questAction() {
         if (nifty.getCurrentScreen().getScreenId().equals(SCREEN_QUEST)) {
-            gotoWorldScreen();
+            enableState(true);
+            displayLastScreen();
         } else {
             displayQuest(currentQuest);
         }
@@ -146,19 +143,19 @@ public class FlowManager {
         final GuiNotify control = (GuiNotify) nifty.getScreen(SCREEN_NOTIFY).getScreenController();
         control.setMessage(message);
         nifty.gotoScreen(SCREEN_NOTIFY);
-        enableGame(true);
+        enableState(true);
     }
 
-    public static void finishGroupScreen() {        
-        gotoWorldScreen();
+    public static void finishGroupScreen() {
         final int[] results = groupScreen.checkGrouping();
         final String message = "Zařadili jste správně " + results[0] + " předmětů z " + results[1];
         displayMessage(message);
+        gotoWorldScreen();
     }
 
     // -------
     public static void debug() {
-        AppContext.getApp().getStateManager().detach(currentState);        
+        AppContext.getApp().getStateManager().detach(currentState);
 
         final ItemRegistry ir = AppContext.getItemRegistry();
         groupScreen.setGrouping(ir.get("skup"));

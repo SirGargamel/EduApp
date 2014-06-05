@@ -217,7 +217,7 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
             }
         } else if (name.equals(Actions.PAUSE.toString())) {
             if (!isPressed && name.equals(Actions.PAUSE.toString())) {
-                FlowManager.enableGame(!isEnabled());
+                FlowManager.handlePause();
             }
         }
     }

@@ -86,7 +86,7 @@ public class WorldScreen extends AbstractAppState {
             public void onAction(String name, boolean isPressed, float tpf) {
                 if (!isPressed) {
                     if (name.equals(Actions.PAUSE.toString())) {
-                        FlowManager.enableGame(!isEnabled());
+                        FlowManager.handlePause();
                     } else if (name.equals(Actions.QUEST.toString())) {
                         FlowManager.questAction();
                     } else if (name.equals(Actions.ACTION.toString())) {
