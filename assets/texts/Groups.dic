@@ -2,5 +2,10 @@
     <item id="skup">
         <jmeno>Skupenství</jmeno>
         <skup>plynné; kapalné; pevné</skup>        
-    </item>    
+    </item>
+    <item id="vzorecJmeno">
+        <jmeno>Převeďte vzorec prvku na jeho jméno</jmeno>
+        <z>vzorec</z>
+        <do>jmeno</do>
+    </item>        
 </dict>

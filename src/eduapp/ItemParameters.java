@@ -10,5 +10,7 @@ public interface ItemParameters {
     String NAME = "jmeno";
     String SPLITTER = ";";
     String STATE = "skup";
+    String FROM = "z";
+    String TO = "do";
     
 }

@@ -117,10 +117,10 @@
             <Target>hlavniQuest</Target>
             <Action>DisplayW1</Action>            	
         </ActionTrigger>
-        <ActionTrigger id="tW2">
+        <ActionTrigger id="tC1">
             <Volume>shelf2</Volume>
             <Target>hlavniQuest</Target>
-            <Action>DisplayW2</Action>            	
+            <Action>DisplayC1</Action>            	
         </ActionTrigger>
         <ActionTrigger id="tG1">
             <Volume>shelf3</Volume>
@@ -140,19 +140,19 @@
             <Jmol id="j1">
                 <Data>Zadejte počet atomů molekuly kyseliny sírové::7::kyselinaSirova.pdb</Data>
                 <Child>tJ1</Child>                
-            </Jmol>
+            </Jmol>            
             <Web id="w1">
-                <Data>Popište vzhled kyseliny sírové::bezbarvá olejovitá kapalina::http://cs.wikipedia.org/wiki/Kyselina_s%C3%ADrov%C3%A1</Data>
-                <Child>tW1</Child>
-            </Web>
-            <Web id="w2">
                 <Data>Uveďte zastaralý název kyseliny sírové::vitriol::http://cs.wikipedia.org/wiki/Kyselina_s%C3%ADrov%C3%A1</Data>
-                <Child>tW2</Child>
+                <Child>tW1</Child>
             </Web>
             <Group id="g1">
                 <Data>skup::h2so4;so2;so3;v2o5;k2so4;sio2</Data>
                 <Child>tG1</Child>
             </Group>
+            <Conversion>
+                <Data>vzorecJmeno::h2so4;so2;so3;v2o5;k2so4;sio2</Data>
+                <Child>tC1</Child>
+            </Conversion>
         </Quest>
     </Quests>
 </Level>

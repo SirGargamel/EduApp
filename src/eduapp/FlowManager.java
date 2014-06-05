@@ -2,10 +2,12 @@ package eduapp;
 
 import com.jme3.app.state.AppState;
 import de.lessvoid.nifty.Nifty;
+import eduapp.gui.GuiConversion;
 import eduapp.gui.GuiGame;
 import eduapp.gui.GuiQuest;
 import eduapp.gui.GuiQuestInput;
 import eduapp.gui.GuiNotify;
+import eduapp.level.quest.ConversionQuest;
 import eduapp.level.quest.GroupingQuest;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.Question;
@@ -19,16 +21,17 @@ import eduapp.state.WorldScreen;
  */
 public class FlowManager {
 
-    private static final String SCREEN_WORLD = "game";
+    private static final String SCREEN_CONVERSION = "conversion";
     private static final String SCREEN_GROUPS = "groups";
     private static final String SCREEN_NOTIFY = "notify";
     private static final String SCREEN_PAUSE = "pause";
     private static final String SCREEN_QUEST = "quest";
     private static final String SCREEN_QUEST_INPUT = "questInput";
     private static final String SCREEN_START = "start";
+    private static final String SCREEN_WORLD = "game";
     private static final WorldScreen worldScreen;
     private static final StartScreen startScreen;
-    private static final GroupScreen groupScreen;    
+    private static final GroupScreen groupScreen;
     private static Nifty nifty;
     private static Quest currentQuest;
     private static AppState currentState;
@@ -43,7 +46,7 @@ public class FlowManager {
         currentState = startScreen;
     }
 
-    public static void loadLevel(String levelName) {        
+    public static void loadLevel(String levelName) {
         worldScreen.setLevelName(levelName);
         gotoWorldScreen();
     }
@@ -79,7 +82,7 @@ public class FlowManager {
         AppContext.getApp().getStateManager().detach(currentState);
         AppContext.getApp().getStateManager().attach(worldScreen);
         worldScreen.setEnabled(true);
-        currentState = worldScreen;        
+        currentState = worldScreen;
         nifty.gotoScreen(SCREEN_WORLD);
     }
 
@@ -117,6 +120,13 @@ public class FlowManager {
         nifty.gotoScreen(SCREEN_QUEST_INPUT);
     }
 
+    public static void displayConversionScreen(final ConversionQuest quest) {
+        enableState(false);
+        final GuiConversion control = (GuiConversion) nifty.getScreen(SCREEN_CONVERSION).getScreenController();
+        control.setQuest(quest);
+        nifty.gotoScreen(SCREEN_CONVERSION);
+    }
+
     public static void questAction() {
         if (nifty.getCurrentScreen().getScreenId().equals(SCREEN_QUEST)) {
             enableState(true);
@@ -145,16 +155,9 @@ public class FlowManager {
         gotoWorldScreen();
     }
 
-    // -------
-    public static void debug() {
-        AppContext.getApp().getStateManager().detach(currentState);
-
-        final ItemRegistry ir = AppContext.getItemRegistry();
-        groupScreen.setGrouping(ir.get("skup"));
-        groupScreen.setItems(ir.get("h2so4"), ir.get("v2o5"), ir.get("s"), ir.get("sio2"), ir.get("so2"));
-
-        worldScreen.setLevelName("Empty");
-
-//        gotoGroupScreen();
+    public static void finishConversion(int good, int total) {
+        final String message = "Převedli jste správně " + good + " věcí z " + total;
+        displayMessage(message);
+        displayLastScreen();
     }
 }

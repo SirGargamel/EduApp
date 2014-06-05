@@ -47,6 +47,10 @@ public class Quest extends Item {
     public void displayGroups(GroupingQuest group) {
         FlowManager.displayGroupScreen(group);
     }
+    
+    public void displayConversion(ConversionQuest conversion) {
+        FlowManager.displayConversionScreen(conversion);
+    }
 
     public List<QuestItem> getData() {
         return data;
