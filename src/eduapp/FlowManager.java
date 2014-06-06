@@ -50,7 +50,7 @@ public class FlowManager {
 
     public static void loadLevel(String levelName) {
         worldScreen.setLevelName(levelName);
-        displayDescription("Starting level " + levelName + "\n a\n b \n c \n hooooooooooooooooooooooooooooooooooooooooooooooooooooooooooodne dlouhý text s čárkami");
+        displayDescription("Starting level " + levelName + "\n H\u2082 SO \u2084 \n b \n c \n hooooooooooooooooooooooooooooooooooooooooooooooooooooooooooodne dlouhý text s čárkami");
         gotoWorldScreen();
     }
 
