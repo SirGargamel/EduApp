@@ -162,9 +162,7 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
         rootNode.detachAllChildren();
         guiNode.detachAllChildren();
 
-        inputManager.removeListener(this);
-        inputManager.deleteMapping(Actions.LEFT_CLICK.toString());
-        inputManager.deleteMapping(Actions.MOUSE_MOVE.toString());
+        inputManager.removeListener(this);        
     }
 
     public void setGrouping(Item group) {

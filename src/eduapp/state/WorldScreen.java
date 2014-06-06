@@ -197,13 +197,7 @@ public class WorldScreen extends AbstractAppState {
         super.cleanup();
 
         final InputManager inputManager = AppContext.getApp().getInputManager();
-        inputManager.removeListener(keyListener);
-        inputManager.deleteMapping(Actions.LEFT.toString());
-        inputManager.deleteMapping(Actions.RIGHT.toString());
-        inputManager.deleteMapping(Actions.UP.toString());
-        inputManager.deleteMapping(Actions.DOWN.toString());
-        inputManager.deleteMapping(Actions.ACTION.toString());
-        inputManager.deleteMapping(Actions.QUEST.toString());
+        inputManager.removeListener(keyListener);        
         player.removeKeys(inputManager);
 
         currentLevel.getRootNode().removeFromParent();
