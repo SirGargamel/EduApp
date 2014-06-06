@@ -51,9 +51,7 @@ public class WorldScreen extends AbstractAppState {
 
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
-        super.initialize(stateManager, app);
-
-        System.out.println("Gami init");
+        super.initialize(stateManager, app);        
 
         prepareWorld(app);
     }

@@ -3,6 +3,8 @@ package eduapp.level;
 import eduapp.ItemRegistry;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -31,7 +33,20 @@ public class Item {
     }
     
     public void setParam(String id, String param) {
-        params.put(id, param.trim());
+        String fixedP = param;
+        final String base = "208";
+        final Matcher m = Pattern.compile("[0-9]").matcher(fixedP);
+        String val;
+        int code;
+        while (m.find()) {
+            val = m.group();
+            code = Integer.valueOf(base.concat(val), 16);
+            fixedP = fixedP.replaceAll(
+                    val,
+                    String.valueOf((char) code));
+        }
+                
+        params.put(id, fixedP);
     }
 
     public void setItemRegistry(ItemRegistry itemRegistry) {

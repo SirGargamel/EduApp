@@ -15,6 +15,8 @@ import eduapp.level.quest.Question;
 import eduapp.state.GroupScreen;
 import eduapp.state.StartScreen;
 import eduapp.state.WorldScreen;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -50,7 +52,9 @@ public class FlowManager {
 
     public static void loadLevel(String levelName) {
         worldScreen.setLevelName(levelName);
-        displayDescription("Starting level " + levelName + "\n H\u2082 SO \u2084 \n b \n c \n hooooooooooooooooooooooooooooooooooooooooooooooooooooooooooodne dlouhý text s čárkami");
+
+        final String text = "Starting level " + levelName + "\n H\u2082 SO\u2084 \n b \n c \n hooooooooooooooooooooooooooooooooooooooooooooooooooooooooooodn2 dlouhý text s čárkami";
+        displayDescription(text);
         gotoWorldScreen();
     }
 
