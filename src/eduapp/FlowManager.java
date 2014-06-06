@@ -3,6 +3,7 @@ package eduapp;
 import com.jme3.app.state.AppState;
 import de.lessvoid.nifty.Nifty;
 import eduapp.gui.GuiConversion;
+import eduapp.gui.GuiDescription;
 import eduapp.gui.GuiGame;
 import eduapp.gui.GuiQuest;
 import eduapp.gui.GuiQuestInput;
@@ -22,6 +23,7 @@ import eduapp.state.WorldScreen;
 public class FlowManager {
 
     private static final String SCREEN_CONVERSION = "conversion";
+    private static final String SCREEN_DESCRIPTION = "description";
     private static final String SCREEN_GROUPS = "groups";
     private static final String SCREEN_NOTIFY = "notify";
     private static final String SCREEN_PAUSE = "pause";
@@ -48,6 +50,7 @@ public class FlowManager {
 
     public static void loadLevel(String levelName) {
         worldScreen.setLevelName(levelName);
+        displayDescription("Starting level " + levelName + "\n a\n b \n c \n hooooooooooooooooooooooooooooooooooooooooooooooooooooooooooodne dlouhý text s čárkami");
         gotoWorldScreen();
     }
 
@@ -93,16 +96,19 @@ public class FlowManager {
         currentState = startScreen;
     }
 
-    public static void displayGroupScreen(final GroupingQuest group) {
+    public static void gotoGroupScreen(final GroupingQuest group) {
         groupScreen.setGrouping(group.getGroup());
         groupScreen.setItems(group.getItems());
 
         AppContext.getApp().getStateManager().detach(currentState);
         AppContext.getApp().getStateManager().attach(groupScreen);
-        lastScreen = SCREEN_GROUPS;
-        nifty.gotoScreen(SCREEN_GROUPS);
         currentState = groupScreen;
         groupScreen.setEnabled(true);
+
+        lastScreen = SCREEN_GROUPS;
+        nifty.gotoScreen(SCREEN_GROUPS);
+        displayMessage(group.getGroup().getParam(ItemParameters.NAME));
+        displayDescription(group.getGroup().getParam(ItemParameters.NAME));
     }
 
     public static void displayQuest(final Quest quest) {
@@ -148,6 +154,13 @@ public class FlowManager {
         enableState(true);
     }
 
+    public static void displayDescription(final String message) {
+        final GuiDescription control = (GuiDescription) nifty.getScreen(SCREEN_DESCRIPTION).getScreenController();
+        control.setMessage(message);
+        nifty.gotoScreen(SCREEN_DESCRIPTION);
+        enableState(true);
+    }
+
     public static void finishGroupScreen() {
         final int[] results = groupScreen.checkGrouping();
         final String message = "Zařadili jste správně " + results[0] + " předmětů z " + results[1];
@@ -157,7 +170,8 @@ public class FlowManager {
 
     public static void finishConversion(int good, int total) {
         final String message = "Převedli jste správně " + good + " věcí z " + total;
-        displayMessage(message);
+//        displayMessage(message);
+        displayDescription(message);
         displayLastScreen();
     }
 }
