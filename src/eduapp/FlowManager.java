@@ -86,8 +86,7 @@ public class FlowManager {
         FlowManager.nifty = nifty;
     }
 
-    public static void gotoWorldScreen() {
-        lastScreens.push(SCREEN_WORLD);
+    public static void gotoWorldScreen() {        
         AppContext.getApp().getStateManager().detach(currentState);
         AppContext.getApp().getStateManager().attach(worldScreen);
         worldScreen.setEnabled(true);
@@ -95,8 +94,7 @@ public class FlowManager {
         nifty.gotoScreen(SCREEN_WORLD);
     }
 
-    public static void gotoMainMenu() {
-        lastScreens.push(SCREEN_START);
+    public static void gotoMainMenu() {        
         AppContext.getApp().getStateManager().detach(currentState);
         AppContext.getApp().getStateManager().attach(startScreen);
         nifty.gotoScreen(SCREEN_START);
@@ -113,9 +111,8 @@ public class FlowManager {
         currentState = groupScreen;
         groupScreen.setEnabled(true);
 
+        displayDescription(group.getGroup().getParam(ItemParameters.NAME), SCREEN_GROUPS);
         nifty.gotoScreen(SCREEN_GROUPS);
-        displayNotification(group.getGroup().getParam(ItemParameters.NAME));
-        displayDescription(group.getGroup().getParam(ItemParameters.NAME));
     }
 
     public static void displayQuest(final Quest quest) {
@@ -154,9 +151,9 @@ public class FlowManager {
         control.enableQuestMarker(show);
     }
 
-    public static void displayNotification(final String message) {
-        displayNotification(message, nifty.getCurrentScreen().getScreenId());
-    }
+//    public static void displayNotification(final String message) {
+//        displayNotification(message, nifty.getCurrentScreen().getScreenId());
+//    }
 
     public static void displayNotification(final String message, final String returnScreen) {
         lastScreens.push(returnScreen);
@@ -166,9 +163,9 @@ public class FlowManager {
         enableState(true);
     }
 
-    public static void displayDescription(final String message) {
-        displayDescription(message, nifty.getCurrentScreen().getScreenId());
-    }
+//    public static void displayDescription(final String message) {
+//        displayDescription(message, nifty.getCurrentScreen().getScreenId());
+//    }
 
     public static void displayDescription(final String message, final String returnScreen) {
         lastScreens.push(returnScreen);
@@ -181,17 +178,16 @@ public class FlowManager {
     public static void finishGroupScreen() {
         final int[] results = groupScreen.checkGrouping();
         final String message = "Zařadili jste správně " + results[0] + " předmětů z " + results[1];
-        displayDescription(message);
+        displayDescription(message, SCREEN_WORLD);
         gotoWorldScreen();
     }
 
     public static void finishConversion(int good, int total) {
         final String message = "Převedli jste správně " + good + " věcí z " + total;
-        displayDescription(message);
-        displayLastScreen();
+        displayDescription(message, SCREEN_WORLD);
     }
-    
+
     public static void finishQuestItem(final String text) {
-        FlowManager.displayNotification(text);
+        FlowManager.displayDescription(text, SCREEN_WORLD);
     }
 }
