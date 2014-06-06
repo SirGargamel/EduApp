@@ -125,10 +125,10 @@
     </screen>
     <screen id="description" controller="eduapp.gui.GuiDescription">        
         <layer childLayout="vertical">
-            <panel height="17%" />            
+            <panel height="19%" />            
             <panel id="panelText"  height="25%" align="left" childLayout="horizontal">                                
                 <panel width="57%" />
-                <text id="text" width="30%" font="interface/Fonts/Base.fnt" textHAlign="left" backgroundColor="#aaaa" color="#00ff00" text="....." wrap="true"/>                
+                <text id="text" width="30%" font="interface/Fonts/Base.fnt" textHAlign="left" backgroundColor="#aaaa" color="#00ff00" text="....." wrap="true" padding="5px"/>                
                 <effect>
                     <onCustom customKey="Show" name="fade" start="#0" end="#f" length="500" startDelay="0" inherit="true" />
                     <onCustom customKey="Hide" name="fade" start="#f" end="#0" length="500" startDelay="5000" inherit="true"/>                    
