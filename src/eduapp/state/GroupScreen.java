@@ -76,8 +76,7 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
         cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
 
         inputManager = AppContext.getApp().getInputManager();
-        inputManager.setCursorVisible(true);
-        inputManager.addMapping(Actions.LEFT_CLICK.toString(), new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+        inputManager.setCursorVisible(true);        
         inputManager.addMapping(Actions.MOUSE_MOVE.toString(),
                 new MouseAxisTrigger(MouseInput.AXIS_X, true),
                 new MouseAxisTrigger(MouseInput.AXIS_X, false),

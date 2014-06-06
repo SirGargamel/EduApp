@@ -5,8 +5,9 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetKey;
 import com.jme3.asset.AssetManager;
 import com.jme3.input.KeyInput;
-import com.jme3.input.controls.ActionListener;
+import com.jme3.input.MouseInput;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.lessvoid.nifty.Nifty;
 import eduapp.level.Item;
@@ -27,7 +28,7 @@ public class Game extends SimpleApplication {
         loadDictionary(assetManager, AppContext.getItemRegistry(), "Elements");
         loadDictionary(assetManager, AppContext.getItemRegistry(), "Groups");
         
-        initGlobalKeyMappings();
+        initKeyMappings();
 
         NiftyJmeDisplay niftyDisplay = new NiftyJmeDisplay(
                 assetManager, inputManager, audioRenderer, guiViewPort);
@@ -39,8 +40,7 @@ public class Game extends SimpleApplication {
         AppContext.setApp(this);
         FlowManager.setNifty(nifty);
 
-//        FlowManager.debug();
-//        FlowManager.gotoMainMenu();
+        FlowManager.gotoMainMenu();
     }
 
     private void loadDictionary(final AssetManager assetManager, final ItemRegistry ir, final String dicName) {
@@ -51,13 +51,21 @@ public class Game extends SimpleApplication {
         }
     }
 
-    private void initGlobalKeyMappings() {
+    private void initKeyMappings() {
 //        inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_MEMORY);
 //        inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_CAMERA_POS);
 
         inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_HIDE_STATS);
         inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_EXIT);
         
-        inputManager.addMapping(Actions.PAUSE.toString(), new KeyTrigger(KeyInput.KEY_ESCAPE));        
+        inputManager.addMapping(Actions.PAUSE.toString(), new KeyTrigger(KeyInput.KEY_ESCAPE)); 
+        
+        inputManager.addMapping(Actions.LEFT.toString(), new KeyTrigger(KeyInput.KEY_LEFT));
+        inputManager.addMapping(Actions.RIGHT.toString(), new KeyTrigger(KeyInput.KEY_RIGHT));
+        inputManager.addMapping(Actions.UP.toString(), new KeyTrigger(KeyInput.KEY_UP));
+        inputManager.addMapping(Actions.DOWN.toString(), new KeyTrigger(KeyInput.KEY_DOWN));
+        inputManager.addMapping(Actions.ACTION.toString(), new KeyTrigger(KeyInput.KEY_SPACE));
+        inputManager.addMapping(Actions.QUEST.toString(), new KeyTrigger(KeyInput.KEY_Q));
+        inputManager.addMapping(Actions.LEFT_CLICK.toString(), new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
     }
 }

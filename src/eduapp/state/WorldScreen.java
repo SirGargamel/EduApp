@@ -51,7 +51,7 @@ public class WorldScreen extends AbstractAppState {
 
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
-        super.initialize(stateManager, app);        
+        super.initialize(stateManager, app);
 
         prepareWorld(app);
     }
@@ -75,14 +75,6 @@ public class WorldScreen extends AbstractAppState {
     }
 
     private void initKeys(final InputManager inputManager) {
-        // You can map one or several inputs to one named action                
-        inputManager.addMapping(Actions.LEFT.toString(), new KeyTrigger(KeyInput.KEY_LEFT));
-        inputManager.addMapping(Actions.RIGHT.toString(), new KeyTrigger(KeyInput.KEY_RIGHT));
-        inputManager.addMapping(Actions.UP.toString(), new KeyTrigger(KeyInput.KEY_UP));
-        inputManager.addMapping(Actions.DOWN.toString(), new KeyTrigger(KeyInput.KEY_DOWN));
-        inputManager.addMapping(Actions.ACTION.toString(), new KeyTrigger(KeyInput.KEY_SPACE));
-        inputManager.addMapping(Actions.QUEST.toString(), new KeyTrigger(KeyInput.KEY_Q));
-        // Add the names to the action listener.
         keyListener = new ActionListener() {
             @Override
             public void onAction(String name, boolean isPressed, float tpf) {
