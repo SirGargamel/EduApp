@@ -48,7 +48,7 @@ public abstract class QuestItem extends Item {
             } else {
                 System.err.println("Illegal child for deactivation - " + s);
             }
-        }
-        FlowManager.displayMessage("Úkol ".concat(getTask()).concat(" byl splněn."));
+        }        
+        FlowManager.finishQuestItem("Úkol ".concat(getTask()).concat(" byl splněn."));
     }
 }
