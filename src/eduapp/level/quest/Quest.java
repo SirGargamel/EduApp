@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  *
@@ -30,11 +31,24 @@ public class Quest extends Item {
         FlowManager.displayQuestion(question);
     }
 
-    public void displayJmolQuestion(JmolQuestion question) {        
-        JmolUtils.launchJmol(question.getModelName());
+    public void displayJmolQuestion(final JmolQuestion question) {
         FlowManager.displayQuestion(question);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                synchronized (this) {
+                    try {
+                        this.wait(500);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Quest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                    }
+                }
+                JmolUtils.displayModel(question.getModelName());
+            }
+        }).start();
+
     }
-    
+
     public void displayWebQuestion(WebQuestion question) {
         try {
             java.awt.Desktop.getDesktop().browse(new URI(question.getWeb()));
@@ -43,11 +57,11 @@ public class Quest extends Item {
             System.err.println("Illegal web URL - " + ex);
         }
     }
-    
+
     public void displayGroups(GroupingQuest group) {
         FlowManager.gotoGroupScreen(group);
     }
-    
+
     public void displayConversion(ConversionQuest conversion) {
         FlowManager.displayConversionScreen(conversion);
     }

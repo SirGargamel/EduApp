@@ -27,7 +27,7 @@ public class Game extends SimpleApplication {
 
         loadDictionary(assetManager, AppContext.getItemRegistry(), "Elements");
         loadDictionary(assetManager, AppContext.getItemRegistry(), "Groups");
-        
+
         initKeyMappings();
 
         NiftyJmeDisplay niftyDisplay = new NiftyJmeDisplay(
@@ -41,6 +41,9 @@ public class Game extends SimpleApplication {
         FlowManager.setNifty(nifty);
 
         FlowManager.gotoMainMenu();
+
+        JmolUtils.displayModel("so3.pdb");
+
     }
 
     private void loadDictionary(final AssetManager assetManager, final ItemRegistry ir, final String dicName) {
@@ -57,9 +60,9 @@ public class Game extends SimpleApplication {
 
         inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_HIDE_STATS);
         inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_EXIT);
-        
-        inputManager.addMapping(Actions.PAUSE.toString(), new KeyTrigger(KeyInput.KEY_ESCAPE)); 
-        
+
+        inputManager.addMapping(Actions.PAUSE.toString(), new KeyTrigger(KeyInput.KEY_ESCAPE));
+
         inputManager.addMapping(Actions.LEFT.toString(), new KeyTrigger(KeyInput.KEY_LEFT));
         inputManager.addMapping(Actions.RIGHT.toString(), new KeyTrigger(KeyInput.KEY_RIGHT));
         inputManager.addMapping(Actions.UP.toString(), new KeyTrigger(KeyInput.KEY_UP));
@@ -67,5 +70,12 @@ public class Game extends SimpleApplication {
         inputManager.addMapping(Actions.ACTION.toString(), new KeyTrigger(KeyInput.KEY_SPACE));
         inputManager.addMapping(Actions.QUEST.toString(), new KeyTrigger(KeyInput.KEY_Q));
         inputManager.addMapping(Actions.LEFT_CLICK.toString(), new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        JmolUtils.closeViewer();
+        System.exit(0);
     }
 }

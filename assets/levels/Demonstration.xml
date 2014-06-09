@@ -140,7 +140,7 @@
                 <Child>tQ1</Child>                
             </Question>
             <Jmol id="j1">
-                <Data>Zadejte počet atomů molekuly kyseliny sírové::7::kyselinaSirova.pdb</Data>
+                <Data>Zadejte počet atomů molekuly kyseliny sírové::7::h2so4.pdb</Data>
                 <Child>tJ1</Child>                
             </Jmol>            
             <Web id="w1">

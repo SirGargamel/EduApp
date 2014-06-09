@@ -1,0 +1,11 @@
+HEADER    SO3
+REMARK    COPYRIGHT 1996 BY JAMES P. BIRK
+HETATM    1  S           1     -10.371  13.252   0.894
+HETATM    2  O           1     -10.371  11.502   0.894
+HETATM    3  O           1      -8.856  14.127   0.894
+HETATM    4  O           1     -11.887  14.127   0.894
+CONECT    1    2    3    4    2
+CONECT    2    1    1    0    0
+CONECT    3    1    0    0    0
+CONECT    4    1    0    0    0
+END
