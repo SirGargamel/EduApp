@@ -20,18 +20,20 @@ public class JmolUtils {
     private static JmolPanel jmolPanel;
     private static JFrame frame;
 
-    static {
-        initializeJmolPanel();
-    }
-
     public static void displayModel(final String modelName) {
+        if (frame == null) {
+            initializeJmolPanel();
+        }
+        
         frame.setVisible(true);
         jmolPanel.getViewer().openFile(JMOL_PATH.concat(modelName));
     }
 
     public static void closeViewer() {
-        frame.setVisible(false);
-        frame.dispose();
+        if (frame != null) {
+            frame.setVisible(false);
+            frame.dispose();
+        }
     }
 
     private static void initializeJmolPanel() {
