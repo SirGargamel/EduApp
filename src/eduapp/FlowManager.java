@@ -79,6 +79,10 @@ public class FlowManager {
     public static void displayLastScreen() {
         nifty.gotoScreen(lastScreens.pop());
     }
+    
+    public static void storeActualScreen() {
+        lastScreens.push(nifty.getCurrentScreen().getScreenId());
+    }
 
     public static void exitGame() {
         AppContext.getApp().stop();
@@ -144,6 +148,7 @@ public class FlowManager {
             enableState(true);
             displayLastScreen();
         } else {
+            storeActualScreen();
             enableState(false);
             final GuiDictionary control = (GuiDictionary) nifty.getScreen(SCREEN_DICTIONARY).getScreenController();
             control.setItemRegistry(AppContext.getItemRegistry());
@@ -156,6 +161,7 @@ public class FlowManager {
             enableState(true);
             displayLastScreen();
         } else {
+            storeActualScreen();
             displayQuest(currentQuest);
         }
     }
