@@ -5,12 +5,14 @@ package eduapp;
  * @author Petr Ječmen
  */
 public interface ItemParameters {
-    
+
+    String NAMES_CONVERT = "description";
     String FORMULA = "vzorec";
+    String FROM = "z";
+    String LINKS = "link";
     String NAME = "jmeno";
     String SPLITTER = ";";
     String STATE = "skup";
-    String FROM = "z";
     String TO = "do";
-    
+    String SOURCE = "type";
 }

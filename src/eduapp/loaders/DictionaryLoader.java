@@ -2,6 +2,7 @@ package eduapp.loaders;
 
 import com.jme3.asset.AssetInfo;
 import com.jme3.asset.AssetLoader;
+import eduapp.ItemParameters;
 import eduapp.level.Item;
 import java.io.IOException;
 import java.util.HashSet;
@@ -37,6 +38,7 @@ public class DictionaryLoader implements AssetLoader {
             doc.getDocumentElement().normalize();
 
             final Element dict = (Element) doc.getElementsByTagName(NODE_DICT).item(0);
+            final String id = dict.getAttribute(ATTR_ID);
             final NodeList nl = dict.getElementsByTagName(NODE_ITEM);
             Node n, n2;
             NodeList nlSub;
@@ -53,6 +55,7 @@ public class DictionaryLoader implements AssetLoader {
                             it.setParam(n2.getNodeName(), n2.getTextContent());
                         }
                     }
+                    it.setParam(ItemParameters.SOURCE, id);
                     result.add(it);
                 }
             }

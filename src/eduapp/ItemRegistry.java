@@ -1,6 +1,7 @@
 package eduapp;
 
 import eduapp.level.Item;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,6 +33,10 @@ public class ItemRegistry {
 
     public Item get(final String id) {
         return data.get(id);
+    }
+    
+    public Collection<Item> listItems() {
+        return data.values();
     }
 
     public void clear() {

@@ -14,5 +14,6 @@ public enum Actions {
     DOWN,
     PAUSE,
     ACTION,
-    QUEST;
+    QUEST,
+    DICTIONARY;
 }

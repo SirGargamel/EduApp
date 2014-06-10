@@ -11,9 +11,7 @@ import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.util.CollisionShapeFactory;
 import com.jme3.input.InputManager;
-import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
-import com.jme3.input.controls.KeyTrigger;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
@@ -85,6 +83,9 @@ public class WorldScreen extends AbstractAppState {
                         FlowManager.questAction();
                     } else if (name.equals(Actions.ACTION.toString())) {
                         currentLevel.activate(player.getModel().getWorldBound().getCenter());
+                    } else if (name.equals(Actions.DICTIONARY.toString())) {
+                        FlowManager.dictionaryAction();
+                        System.out.println("dict");
                     } else if (name.equals("Debug")) {
                         debugAction();
                     }
@@ -107,6 +108,7 @@ public class WorldScreen extends AbstractAppState {
         inputManager.addListener(keyListener, Actions.DOWN.toString());
         inputManager.addListener(keyListener, Actions.ACTION.toString());
         inputManager.addListener(keyListener, Actions.QUEST.toString());
+        inputManager.addListener(keyListener, Actions.DICTIONARY.toString());
 
         player.initKeys(inputManager);
     }

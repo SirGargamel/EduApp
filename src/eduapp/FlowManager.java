@@ -4,6 +4,7 @@ import com.jme3.app.state.AppState;
 import de.lessvoid.nifty.Nifty;
 import eduapp.gui.GuiConversion;
 import eduapp.gui.GuiDescription;
+import eduapp.gui.GuiDictionary;
 import eduapp.gui.GuiGame;
 import eduapp.gui.GuiQuest;
 import eduapp.gui.GuiQuestInput;
@@ -25,6 +26,7 @@ public class FlowManager {
 
     private static final String SCREEN_CONVERSION = "conversion";
     private static final String SCREEN_DESCRIPTION = "description";
+    private static final String SCREEN_DICTIONARY = "dictionary";
     private static final String SCREEN_GROUPS = "groups";
     private static final String SCREEN_NOTIFY = "notify";
     private static final String SCREEN_PAUSE = "pause";
@@ -86,7 +88,7 @@ public class FlowManager {
         FlowManager.nifty = nifty;
     }
 
-    public static void gotoWorldScreen() {        
+    public static void gotoWorldScreen() {
         AppContext.getApp().getStateManager().detach(currentState);
         AppContext.getApp().getStateManager().attach(worldScreen);
         worldScreen.setEnabled(true);
@@ -94,7 +96,7 @@ public class FlowManager {
         nifty.gotoScreen(SCREEN_WORLD);
     }
 
-    public static void gotoMainMenu() {        
+    public static void gotoMainMenu() {
         AppContext.getApp().getStateManager().detach(currentState);
         AppContext.getApp().getStateManager().attach(startScreen);
         nifty.gotoScreen(SCREEN_START);
@@ -137,6 +139,18 @@ public class FlowManager {
         nifty.gotoScreen(SCREEN_CONVERSION);
     }
 
+    public static void dictionaryAction() {
+        if (nifty.getCurrentScreen().getScreenId().equals(SCREEN_DICTIONARY)) {
+            enableState(true);
+            displayLastScreen();
+        } else {
+            enableState(false);
+            final GuiDictionary control = (GuiDictionary) nifty.getScreen(SCREEN_DICTIONARY).getScreenController();
+            control.setItemRegistry(AppContext.getItemRegistry());
+            nifty.gotoScreen(SCREEN_DICTIONARY);
+        }
+    }
+
     public static void questAction() {
         if (nifty.getCurrentScreen().getScreenId().equals(SCREEN_QUEST)) {
             enableState(true);
@@ -151,10 +165,6 @@ public class FlowManager {
         control.enableQuestMarker(show);
     }
 
-//    public static void displayNotification(final String message) {
-//        displayNotification(message, nifty.getCurrentScreen().getScreenId());
-//    }
-
     public static void displayNotification(final String message, final String returnScreen) {
         lastScreens.push(returnScreen);
         final GuiNotify control = (GuiNotify) nifty.getScreen(SCREEN_NOTIFY).getScreenController();
@@ -162,10 +172,6 @@ public class FlowManager {
         nifty.gotoScreen(SCREEN_NOTIFY);
         enableState(true);
     }
-
-//    public static void displayDescription(final String message) {
-//        displayDescription(message, nifty.getCurrentScreen().getScreenId());
-//    }
 
     public static void displayDescription(final String message, final String returnScreen) {
         lastScreens.push(returnScreen);

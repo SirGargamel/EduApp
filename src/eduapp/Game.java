@@ -41,9 +41,7 @@ public class Game extends SimpleApplication {
         FlowManager.setNifty(nifty);
 
         FlowManager.gotoMainMenu();
-
-        JmolUtils.displayModel("so3.pdb");
-
+//        FlowManager.displayDictionary();
     }
 
     private void loadDictionary(final AssetManager assetManager, final ItemRegistry ir, final String dicName) {
@@ -69,6 +67,7 @@ public class Game extends SimpleApplication {
         inputManager.addMapping(Actions.DOWN.toString(), new KeyTrigger(KeyInput.KEY_DOWN));
         inputManager.addMapping(Actions.ACTION.toString(), new KeyTrigger(KeyInput.KEY_SPACE));
         inputManager.addMapping(Actions.QUEST.toString(), new KeyTrigger(KeyInput.KEY_Q));
+        inputManager.addMapping(Actions.DICTIONARY.toString(), new KeyTrigger(KeyInput.KEY_S));
         inputManager.addMapping(Actions.LEFT_CLICK.toString(), new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
     }
 
