@@ -46,10 +46,10 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
     private static final float SIZE_BOX_Y = 1.0f;
     private static final float SIZE_BOX_Z = 0.1f;
     private static final float SIZE_GAP = 0.5f;
-    private static final float SIZE_GROUP_R = 2.5f;
+    private static final int SIZE_GAP_2D = 20;
     private static final float SIZE_GROUP_H = 0.1f;
-    private static final float POS_OFFSET_GROUP_X = -5.5f;
-    private static final float POS_OFFSET_GROUP_Y = 3.0f;
+    private static final float SIZE_WIDTH = 16f;    
+    private static final float SIZE_HEIGHT = 12f;        
     private static final float POS_OFFSET_BOX_X = -7.0f;
     private static final float POS_OFFSET_BOX_Y = -5.0f;
     private static final float POS_OFFSET_CAM_Z = 15.0f;
@@ -67,7 +67,7 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
         super.initialize(stateManager, app);
-        
+
         System.out.println("Group init");
 
         AppContext.getApp().getFlyByCamera().setEnabled(false);
@@ -76,7 +76,7 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
         cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
 
         inputManager = AppContext.getApp().getInputManager();
-        inputManager.setCursorVisible(true);        
+        inputManager.setCursorVisible(true);
         inputManager.addMapping(Actions.MOUSE_MOVE.toString(),
                 new MouseAxisTrigger(MouseInput.AXIS_X, true),
                 new MouseAxisTrigger(MouseInput.AXIS_X, false),
@@ -97,23 +97,28 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
 
         mat = new Material(app.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
         mat.setColor("Color", ColorRGBA.Gray);
-        int i = 0;
-        int w = 1024 / groups.length;
-        int gap = 10;
+        int i = 0;        
+        final int count = groups.length;        
+        final float sizeGroup3D = (SIZE_WIDTH - SIZE_GAP * count) / (float) (count * 2);
+        final float sizeGroup2D = (app.getCamera().getWidth() - SIZE_GAP_2D * count) / (float) (count);
         buckets = new Node();
         String sT;
         for (String s : groups) {
             sT = s.trim();
-            g = new Geometry(sT, new Cylinder(50, 50, SIZE_GROUP_R, SIZE_GROUP_H, true));
+            g = new Geometry(sT, new Cylinder(50, 50, sizeGroup3D, SIZE_GROUP_H, true));
             g.setMaterial(mat);
-            g.move(POS_OFFSET_GROUP_X + i * (SIZE_GROUP_R * 2 + SIZE_GAP), POS_OFFSET_GROUP_Y, -SIZE_GROUP_H / 2.0f);
+            g.move(
+                    -SIZE_WIDTH / 2.0f + sizeGroup3D + SIZE_GAP + i * (sizeGroup3D * 2 + SIZE_GAP), 
+                    SIZE_HEIGHT / 2.0f - sizeGroup3D - SIZE_GAP * 2, 
+                    -SIZE_GROUP_H / 2.0f);
             buckets.attachChild(g);
 
             BitmapText hudText = new BitmapText(bf, false);
             hudText.setSize(bf.getCharSet().getRenderedSize());
             hudText.setColor(ColorRGBA.White);
             hudText.setText(sT);
-            hudText.setLocalTranslation(w / 2 + i * (w - gap), 768, 0);
+            
+            hudText.setLocalTranslation(SIZE_GAP_2D + sizeGroup2D / 2 - hudText.getLineWidth() / 2 + i * (sizeGroup2D + SIZE_GAP_2D), app.getCamera().getHeight(), 0);
             guiNode.attachChild(hudText);
 
             i++;
@@ -162,7 +167,7 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
         rootNode.detachAllChildren();
         guiNode.detachAllChildren();
 
-        inputManager.removeListener(this);        
+        inputManager.removeListener(this);
     }
 
     public void setGrouping(Item group) {
