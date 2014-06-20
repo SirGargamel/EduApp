@@ -117,7 +117,7 @@ public class FlowManager {
         currentState = groupScreen;
         groupScreen.setEnabled(true);
 
-        displayDescription(group.getGroup().getParam(ItemParameters.NAME), SCREEN_GROUPS);
+        displayDescription(group.getGroup().getParam(ItemParameters.DESCRIPTION), SCREEN_GROUPS);
         nifty.gotoScreen(SCREEN_GROUPS);
     }
 

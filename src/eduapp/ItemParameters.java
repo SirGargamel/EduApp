@@ -15,4 +15,5 @@ public interface ItemParameters {
     String STATE = "skup";
     String TO = "do";
     String SOURCE = "type";
+    String DESCRIPTION = "popis";
 }
