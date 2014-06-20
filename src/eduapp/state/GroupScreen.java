@@ -42,7 +42,7 @@ import java.util.List;
  */
 public class GroupScreen extends AbstractAppState implements ActionListener, AnalogListener {
 
-    private static final float SIZE_BOX_X = 1.0f;
+    private static final float SIZE_BOX_X = 2.0f;
     private static final float SIZE_BOX_Y = 1.0f;
     private static final float SIZE_BOX_Z = 0.1f;
     private static final float SIZE_GAP = 0.5f;
@@ -125,7 +125,7 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
         items = new Node("items");
         for (Item it : itemsList) {
             mat = new Material(app.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
-            Texture tex = assetManager.loadTexture("materials/wallConcrete.png");
+            Texture tex = assetManager.loadTexture("materials/groupConcrete.png");
             assetManager.deleteFromCache(tex.getKey());
             Image img = tex.getImage();
             ImagePainter ip = new ImagePainter(img);
