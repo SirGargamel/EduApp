@@ -6,7 +6,6 @@ import de.lessvoid.nifty.builder.TextBuilder;
 import de.lessvoid.nifty.controls.TextField;
 import de.lessvoid.nifty.controls.textfield.builder.TextFieldBuilder;
 import de.lessvoid.nifty.elements.Element;
-import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.input.NiftyInputEvent;
 import de.lessvoid.nifty.screen.KeyInputHandler;
 import de.lessvoid.nifty.screen.Screen;
@@ -16,8 +15,6 @@ import eduapp.FlowManager;
 import eduapp.ItemParameters;
 import eduapp.level.Item;
 import eduapp.level.quest.ConversionQuest;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  *
@@ -25,7 +22,7 @@ import java.util.Map;
  */
 public class GuiConversion implements ScreenController {
 
-    private static final String SIZE_LINE_HEIGHT = "20";    
+    private static final String SIZE_LINE_HEIGHT = "20";
     private Nifty nifty;
     private ConversionQuest quest;
     private Element panelValues;
@@ -48,7 +45,7 @@ public class GuiConversion implements ScreenController {
     private void buildConversionTable() {
         for (Element e : panelValues.getElements()) {
             e.markForRemoval();
-        }        
+        }
 
         final Screen current = nifty.getCurrentScreen();
 
@@ -62,7 +59,7 @@ public class GuiConversion implements ScreenController {
 
         tb = new TextBuilder();
         tb.font("interface/Fonts/BaseB.fnt");
-        tb.text(conversion.getParam(ItemParameters.NAME));
+        tb.text(conversion.getParam(ItemParameters.DESCRIPTION));
         tb.alignCenter();
         tb.color(Color.BLACK);
         e = tb.build(nifty, current, panelValues);
@@ -104,7 +101,7 @@ public class GuiConversion implements ScreenController {
             });
             e.add(text);
 
-            panelValues.add(e);            
+            panelValues.add(e);
         }
 
         panelValues.layoutElements();
@@ -116,11 +113,11 @@ public class GuiConversion implements ScreenController {
 
     public void ok() {
         final String to = quest.getConversion().getParam(ItemParameters.TO);
-        int counter = 0;        
+        int counter = 0;
         TextField tf;
         String user, answer;
         for (Item it : quest.getItems()) {
-            tf = nifty.getCurrentScreen().findNiftyControl("tf".concat(it.getId()), TextField.class);       
+            tf = nifty.getCurrentScreen().findNiftyControl("tf".concat(it.getId()), TextField.class);
             user = tf.getRealText().trim();
             answer = it.getParam(to);
             if (user.equalsIgnoreCase(answer)) {
