@@ -35,14 +35,12 @@ public class GuiMainMenu implements ScreenController {
     }
 
     public void startGame() {
-        System.out.println("Starting the game !!!");
-        FlowManager.getInstance().loadLevel(listBox.getFocusItem().toString());        
+        FlowManager.getInstance().loadLevel(listBox.getFocusItem().toString());
     }
 
     @NiftyEventSubscriber(pattern = "LevelList.*")
     public void onListBoxSelectionChanged(final String id,
             final ListBoxSelectionChangedEvent<LevelList> changed) {
-        System.out.println("selection changed");
         startGame();
     }
 }

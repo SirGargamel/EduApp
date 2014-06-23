@@ -85,7 +85,6 @@ public class WorldScreen extends AbstractAppState {
                         currentLevel.activate(player.getModel().getWorldBound().getCenter());
                     } else if (name.equals(Actions.DICTIONARY.toString())) {
                         FlowManager.getInstance().dictionaryAction();
-                        System.out.println("dict");
                     } else if (name.equals("Debug")) {
                         debugAction();
                     }
@@ -153,8 +152,6 @@ public class WorldScreen extends AbstractAppState {
 
     @Override
     public void setEnabled(boolean enabled) {
-        System.out.println("World enabled - " + enabled);
-        
         super.setEnabled(enabled);
         if (player != null) {
             player.setEnabled(enabled);

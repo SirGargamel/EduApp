@@ -67,8 +67,6 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
     public void initialize(AppStateManager stateManager, Application app) {
         super.initialize(stateManager, app);
 
-        System.out.println("Group init");
-
         AppContext.getApp().getFlyByCamera().setEnabled(false);
         cam = AppContext.getApp().getCamera();
         cam.setLocation(Vector3f.UNIT_Z.mult(POS_OFFSET_CAM_Z));
@@ -296,7 +294,6 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
                 }
             }
         }
-        System.out.println(counter + " correct");
         return new int[]{counter, itemsList.size()};
     }
 }

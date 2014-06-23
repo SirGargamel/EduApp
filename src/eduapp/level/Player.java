@@ -109,8 +109,7 @@ public class Player extends Item implements AnimEventListener, ActionListener, A
         return model;
     }
 
-    public void setEnabled(boolean enabled) {
-        System.out.println("Player enabled - " + enabled);
+    public void setEnabled(boolean enabled) {        
         this.isRunning = enabled;
     }
 
