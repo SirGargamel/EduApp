@@ -59,7 +59,7 @@ public class WorldScreen extends AbstractAppState {
             currentLevel.getRootNode().attachChild(player.getModel());
             initCollisions(app);
         } else {
-            player.setIsRunning(true);
+            player.setEnabled(true);
         }
         ((SimpleApplication) app).getRootNode().attachChild(currentLevel.getRootNode());
 
@@ -153,9 +153,11 @@ public class WorldScreen extends AbstractAppState {
 
     @Override
     public void setEnabled(boolean enabled) {
+        System.out.println("World enabled - " + enabled);
+        
         super.setEnabled(enabled);
         if (player != null) {
-            player.setIsRunning(enabled);
+            player.setEnabled(enabled);
         }
     }
 

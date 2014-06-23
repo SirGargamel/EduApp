@@ -23,9 +23,9 @@ public class Question extends QuestItem {
     public void setUserInput(String userInput) {
         this.userInput = userInput.trim();
         if (answer.equalsIgnoreCase(userInput)) {
-            finished = true;
-            finish();
+            finished = true;            
         }
+        finish();
     }
 
     @Override

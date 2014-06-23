@@ -13,6 +13,7 @@ import eduapp.AppContext;
 import eduapp.FlowManager;
 import eduapp.ItemRegistry;
 import eduapp.Player;
+import eduapp.level.quest.QuestItem;
 import eduapp.level.trigger.ActionTrigger;
 import eduapp.level.trigger.MoveTrigger;
 import eduapp.level.trigger.Trigger;
@@ -65,17 +66,25 @@ public class Level {
     }
 
     private void generateLevel(final AssetManager assetManager, final InputManager inputManager) {
+        FlowManager flowManager = FlowManager.getInstance();
+        
         background.generateBackground(assetManager);
         rootNode.attachChild(background.getRootNode());
 
         final ItemRegistry ir = AppContext.getItemRegistry();
         
         player.generatePlayer(assetManager, inputManager);
+        player.addObserver(flowManager);
         ir.put(player);
 
         for (Quest q : quests) {
             ir.put(q);
             q.assignInterfaces(this);
+            q.addObserver(flowManager);
+            
+            for (QuestItem qi : q.getData()) {
+                qi.addObserver(flowManager);
+            }
         }
 
         Spatial s;
@@ -84,12 +93,14 @@ public class Level {
             itemModels.add(s);
             rootNode.attachChild(s);
             ir.put(i);
+            i.addObserver(flowManager);
         }
         // create lights
         for (Light l : lights) {
             ir.put(l);
-            l.actualizePos();
+            l.actualizePos();            
             rootNode.addLight(l.getLight());
+            l.addObserver(flowManager);
         }
         // generate action items
         Trigger t;
@@ -103,6 +114,7 @@ public class Level {
                 at = (ActionTrigger) t;
                 rootNode.addLight(at.getLight());
             }
+            t.addObserver(flowManager);
         }
     }
 

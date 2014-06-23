@@ -48,11 +48,11 @@ public class FlowManager implements Observer {
     private Quest currentQuest;
     private AppState currentState;
     private Stack<String> lastScreens;
-    
+
     static {
         instance = new FlowManager();
     }
-    
+
     private FlowManager() {
         worldScreen = new WorldScreen();
         startScreen = new StartScreen();
@@ -94,7 +94,7 @@ public class FlowManager implements Observer {
     public void displayLastScreen() {
         nifty.gotoScreen(lastScreens.pop());
     }
-    
+
     public void storeActualScreen() {
         lastScreens.push(nifty.getCurrentScreen().getScreenId());
     }
@@ -145,6 +145,8 @@ public class FlowManager implements Observer {
     }
 
     public void displayQuestion(final Question question) {
+        storeActualScreen();
+
         enableState(false);
         final GuiQuestInput control = (GuiQuestInput) nifty.getScreen(SCREEN_QUEST_INPUT).getScreenController();
         control.setQuestion(question);
@@ -217,7 +219,7 @@ public class FlowManager implements Observer {
     public void finishQuestItem(final String text) {
         displayDescription(text, SCREEN_WORLD);
     }
-    
+
     public void assignPlayer(final Player player) {
         final GuiGame control = (GuiGame) nifty.getScreen(SCREEN_WORLD).getScreenController();
         control.setPlayer(player);
@@ -227,11 +229,16 @@ public class FlowManager implements Observer {
     public void update(Observable o, Object arg) {
         if (o instanceof QuestItem) {
             QuestItem qi = (QuestItem) o;
-            FlowManager.getInstance().finishQuestItem("Úkol ".concat(qi.getTask()).concat(" byl splněn."));
-            deactiveChildren(qi);
+
+            if (qi.isFinished()) {
+                FlowManager.getInstance().finishQuestItem("Úkol ".concat(qi.getTask()).concat(" byl splněn."));
+                deactiveChildren(qi);
+            }
+
+            enableState(true);
         }
     }
-    
+
     private void deactiveChildren(final Item item) {
         final ItemRegistry itemRegistry = AppContext.getItemRegistry();
         Item i;
