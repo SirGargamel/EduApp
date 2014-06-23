@@ -4,6 +4,7 @@ import eduapp.level.quest.Quest;
 import com.jme3.asset.AssetKey;
 import com.jme3.asset.AssetManager;
 import com.jme3.asset.DesktopAssetManager;
+import com.jme3.input.InputManager;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
@@ -11,6 +12,7 @@ import com.jme3.scene.Spatial;
 import eduapp.AppContext;
 import eduapp.FlowManager;
 import eduapp.ItemRegistry;
+import eduapp.Player;
 import eduapp.level.trigger.ActionTrigger;
 import eduapp.level.trigger.MoveTrigger;
 import eduapp.level.trigger.Trigger;
@@ -39,11 +41,11 @@ public class Level {
     private final Set<TriggerStub> stubs;
     private final Set<Trigger> triggers, activeTriggers;
 
-    public static Level loadLevel(final String levelName, final AssetManager assetManager) {
+    public static Level loadLevel(final String levelName, final AssetManager assetManager, final InputManager inputManager) {
         final String path = "levels/".concat(levelName).concat(".").concat(LevelLoader.EXTENSION);
         final AssetKey<Level> key = new AssetKey<>(path);
         final Level result = assetManager.loadAsset(key);
-        result.generateLevel(assetManager);
+        result.generateLevel(assetManager, inputManager);
         ((DesktopAssetManager) assetManager).clearCache();
         return result;
     }
@@ -62,11 +64,13 @@ public class Level {
         activeTriggers = new HashSet<>();
     }
 
-    private void generateLevel(final AssetManager assetManager) {
+    private void generateLevel(final AssetManager assetManager, final InputManager inputManager) {
         background.generateBackground(assetManager);
         rootNode.attachChild(background.getRootNode());
 
         final ItemRegistry ir = AppContext.getItemRegistry();
+        
+        player.generatePlayer(assetManager, inputManager);
         ir.put(player);
 
         for (Quest q : quests) {

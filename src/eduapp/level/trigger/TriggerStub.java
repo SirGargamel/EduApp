@@ -10,9 +10,9 @@ import com.jme3.scene.debug.WireBox;
 import com.jme3.scene.debug.WireSphere;
 import eduapp.level.Item;
 import eduapp.ItemRegistry;
+import eduapp.Player;
 import eduapp.level.Light;
 import eduapp.level.Model;
-import eduapp.level.Player;
 import eduapp.level.quest.Quest;
 import java.util.Arrays;
 

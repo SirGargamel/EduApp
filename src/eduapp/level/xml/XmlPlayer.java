@@ -1,8 +1,7 @@
 package eduapp.level.xml;
 
 import com.jme3.math.Vector3f;
-import eduapp.level.Player;
-import javax.xml.soap.Node;
+import eduapp.Player;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 

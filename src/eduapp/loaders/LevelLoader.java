@@ -2,14 +2,11 @@ package eduapp.loaders;
 
 import com.jme3.asset.AssetInfo;
 import com.jme3.asset.AssetLoader;
-import eduapp.AppContext;
-import eduapp.ItemRegistry;
+import eduapp.Player;
 import eduapp.level.Background;
-import eduapp.level.Item;
 import eduapp.level.Model;
 import eduapp.level.Level;
 import eduapp.level.Light;
-import eduapp.level.Player;
 import eduapp.level.quest.Quest;
 import eduapp.level.trigger.TriggerStub;
 import eduapp.level.xml.XmlBackground;

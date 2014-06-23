@@ -44,7 +44,7 @@ public class WorldScreen extends AbstractAppState {
     private Camera cam;
 
     public void setLevelName(String levelName) {
-        currentLevel = Level.loadLevel(levelName, AppContext.getApp().getAssetManager());
+        currentLevel = Level.loadLevel(levelName, AppContext.getApp().getAssetManager(), AppContext.getApp().getInputManager());
     }
 
     @Override
@@ -69,7 +69,6 @@ public class WorldScreen extends AbstractAppState {
     }
 
     private void initPlayer(final AssetManager assetManager, final InputManager inputManager) {
-        player = new Player(assetManager, inputManager, currentLevel.getPlayer().getModelName());
         FlowManager.assignPlayer(player);
     }
 
@@ -200,7 +199,7 @@ public class WorldScreen extends AbstractAppState {
         super.cleanup();
 
         final InputManager inputManager = AppContext.getApp().getInputManager();
-        inputManager.removeListener(keyListener);        
+        inputManager.removeListener(keyListener);
         player.removeKeys(inputManager);
 
         currentLevel.getRootNode().removeFromParent();

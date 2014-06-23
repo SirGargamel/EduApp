@@ -9,6 +9,7 @@ import com.jme3.bounding.BoundingBox;
 import com.jme3.input.InputManager;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.AnalogListener;
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
 import eduapp.level.Item;
 import eduapp.level.quest.Quest;
@@ -23,19 +24,27 @@ import java.util.List;
 public class Player extends Item implements AnimEventListener, ActionListener, AnalogListener {
 
     private static final float PLAYER_HEIGHT = 1.5f;
-    private Spatial model;
+    private static final String ID = "player";
+    private final Vector3f initialPosition;
+    private final String modelName;private Spatial model;
     private String animationIdle, animationWalk;
-    private final AnimChannel channel;
-    private final AnimControl control;
+    private AnimChannel channel;
+    private AnimControl control;
     private boolean isRunning;
     private Quest currentQuest;
     private final List<String> inventory;
 
-    public Player(final AssetManager assetManager, final InputManager inputManager, final String modelName) {
+    public Player(Vector3f initialPosition, String modelName) {
         inventory = new ArrayList<>();
         inventory.add("a");
         inventory.add("b");
         
+        this.initialPosition = initialPosition;
+        this.modelName = modelName;
+        setId(ID);
+    }
+    
+    public void generatePlayer(final AssetManager assetManager, final InputManager inputManager) {
         final StringBuilder sb = new StringBuilder();
         sb.append("models/");
         sb.append(modelName);
@@ -157,5 +166,13 @@ public class Player extends Item implements AnimEventListener, ActionListener, A
     
     public Collection<String> getAllItems() {
         return inventory;
+    }
+    
+    public Vector3f getInitialPosition() {
+        return initialPosition;
+    }
+
+    public String getModelName() {
+        return modelName;
     }
 }
