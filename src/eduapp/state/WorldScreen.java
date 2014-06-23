@@ -70,6 +70,7 @@ public class WorldScreen extends AbstractAppState {
 
     private void initPlayer(final AssetManager assetManager, final InputManager inputManager) {
         player = new Player(assetManager, inputManager, currentLevel.getPlayer().getModelName());
+        FlowManager.assignPlayer(player);
     }
 
     private void initKeys(final InputManager inputManager) {

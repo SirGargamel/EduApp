@@ -202,4 +202,9 @@ public class FlowManager {
     public static void finishQuestItem(final String text) {
         FlowManager.displayDescription(text, SCREEN_WORLD);
     }
+    
+    public static void assignPlayer(final Player player) {
+        final GuiGame control = (GuiGame) nifty.getScreen(SCREEN_WORLD).getScreenController();
+        control.setPlayer(player);
+    }
 }

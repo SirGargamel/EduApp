@@ -10,13 +10,17 @@ import com.jme3.input.InputManager;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.AnalogListener;
 import com.jme3.scene.Spatial;
+import eduapp.level.Item;
 import eduapp.level.quest.Quest;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  *
  * @author Petr Jecmen
  */
-public class Player implements AnimEventListener, ActionListener, AnalogListener {
+public class Player extends Item implements AnimEventListener, ActionListener, AnalogListener {
 
     private static final float PLAYER_HEIGHT = 1.5f;
     private Spatial model;
@@ -25,8 +29,13 @@ public class Player implements AnimEventListener, ActionListener, AnalogListener
     private final AnimControl control;
     private boolean isRunning;
     private Quest currentQuest;
+    private final List<String> inventory;
 
     public Player(final AssetManager assetManager, final InputManager inputManager, final String modelName) {
+        inventory = new ArrayList<>();
+        inventory.add("a");
+        inventory.add("b");
+        
         final StringBuilder sb = new StringBuilder();
         sb.append("models/");
         sb.append(modelName);
@@ -140,5 +149,13 @@ public class Player implements AnimEventListener, ActionListener, AnalogListener
                 }
             }
         }
+    }
+    
+    public void addItemToInventory(final String itemId) {
+        inventory.add(itemId);
+    }
+    
+    public Collection<String> getAllItems() {
+        return inventory;
     }
 }
