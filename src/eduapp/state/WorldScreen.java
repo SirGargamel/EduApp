@@ -4,7 +4,6 @@ import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
-import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.BetterCharacterControl;
@@ -56,7 +55,7 @@ public class WorldScreen extends AbstractAppState {
 
     private void prepareWorld(Application app) {
         if (player == null) {
-            initPlayer(app.getAssetManager(), app.getInputManager());
+            initPlayer();
             currentLevel.getRootNode().attachChild(player.getModel());
             initCollisions(app);
         } else {
@@ -68,7 +67,8 @@ public class WorldScreen extends AbstractAppState {
         initCamera(app);
     }
 
-    private void initPlayer(final AssetManager assetManager, final InputManager inputManager) {
+    private void initPlayer() {
+        player = currentLevel.getPlayer();
         FlowManager.assignPlayer(player);
     }
 
