@@ -26,7 +26,7 @@ import javax.imageio.ImageIO;
  *
  * @author Petr Ječmen
  */
-public class GuiGame implements ScreenController {
+public class GuiWorld implements ScreenController {
 
     private Nifty nifty;
     private Element icon;

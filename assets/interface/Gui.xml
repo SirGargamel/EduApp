@@ -4,8 +4,7 @@
     <useControls filename="nifty-default-controls.xml" />   
     <style id="font">
         <attributes font="interface/Fonts/Base.fnt" inherit="true" />     
-    </style>
-    
+    </style>    
     <screen id="start" controller="eduapp.gui.GuiMainMenu">
         <layer id="centerColumn" childLayout="vertical">
             <panel width="100%" height="40%" childLayout="vertical" />                  
@@ -21,7 +20,7 @@
             </panel>
         </layer>
     </screen>
-    <screen id="game" controller="eduapp.gui.GuiGame">        
+    <screen id="game" controller="eduapp.gui.GuiWorld">        
         <layer id="foreground" childLayout="vertical">
             <panel height="10%" childLayout="horizontal">
                 <panel width="1%" childLayout="vertical" />

@@ -5,7 +5,7 @@ import de.lessvoid.nifty.Nifty;
 import eduapp.gui.GuiConversion;
 import eduapp.gui.GuiDescription;
 import eduapp.gui.GuiDictionary;
-import eduapp.gui.GuiGame;
+import eduapp.gui.GuiWorld;
 import eduapp.gui.GuiQuest;
 import eduapp.gui.GuiQuestInput;
 import eduapp.gui.GuiNotify;
@@ -184,7 +184,7 @@ public class FlowManager implements Observer {
     }
 
     public void showTriggerMarker(boolean show) {
-        final GuiGame control = (GuiGame) nifty.getScreen(SCREEN_WORLD).getScreenController();
+        final GuiWorld control = (GuiWorld) nifty.getScreen(SCREEN_WORLD).getScreenController();
         control.enableQuestMarker(show);
     }
 
@@ -221,7 +221,7 @@ public class FlowManager implements Observer {
     }
 
     public void assignPlayer(final Player player) {
-        final GuiGame control = (GuiGame) nifty.getScreen(SCREEN_WORLD).getScreenController();
+        final GuiWorld control = (GuiWorld) nifty.getScreen(SCREEN_WORLD).getScreenController();
         control.setPlayer(player);
         this.player = player;
     }
@@ -239,7 +239,7 @@ public class FlowManager implements Observer {
 
             enableState(true);
         } else if (o instanceof Player) {
-            final GuiGame control = (GuiGame) nifty.getScreen(SCREEN_WORLD).getScreenController();
+            final GuiWorld control = (GuiWorld) nifty.getScreen(SCREEN_WORLD).getScreenController();
             control.refreshInventoryItems();
         }
     }
