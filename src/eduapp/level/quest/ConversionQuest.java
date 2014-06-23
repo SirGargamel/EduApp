@@ -57,10 +57,8 @@ public class ConversionQuest extends QuestItem {
     @Override
     public String toNiftyString() {
         initConversion();
-        
-        final StringBuilder sb = new StringBuilder();        
-        sb.append(conversion.getParam(ItemParameters.NAME));
-        return sb.toString();
+                
+        return conversion.getParam(ItemParameters.DESCRIPTION);
     }
 
     @Override

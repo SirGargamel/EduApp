@@ -57,11 +57,8 @@ public class GroupingQuest extends QuestItem {
     @Override
     public String toNiftyString() {
         initGroup();
-        
-        final StringBuilder sb = new StringBuilder();
-        sb.append("Rozřaďte prvky do skupin dle ");
-        sb.append(group.getParam(ItemParameters.NAME));
-        return sb.toString();
+                
+        return group.getParam(ItemParameters.DESCRIPTION);
     }
 
     @Override
