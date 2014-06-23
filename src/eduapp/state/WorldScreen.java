@@ -108,8 +108,6 @@ public class WorldScreen extends AbstractAppState {
         inputManager.addListener(keyListener, Actions.ACTION.toString());
         inputManager.addListener(keyListener, Actions.QUEST.toString());
         inputManager.addListener(keyListener, Actions.DICTIONARY.toString());
-
-        player.initKeys(inputManager);
     }
 
     private void initCamera(Application app) {
@@ -191,6 +189,7 @@ public class WorldScreen extends AbstractAppState {
         currentLevel.visit(loc);
         cam.setLocation(loc.add(0, CAM_ELEVATION, 0));
 //        System.out.println(loc); 
+        player.update(tpf);
     }
 
     @Override
@@ -199,7 +198,6 @@ public class WorldScreen extends AbstractAppState {
 
         final InputManager inputManager = AppContext.getApp().getInputManager();
         inputManager.removeListener(keyListener);
-        player.removeKeys(inputManager);
 
         currentLevel.getRootNode().removeFromParent();
     }

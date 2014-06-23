@@ -17,7 +17,7 @@
     </Background>
     <Player>
         <Coords>15.5;-1.5</Coords>
-        <Model>Goblin</Model>
+        <Model>h2o</Model>
     </Player>
     <Items>
         <Item id="table1">
@@ -96,14 +96,14 @@
             <Action>FinishT1</Action>    
             <Once/>  			
         </MoveTrigger>
-<!--
+<!-- -->
         <MoveTrigger>
             <Volume>player</Volume>
             <Target>hlavniQuest</Target>
             <Action></Action>    
             <Once/>        			
         </MoveTrigger>
--->
+<!-- -->
         <ActionTrigger id="tQ1">
             <Volume>table1</Volume>
             <Target>hlavniQuest</Target>
