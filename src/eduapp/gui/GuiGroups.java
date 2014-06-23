@@ -24,6 +24,6 @@ public class GuiGroups implements ScreenController {
     }
 
     public void ok() {        
-        FlowManager.finishGroupScreen();
+        FlowManager.getInstance().finishGroupScreen();
     }
 }

@@ -48,7 +48,7 @@ public class GuiQuestInput implements ScreenController {
                                 panelQuest.startEffect(EffectEventId.onCustom, new EndNotify() {
                                     @Override
                                     public void perform() {
-                                        FlowManager.displayLastScreen();
+                                        FlowManager.getInstance().displayLastScreen();
                                     }
                                 }, "Ok");
                                 result = true;

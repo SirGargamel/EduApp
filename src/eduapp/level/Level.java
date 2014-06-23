@@ -176,7 +176,7 @@ public class Level {
                 break;
             }
         }
-        FlowManager.showTriggerMarker(show);
+        FlowManager.getInstance().showTriggerMarker(show);
     }
 
     public void activate(final Vector3f pos) {

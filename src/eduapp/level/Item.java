@@ -4,6 +4,7 @@ import eduapp.ItemParameters;
 import eduapp.ItemRegistry;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,7 +12,7 @@ import java.util.regex.Pattern;
  *
  * @author Petr Ječmen
  */
-public class Item implements Comparable<Item> {
+public class Item extends Observable implements Comparable<Item> {
 
     private static final String FIELD_COMPARE = ItemParameters.NAME;
     protected ItemRegistry itemRegistry;

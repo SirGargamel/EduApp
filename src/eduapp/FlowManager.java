@@ -16,13 +16,15 @@ import eduapp.level.quest.Question;
 import eduapp.state.GroupScreen;
 import eduapp.state.StartScreen;
 import eduapp.state.WorldScreen;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Stack;
 
 /**
  *
  * @author Petr Ječmen
  */
-public class FlowManager {
+public class FlowManager implements Observer {
 
     private static final String SCREEN_CONVERSION = "conversion";
     private static final String SCREEN_DESCRIPTION = "description";
@@ -34,15 +36,20 @@ public class FlowManager {
     private static final String SCREEN_QUEST_INPUT = "questInput";
     private static final String SCREEN_START = "start";
     private static final String SCREEN_WORLD = "game";
-    private static final WorldScreen worldScreen;
-    private static final StartScreen startScreen;
-    private static final GroupScreen groupScreen;
-    private static Nifty nifty;
-    private static Quest currentQuest;
-    private static AppState currentState;
-    private static Stack<String> lastScreens;
-
+    private static final FlowManager instance;
+    private final WorldScreen worldScreen;
+    private final StartScreen startScreen;
+    private final GroupScreen groupScreen;
+    private Nifty nifty;
+    private Quest currentQuest;
+    private AppState currentState;
+    private Stack<String> lastScreens;
+    
     static {
+        instance = new FlowManager();
+    }
+    
+    private FlowManager() {
         worldScreen = new WorldScreen();
         startScreen = new StartScreen();
         groupScreen = new GroupScreen();
@@ -53,7 +60,11 @@ public class FlowManager {
         lastScreens = new Stack<>();
     }
 
-    public static void loadLevel(String levelName) {
+    public static FlowManager getInstance() {
+        return instance;
+    }
+
+    public void loadLevel(String levelName) {
         worldScreen.setLevelName(levelName);
 
         final String text = "Starting level " + levelName + "\n H\u2082 SO\u2084 \n b \n c \n hooooooooooooooooooooooooooooooooooooooooooooooooooooooooooodn2 dlouhý text s čárkami";
@@ -62,7 +73,7 @@ public class FlowManager {
 
     }
 
-    public static void handlePause() {
+    public void handlePause() {
         boolean isEnabled = currentState.isEnabled();
         enableState(!isEnabled);
         if (isEnabled) {
@@ -72,27 +83,27 @@ public class FlowManager {
         }
     }
 
-    public static void enableState(boolean isEnabled) {
+    public void enableState(boolean isEnabled) {
         currentState.setEnabled(isEnabled);
     }
 
-    public static void displayLastScreen() {
+    public void displayLastScreen() {
         nifty.gotoScreen(lastScreens.pop());
     }
     
-    public static void storeActualScreen() {
+    public void storeActualScreen() {
         lastScreens.push(nifty.getCurrentScreen().getScreenId());
     }
 
-    public static void exitGame() {
+    public void exitGame() {
         AppContext.getApp().stop();
     }
 
-    public static void setNifty(final Nifty nifty) {
-        FlowManager.nifty = nifty;
+    public void setNifty(final Nifty nifty) {
+        this.nifty = nifty;
     }
 
-    public static void gotoWorldScreen() {
+    public void gotoWorldScreen() {
         AppContext.getApp().getStateManager().detach(currentState);
         AppContext.getApp().getStateManager().attach(worldScreen);
         worldScreen.setEnabled(true);
@@ -100,14 +111,14 @@ public class FlowManager {
         nifty.gotoScreen(SCREEN_WORLD);
     }
 
-    public static void gotoMainMenu() {
+    public void gotoMainMenu() {
         AppContext.getApp().getStateManager().detach(currentState);
         AppContext.getApp().getStateManager().attach(startScreen);
         nifty.gotoScreen(SCREEN_START);
         currentState = startScreen;
     }
 
-    public static void gotoGroupScreen(final GroupingQuest group) {
+    public void gotoGroupScreen(final GroupingQuest group) {
         groupScreen.setGrouping(group.getGroup());
         groupScreen.setItems(group.getItems());
 
@@ -121,7 +132,7 @@ public class FlowManager {
         nifty.gotoScreen(SCREEN_GROUPS);
     }
 
-    public static void displayQuest(final Quest quest) {
+    public void displayQuest(final Quest quest) {
         enableState(false);
         currentQuest = quest;
         final GuiQuest control = (GuiQuest) nifty.getScreen(SCREEN_QUEST).getScreenController();
@@ -129,21 +140,21 @@ public class FlowManager {
         nifty.gotoScreen(SCREEN_QUEST);
     }
 
-    public static void displayQuestion(final Question question) {
+    public void displayQuestion(final Question question) {
         enableState(false);
         final GuiQuestInput control = (GuiQuestInput) nifty.getScreen(SCREEN_QUEST_INPUT).getScreenController();
         control.setQuestion(question);
         nifty.gotoScreen(SCREEN_QUEST_INPUT);
     }
 
-    public static void displayConversionScreen(final ConversionQuest quest) {
+    public void displayConversionScreen(final ConversionQuest quest) {
         enableState(false);
         final GuiConversion control = (GuiConversion) nifty.getScreen(SCREEN_CONVERSION).getScreenController();
         control.setQuest(quest);
         nifty.gotoScreen(SCREEN_CONVERSION);
     }
 
-    public static void dictionaryAction() {
+    public void dictionaryAction() {
         if (nifty.getCurrentScreen().getScreenId().equals(SCREEN_DICTIONARY)) {
             enableState(true);
             displayLastScreen();
@@ -156,7 +167,7 @@ public class FlowManager {
         }
     }
 
-    public static void questAction() {
+    public void questAction() {
         if (nifty.getCurrentScreen().getScreenId().equals(SCREEN_QUEST)) {
             enableState(true);
             displayLastScreen();
@@ -166,12 +177,12 @@ public class FlowManager {
         }
     }
 
-    public static void showTriggerMarker(boolean show) {
+    public void showTriggerMarker(boolean show) {
         final GuiGame control = (GuiGame) nifty.getScreen(SCREEN_WORLD).getScreenController();
         control.enableQuestMarker(show);
     }
 
-    public static void displayNotification(final String message, final String returnScreen) {
+    public void displayNotification(final String message, final String returnScreen) {
         lastScreens.push(returnScreen);
         final GuiNotify control = (GuiNotify) nifty.getScreen(SCREEN_NOTIFY).getScreenController();
         control.setMessage(message);
@@ -179,7 +190,7 @@ public class FlowManager {
         enableState(true);
     }
 
-    public static void displayDescription(final String message, final String returnScreen) {
+    public void displayDescription(final String message, final String returnScreen) {
         lastScreens.push(returnScreen);
         final GuiDescription control = (GuiDescription) nifty.getScreen(SCREEN_DESCRIPTION).getScreenController();
         control.setMessage(message);
@@ -187,24 +198,29 @@ public class FlowManager {
         enableState(true);
     }
 
-    public static void finishGroupScreen() {
+    public void finishGroupScreen() {
         final int[] results = groupScreen.checkGrouping();
         final String message = "Zařadili jste správně " + results[0] + " předmětů z " + results[1];
         displayDescription(message, SCREEN_WORLD);
         gotoWorldScreen();
     }
 
-    public static void finishConversion(int good, int total) {
+    public void finishConversion(int good, int total) {
         final String message = "Převedli jste správně " + good + " věcí z " + total;
         displayDescription(message, SCREEN_WORLD);
     }
 
-    public static void finishQuestItem(final String text) {
-        FlowManager.displayDescription(text, SCREEN_WORLD);
+    public void finishQuestItem(final String text) {
+        displayDescription(text, SCREEN_WORLD);
     }
     
-    public static void assignPlayer(final Player player) {
+    public void assignPlayer(final Player player) {
         final GuiGame control = (GuiGame) nifty.getScreen(SCREEN_WORLD).getScreenController();
         control.setPlayer(player);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

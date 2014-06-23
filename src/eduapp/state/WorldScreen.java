@@ -69,7 +69,7 @@ public class WorldScreen extends AbstractAppState {
 
     private void initPlayer() {
         player = currentLevel.getPlayer();
-        FlowManager.assignPlayer(player);
+        FlowManager.getInstance().assignPlayer(player);
     }
 
     private void initKeys(final InputManager inputManager) {
@@ -78,13 +78,13 @@ public class WorldScreen extends AbstractAppState {
             public void onAction(String name, boolean isPressed, float tpf) {
                 if (!isPressed) {
                     if (name.equals(Actions.PAUSE.toString())) {
-                        FlowManager.handlePause();
+                        FlowManager.getInstance().handlePause();
                     } else if (name.equals(Actions.QUEST.toString())) {
-                        FlowManager.questAction();
+                        FlowManager.getInstance().questAction();
                     } else if (name.equals(Actions.ACTION.toString())) {
                         currentLevel.activate(player.getModel().getWorldBound().getCenter());
                     } else if (name.equals(Actions.DICTIONARY.toString())) {
-                        FlowManager.dictionaryAction();
+                        FlowManager.getInstance().dictionaryAction();
                         System.out.println("dict");
                     } else if (name.equals("Debug")) {
                         debugAction();

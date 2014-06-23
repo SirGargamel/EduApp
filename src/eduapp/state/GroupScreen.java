@@ -12,7 +12,6 @@ import com.jme3.input.MouseInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.MouseAxisTrigger;
-import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Ray;
@@ -48,8 +47,8 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
     private static final float SIZE_GAP = 0.5f;
     private static final int SIZE_GAP_2D = 20;
     private static final float SIZE_GROUP_H = 0.1f;
-    private static final float SIZE_WIDTH = 16f;    
-    private static final float SIZE_HEIGHT = 12f;        
+    private static final float SIZE_WIDTH = 16f;
+    private static final float SIZE_HEIGHT = 12f;
     private static final float POS_OFFSET_BOX_X = -7.0f;
     private static final float POS_OFFSET_BOX_Y = -5.0f;
     private static final float POS_OFFSET_CAM_Z = 15.0f;
@@ -97,8 +96,8 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
 
         mat = new Material(app.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
         mat.setColor("Color", ColorRGBA.Gray);
-        int i = 0;        
-        final int count = groups.length;        
+        int i = 0;
+        final int count = groups.length;
         final float sizeGroup3D = (SIZE_WIDTH - SIZE_GAP * count) / (float) (count * 2);
         final float sizeGroup2D = (app.getCamera().getWidth() - SIZE_GAP_2D * count) / (float) (count);
         buckets = new Node();
@@ -108,8 +107,8 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
             g = new Geometry(sT, new Cylinder(50, 50, sizeGroup3D, SIZE_GROUP_H, true));
             g.setMaterial(mat);
             g.move(
-                    -SIZE_WIDTH / 2.0f + sizeGroup3D + SIZE_GAP + i * (sizeGroup3D * 2 + SIZE_GAP), 
-                    SIZE_HEIGHT / 2.0f - sizeGroup3D - SIZE_GAP * 2, 
+                    -SIZE_WIDTH / 2.0f + sizeGroup3D + SIZE_GAP + i * (sizeGroup3D * 2 + SIZE_GAP),
+                    SIZE_HEIGHT / 2.0f - sizeGroup3D - SIZE_GAP * 2,
                     -SIZE_GROUP_H / 2.0f);
             buckets.attachChild(g);
 
@@ -117,7 +116,7 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
             hudText.setSize(bf.getCharSet().getRenderedSize());
             hudText.setColor(ColorRGBA.White);
             hudText.setText(sT);
-            
+
             hudText.setLocalTranslation(SIZE_GAP_2D + sizeGroup2D / 2 - hudText.getLineWidth() / 2 + i * (sizeGroup2D + SIZE_GAP_2D), app.getCamera().getHeight(), 0);
             guiNode.attachChild(hudText);
 
@@ -226,7 +225,7 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
             }
         } else if (name.equals(Actions.PAUSE.toString())) {
             if (!isPressed && name.equals(Actions.PAUSE.toString())) {
-                FlowManager.handlePause();
+                FlowManager.getInstance().handlePause();
             }
         }
     }

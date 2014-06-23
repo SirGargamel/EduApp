@@ -24,14 +24,14 @@ public class GuiPause implements ScreenController {
     }
 
     public void backToMenu() {       
-        FlowManager.gotoMainMenu();
+        FlowManager.getInstance().gotoMainMenu();
     }
 
     public void backToGame() {        
-        FlowManager.handlePause();
+        FlowManager.getInstance().handlePause();
     }
 
     public void exit() {
-        FlowManager.exitGame();
+        FlowManager.getInstance().exitGame();
     }
 }

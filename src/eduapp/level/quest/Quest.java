@@ -24,15 +24,15 @@ public class Quest extends Item {
     }
 
     public void makeActive() {
-        FlowManager.displayQuest(this);
+        FlowManager.getInstance().displayQuest(this);
     }
 
     public void displayQuestion(Question question) {
-        FlowManager.displayQuestion(question);
+        FlowManager.getInstance().displayQuestion(question);
     }
 
     public void displayJmolQuestion(final JmolQuestion question) {
-        FlowManager.displayQuestion(question);
+        FlowManager.getInstance().displayQuestion(question);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -52,18 +52,18 @@ public class Quest extends Item {
     public void displayWebQuestion(WebQuestion question) {
         try {
             java.awt.Desktop.getDesktop().browse(new URI(question.getWeb()));
-            FlowManager.displayQuestion(question);
+            FlowManager.getInstance().displayQuestion(question);
         } catch (IOException | URISyntaxException ex) {
             System.err.println("Illegal web URL - " + ex);
         }
     }
 
     public void displayGroups(GroupingQuest group) {
-        FlowManager.gotoGroupScreen(group);
+        FlowManager.getInstance().gotoGroupScreen(group);
     }
 
     public void displayConversion(ConversionQuest conversion) {
-        FlowManager.displayConversionScreen(conversion);
+        FlowManager.getInstance().displayConversionScreen(conversion);
     }
 
     public List<QuestItem> getData() {

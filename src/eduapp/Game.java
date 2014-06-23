@@ -38,9 +38,9 @@ public class Game extends SimpleApplication {
         guiViewPort.addProcessor(niftyDisplay);
 
         AppContext.setApp(this);
-        FlowManager.setNifty(nifty);
+        FlowManager.getInstance().setNifty(nifty);
 
-        FlowManager.gotoMainMenu();
+        FlowManager.getInstance().gotoMainMenu();
 //        FlowManager.displayDictionary();
     }
 
