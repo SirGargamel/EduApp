@@ -258,7 +258,7 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
             items.collideWith(s.getWorldBound(), results);
 
             gr = s.getName();
-            for (int i = 9; i < results.size(); i += 10) {
+            for (int i = 9; i < results.size(); i += 10) {                
                 vals = results.getCollision(i).getGeometry().getName().split(ItemParameters.SPLITTER);
                 match = false;
                 for (String str : vals) {
@@ -268,6 +268,16 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
                     }
                 }
                 if (match) {
+                    counter += 1;
+                }
+            }
+        }
+        for (Spatial s : items.getChildren()) {
+            gr = s.getName();
+            if (gr.isEmpty()) {
+                results.clear();
+                buckets.collideWith(s.getWorldBound(), results);
+                if (results.size() == 0) {
                     counter += 1;
                 }
             }
