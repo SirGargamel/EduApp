@@ -10,7 +10,7 @@ import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import de.lessvoid.nifty.tools.Color;
-import eduapp.ItemParameters;
+import eduapp.level.ItemParameters;
 import eduapp.ItemRegistry;
 import eduapp.gui.listbox.Line;
 import eduapp.level.Item;

@@ -12,7 +12,7 @@ import de.lessvoid.nifty.elements.render.ImageRenderer;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import eduapp.AppContext;
-import eduapp.ItemParameters;
+import eduapp.level.ItemParameters;
 import eduapp.ItemRegistry;
 import eduapp.level.Player;
 import java.awt.image.BufferedImage;

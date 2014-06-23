@@ -1,6 +1,5 @@
 package eduapp.level;
 
-import eduapp.ItemParameters;
 import eduapp.ItemRegistry;
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package eduapp;
+package eduapp.level;
 
 /**
  *

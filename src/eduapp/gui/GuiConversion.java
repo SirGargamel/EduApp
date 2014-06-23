@@ -12,7 +12,7 @@ import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import de.lessvoid.nifty.tools.Color;
 import eduapp.FlowManager;
-import eduapp.ItemParameters;
+import eduapp.level.ItemParameters;
 import eduapp.level.Item;
 import eduapp.level.quest.ConversionQuest;
 

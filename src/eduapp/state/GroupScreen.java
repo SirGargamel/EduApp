@@ -30,7 +30,7 @@ import com.zero_separation.plugins.imagepainter.ImagePainter;
 import eduapp.Actions;
 import eduapp.AppContext;
 import eduapp.FlowManager;
-import eduapp.ItemParameters;
+import eduapp.level.ItemParameters;
 import eduapp.level.Item;
 import java.util.ArrayList;
 import java.util.List;

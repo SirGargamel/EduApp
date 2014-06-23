@@ -1,6 +1,6 @@
 package eduapp.level.quest;
 
-import eduapp.ItemParameters;
+import eduapp.level.ItemParameters;
 import eduapp.level.Item;
 
 public class ConversionQuest extends QuestItem {
