@@ -31,29 +31,44 @@ import javax.imageio.ImageIO;
  */
 public class GuiWorld implements ScreenController {
 
-    private static final String NAME_PANEL = "panelText";
+    private static final String NAME_PANEL_TEXT = "panelText";
+    private static final String NAME_PANEL_IMAGE = "panelDescr";
     private static final String NAME_TEXT = "text";
     private static final String NAME_IMAGE = "albert";
+    private static final String NAME_DESCR = "textDescr";
     private Nifty nifty;
-    private Element icon;
     private List<Element> inv;
     private Player player;
-    private String message;
+    private String notification, descr;
     private Element questionText;
     private Element panelQuest;
     private Element image;
+    private Element description;
+    private Element panelImage;
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void displayDescription(String message) {
+        if (message == null || message.isEmpty()) {
+            if (panelImage != null && panelImage.isVisible()) {
+                panelImage.hide();
+            }
+        } else if (!message.equals(descr)) {
+            description.getRenderer(TextRenderer.class).setText(message);
+            panelImage.show();
+            descr = message;
+        }
     }
 
-    public void displayMessage() {
-        if (message != null) {
+    public void setNotification(String message) {
+        this.notification = message;
+    }
+
+    public void displayNotification() {
+        if (notification != null) {
             questionText.show();
             panelQuest.show();
             image.show();
 
-            questionText.getRenderer(TextRenderer.class).setText(message);
+            questionText.getRenderer(TextRenderer.class).setText(notification);
             panelQuest.startEffect(EffectEventId.onCustom, new EndNotify() {
                 @Override
                 public void perform() {
@@ -74,8 +89,6 @@ public class GuiWorld implements ScreenController {
     public void bind(Nifty nifty, Screen screen) {
         this.nifty = nifty;
 
-        icon = nifty.getCurrentScreen().findElementByName("panelImage");
-
         inv = new ArrayList<>(5);
         inv.add(nifty.getCurrentScreen().findElementByName("inv1"));
         inv.add(nifty.getCurrentScreen().findElementByName("inv2"));
@@ -83,23 +96,23 @@ public class GuiWorld implements ScreenController {
         inv.add(nifty.getCurrentScreen().findElementByName("inv4"));
         inv.add(nifty.getCurrentScreen().findElementByName("inv5"));
 
-        panelQuest = nifty.getCurrentScreen().findElementByName(NAME_PANEL);
+        panelQuest = nifty.getCurrentScreen().findElementByName(NAME_PANEL_TEXT);
         questionText = nifty.getCurrentScreen().findElementByName(NAME_TEXT);
         image = nifty.getCurrentScreen().findElementByName(NAME_IMAGE);
+        description = nifty.getCurrentScreen().findElementByName(NAME_DESCR);
+        panelImage = nifty.getCurrentScreen().findElementByName(NAME_PANEL_IMAGE);
     }
 
     @Override
     public void onStartScreen() {
-        icon.hide();
-
         for (Element e : inv) {
             e.hide();
         }
 
         refreshInventoryItems();
 
-        if (message != null) {
-            displayMessage();
+        if (notification != null) {
+            displayNotification();
         }
     }
 
@@ -109,16 +122,6 @@ public class GuiWorld implements ScreenController {
 
     public void setPlayer(Player player) {
         this.player = player;
-    }
-
-    public void enableQuestMarker(boolean enable) {
-        if (icon != null) {
-            if (enable) {
-                icon.show();
-            } else {
-                icon.hide();
-            }
-        }
     }
 
     public void refreshInventoryItems() {

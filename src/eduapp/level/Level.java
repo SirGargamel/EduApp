@@ -30,7 +30,7 @@ public class Level {
 
     public static final float LEVEL_HEIGHT = 2.5f;
     public static final int TILE_SIZE = 1;
-    private static final float RADIUS_INTERACTION = 0.5f;
+    private static final float RADIUS_INTERACTION = 0.75f;
     private final Node rootNode;
     private final Background background;
     private final Player player;
@@ -179,15 +179,16 @@ public class Level {
         }
 
         // check for action triggers
-        boolean show = false;
+        String msg = null;
         for (Trigger t : activeTriggers) {
             if (t instanceof ActionTrigger) {
                 // show icon
-                show = true;
+                msg = ((ActionTrigger) t).description();
                 break;
             }
         }
-        FlowManager.getInstance().showTriggerMarker(show);
+
+        FlowManager.getInstance().displayDescription(msg);
     }
 
     public void activate(final Vector3f pos) {

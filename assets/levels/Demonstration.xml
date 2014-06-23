@@ -96,14 +96,14 @@
             <Action>FinishT1</Action>    
             <Once/>  			
         </MoveTrigger>
-<!-- -->
+<!-- 
         <MoveTrigger>
             <Volume>player</Volume>
             <Target>hlavniQuest</Target>
             <Action></Action>    
             <Once/>        			
         </MoveTrigger>
-<!-- -->
+ -->
         <ActionTrigger id="tQ1">
             <Volume>table1</Volume>
             <Target>hlavniQuest</Target>

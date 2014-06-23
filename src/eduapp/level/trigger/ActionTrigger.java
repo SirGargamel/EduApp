@@ -54,4 +54,8 @@ public abstract class ActionTrigger<T> extends Trigger<T> {
             light.setColor(ColorRGBA.BlackNoAlpha);
         }
     }
+    
+    public String description() {
+        return null;
+    }
 }

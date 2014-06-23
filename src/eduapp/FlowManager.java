@@ -35,7 +35,6 @@ public class FlowManager implements Observer {
     private static final String SCREEN_DESCRIPTION = "description";
     private static final String SCREEN_DICTIONARY = "dictionary";
     private static final String SCREEN_GROUPS = "groups";
-    private static final String SCREEN_NOTIFY = "notify";
     private static final String SCREEN_PAUSE = "pause";
     private static final String SCREEN_QUEST = "quest";
     private static final String SCREEN_QUEST_INPUT = "questInput";
@@ -75,7 +74,7 @@ public class FlowManager implements Observer {
 
         gotoWorldScreen();
         final GuiWorld control = (GuiWorld) nifty.getScreen(SCREEN_WORLD).getScreenController();
-        control.setMessage("Level " + levelName + "\n H\u2082 SO\u2084");
+        control.setNotification("Level " + levelName + "\n H\u2082 SO\u2084");
     }
 
     public void handlePause() {
@@ -190,17 +189,17 @@ public class FlowManager implements Observer {
         }
     }
 
-    public void showTriggerMarker(boolean show) {
+    public void displayDescription(String message) {
         final GuiWorld control = (GuiWorld) nifty.getScreen(SCREEN_WORLD).getScreenController();
-        control.enableQuestMarker(show);
+        control.displayDescription(message);
     }
 
     public void displayMessage(final String message, final String returnScreen) {
         final GuiWorld control = (GuiWorld) nifty.getScreen(SCREEN_WORLD).getScreenController();
-        control.setMessage(message);
+        control.setNotification(message);
         if (currentState == worldScreen) {
             if (nifty.getCurrentScreen().getScreenId().equals(SCREEN_WORLD)) {
-                control.displayMessage();
+                control.displayNotification();
             } else {
                 displayLastScreen();
             }

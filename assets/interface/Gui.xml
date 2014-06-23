@@ -44,15 +44,12 @@
                     <image id="inv5" filename="interface/face1.png" valign="center" halign="center" width="50%" height="50%"/>
                 </panel>
             </panel>
-            <panel height="80%" childLayout="vertical" />
-            <panel id="panelWithImage" childLayout="horizontal">                  
-                <panel width="45%" valign="center" />                  
-                <panel id="panelImage" width="10%" childLayout="center">
-                    <image filename="interface/face1.png" valign="center" align="center" width="50%" height="50%" />                    
-                </panel>                
+            <panel height="70%" childLayout="vertical" />
+            <panel id="panelDescr" childLayout="center">                 
+                <text id="textDescr" font="interface/Fonts/Base.fnt" align="left" color="#00ff00" text="TEST DESCR" wrap="true"/>               
             </panel>
         </layer>   
-        <layer childLayout="vertical">
+        <layer id="description" childLayout="vertical">
             <panel height="19%" />            
             <panel id="panelText"  height="25%" align="left" childLayout="horizontal" visible="false">                                
                 <panel width="57%" />
@@ -63,10 +60,10 @@
                 </effect>
             </panel>
         </layer>
-        <layer childLayout="horizontal">            
+        <layer id="description2" childLayout="horizontal">            
             <panel width="77%"/>                                                                                
             <image id="albert" filename="interface/albert.png" valign="top" halign="right" width="23%" height="20%" visible="false"/>                            
-        </layer>     
+        </layer>            
     </screen>
     <screen id="pause" controller="eduapp.gui.GuiPause">        
         <layer id="centerColumn" childLayout="vertical">

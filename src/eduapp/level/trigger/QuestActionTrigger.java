@@ -91,4 +91,9 @@ public class QuestActionTrigger extends ActionTrigger<Quest> {
     public QuestActionTrigger(Spatial volume, Quest target, String action, boolean once, boolean active) {
         super(volume, target, action, once, active);
     }
+    
+    @Override
+    public String description() {
+        return action;
+    }
 }
