@@ -117,18 +117,6 @@
             </panel>
         </layer>       
     </screen>
-    <screen id="notify" controller="eduapp.gui.GuiNotify">        
-        <layer id="onlyLayer" childLayout="vertical">            
-            <panel width="100%" height="5%" childLayout="vertical" />            
-            <panel id="panelQuest" width="30%" height="5%"  align="left" backgroundColor="#00000000" childLayout="center" visibleToMouse="false">                                
-                <text id="questText" width="100%" font="interface/Fonts/Base.fnt" align="left" color="#00ff00" text="..." wrap="true"/>                
-                <effect>
-                    <onCustom customKey="Show" name="move" mode="in" direction="left" length="500" startDelay="0" inherit="true" />
-                    <onCustom customKey="Hide" name="move" mode="out" direction="left" length="500" startDelay="5000" inherit="true"/>                    
-                </effect>
-            </panel>
-        </layer>       
-    </screen>
     <screen id="groups" controller="eduapp.gui.GuiGroups">        
         <layer id="onlyLayer" childLayout="vertical">            
             <panel width="100%" height="95%" childLayout="vertical" />            

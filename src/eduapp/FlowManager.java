@@ -10,7 +10,6 @@ import eduapp.gui.GuiDictionary;
 import eduapp.gui.GuiWorld;
 import eduapp.gui.GuiQuest;
 import eduapp.gui.GuiQuestInput;
-import eduapp.gui.GuiNotify;
 import eduapp.level.Item;
 import eduapp.level.Light;
 import eduapp.level.quest.ConversionQuest;
@@ -136,35 +135,35 @@ public class FlowManager implements Observer {
         currentState = groupScreen;
         groupScreen.setEnabled(true);
 
-        displayDescription(group.getGroup().getParam(ItemParameters.DESCRIPTION), SCREEN_GROUPS);
+        displayMessage(group.getGroup().getParam(ItemParameters.DESCRIPTION), SCREEN_GROUPS);
         storeActualScreen();
         nifty.gotoScreen(SCREEN_GROUPS);
     }
 
-    public void displayQuest(final Quest quest) {        
+    public void displayQuest(final Quest quest) {
         enableState(false);
         currentQuest = quest;
         final GuiQuest control = (GuiQuest) nifty.getScreen(SCREEN_QUEST).getScreenController();
         control.setQuest(quest);
-        
+
         storeActualScreen();
         nifty.gotoScreen(SCREEN_QUEST);
     }
 
-    public void displayQuestion(final Question question) {        
+    public void displayQuestion(final Question question) {
         enableState(false);
         final GuiQuestInput control = (GuiQuestInput) nifty.getScreen(SCREEN_QUEST_INPUT).getScreenController();
         control.setQuestion(question);
-        
+
         storeActualScreen();
         nifty.gotoScreen(SCREEN_QUEST_INPUT);
     }
 
-    public void displayConversionScreen(final ConversionQuest quest) {        
+    public void displayConversionScreen(final ConversionQuest quest) {
         enableState(false);
         final GuiConversion control = (GuiConversion) nifty.getScreen(SCREEN_CONVERSION).getScreenController();
         control.setQuest(quest);
-        
+
         storeActualScreen();
         nifty.gotoScreen(SCREEN_CONVERSION);
     }
@@ -197,15 +196,7 @@ public class FlowManager implements Observer {
         control.enableQuestMarker(show);
     }
 
-    public void displayNotification(final String message, final String returnScreen) {
-        lastScreens.push(returnScreen);
-        final GuiNotify control = (GuiNotify) nifty.getScreen(SCREEN_NOTIFY).getScreenController();
-        control.setMessage(message);
-        nifty.gotoScreen(SCREEN_NOTIFY);
-        enableState(true);
-    }
-
-    public void displayDescription(final String message, final String returnScreen) {
+    public void displayMessage(final String message, final String returnScreen) {
         final GuiWorld control = (GuiWorld) nifty.getScreen(SCREEN_WORLD).getScreenController();
         control.setMessage(message);
         if (currentState == worldScreen) {
@@ -228,16 +219,16 @@ public class FlowManager implements Observer {
         final int[] results = groupScreen.checkGrouping();
         final String message = "Zařadili jste správně " + results[0] + " předmětů z " + results[1];
         gotoWorldScreen();
-        displayDescription(message, SCREEN_WORLD);
+        displayMessage(message, SCREEN_WORLD);
     }
 
     public void finishConversion(int good, int total) {
         final String message = "Převedli jste správně " + good + " věcí z " + total;
-        displayDescription(message, SCREEN_WORLD);
+        displayMessage(message, SCREEN_WORLD);
     }
 
     public void finishQuestItem(final String text) {
-        displayDescription(text, SCREEN_WORLD);
+        displayMessage(text, SCREEN_WORLD);
     }
 
     public void assignPlayer(final Player player) {
