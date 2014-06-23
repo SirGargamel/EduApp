@@ -51,7 +51,22 @@
                     <image filename="interface/face1.png" valign="center" align="center" width="50%" height="50%" />                    
                 </panel>                
             </panel>
-        </layer>        
+        </layer>   
+        <layer childLayout="vertical">
+            <panel height="19%" />            
+            <panel id="panelText"  height="25%" align="left" childLayout="horizontal" visible="false">                                
+                <panel width="57%" />
+                <text id="text" width="30%" font="interface/Fonts/Base.fnt" textHAlign="left" backgroundColor="#aaaa" color="#00ff00" text="" wrap="true" padding="5px"/>                
+                <effect>
+                    <onCustom customKey="Show" name="fade" start="#0" end="#f" length="500" startDelay="0" inherit="true" />
+                    <onCustom customKey="Hide" name="fade" start="#f" end="#0" length="500" startDelay="5000" inherit="true"/>                    
+                </effect>
+            </panel>
+        </layer>
+        <layer childLayout="horizontal">            
+            <panel width="77%"/>                                                                                
+            <image id="albert" filename="interface/albert.png" valign="top" halign="right" width="23%" height="20%" visible="false"/>                            
+        </layer>     
     </screen>
     <screen id="pause" controller="eduapp.gui.GuiPause">        
         <layer id="centerColumn" childLayout="vertical">

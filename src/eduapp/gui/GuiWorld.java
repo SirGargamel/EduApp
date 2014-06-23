@@ -6,9 +6,12 @@ import com.jme3.asset.TextureKey;
 import com.jme3.texture.Texture;
 import com.jme3.texture.Texture2D;
 import com.jme3.texture.plugins.AWTLoader;
+import de.lessvoid.nifty.EndNotify;
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.effects.EffectEventId;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.elements.render.ImageRenderer;
+import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import eduapp.AppContext;
@@ -28,12 +31,44 @@ import javax.imageio.ImageIO;
  */
 public class GuiWorld implements ScreenController {
 
+    private static final String NAME_PANEL = "panelText";
+    private static final String NAME_TEXT = "text";
+    private static final String NAME_IMAGE = "albert";
     private Nifty nifty;
     private Element icon;
     private List<Element> inv;
     private Player player;
-    private AssetManager assetManager;
-    private ItemRegistry itemRegistry;
+    private String message;
+    private Element questionText;
+    private Element panelQuest;
+    private Element image;
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void displayMessage() {
+        if (message != null) {
+            questionText.show();
+            panelQuest.show();
+            image.show();
+
+            questionText.getRenderer(TextRenderer.class).setText(message);
+            panelQuest.startEffect(EffectEventId.onCustom, new EndNotify() {
+                @Override
+                public void perform() {
+                    panelQuest.startEffect(EffectEventId.onCustom, new EndNotify() {
+                        @Override
+                        public void perform() {
+                            questionText.hide();
+                            panelQuest.hide();
+                            image.hide();
+                        }
+                    }, "Hide");
+                }
+            }, "Show");
+        }
+    }
 
     @Override
     public void bind(Nifty nifty, Screen screen) {
@@ -48,8 +83,9 @@ public class GuiWorld implements ScreenController {
         inv.add(nifty.getCurrentScreen().findElementByName("inv4"));
         inv.add(nifty.getCurrentScreen().findElementByName("inv5"));
 
-        assetManager = AppContext.getApp().getAssetManager();
-        itemRegistry = AppContext.getItemRegistry();
+        panelQuest = nifty.getCurrentScreen().findElementByName(NAME_PANEL);
+        questionText = nifty.getCurrentScreen().findElementByName(NAME_TEXT);
+        image = nifty.getCurrentScreen().findElementByName(NAME_IMAGE);
     }
 
     @Override
@@ -61,6 +97,10 @@ public class GuiWorld implements ScreenController {
         }
 
         refreshInventoryItems();
+
+        if (message != null) {
+            displayMessage();
+        }
     }
 
     @Override
@@ -82,8 +122,9 @@ public class GuiWorld implements ScreenController {
     }
 
     public void refreshInventoryItems() {
-        // TODO retrieve and display icon
         final List<String> items = player.getAllItems();
+        final AssetManager assetManager = AppContext.getApp().getAssetManager();
+        final ItemRegistry itemRegistry = AppContext.getItemRegistry();
 
         Element e;
         ImageRenderer ir;

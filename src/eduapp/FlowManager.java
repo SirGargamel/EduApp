@@ -74,9 +74,9 @@ public class FlowManager implements Observer {
     public void loadLevel(String levelName) {
         worldScreen.setLevelName(levelName);
 
-        final String text = "Level " + levelName + "\n H\u2082 SO\u2084";
-        displayDescription(text, SCREEN_WORLD);
         gotoWorldScreen();
+        final GuiWorld control = (GuiWorld) nifty.getScreen(SCREEN_WORLD).getScreenController();
+        control.setMessage("Level " + levelName + "\n H\u2082 SO\u2084");
     }
 
     public void handlePause() {
@@ -110,16 +110,18 @@ public class FlowManager implements Observer {
     }
 
     public void gotoWorldScreen() {
+        storeActualScreen();
+        nifty.gotoScreen(SCREEN_WORLD);
         AppContext.getApp().getStateManager().detach(currentState);
         AppContext.getApp().getStateManager().attach(worldScreen);
         worldScreen.setEnabled(true);
         currentState = worldScreen;
-        nifty.gotoScreen(SCREEN_WORLD);
     }
 
     public void gotoMainMenu() {
         AppContext.getApp().getStateManager().detach(currentState);
         AppContext.getApp().getStateManager().attach(startScreen);
+        storeActualScreen();
         nifty.gotoScreen(SCREEN_START);
         currentState = startScreen;
     }
@@ -135,30 +137,35 @@ public class FlowManager implements Observer {
         groupScreen.setEnabled(true);
 
         displayDescription(group.getGroup().getParam(ItemParameters.DESCRIPTION), SCREEN_GROUPS);
+        storeActualScreen();
         nifty.gotoScreen(SCREEN_GROUPS);
     }
 
-    public void displayQuest(final Quest quest) {
+    public void displayQuest(final Quest quest) {        
         enableState(false);
         currentQuest = quest;
         final GuiQuest control = (GuiQuest) nifty.getScreen(SCREEN_QUEST).getScreenController();
         control.setQuest(quest);
+        
+        storeActualScreen();
         nifty.gotoScreen(SCREEN_QUEST);
     }
 
-    public void displayQuestion(final Question question) {
-        storeActualScreen();
-
+    public void displayQuestion(final Question question) {        
         enableState(false);
         final GuiQuestInput control = (GuiQuestInput) nifty.getScreen(SCREEN_QUEST_INPUT).getScreenController();
         control.setQuestion(question);
+        
+        storeActualScreen();
         nifty.gotoScreen(SCREEN_QUEST_INPUT);
     }
 
-    public void displayConversionScreen(final ConversionQuest quest) {
+    public void displayConversionScreen(final ConversionQuest quest) {        
         enableState(false);
         final GuiConversion control = (GuiConversion) nifty.getScreen(SCREEN_CONVERSION).getScreenController();
         control.setQuest(quest);
+        
+        storeActualScreen();
         nifty.gotoScreen(SCREEN_CONVERSION);
     }
 
@@ -199,18 +206,29 @@ public class FlowManager implements Observer {
     }
 
     public void displayDescription(final String message, final String returnScreen) {
-        lastScreens.push(returnScreen);
-        final GuiDescription control = (GuiDescription) nifty.getScreen(SCREEN_DESCRIPTION).getScreenController();
+        final GuiWorld control = (GuiWorld) nifty.getScreen(SCREEN_WORLD).getScreenController();
         control.setMessage(message);
-        nifty.gotoScreen(SCREEN_DESCRIPTION);
+        if (currentState == worldScreen) {
+            if (nifty.getCurrentScreen().getScreenId().equals(SCREEN_WORLD)) {
+                control.displayMessage();
+            } else {
+                displayLastScreen();
+            }
+        } else {
+            final GuiDescription descr = (GuiDescription) nifty.getScreen(SCREEN_DESCRIPTION).getScreenController();
+            descr.setMessage(message);
+            lastScreens.push(returnScreen);
+            nifty.gotoScreen(SCREEN_DESCRIPTION);
+        }
+
         enableState(true);
     }
 
     public void finishGroupScreen() {
         final int[] results = groupScreen.checkGrouping();
         final String message = "Zařadili jste správně " + results[0] + " předmětů z " + results[1];
-        displayDescription(message, SCREEN_WORLD);
         gotoWorldScreen();
+        displayDescription(message, SCREEN_WORLD);
     }
 
     public void finishConversion(int good, int total) {
