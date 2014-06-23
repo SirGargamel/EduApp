@@ -14,7 +14,6 @@ import com.jme3.scene.Spatial;
 import eduapp.level.Item;
 import eduapp.level.quest.Quest;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -26,7 +25,8 @@ public class Player extends Item implements AnimEventListener, ActionListener, A
     private static final float PLAYER_HEIGHT = 1.5f;
     private static final String ID = "player";
     private final Vector3f initialPosition;
-    private final String modelName;private Spatial model;
+    private final String modelName;
+    private Spatial model;
     private String animationIdle, animationWalk;
     private AnimChannel channel;
     private AnimControl control;
@@ -36,14 +36,12 @@ public class Player extends Item implements AnimEventListener, ActionListener, A
 
     public Player(Vector3f initialPosition, String modelName) {
         inventory = new ArrayList<>();
-        inventory.add("a");
-        inventory.add("b");
-        
+
         this.initialPosition = initialPosition;
         this.modelName = modelName;
         setId(ID);
     }
-    
+
     public void generatePlayer(final AssetManager assetManager, final InputManager inputManager) {
         final StringBuilder sb = new StringBuilder();
         sb.append("models/");
@@ -84,7 +82,7 @@ public class Player extends Item implements AnimEventListener, ActionListener, A
                 Actions.UP.toString(),
                 Actions.DOWN.toString());
     }
-    
+
     public void removeKeys(final InputManager inputManager) {
         inputManager.removeListener(this);
     }
@@ -160,15 +158,18 @@ public class Player extends Item implements AnimEventListener, ActionListener, A
             }
         }
     }
-    
+
     public void addItemToInventory(final String itemId) {
         inventory.add(itemId);
+
+        setChanged();
+        notifyObservers();
     }
-    
-    public Collection<String> getAllItems() {
+
+    public List<String> getAllItems() {
         return inventory;
     }
-    
+
     public Vector3f getInitialPosition() {
         return initialPosition;
     }

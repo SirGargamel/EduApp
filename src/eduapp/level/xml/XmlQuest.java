@@ -28,7 +28,7 @@ public class XmlQuest extends XmlEntity<Quest> {
     private static final String ITEM_GROUPS = "Group";
     private static final String ITEM_QUESTION = "Question";
     private static final String ITEM_QUESTION_JMOL = "Jmol";
-    private static final String ITEM_QUESTION_WEB = "Web";
+    private static final String ITEM_QUESTION_WEB = "Web";    
     private static final String ITEM_TASK = "Task";
     private static final String QUESTION_SEPARATOR = "::";
 
@@ -62,46 +62,51 @@ public class XmlQuest extends XmlEntity<Quest> {
         switch (e.getNodeName()) {
             case ITEM_CONVERSION:
                 split = e.getElementsByTagName(ITEM_DATA).item(0).getTextContent().split(QUESTION_SEPARATOR);
-                if (split.length == 2) {
-                    result = new ConversionQuest(split[0], split[1]);
+                if (split.length == 3) {
+                    result = new ConversionQuest(split[0], split[1], split[2]);
                 } else {
-                    throw new IllegalArgumentException("Unsupported conversion quest text, separator is ::, required 2 params - " + node.getTextContent());
+                    throw new IllegalArgumentException("Unsupported conversion quest text, separator is ::, required 3 params - " + node.getTextContent());
                 }
                 break;
             case ITEM_GROUPS:
                 split = e.getElementsByTagName(ITEM_DATA).item(0).getTextContent().split(QUESTION_SEPARATOR);
-                if (split.length == 2) {
-                    result = new GroupingQuest(split[0], split[1]);
+                if (split.length == 3) {
+                    result = new GroupingQuest(split[0], split[1], split[2]);
                 } else {
-                    throw new IllegalArgumentException("Unsupported group task, separator is ::, required 2 params - " + node.getTextContent());
+                    throw new IllegalArgumentException("Unsupported group task, separator is ::, required 3 params - " + node.getTextContent());
                 }
                 break;
             case ITEM_QUESTION:
                 split = e.getElementsByTagName(ITEM_DATA).item(0).getTextContent().split(QUESTION_SEPARATOR);
-                if (split.length == 2) {
-                    result = new Question(split[0], split[1]);
+                if (split.length == 3) {
+                    result = new Question(split[0], split[1], split[2]);
                 } else {
-                    throw new IllegalArgumentException("Unsupported question text, separator is ::, required 2 params - " + node.getTextContent());
+                    throw new IllegalArgumentException("Unsupported question text, separator is ::, required 3 params - " + node.getTextContent());
                 }
                 break;
             case ITEM_QUESTION_JMOL:
                 split = e.getElementsByTagName(ITEM_DATA).item(0).getTextContent().split(QUESTION_SEPARATOR);
-                if (split.length == 3) {
-                    result = new JmolQuestion(split[0], split[1], split[2]);
+                if (split.length == 4) {
+                    result = new JmolQuestion(split[0], split[1], split[2], split[3]);
                 } else {
-                    throw new IllegalArgumentException("Unsupported Jmol question text, separator is ::, required 3 params - " + node.getTextContent());
+                    throw new IllegalArgumentException("Unsupported Jmol question text, separator is ::, required 4 params - " + node.getTextContent());
                 }
                 break;
             case ITEM_QUESTION_WEB:
                 split = e.getElementsByTagName(ITEM_DATA).item(0).getTextContent().split(QUESTION_SEPARATOR);
-                if (split.length == 3) {
-                    result = new WebQuestion(split[0], split[1], split[2]);
+                if (split.length == 4) {
+                    result = new WebQuestion(split[0], split[1], split[2], split[3]);
                 } else {
-                    throw new IllegalArgumentException("Unsupported Web question text, separator is ::, required 3 params - " + node.getTextContent());
+                    throw new IllegalArgumentException("Unsupported Web question text, separator is ::, required 4 params - " + node.getTextContent());
                 }
                 break;
             case ITEM_TASK:
-                result = new Task(e.getElementsByTagName(ITEM_DATA).item(0).getTextContent());
+                split = e.getElementsByTagName(ITEM_DATA).item(0).getTextContent().split(QUESTION_SEPARATOR);
+                if (split.length == 2) {
+                    result = new Task(split[0], split[1]);
+                } else {
+                    throw new IllegalArgumentException("Unsupported Task text, separator is ::, required 2 params - " + node.getTextContent());
+                }
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported quest item type - " + node.getNodeName());

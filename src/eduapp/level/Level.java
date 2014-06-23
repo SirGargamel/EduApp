@@ -67,12 +67,12 @@ public class Level {
 
     private void generateLevel(final AssetManager assetManager, final InputManager inputManager) {
         FlowManager flowManager = FlowManager.getInstance();
-        
+
         background.generateBackground(assetManager);
         rootNode.attachChild(background.getRootNode());
 
         final ItemRegistry ir = AppContext.getItemRegistry();
-        
+
         player.generatePlayer(assetManager, inputManager);
         player.addObserver(flowManager);
         ir.put(player);
@@ -81,7 +81,7 @@ public class Level {
             ir.put(q);
             q.assignInterfaces(this);
             q.addObserver(flowManager);
-            
+
             for (QuestItem qi : q.getData()) {
                 qi.addObserver(flowManager);
             }
@@ -98,7 +98,7 @@ public class Level {
         // create lights
         for (Light l : lights) {
             ir.put(l);
-            l.actualizePos();            
+            l.actualizePos();
             rootNode.addLight(l.getLight());
             l.addObserver(flowManager);
         }

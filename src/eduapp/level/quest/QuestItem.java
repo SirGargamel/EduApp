@@ -10,6 +10,11 @@ import eduapp.level.Level;
 public abstract class QuestItem extends Item {
 
     protected Level level;
+    private String reward;
+
+    public QuestItem(String reward) {
+        this.reward = reward;
+    }
 
     public abstract boolean isFinished();
 
@@ -19,6 +24,10 @@ public abstract class QuestItem extends Item {
 
     public void setLevel(final Level level) {
         this.level = level;
+    }
+
+    public String getReward() {
+        return reward;
     }
 
     public void finish() {

@@ -5,7 +5,8 @@ public class Task extends QuestItem {
     private final String task;
     private boolean done;
 
-    public Task(String task) {
+    public Task(String task, String reward) {
+        super(reward);
         this.task = task;
     }
 

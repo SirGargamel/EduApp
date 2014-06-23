@@ -13,7 +13,9 @@ public class ConversionQuest extends QuestItem {
     private int correct;
     private boolean finished;
 
-    public ConversionQuest(String conversionId, String data) {
+    public ConversionQuest(String conversionId, String data, String reward) {
+        super(reward);
+        
         this.conversionId = conversionId;        
         final String[] split = data.split(ItemParameters.SPLITTER);
         itemList = new String[split.length];

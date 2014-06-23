@@ -6,7 +6,9 @@ public class Question extends QuestItem {
     private String userInput;
     private boolean finished;
 
-    public Question(String question, String answer) {
+    public Question(String question, String answer, String reward) {
+        super(reward);
+
         this.question = question;
         this.answer = answer;
         userInput = "";
@@ -23,7 +25,7 @@ public class Question extends QuestItem {
     public void setUserInput(String userInput) {
         this.userInput = userInput.trim();
         if (answer.equalsIgnoreCase(userInput)) {
-            finished = true;            
+            finished = true;
         }
         finish();
     }

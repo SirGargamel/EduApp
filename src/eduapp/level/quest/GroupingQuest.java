@@ -13,7 +13,9 @@ public class GroupingQuest extends QuestItem {
     private int correct;
     private boolean finished;
 
-    public GroupingQuest(String groupId, String data) {
+    public GroupingQuest(String groupId, String data, String reward) {
+        super(reward);
+        
         this.groupId = groupId;
         final String[] split = data.split(ItemParameters.SPLITTER);
         itemList = new String[split.length];

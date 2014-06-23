@@ -16,4 +16,5 @@ public interface ItemParameters {
     String TO = "do";
     String SOURCE = "type";
     String DESCRIPTION = "popis";
+    String ICON = "ikona";
 }

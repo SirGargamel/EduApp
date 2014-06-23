@@ -8,8 +8,8 @@ public class JmolQuestion extends Question {
 
     private final String modelName;
 
-    public JmolQuestion(String question, String answer, String modelName) {
-        super(question, answer);
+    public JmolQuestion(String question, String answer, String modelName, String reward) {
+        super(question, answer, reward);
 
         this.modelName = modelName;
     }

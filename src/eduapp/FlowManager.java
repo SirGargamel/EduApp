@@ -44,6 +44,7 @@ public class FlowManager implements Observer {
     private final WorldScreen worldScreen;
     private final StartScreen startScreen;
     private final GroupScreen groupScreen;
+    private Player player;
     private Nifty nifty;
     private Quest currentQuest;
     private AppState currentState;
@@ -71,10 +72,9 @@ public class FlowManager implements Observer {
     public void loadLevel(String levelName) {
         worldScreen.setLevelName(levelName);
 
-        final String text = "Starting level " + levelName + "\n H\u2082 SO\u2084 \n b \n c \n hooooooooooooooooooooooooooooooooooooooooooooooooooooooooooodn2 dlouhý text s čárkami";
+        final String text = "Level " + levelName + "\n H\u2082 SO\u2084";
         displayDescription(text, SCREEN_WORLD);
         gotoWorldScreen();
-
     }
 
     public void handlePause() {
@@ -223,6 +223,7 @@ public class FlowManager implements Observer {
     public void assignPlayer(final Player player) {
         final GuiGame control = (GuiGame) nifty.getScreen(SCREEN_WORLD).getScreenController();
         control.setPlayer(player);
+        this.player = player;
     }
 
     @Override
@@ -233,9 +234,13 @@ public class FlowManager implements Observer {
             if (qi.isFinished()) {
                 FlowManager.getInstance().finishQuestItem("Úkol ".concat(qi.getTask()).concat(" byl splněn."));
                 deactiveChildren(qi);
+                player.addItemToInventory(qi.getReward());
             }
 
             enableState(true);
+        } else if (o instanceof Player) {
+            final GuiGame control = (GuiGame) nifty.getScreen(SCREEN_WORLD).getScreenController();
+            control.refreshInventoryItems();
         }
     }
 

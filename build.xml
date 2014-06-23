@@ -77,6 +77,9 @@
         <copy todir="dist/Jmol">  
             <fileset dir="Jmol" includes="**"/>  
         </copy>
+        <copy todir="dist/data">  
+            <fileset dir="data" includes="**"/>  
+        </copy>
     </target>
     
 </project>

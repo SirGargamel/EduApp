@@ -4,6 +4,7 @@
         <skup>kapalné</skup>
         <vzorec>H2SO4</vzorec>
         <link>http://cs.wikipedia.org/wiki/Kyselina_s%C3%ADrov%C3%A1</link>
+        <ikona>h2so4.png</ikona>
     </item>
     <item id="so2">
         <jmeno>Oxid siřičitý</jmeno>
