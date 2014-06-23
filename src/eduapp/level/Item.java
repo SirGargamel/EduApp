@@ -3,8 +3,10 @@ package eduapp.level;
 import eduapp.ItemParameters;
 import eduapp.ItemRegistry;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Observable;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,9 +20,11 @@ public class Item extends Observable implements Comparable<Item> {
     protected ItemRegistry itemRegistry;
     private String id;
     private Map<String, String> params;
+    private final Set<String> children;
 
     public Item() {
         params = new HashMap<>();
+        children = new HashSet<>();
     }
 
     public String getId() {
@@ -55,6 +59,14 @@ public class Item extends Observable implements Comparable<Item> {
     public void setItemRegistry(ItemRegistry itemRegistry) {
         this.itemRegistry = itemRegistry;
     }
+    
+    public void addChild(final String id) {
+        children.add(id);
+    }
+
+    public Set<String> getChildren() {
+        return children;
+    }        
 
     @Override
     public int compareTo(Item o) {

@@ -9,10 +9,14 @@ import eduapp.gui.GuiGame;
 import eduapp.gui.GuiQuest;
 import eduapp.gui.GuiQuestInput;
 import eduapp.gui.GuiNotify;
+import eduapp.level.Item;
+import eduapp.level.Light;
 import eduapp.level.quest.ConversionQuest;
 import eduapp.level.quest.GroupingQuest;
 import eduapp.level.quest.Quest;
+import eduapp.level.quest.QuestItem;
 import eduapp.level.quest.Question;
+import eduapp.level.trigger.Trigger;
 import eduapp.state.GroupScreen;
 import eduapp.state.StartScreen;
 import eduapp.state.WorldScreen;
@@ -221,6 +225,27 @@ public class FlowManager implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (o instanceof QuestItem) {
+            QuestItem qi = (QuestItem) o;
+            FlowManager.getInstance().finishQuestItem("Úkol ".concat(qi.getTask()).concat(" byl splněn."));
+            deactiveChildren(qi);
+        }
+    }
+    
+    private void deactiveChildren(final Item item) {
+        final ItemRegistry itemRegistry = AppContext.getItemRegistry();
+        Item i;
+        for (String s : item.getChildren()) {
+            i = itemRegistry.get(s);
+            if (i instanceof Light) {
+                Light l = (Light) i;
+                l.enableLight(false);
+            } else if (i instanceof Trigger) {
+                Trigger t = (Trigger) i;
+                t.setActive(false);
+            } else {
+                System.err.println("Illegal child for deactivation - " + s);
+            }
+        }
     }
 }
