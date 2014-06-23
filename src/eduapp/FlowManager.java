@@ -1,5 +1,6 @@
 package eduapp;
 
+import eduapp.level.Player;
 import com.jme3.app.state.AppState;
 import de.lessvoid.nifty.Nifty;
 import eduapp.gui.GuiConversion;

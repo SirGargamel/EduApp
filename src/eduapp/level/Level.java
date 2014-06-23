@@ -12,7 +12,6 @@ import com.jme3.scene.Spatial;
 import eduapp.AppContext;
 import eduapp.FlowManager;
 import eduapp.ItemRegistry;
-import eduapp.Player;
 import eduapp.level.quest.QuestItem;
 import eduapp.level.trigger.ActionTrigger;
 import eduapp.level.trigger.MoveTrigger;

@@ -2,7 +2,7 @@ package eduapp.loaders;
 
 import com.jme3.asset.AssetInfo;
 import com.jme3.asset.AssetLoader;
-import eduapp.Player;
+import eduapp.level.Player;
 import eduapp.level.Background;
 import eduapp.level.Model;
 import eduapp.level.Level;

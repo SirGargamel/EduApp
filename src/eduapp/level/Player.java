@@ -1,4 +1,4 @@
-package eduapp;
+package eduapp.level;
 
 import com.jme3.animation.AnimChannel;
 import com.jme3.animation.AnimControl;
@@ -11,6 +11,7 @@ import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.AnalogListener;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
+import eduapp.Actions;
 import eduapp.level.Item;
 import eduapp.level.quest.Quest;
 import java.util.ArrayList;

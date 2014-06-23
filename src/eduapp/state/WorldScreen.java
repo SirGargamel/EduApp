@@ -18,7 +18,7 @@ import com.jme3.scene.Spatial;
 import eduapp.Actions;
 import eduapp.AppContext;
 import eduapp.FlowManager;
-import eduapp.Player;
+import eduapp.level.Player;
 import eduapp.level.Level;
 
 /**

@@ -14,7 +14,7 @@ import de.lessvoid.nifty.screen.ScreenController;
 import eduapp.AppContext;
 import eduapp.ItemParameters;
 import eduapp.ItemRegistry;
-import eduapp.Player;
+import eduapp.level.Player;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
