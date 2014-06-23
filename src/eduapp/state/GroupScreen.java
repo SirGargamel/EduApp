@@ -185,6 +185,9 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
     public void setItems(Item... items) {
         this.itemsList.clear();
         final String id = group.getId();
+        final String groups = group.getParam(id);
+        String[] vals;
+        boolean add;
         if (id == null) {
             System.err.println("Group does not set.");
         } else {
@@ -195,7 +198,18 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
                     if (val == null) {
                         System.err.println("Item missing group param - " + id);
                     } else {
-                        itemsList.add(it);
+                        add = true;
+                        vals = val.split(ItemParameters.SPLITTER);
+                        for (String s : vals) {
+                            if (!groups.contains(s)) {
+                                System.err.println("Item contains illegal group param - " + s);
+                                add = false;
+                                break;
+                            }
+                        }
+                        if (add) {
+                            itemsList.add(it);
+                        }
                     }
                 } else {
                     System.err.println("NULL item");
@@ -258,7 +272,7 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
             items.collideWith(s.getWorldBound(), results);
 
             gr = s.getName();
-            for (int i = 9; i < results.size(); i += 10) {                
+            for (int i = 9; i < results.size(); i += 10) {
                 vals = results.getCollision(i).getGeometry().getName().split(ItemParameters.SPLITTER);
                 match = false;
                 for (String str : vals) {
