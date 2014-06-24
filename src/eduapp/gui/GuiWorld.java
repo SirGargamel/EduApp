@@ -34,7 +34,7 @@ public class GuiWorld implements ScreenController {
     private static final String NAME_PANEL_TEXT = "panelText";
     private static final String NAME_PANEL_IMAGE = "panelDescr";
     private static final String NAME_TEXT = "text";
-    private static final String NAME_IMAGE = "albert";
+    private static final String NAME_IMAGE = "guide";
     private static final String NAME_DESCR = "textDescr";
     private Nifty nifty;
     private List<Element> inv;

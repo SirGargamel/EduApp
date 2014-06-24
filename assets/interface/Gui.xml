@@ -64,8 +64,8 @@
             </panel>
         </layer>
         <layer id="description2" childLayout="horizontal">            
-            <panel width="77%"/>                                                                                
-            <image id="albert" filename="interface/albert.png" valign="top" halign="right" width="23%" height="20%" visible="false"/>                            
+            <panel width="80%"/>                                                                                
+            <image id="guide" filename="interface/guide.png" valign="top" halign="right" width="20%" height="20%" visible="false"/>                            
         </layer>            
     </screen>
     <screen id="pause" controller="eduapp.gui.GuiPause">        
@@ -161,8 +161,8 @@
             </panel>
         </layer>
         <layer childLayout="horizontal">            
-            <panel width="77%"/>                                                                                
-            <image filename="interface/albert.png" valign="top" halign="right" width="23%" height="20%"/>                            
+            <panel width="80%"/>                                                                                
+            <image filename="interface/guide.png" valign="top" halign="right" width="20%" height="20%"/>                            
         </layer>
     </screen>
     <controlDefinition name="line">
