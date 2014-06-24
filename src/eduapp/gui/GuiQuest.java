@@ -42,7 +42,7 @@ public class GuiQuest implements ScreenController {
         final Screen current = nifty.getCurrentScreen();
         TextBuilder tb = new TextBuilder();
         tb.text(quest.getName());
-        tb.font("interface/Fonts/BaseB.fnt");
+        tb.style("baseB");
         tb.alignCenter();
         tb.color(Color.BLACK);
         Element e = tb.build(nifty, current, panelQuest);
@@ -51,7 +51,7 @@ public class GuiQuest implements ScreenController {
         for (QuestItem qi : quest.getData()) {
             tb = new TextBuilder();
             tb.text(qi.toNiftyString());
-            tb.font("interface/Fonts/Base.fnt");
+            tb.style("base");
             if (qi.isFinished()) {
                 tb.color(Color.BLACK);
             }

@@ -58,7 +58,7 @@ public class GuiConversion implements ScreenController {
         Element e, text;
 
         tb = new TextBuilder();
-        tb.font("interface/Fonts/BaseB.fnt");
+        tb.style("baseB");
         tb.text(conversion.getParam(ItemParameters.DESCRIPTION));
         tb.alignCenter();
         tb.color(Color.BLACK);
@@ -69,7 +69,7 @@ public class GuiConversion implements ScreenController {
             tb = new TextBuilder("t".concat(it.getId()));
             tb.width("10%");
             tb.textHAlignLeft();
-            tb.font("interface/Fonts/Base.fnt");
+            tb.style("base");
             tb.text(it.getParam(from));
             tb.color(Color.WHITE);
             tb.height(SIZE_LINE_HEIGHT);

@@ -96,14 +96,14 @@ public class GuiDictionary implements ScreenController {
                     p = pb.build(nifty, current, panelContent);
 
                     tb = new TextBuilder("t1".concat(s));
-                    tb.font("interface/Fonts/BaseB.fnt");
+                    tb.style("baseB");
                     tb.text(descr.getParam(s));
                     tb.color(Color.WHITE);
                     tb.height(SIZE_LINE_HEIGHT);
                     p.add(tb.build(nifty, current, panelContent));
 
                     tb = new TextBuilder("t2".concat(s));
-                    tb.font("interface/Fonts/Base.fnt");
+                    tb.style("base");
                     tb.text(val);
                     tb.color(Color.BLACK);
                     tb.height(SIZE_LINE_HEIGHT);

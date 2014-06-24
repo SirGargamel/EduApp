@@ -2,9 +2,12 @@
 <nifty xmlns="http://nifty-gui.sourceforge.net/nifty-1.3.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nifty-gui.sourceforge.net/nifty-1.3.xsd http://nifty-gui.sourceforge.net/nifty-1.3.xsd">
     <useStyles filename="nifty-default-styles.xml" />
     <useControls filename="nifty-default-controls.xml" />   
-    <style id="font">
-        <attributes font="interface/Fonts/Base.fnt" inherit="true" />     
-    </style>    
+    <style id="base">
+        <attributes font="interface/Fonts/Base20.fnt" inherit="true"/>     
+    </style>
+    <style id="baseB">
+        <attributes font="interface/Fonts/Base20B.fnt" inherit="true"/>     
+    </style>   
     <screen id="start" controller="eduapp.gui.GuiMainMenu">
         <layer id="centerColumn" childLayout="vertical">
             <panel width="100%" height="40%" childLayout="vertical" />                  
@@ -16,7 +19,7 @@
                     <onEndScreen name="move" mode="out" direction="bottom" length="300" startDelay="0" inherit="true"/>
                     <onHover name="pulsate" scaleFactor="0.008" startColor="#f600" endColor="#ffff" post="true"/>
                 </effect>
-                <text id="text" font="interface/Fonts/Base.fnt" color="#000f" text="Start game!" align="center" valign="center" />
+                <text id="text" color="#000f" text="Start game!" align="center" valign="center" style="base"/>
             </panel>
         </layer>
     </screen>
@@ -46,14 +49,14 @@
             </panel>
             <panel height="70%" childLayout="vertical" />
             <panel id="panelDescr" childLayout="center">                 
-                <text id="textDescr" font="interface/Fonts/Base.fnt" align="left" color="#00ff00" text="TEST DESCR" wrap="true"/>               
+                <text id="textDescr" style="base" align="left" color="#00ff00" text="TEST DESCR" wrap="true"/>               
             </panel>
         </layer>   
         <layer id="description" childLayout="vertical">
             <panel height="19%" />            
             <panel id="panelText"  height="25%" align="left" childLayout="horizontal" visible="false">                                
                 <panel width="57%" />
-                <text id="text" width="30%" font="interface/Fonts/Base.fnt" textHAlign="left" backgroundColor="#aaaa" color="#00ff00" text="" wrap="true" padding="5px"/>                
+                <text id="text" width="30%" textHAlign="left" backgroundColor="#aaaa" color="#00ff00" text="" wrap="true" padding="5px" style="base"/>                
                 <effect>
                     <onCustom customKey="Show" name="fade" start="#0" end="#f" length="500" startDelay="0" inherit="true" />
                     <onCustom customKey="Hide" name="fade" start="#f" end="#0" length="500" startDelay="5000" inherit="true"/>                    
@@ -73,7 +76,7 @@
                 <effect>                                        
                     <onHover name="pulsate" scaleFactor="0.008" startColor="#f600" endColor="#ffff" post="true"/>
                 </effect>
-                <text id="textBack" font="interface/Fonts/Base.fnt" color="#000f" text="Zpět do hry" align="center" valign="center" />
+                <text id="textBack" color="#000f" text="Zpět do hry" align="center" valign="center" style="base"/>
             </panel>
             <panel width="100%" height="5%" childLayout="vertical" /> 
             <panel id="buttonMenu" height="10%" width="15%" align="center" backgroundColor="#aaaa" childLayout="center" visibleToMouse="true">
@@ -81,7 +84,7 @@
                 <effect>                                        
                     <onHover name="pulsate" scaleFactor="0.008" startColor="#f600" endColor="#ffff" post="true"/>
                 </effect>
-                <text id="textMenu" font="interface/Fonts/Base.fnt" color="#000f" text="Zpět do menu" align="center" valign="center" />
+                <text id="textMenu" color="#000f" text="Zpět do menu" align="center" valign="center" style="base"/>
             </panel>
             <panel width="100%" height="5%" childLayout="vertical" /> 
             <panel id="buttonExit" height="10%" width="15%" align="center" backgroundColor="#aaaa" childLayout="center" visibleToMouse="true">
@@ -89,22 +92,21 @@
                 <effect>                                        
                     <onHover name="pulsate" scaleFactor="0.008" startColor="#f600" endColor="#ffff" post="true"/>
                 </effect>
-                <text id="textExit" font="interface/Fonts/Base.fnt" color="#000f" text="Ukončit hru" align="center" valign="center" />
+                <text id="textExit" color="#000f" text="Ukončit hru" align="center" valign="center" style="base"/>
             </panel>
         </layer>       
     </screen>
     <screen id="quest" controller="eduapp.gui.GuiQuest">        
         <layer id="centerColumn" childLayout="vertical">
             <panel width="100%" height="10%" childLayout="vertical" />            
-            <panel id="panelQuest" height="80%" width="80%" align="center" backgroundColor="#aaaa" childLayout="vertical" visibleToMouse="false">                                                
-            </panel>
+            <panel id="panelQuest" height="80%" width="80%" align="center" backgroundColor="#aaaa" childLayout="vertical" visibleToMouse="false" />            
         </layer>       
     </screen>
     <screen id="questInput" controller="eduapp.gui.GuiQuestInput">        
         <layer id="centerColumn" childLayout="vertical">
             <panel width="100%" height="70%" childLayout="vertical" />            
             <panel id="panelQuest" width="30%" height="10%"  align="center" backgroundColor="#aaaa" childLayout="vertical" visibleToMouse="true">                                
-                <text id="questText" height="50%" font="interface/Fonts/Base.fnt" align="center" color="#ffffff" text=".."/>
+                <text id="questText" height="50%" align="center" color="#ffffff" text=".." style="base"/>
                 <control id="questInput" height="50%" name="textfield" />
                 <effect>
                     <onCustom customKey="Start" name="move" mode="in" direction="bottom" length="300" startDelay="0" inherit="true" />
@@ -124,9 +126,8 @@
                     <effect>                                        
                         <onHover name="pulsate" scaleFactor="0.008" startColor="#f600" endColor="#ffff" post="true"/>
                     </effect>
-                    <text id="text" font="interface/Fonts/Base.fnt" color="#000f" text="Ok" align="center" valign="center" />
-                </panel>
-                
+                    <text id="text" color="#000f" text="Ok" align="center" valign="center" style="base"/>
+                </panel>                
             </panel>
         </layer>       
     </screen>
@@ -142,7 +143,7 @@
                     <effect>                                        
                         <onHover name="pulsate" scaleFactor="0.008" startColor="#f600" endColor="#ffff" post="true"/>
                     </effect>
-                    <text id="text" font="interface/Fonts/Base.fnt" color="#000f" text="Ok" align="center" valign="center" />
+                    <text id="text" color="#000f" text="Ok" align="center" valign="center" style="base"/>
                 </panel>                
             </panel>            
         </layer>       
@@ -152,7 +153,7 @@
             <panel height="19%" />            
             <panel id="panelText"  height="25%" align="left" childLayout="horizontal">                                
                 <panel width="57%" />
-                <text id="text" width="30%" font="interface/Fonts/Base.fnt" textHAlign="left" backgroundColor="#aaaa" color="#00ff00" text="....." wrap="true" padding="5px"/>                
+                <text id="text" width="30%" textHAlign="left" backgroundColor="#aaaa" color="#00ff00" text="....." wrap="true" padding="5px" style="base"/>                
                 <effect>
                     <onCustom customKey="Show" name="fade" start="#0" end="#f" length="500" startDelay="0" inherit="true" />
                     <onCustom customKey="Hide" name="fade" start="#f" end="#0" length="500" startDelay="5000" inherit="true"/>                    
@@ -166,13 +167,13 @@
     </screen>
     <controlDefinition name="line">
         <panel childLayout="horizontal" width="100%" align="center">
-            <control id="#line-text" name="label" align="left" textHAlign="left" height="23px" width="*" wrap="true" style="font"/>
+            <control id="#line-text" name="label" align="left" textHAlign="left" height="23px" width="*" wrap="true" style="base"/>
         </panel>
     </controlDefinition> 
     <screen id="dictionary" controller="eduapp.gui.GuiDictionary">  
         <layer id="complete" childLayout="center">      
             <panel height="95%" width="95%" align="center" backgroundColor="#aaaa" childLayout="horizontal" visibleToMouse="true">                
-                <control id="tree" name="listBox" valign="center" vertical="optional" horizontal="off" width="25%" displayItems="15" style="font" inherit="true"
+                <control id="tree" name="listBox" valign="center" vertical="optional" horizontal="off" width="25%" displayItems="15" style="base" inherit="true"
                          viewConverterClass="eduapp.gui.listbox.LineListBoxViewConverter">
                     <control name="line" controller="de.lessvoid.nifty.controls.listbox.ListBoxItemController" margin="2px">
                         <interact onClick="listBoxItemClicked()" />
