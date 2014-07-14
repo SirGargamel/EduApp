@@ -16,7 +16,7 @@ import org.jmol.api.JmolViewer;
  */
 public class JmolUtils {
 
-    private static final String JMOL_PATH = "Jmol\\";
+    private static final String JMOL_PATH = "data\\jmol\\";
     private static JmolPanel jmolPanel;
     private static JFrame frame;
 
