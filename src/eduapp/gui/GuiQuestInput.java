@@ -39,7 +39,7 @@ public class GuiQuestInput implements ScreenController {
         questionInput.getElement().addInputHandler(new KeyInputHandler() {
             @Override
             public boolean keyEvent(NiftyInputEvent nie) {
-                boolean result = false;
+                boolean result = true;
                 if (nie != null) {
                     switch (nie) {
                         case SubmitText:
