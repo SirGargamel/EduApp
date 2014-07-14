@@ -2,6 +2,10 @@ package eduapp;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.system.AppSettings;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
+import org.lwjgl.opengl.Display;
 
 /**
  *
@@ -16,6 +20,9 @@ public class EduApp {
             settings.setRenderer(AppSettings.LWJGL_OPENGL_ANY);
             settings.setWidth(1024);
             settings.setHeight(768);
+            settings.setTitle("EduApp");
+            settings.setIcons(new BufferedImage[] {ImageIO.read(new File("data/icon.png"))});
+            
             app.setShowSettings(false);
             app.setSettings(settings);
 
