@@ -4,6 +4,11 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import org.jmol.adapter.smarter.SmarterJmolAdapter;
@@ -17,6 +22,7 @@ import org.jmol.api.JmolViewer;
 public class JmolUtils {
 
     private static final String JMOL_PATH = "data\\jmol\\";
+    private static final String ICON_PATH = "data\\icon.png";
     private static JmolPanel jmolPanel;
     private static JFrame frame;
 
@@ -38,6 +44,12 @@ public class JmolUtils {
 
     private static void initializeJmolPanel() {
         frame = new JFrame();
+        try {
+            frame.setIconImage(ImageIO.read(new File(ICON_PATH)));
+        } catch (IOException ex) {
+            System.err.println("Error setting icon to JMol panel.");
+            System.err.println(ex);
+        }
         Container contentPane = frame.getContentPane();
         jmolPanel = new JmolPanel();
 
