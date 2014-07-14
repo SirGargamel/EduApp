@@ -39,7 +39,6 @@ public class GuiQuestInput implements ScreenController {
         questionInput.getElement().addInputHandler(new KeyInputHandler() {
             @Override
             public boolean keyEvent(NiftyInputEvent nie) {
-                boolean result = true;
                 if (nie != null) {
                     switch (nie) {
                         case SubmitText:
@@ -51,14 +50,17 @@ public class GuiQuestInput implements ScreenController {
                                         FlowManager.getInstance().displayLastScreen();
                                     }
                                 }, "Ok");
-                                result = true;
                             } else {
                                 panelQuest.startEffect(EffectEventId.onCustom, null, "Wrong");
                             }
                             break;
+                        case Escape:
+                            question.setUserInput(questionInput.getDisplayedText());
+                            FlowManager.getInstance().displayLastScreen();
+                            break;
                     }
                 }
-                return result;
+                return true;
             }
         });
     }
