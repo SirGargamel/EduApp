@@ -31,8 +31,7 @@ public class WorldScreen extends AbstractAppState {
     private static final float CAM_ELEVATION = 7.5f;
     private static final Vector3f LEFT = new Vector3f(-1, 0, 0);
     private static final Vector3f UP = new Vector3f(0, 0, -1);
-    private final Vector3f walkDirection = new Vector3f();
-    private final Vector3f viewDirection = new Vector3f();
+    private final Vector3f walkDirection = new Vector3f();    
     private BulletAppState bulletAppState;
     private BetterCharacterControl playerPhysics;
     private Player player;
@@ -157,33 +156,20 @@ public class WorldScreen extends AbstractAppState {
     }
 
     @Override
-    public void update(float tpf) {
-        boolean upd = false;
+    public void update(float tpf) {        
         walkDirection.set(0, 0, 0);
-        viewDirection.set(0, 0, 0);
         if (left) {
-            walkDirection.addLocal(LEFT);
-            viewDirection.addLocal(LEFT);
-            upd = true;
+            walkDirection.addLocal(LEFT);            
         }
         if (right) {
-            walkDirection.addLocal(LEFT.negate());
-            viewDirection.addLocal(LEFT.negate());
-            upd = true;
+            walkDirection.addLocal(LEFT.negate());            
         }
-        if (up) {
-            upd = true;
-            walkDirection.addLocal(UP);
-            viewDirection.addLocal(UP);
+        if (up) {            
+            walkDirection.addLocal(UP);            
         }
-        if (down) {
-            upd = true;
-            walkDirection.addLocal(UP.negate());
-            viewDirection.addLocal(UP.negate());
-        }
-        if (upd) {
-            playerPhysics.setViewDirection(viewDirection);
-        }
+        if (down) {            
+            walkDirection.addLocal(UP.negate());            
+        }        
         playerPhysics.setWalkDirection(walkDirection.normalizeLocal().multLocal(PLAYER_SPEED));
         final Vector3f loc = player.getModel().getWorldBound().getCenter();
         currentLevel.visit(loc);
