@@ -22,8 +22,8 @@ import java.util.Arrays;
  */
 public class TriggerStub {
 
-    private static final String NODE_MOVE = "MoveTrigger";
-    private static final String NODE_ACTION = "ActionTrigger";
+    private static final String NODE_MOVE = "Pohyb";
+    private static final String NODE_ACTION = "Akce";
     private static final float DEFAULT_HEIGHT = 0.75f;
     private static Material MAT_MOVE, MAT_ACTION;
     private final String nodeName, id;

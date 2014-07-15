@@ -1,6 +1,6 @@
 <Level>
-    <Background>                
-        <Values> 
+    <Pozadi>                
+        <Hodnoty> 
             --------WWWWWWWWWWW
             --------WFFFFFFFFFW
             ---WWWWWWFWFFFFFFFW
@@ -8,54 +8,54 @@
             PPPFFFFFFFWFFFFFFFW
             PPPWFFFFFFWFFFFFFFW
             0--WWWWWWWWWWWWWWWW                         
-        </Values>
-        <Texture tag="F">floorWhiteStone.png</Texture>
-        <Texture tag="P">floorBrick.png</Texture>
-        <Texture tag="W">wallConcrete.png</Texture>        
-        <Wall>W</Wall>
-        <Empty>-</Empty>
-    </Background>
-    <Player>
-        <Coords>14.5;-3.5</Coords>
+        </Hodnoty>
+        <Textura tag="F">floorWhiteStone.png</Textura>
+        <Textura tag="P">floorBrick.png</Textura>
+        <Textura tag="W">wallConcrete.png</Textura>        
+        <Zed>W</Zed>
+        <Prazdne>-</Prazdne>
+    </Pozadi>
+    <Hrac>
+        <Pozice>14.5;-3.5</Pozice>
         <Model>h2o</Model>
-    </Player>
-    <Items>
-        <Item id="table1">
-            <Name>bench2-table.j3o</Name>
-            <Coords>9;0;-0.5</Coords>
-            <Scale>0.5</Scale>
-        </Item>
-        <Item id="table2">
-            <Name>bench2-table.j3o</Name>
-            <Coords>8;0;-2.5</Coords>
-            <Scale>0.5</Scale>
-        </Item>
-        <Item id="shelf1">
-            <Name>bench2-shelf.j3o</Name>
-            <Coords>17.75;0;-4.0</Coords>
-            <Scale>0.75</Scale>
-            <Rotate>0;-90;0</Rotate>
-        </Item>
-        <Item id="shelf2">
-            <Name>bench2-shelf.j3o</Name>
-            <Coords>17.75;0;-1.0</Coords>
-            <Scale>0.75</Scale>
-            <Rotate>0;-90;0</Rotate>
-        </Item>
-        <Item id="shelf3">
-            <Name>bench2-shelf.j3o</Name>
-            <Coords>11.25;0;-1.0</Coords>
-            <Scale>0.75</Scale>
-            <Rotate>0;90;0</Rotate>
-        </Item>
-        <Item id="shelf4">
-            <Name>bench2-shelf.j3o</Name>
-            <Coords>14.0;0;-4.75</Coords>
-            <Scale>0.75</Scale>
-            <Rotate>0;0;0</Rotate>
-        </Item>
-    </Items>
-    <Lights>						        
+    </Hrac>
+    <Veci>
+        <Vec id="table1">
+            <Model>bench2-table.j3o</Model>
+            <Pozice>9;0;-0.5</Pozice>
+            <Velikost>0.5</Velikost>
+        </Vec>
+        <Vec id="table2">
+            <Model>bench2-table.j3o</Model>
+            <Pozice>8;0;-2.5</Pozice>
+            <Velikost>0.5</Velikost>
+        </Vec>
+        <Vec id="shelf1">
+            <Model>bench2-shelf.j3o</Model>
+            <Pozice>17.75;0;-4.0</Pozice>
+            <Velikost>0.75</Velikost>
+            <Rotace>0;-90;0</Rotace>
+        </Vec>
+        <Vec id="shelf2">
+            <Model>bench2-shelf.j3o</Model>
+            <Pozice>17.75;0;-1.0</Pozice>
+            <Velikost>0.75</Velikost>
+            <Rotace>0;-90;0</Rotace>
+        </Vec>
+        <Vec id="shelf3">
+            <Model>bench2-shelf.j3o</Model>
+            <Pozice>11.25;0;-1.0</Pozice>
+            <Velikost>0.75</Velikost>
+            <Rotace>0;90;0</Rotace>
+        </Vec>
+        <Vec id="shelf4">
+            <Model>bench2-shelf.j3o</Model>
+            <Pozice>14.0;0;-4.75</Pozice>
+            <Velikost>0.75</Velikost>
+            <Rotace>0;0;0</Rotace>
+        </Vec>
+    </Veci>
+    <Svetla>						        
         <Point id="lEntrance">
             <Coords>2.5;2.0;-1.5</Coords>
             <Color>White</Color>
@@ -94,84 +94,75 @@
         <Directional>
             <Intensity>0.1</Intensity>            
         </Directional>   							
-    </Lights>
-    <ActionItems>        
-        <MoveTrigger>
-            <Volume>3.5;-1.5;0.5</Volume>
-            <Target>hlavniQuest</Target>
-            <Action>FinishT1</Action>    
-            <Once/>  			
-        </MoveTrigger>
+    </Svetla>
+    <Spoustece>        
 <!-- -->
-        <MoveTrigger>
-            <Volume>player</Volume>
-            <Target>hlavniQuest</Target>
-            <Action></Action>    
-            <Once/>        			
-        </MoveTrigger>
+        <Pohyb>
+            <Teleso>player</Teleso>
+            <Cil>hlavniQuest</Cil>
+            <Ukol></Ukol>    
+            <Jednou/>        			
+        </Pohyb>
  <!-- -->
-        <ActionTrigger id="tQ1">
-            <Volume>table1</Volume>
-            <Target>hlavniQuest</Target>
-            <Action>DisplayQ1</Action>            	
-        </ActionTrigger>
-        <ActionTrigger id="tJ1">
-            <Volume>table2</Volume>
-            <Target>hlavniQuest</Target>
-            <Action>DisplayJ1</Action>            	
-        </ActionTrigger>                        
-        <ActionTrigger id="tW1">
-            <Volume>shelf1</Volume>
-            <Target>hlavniQuest</Target>
-            <Action>DisplayW1</Action>            	
-        </ActionTrigger>
-        <ActionTrigger id="tC1">
-            <Volume>shelf2</Volume>
-            <Target>hlavniQuest</Target>
-            <Action>DisplayC1</Action>            	
-        </ActionTrigger>
-        <ActionTrigger id="tG1">
-            <Volume>shelf3</Volume>
-            <Target>hlavniQuest</Target>
-            <Action>DisplayG1</Action>            	
-        </ActionTrigger>
-        <ActionTrigger id="tD1">
-            <Volume>shelf4</Volume>
-            <Target>hlavniQuest</Target>
-            <Action>DisplayD1</Action>            	
-        </ActionTrigger>
-    </ActionItems>
-    <Quests>
-        <Quest id="hlavniQuest" name="Hlavní úkol">
-            <Task>
-                <Data>Vejděte do budovy::h2so4</Data>                
-            </Task>            
-            <Question id="q1">
+        <Akce id="tQ1">
+            <Teleso>table1</Teleso>
+            <Cil>hlavniQuest</Cil>
+            <Ukol>DisplayQ1</Ukol>            	
+        </Akce>
+        <Akce id="tJ1">
+            <Teleso>table2</Teleso>
+            <Cil>hlavniQuest</Cil>
+            <Ukol>DisplayJ1</Ukol>            	
+        </Akce>                        
+        <Akce id="tW1">
+            <Teleso>shelf1</Teleso>
+            <Cil>hlavniQuest</Cil>
+            <Ukol>DisplayW1</Ukol>            	
+        </Akce>
+        <Akce id="tC1">
+            <Teleso>shelf2</Teleso>
+            <Cil>hlavniQuest</Cil>
+            <Ukol>DisplayC1</Ukol>            	
+        </Akce>
+        <Akce id="tG1">
+            <Teleso>shelf3</Teleso>
+            <Cil>hlavniQuest</Cil>
+            <Ukol>DisplayG1</Ukol>            	
+        </Akce>
+        <Akce id="tD1">
+            <Teleso>shelf4</Teleso>
+            <Cil>hlavniQuest</Cil>
+            <Ukol>DisplayD1</Ukol>            	
+        </Akce>
+    </Spoustece>
+    <Ukoly>
+        <Ukol id="hlavniQuest" jmeno="Hlavní úkol">           
+            <Otazka id="q1">
                 <Data>Zadejte vzorec kyseliny sírové::H2SO4::h2so4</Data>
-                <Child>tQ1</Child>                
-            </Question>
+                <Dite>tQ1</Dite>                
+            </Otazka>
             <Jmol id="j1">
                 <Data>Zadejte počet atomů molekuly kyseliny sírové::7::h2so4.pdb::h2so4</Data>
-                <Child>tJ1</Child>                
+                <Dite>tJ1</Dite>                
             </Jmol>            
             <Web id="w1">
                 <Data>Uveďte zastaralý název kyseliny sírové::vitriol::http://cs.wikipedia.org/wiki/Kyselina_s%C3%ADrov%C3%A1::h2so4</Data>
-                <Child>tW1</Child>
+                <Dite>tW1</Dite>
             </Web>
-            <Group id="g1">
+            <Skupiny id="g1">
                 <Data>skup::h2so4;so2;so3;v2o5;k2so4;sio2::h2so4</Data>
-                <Child>tG1</Child>
-            </Group>
-            <Conversion id="c1">
+                <Dite>tG1</Dite>
+            </Skupiny>
+            <Prevod id="c1">
                 <Data>vzorecJmeno::h2so4;so2;so3;v2o5;k2so4;sio2::h2so4</Data>
-                <Child>tC1</Child>
-            </Conversion>
-            <Drag id="d1">
+                <Dite>tC1</Dite>
+            </Prevod>
+            <Rovnice id="d1">
                 <Odmena>h2so4</Odmena>
                 <Data>S::_+::O2::_=::SO2</Data>
                 <Extra>H2O::SO3::O</Extra>
-                <Child>tD1</Child>
-            </Drag>
-        </Quest>
-    </Quests>
+                <Dite>tD1</Dite>
+            </Rovnice>
+        </Ukol>
+    </Ukoly>
 </Level>

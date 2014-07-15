@@ -8,7 +8,6 @@ import eduapp.level.quest.JmolQuestion;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
 import eduapp.level.quest.Question;
-import eduapp.level.quest.Task;
 import eduapp.level.quest.WebQuestion;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,20 +21,19 @@ import org.w3c.dom.NodeList;
  */
 public class XmlQuest extends XmlEntity<Quest> {
 
-    private static final String ATTR_NAME = "name";
-    private static final String ITEM_CHILD = "Child";
-    private static final String ITEM_CONVERSION = "Conversion";
+    private static final String ATTR_NAME = "jmeno";
+    private static final String EQUATION_EXTRA = "Extra";
+    private static final String EQUATION_STATIC = "_";
+    private static final String ITEM_CHILD = "Dite";
+    private static final String ITEM_CONVERSION = "Prevod";
     private static final String ITEM_DATA = "Data";
-    private static final String ITEM_DRAG = "Drag";
-    private static final String ITEM_GROUPS = "Group";
-    private static final String ITEM_QUESTION = "Question";
+    private static final String ITEM_EQUATION = "Rovnice";
+    private static final String ITEM_GROUPS = "Skupiny";
+    private static final String ITEM_QUESTION = "Otazka";
     private static final String ITEM_QUESTION_JMOL = "Jmol";
     private static final String ITEM_QUESTION_WEB = "Web";    
-    private static final String ITEM_REWARD = "Odmena";
-    private static final String ITEM_TASK = "Task";
-    private static final String QUESTION_SEPARATOR = "::";
-    private static final String DRAG_EXTRA = "Extra";
-    private static final String DRAG_STATIC = "_";
+    private static final String ITEM_REWARD = "Odmena";   
+    private static final String QUESTION_SEPARATOR = "::";    
 
     public XmlQuest(Element node) {
         super(node);
@@ -105,25 +103,17 @@ public class XmlQuest extends XmlEntity<Quest> {
                     throw new IllegalArgumentException("Unsupported Web question text, separator is ::, required 4 params - " + node.getTextContent());
                 }
                 break;
-            case ITEM_TASK:
-                split = e.getElementsByTagName(ITEM_DATA).item(0).getTextContent().split(QUESTION_SEPARATOR);
-                if (split.length == 2) {
-                    result = new Task(split[0], split[1]);
-                } else {
-                    throw new IllegalArgumentException("Unsupported Task text, separator is ::, required 2 params - " + node.getTextContent());
-                }
-                break;
-            case ITEM_DRAG:
+            case ITEM_EQUATION:
                 DragQuest dq = new DragQuest(e.getElementsByTagName(ITEM_REWARD).item(0).getTextContent());
                 split = e.getElementsByTagName(ITEM_DATA).item(0).getTextContent().split(QUESTION_SEPARATOR);
                 for (String s : split) {
-                    if (s.startsWith(DRAG_STATIC)) {
-                        dq.addItem(new DragQuest.DragItem(DragQuest.DragItemType.STATIC, s.substring(DRAG_STATIC.length())));
+                    if (s.startsWith(EQUATION_STATIC)) {
+                        dq.addItem(new DragQuest.DragItem(DragQuest.DragItemType.STATIC, s.substring(EQUATION_STATIC.length())));
                     } else {
                         dq.addItem(new DragQuest.DragItem(DragQuest.DragItemType.DRAG, s));
                     }
                 }
-                split = e.getElementsByTagName(DRAG_EXTRA).item(0).getTextContent().split(QUESTION_SEPARATOR);
+                split = e.getElementsByTagName(EQUATION_EXTRA).item(0).getTextContent().split(QUESTION_SEPARATOR);
                 for (String s : split) {
                     dq.addExtra(s);
                 }

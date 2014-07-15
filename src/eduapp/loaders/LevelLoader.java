@@ -36,13 +36,13 @@ public class LevelLoader implements AssetLoader {
 
     public static final String EXTENSION = "xml";
     public static final String ATTR_ID = "id";
-    private static final String NODE_ACTION_ITEMS = "ActionItems";
-    private static final String NODE_BACKGROUND = "Background";
-    private static final String NODE_ITEMS = "Items";
-    private static final String NODE_ITEM = "Item";
-    private static final String NODE_LIGHTS = "Lights";
-    private static final String NODE_PLAYER = "Player";
-    private static final String NODE_QUEST = "Quests";
+    private static final String NODE_ACTION_ITEMS = "Spoustece";
+    private static final String NODE_BACKGROUND = "Pozadi";
+    private static final String NODE_ITEMS = "Veci";
+    private static final String NODE_ITEM = "Vec";
+    private static final String NODE_LIGHTS = "Svetla";
+    private static final String NODE_PLAYER = "Hrac";
+    private static final String NODE_QUEST = "Ukoly";
 
     @Override
     public Object load(AssetInfo assetInfo) throws IOException {

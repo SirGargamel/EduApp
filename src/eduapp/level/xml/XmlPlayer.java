@@ -12,7 +12,7 @@ import org.xml.sax.SAXException;
 public class XmlPlayer extends XmlEntity<Player> {
 
     private static final String NAME = "player";
-    private static final String NODE_COORDS = "Coords";
+    private static final String NODE_COORDS = "Pozice";
     private static final String NODE_MODEL = "Model";
 
     public XmlPlayer(Element el) {

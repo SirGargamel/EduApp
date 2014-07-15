@@ -13,11 +13,10 @@ import org.xml.sax.SAXException;
 public class XmlBackground extends XmlEntity<Background> {
 
     private static final String ATTR_TEXTURE = "tag";
-    private static final String NODE_EMPTY = "Empty";
-    private static final String NODE_TEXTURE = "Texture";
-    private static final String NODE_VALUES = "Values";
-    private static final String NODE_WALL = "Wall";
-    private static final String NODE_WIDTH = "Width";
+    private static final String NODE_EMPTY = "Prazdne";
+    private static final String NODE_TEXTURE = "Textura";
+    private static final String NODE_VALUES = "Hodnoty";
+    private static final String NODE_WALL = "Zed";    
 
     public XmlBackground(Element node) {
         super(node);

@@ -11,11 +11,11 @@ import org.w3c.dom.NodeList;
  */
 public class XmlTrigger extends XmlEntity<TriggerStub> {
 
-    private static final String NODE_ACTION = "Action";
-    private static final String NODE_OFF = "Off";
-    private static final String NODE_ONCE = "Once";
-    private static final String NODE_TARGET = "Target";
-    private static final String NODE_VOLUME = "Volume";
+    private static final String NODE_ACTION = "Ukol";
+    private static final String NODE_OFF = "Vypnut";
+    private static final String NODE_ONCE = "Jednou";
+    private static final String NODE_TARGET = "Cil";
+    private static final String NODE_VOLUME = "Teleso";
 
     public XmlTrigger(Element node) {
         super(node);

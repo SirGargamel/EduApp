@@ -12,10 +12,10 @@ import org.w3c.dom.NodeList;
  */
 public class XmlModel extends XmlEntity<Model> {
 
-    private static final String NODE_COORDS = "Coords";
-    private static final String NODE_NAME = "Name";
-    private static final String NODE_SCALE = "Scale";
-    private static final String NODE_ROTATE = "Rotate";
+    private static final String NODE_COORDS = "Pozice";
+    private static final String NODE_NAME = "Model";
+    private static final String NODE_SCALE = "Velikost";
+    private static final String NODE_ROTATE = "Rotace";
 
     public XmlModel(Element el) {
         super(el);

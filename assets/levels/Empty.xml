@@ -1,6 +1,6 @@
 <Level>
-    <Background>                
-        <Values>
+    <Pozadi>                
+        <Hodnoty>
             AAAAAAAA
             AAAAAAAA
             AAAAAAAA
@@ -8,21 +8,22 @@
             AAAAAAAA
             AAAAAAAA
             AAAAAAAA
-            0AAAAAAA</Values>
-        <Texture tag="A">floorSand.png</Texture>				
-    </Background>
-    <Player>
-        <Coords>3.5;-3.5</Coords>
-        <Model>Goblin</Model>
-    </Player>
-    <Items>        
-    </Items>
-    <Lights>	
+            0AAAAAAA
+        </Hodnoty>
+        <Textura tag="A">floorSand.png</Textura>				
+    </Pozadi>
+    <Hrac>
+        <Pozice>3.5;-3.5</Pozice>
+        <Model>h2o</Model>
+    </Hrac>
+    <Veci>        
+    </Veci>
+    <Svetla>	
         <Directional>            
         </Directional>				
-    </Lights>
-    <ActionItems>
-    </ActionItems>
-    <Quests>        
-    </Quests>
+    </Svetla>
+    <Spoustece>
+    </Spoustece>
+    <Ukoly>        
+    </Ukoly>
 </Level>

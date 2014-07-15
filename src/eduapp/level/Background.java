@@ -57,7 +57,7 @@ public class Background {
     }
 
     void generateBackground(final AssetManager assetManager) {
-        rootNode = new Node("background");
+        rootNode = new Node("Pozadi");
         final Map<Character, Material> matCache = new HashMap<>();
         Material mat;
         Box tile;
