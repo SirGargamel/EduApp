@@ -24,6 +24,7 @@ public class XmlQuest extends XmlEntity<Quest> {
     private static final String ATTR_NAME = "jmeno";
     private static final String EQUATION_EXTRA = "Extra";
     private static final String EQUATION_STATIC = "_";
+    private static final String ITEM_ANSWER = "Odpoved";
     private static final String ITEM_CHILD = "Dite";
     private static final String ITEM_CONVERSION = "Prevod";
     private static final String ITEM_DATA = "Data";
@@ -31,9 +32,9 @@ public class XmlQuest extends XmlEntity<Quest> {
     private static final String ITEM_GROUPS = "Skupiny";
     private static final String ITEM_QUESTION = "Otazka";
     private static final String ITEM_QUESTION_JMOL = "Jmol";
-    private static final String ITEM_QUESTION_WEB = "Web";    
-    private static final String ITEM_REWARD = "Odmena";   
-    private static final String QUESTION_SEPARATOR = "::";    
+    private static final String ITEM_QUESTION_WEB = "Web";
+    private static final String ITEM_REWARD = "Odmena";
+    private static final String QUESTION_SEPARATOR = "::";
 
     public XmlQuest(Element node) {
         super(node);
@@ -64,48 +65,40 @@ public class XmlQuest extends XmlEntity<Quest> {
         final Element e = (Element) node;
         switch (e.getNodeName()) {
             case ITEM_CONVERSION:
-                split = e.getElementsByTagName(ITEM_DATA).item(0).getTextContent().split(QUESTION_SEPARATOR);
-                if (split.length == 3) {
-                    result = new ConversionQuest(split[0], split[1], split[2]);
-                } else {
-                    throw new IllegalArgumentException("Unsupported conversion quest text, separator is ::, required 3 params - " + node.getTextContent());
-                }
+                result = new ConversionQuest(
+                        extractNodeText(e, ITEM_QUESTION),
+                        extractNodeText(e, ITEM_DATA),
+                        extractNodeText(e, ITEM_REWARD));
                 break;
             case ITEM_GROUPS:
-                split = e.getElementsByTagName(ITEM_DATA).item(0).getTextContent().split(QUESTION_SEPARATOR);
-                if (split.length == 3) {
-                    result = new GroupingQuest(split[0], split[1], split[2]);
-                } else {
-                    throw new IllegalArgumentException("Unsupported group task, separator is ::, required 3 params - " + node.getTextContent());
-                }
+                result = new GroupingQuest(
+                        extractNodeText(e, ITEM_QUESTION),
+                        extractNodeText(e, ITEM_DATA),
+                        extractNodeText(e, ITEM_REWARD));
                 break;
             case ITEM_QUESTION:
-                split = e.getElementsByTagName(ITEM_DATA).item(0).getTextContent().split(QUESTION_SEPARATOR);
-                if (split.length == 3) {
-                    result = new Question(split[0], split[1], split[2]);
-                } else {
-                    throw new IllegalArgumentException("Unsupported question text, separator is ::, required 3 params - " + node.getTextContent());
-                }
+                result = new Question(
+                        extractNodeText(e, ITEM_QUESTION),
+                        extractNodeText(e, ITEM_ANSWER),
+                        extractNodeText(e, ITEM_REWARD));
                 break;
             case ITEM_QUESTION_JMOL:
-                split = e.getElementsByTagName(ITEM_DATA).item(0).getTextContent().split(QUESTION_SEPARATOR);
-                if (split.length == 4) {
-                    result = new JmolQuestion(split[0], split[1], split[2], split[3]);
-                } else {
-                    throw new IllegalArgumentException("Unsupported Jmol question text, separator is ::, required 4 params - " + node.getTextContent());
-                }
+                result = new JmolQuestion(
+                        extractNodeText(e, ITEM_QUESTION),
+                        extractNodeText(e, ITEM_ANSWER),
+                        extractNodeText(e, ITEM_DATA),
+                        extractNodeText(e, ITEM_REWARD));
                 break;
             case ITEM_QUESTION_WEB:
-                split = e.getElementsByTagName(ITEM_DATA).item(0).getTextContent().split(QUESTION_SEPARATOR);
-                if (split.length == 4) {
-                    result = new WebQuestion(split[0], split[1], split[2], split[3]);
-                } else {
-                    throw new IllegalArgumentException("Unsupported Web question text, separator is ::, required 4 params - " + node.getTextContent());
-                }
+                result = new WebQuestion(
+                        extractNodeText(e, ITEM_QUESTION),
+                        extractNodeText(e, ITEM_ANSWER),
+                        extractNodeText(e, ITEM_DATA),
+                        extractNodeText(e, ITEM_REWARD));
                 break;
             case ITEM_EQUATION:
-                DragQuest dq = new DragQuest(e.getElementsByTagName(ITEM_REWARD).item(0).getTextContent());
-                split = e.getElementsByTagName(ITEM_DATA).item(0).getTextContent().split(QUESTION_SEPARATOR);
+                DragQuest dq = new DragQuest(extractNodeText(e, ITEM_REWARD));
+                split = extractNodeText(e, ITEM_DATA).split(QUESTION_SEPARATOR);
                 for (String s : split) {
                     if (s.startsWith(EQUATION_STATIC)) {
                         dq.addItem(new DragQuest.DragItem(DragQuest.DragItemType.STATIC, s.substring(EQUATION_STATIC.length())));
@@ -113,7 +106,7 @@ public class XmlQuest extends XmlEntity<Quest> {
                         dq.addItem(new DragQuest.DragItem(DragQuest.DragItemType.DRAG, s));
                     }
                 }
-                split = e.getElementsByTagName(EQUATION_EXTRA).item(0).getTextContent().split(QUESTION_SEPARATOR);
+                split = extractNodeText(e, EQUATION_EXTRA).split(QUESTION_SEPARATOR);
                 for (String s : split) {
                     dq.addExtra(s);
                 }
@@ -128,5 +121,9 @@ public class XmlQuest extends XmlEntity<Quest> {
         }
         result.setId(((Element) node).getAttribute(LevelLoader.ATTR_ID));
         return result;
+    }
+
+    private static String extractNodeText(Element e, String nodeName) {
+        return e.getElementsByTagName(nodeName).item(0).getTextContent();
     }
 }
