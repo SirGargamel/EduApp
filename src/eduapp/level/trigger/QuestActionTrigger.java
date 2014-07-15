@@ -2,6 +2,7 @@ package eduapp.level.trigger;
 
 import com.jme3.scene.Spatial;
 import eduapp.level.quest.ConversionQuest;
+import eduapp.level.quest.DragQuest;
 import eduapp.level.quest.GroupingQuest;
 import eduapp.level.quest.JmolQuestion;
 import eduapp.level.quest.Quest;
@@ -12,6 +13,7 @@ import eduapp.level.quest.WebQuestion;
 public class QuestActionTrigger extends ActionTrigger<Quest> {
 
     private static final String ACTION_DISPLAY = "Display";
+    private static final String ACTION_DISPLAY_DRAG = "D";
     private static final String ACTION_DISPLAY_CONVERSION = "C";
     private static final String ACTION_DISPLAY_GROUP = "G";
     private static final String ACTION_DISPLAY_JMOL = "J";
@@ -81,6 +83,18 @@ public class QuestActionTrigger extends ActionTrigger<Quest> {
                         counter++;
                         if (counter == num) {
                             target.displayConversion((ConversionQuest) qi);
+                        }
+                    }
+                }
+            }  else if (rest.startsWith(ACTION_DISPLAY_DRAG)) {
+                final String number = rest.replace(ACTION_DISPLAY_DRAG, "");
+                final int num = Integer.valueOf(number);
+                int counter = 0;
+                for (QuestItem qi : target.getData()) {
+                    if (qi instanceof DragQuest) {
+                        counter++;
+                        if (counter == num) {
+                            target.displayDrag((DragQuest) qi);
                         }
                     }
                 }

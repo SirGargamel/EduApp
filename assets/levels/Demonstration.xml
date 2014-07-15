@@ -16,7 +16,7 @@
         <Empty>-</Empty>
     </Background>
     <Player>
-        <Coords>15.5;-1.5</Coords>
+        <Coords>14.5;-3.5</Coords>
         <Model>h2o</Model>
     </Player>
     <Items>
@@ -47,6 +47,12 @@
             <Coords>11.25;0;-1.0</Coords>
             <Scale>0.75</Scale>
             <Rotate>0;90;0</Rotate>
+        </Item>
+        <Item id="shelf4">
+            <Name>bench2-shelf.j3o</Name>
+            <Coords>14.0;0;-4.75</Coords>
+            <Scale>0.75</Scale>
+            <Rotate>0;0;0</Rotate>
         </Item>
     </Items>
     <Lights>						        
@@ -129,6 +135,11 @@
             <Target>hlavniQuest</Target>
             <Action>DisplayG1</Action>            	
         </ActionTrigger>
+        <ActionTrigger id="tD1">
+            <Volume>shelf4</Volume>
+            <Target>hlavniQuest</Target>
+            <Action>DisplayD1</Action>            	
+        </ActionTrigger>
     </ActionItems>
     <Quests>
         <Quest id="hlavniQuest" name="Hlavní úkol">
@@ -151,10 +162,16 @@
                 <Data>skup::h2so4;so2;so3;v2o5;k2so4;sio2::h2so4</Data>
                 <Child>tG1</Child>
             </Group>
-            <Conversion>
+            <Conversion id="c1">
                 <Data>vzorecJmeno::h2so4;so2;so3;v2o5;k2so4;sio2::h2so4</Data>
                 <Child>tC1</Child>
             </Conversion>
+            <Drag id="d1">
+                <Odmena>h2so4</Odmena>
+                <Data>S::_+::O2::_=::SO2</Data>
+                <Extra>H2O::SO3::O</Extra>
+                <Child>tD1</Child>
+            </Drag>
         </Quest>
     </Quests>
 </Level>

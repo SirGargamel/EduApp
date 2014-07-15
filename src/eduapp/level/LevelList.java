@@ -7,7 +7,5 @@ package eduapp.level;
 public enum LevelList {
 
     Demonstration,
-    Egypt,
-    Factory,
     Empty,;
 }

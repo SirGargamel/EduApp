@@ -65,6 +65,10 @@ public class Quest extends Item {
     public void displayConversion(ConversionQuest conversion) {
         FlowManager.getInstance().displayConversionScreen(conversion);
     }
+    
+    public void displayDrag(DragQuest quest) {
+        FlowManager.getInstance().displayDragScreen(quest);
+    }
 
     public List<QuestItem> getData() {
         return data;

@@ -192,4 +192,21 @@
             </panel> 
         </layer>
     </screen>
+    <screen id="drag" controller="eduapp.gui.GuiDrag">        
+        <layer id="onlyLayer" childLayout="vertical">            
+            <panel height="10%" width="100%" childLayout="vertical" />            
+            <panel id="panelDrop" width="100%" height="30%" backgroundColor="#aaaaaaaa" childLayout="horizontal" visibleToMouse="true" />                                                                                                                   
+            <panel height="15%" childLayout="vertical" />
+            <panel id="panelDrag" width="100%" height="40%" backgroundColor="#11111111" childLayout="horizontal" visibleToMouse="true" />                                
+            <panel height="*" childLayout="center">
+                <panel id="buttonOk" align="center" width="10%" height="90%" backgroundColor="#aaaa" childLayout="center" visibleToMouse="true">
+                    <interact onClick="ok()"/>
+                    <effect>                                        
+                        <onHover name="pulsate" scaleFactor="0.008" startColor="#f600" endColor="#ffff" post="true"/>
+                    </effect>
+                    <text id="text" color="#000f" text="Ok" align="center" valign="center" style="base"/>
+                </panel>                
+            </panel>
+        </layer>       
+    </screen>
 </nifty>

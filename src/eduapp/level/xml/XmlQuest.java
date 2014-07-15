@@ -1,6 +1,7 @@
 package eduapp.level.xml;
 
 import eduapp.level.quest.ConversionQuest;
+import eduapp.level.quest.DragQuest;
 import eduapp.level.quest.GroupingQuest;
 import eduapp.loaders.LevelLoader;
 import eduapp.level.quest.JmolQuestion;
@@ -25,12 +26,16 @@ public class XmlQuest extends XmlEntity<Quest> {
     private static final String ITEM_CHILD = "Child";
     private static final String ITEM_CONVERSION = "Conversion";
     private static final String ITEM_DATA = "Data";
+    private static final String ITEM_DRAG = "Drag";
     private static final String ITEM_GROUPS = "Group";
     private static final String ITEM_QUESTION = "Question";
     private static final String ITEM_QUESTION_JMOL = "Jmol";
     private static final String ITEM_QUESTION_WEB = "Web";    
+    private static final String ITEM_REWARD = "Odmena";
     private static final String ITEM_TASK = "Task";
     private static final String QUESTION_SEPARATOR = "::";
+    private static final String DRAG_EXTRA = "Extra";
+    private static final String DRAG_STATIC = "_";
 
     public XmlQuest(Element node) {
         super(node);
@@ -57,7 +62,7 @@ public class XmlQuest extends XmlEntity<Quest> {
 
     private QuestItem generateQuestItem(final Node node) {
         final QuestItem result;
-        final String[] split;
+        String[] split;
         final Element e = (Element) node;
         switch (e.getNodeName()) {
             case ITEM_CONVERSION:
@@ -107,6 +112,22 @@ public class XmlQuest extends XmlEntity<Quest> {
                 } else {
                     throw new IllegalArgumentException("Unsupported Task text, separator is ::, required 2 params - " + node.getTextContent());
                 }
+                break;
+            case ITEM_DRAG:
+                DragQuest dq = new DragQuest(e.getElementsByTagName(ITEM_REWARD).item(0).getTextContent());
+                split = e.getElementsByTagName(ITEM_DATA).item(0).getTextContent().split(QUESTION_SEPARATOR);
+                for (String s : split) {
+                    if (s.startsWith(DRAG_STATIC)) {
+                        dq.addItem(new DragQuest.DragItem(DragQuest.DragItemType.STATIC, s.substring(DRAG_STATIC.length())));
+                    } else {
+                        dq.addItem(new DragQuest.DragItem(DragQuest.DragItemType.DRAG, s));
+                    }
+                }
+                split = e.getElementsByTagName(DRAG_EXTRA).item(0).getTextContent().split(QUESTION_SEPARATOR);
+                for (String s : split) {
+                    dq.addExtra(s);
+                }
+                result = dq;
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported quest item type - " + node.getNodeName());

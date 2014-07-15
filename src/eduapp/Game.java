@@ -11,6 +11,7 @@ import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.lessvoid.nifty.Nifty;
 import eduapp.level.Item;
+import eduapp.level.quest.DragQuest;
 import eduapp.loaders.DictionaryLoader;
 import java.util.Set;
 
@@ -41,7 +42,17 @@ public class Game extends SimpleApplication {
         FlowManager.getInstance().setNifty(nifty);
 
         FlowManager.getInstance().gotoMainMenu();
-//        FlowManager.displayDictionary();
+        
+        // DEBUG
+//        final DragQuest quest = new DragQuest("h2so4");
+//        quest.addItem(new DragQuest.DragItem(DragQuest.DragItemType.DRAG, "s"));
+//        quest.addItem(new DragQuest.DragItem(DragQuest.DragItemType.STATIC, " + "));
+//        quest.addItem(new DragQuest.DragItem(DragQuest.DragItemType.DRAG, "o2"));
+//        quest.addItem(new DragQuest.DragItem(DragQuest.DragItemType.STATIC, " = "));
+//        quest.addItem(new DragQuest.DragItem(DragQuest.DragItemType.DRAG, "so2"));        
+//        quest.addExtra("h2o");
+//        quest.addExtra("o3");        
+//        FlowManager.getInstance().displayDragScreen(quest);
     }
 
     private void loadDictionary(final AssetManager assetManager, final ItemRegistry ir, final String dicName) {

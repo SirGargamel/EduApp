@@ -7,12 +7,14 @@ import de.lessvoid.nifty.Nifty;
 import eduapp.gui.GuiConversion;
 import eduapp.gui.GuiDescription;
 import eduapp.gui.GuiDictionary;
+import eduapp.gui.GuiDrag;
 import eduapp.gui.GuiWorld;
 import eduapp.gui.GuiQuest;
 import eduapp.gui.GuiQuestInput;
 import eduapp.level.Item;
 import eduapp.level.Light;
 import eduapp.level.quest.ConversionQuest;
+import eduapp.level.quest.DragQuest;
 import eduapp.level.quest.GroupingQuest;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
@@ -34,6 +36,7 @@ public class FlowManager implements Observer {
     private static final String SCREEN_CONVERSION = "conversion";
     private static final String SCREEN_DESCRIPTION = "description";
     private static final String SCREEN_DICTIONARY = "dictionary";
+    private static final String SCREEN_DRAG = "drag";
     private static final String SCREEN_GROUPS = "groups";
     private static final String SCREEN_PAUSE = "pause";
     private static final String SCREEN_QUEST = "quest";
@@ -165,6 +168,15 @@ public class FlowManager implements Observer {
         storeActualScreen();
         nifty.gotoScreen(SCREEN_CONVERSION);
     }
+    
+    public void displayDragScreen(final DragQuest quest) {
+        enableState(false);
+        final GuiDrag control = (GuiDrag) nifty.getScreen(SCREEN_DRAG).getScreenController();
+        control.setData(quest);
+
+        storeActualScreen();
+        nifty.gotoScreen(SCREEN_DRAG);
+    }
 
     public void dictionaryAction() {
         if (nifty.getCurrentScreen().getScreenId().equals(SCREEN_DICTIONARY)) {
@@ -222,6 +234,16 @@ public class FlowManager implements Observer {
 
     public void finishConversion(int good, int total) {
         final String message = "Převedli jste správně " + good + " věcí z " + total;
+        displayMessage(message, SCREEN_WORLD);
+    }
+    
+    public void finishDrag(boolean result) {
+        final String message;
+        if (result) {
+            message = "Úspěšně jste doplnili rovnici.";
+        } else {
+            message = "Rovnice nebyla doplněna správně.";
+        }
         displayMessage(message, SCREEN_WORLD);
     }
 
