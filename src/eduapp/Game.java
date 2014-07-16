@@ -4,6 +4,7 @@ import eduapp.loaders.LevelLoader;
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetKey;
 import com.jme3.asset.AssetManager;
+import com.jme3.asset.plugins.FileLocator;
 import com.jme3.input.KeyInput;
 import com.jme3.input.MouseInput;
 import com.jme3.input.controls.KeyTrigger;
@@ -25,6 +26,8 @@ public class Game extends SimpleApplication {
     public void simpleInitApp() {
         assetManager.registerLoader(LevelLoader.class, LevelLoader.EXTENSION);
         assetManager.registerLoader(DictionaryLoader.class, DictionaryLoader.EXTENSION);
+        
+        assetManager.registerLocator("data/", FileLocator.class);
 
         loadDictionary(assetManager, AppContext.getItemRegistry(), "Elements");
         loadDictionary(assetManager, AppContext.getItemRegistry(), "Groups");
