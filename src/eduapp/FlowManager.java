@@ -291,4 +291,8 @@ public class FlowManager implements Observer {
             }
         }
     }
+
+    public Quest getCurrentQuest() {
+        return currentQuest;
+    }
 }

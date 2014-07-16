@@ -183,7 +183,7 @@ public class Level {
         for (Trigger t : activeTriggers) {
             if (t instanceof ActionTrigger) {
                 // show icon
-                msg = ((ActionTrigger) t).description();
+                msg = FlowManager.getInstance().getCurrentQuest().findQuestItem(((ActionTrigger)t).description()).toNiftyString();
                 break;
             }
         }

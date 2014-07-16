@@ -60,6 +60,31 @@ public class Quest extends Item {
         }
     }
 
+    public QuestItem findQuestItem(final String description) {
+        String rest = description.replace(ACTION_DISPLAY, "");
+        QuestItem result = null;
+        if (rest.startsWith(ACTION_DISPLAY_QUESTION)) {
+            final String number = rest.replace(ACTION_DISPLAY_QUESTION, "");
+            result = extractQuestItem(Question.class, Integer.valueOf(number));
+        } else if (rest.startsWith(ACTION_DISPLAY_JMOL)) {
+            final String number = rest.replace(ACTION_DISPLAY_JMOL, "");
+            result = extractQuestItem(JmolQuestion.class, Integer.valueOf(number));
+        } else if (rest.startsWith(ACTION_DISPLAY_WEB)) {
+            final String number = rest.replace(ACTION_DISPLAY_WEB, "");
+            result = extractQuestItem(WebQuestion.class, Integer.valueOf(number));
+        } else if (rest.startsWith(ACTION_DISPLAY_GROUP)) {
+            final String number = rest.replace(ACTION_DISPLAY_GROUP, "");
+            result = extractQuestItem(GroupingQuest.class, Integer.valueOf(number));
+        } else if (rest.startsWith(ACTION_DISPLAY_CONVERSION)) {
+            final String number = rest.replace(ACTION_DISPLAY_CONVERSION, "");
+            result = extractQuestItem(ConversionQuest.class, Integer.valueOf(number));
+        } else if (rest.startsWith(ACTION_DISPLAY_DRAG)) {
+            final String number = rest.replace(ACTION_DISPLAY_DRAG, "");
+            result = extractQuestItem(DragQuest.class, Integer.valueOf(number));
+        }
+        return result;
+    }
+
     private <T extends QuestItem> T extractQuestItem(final Class<T> cls, final int pos) {
         Object result = null;
         int counter = 0;

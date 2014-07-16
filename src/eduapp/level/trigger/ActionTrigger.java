@@ -56,6 +56,6 @@ public abstract class ActionTrigger<T> extends Trigger<T> {
     }
     
     public String description() {
-        return null;
+        return action;
     }
 }
