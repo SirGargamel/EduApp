@@ -2,6 +2,7 @@ package eduapp.gui;
 
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.NiftyEventSubscriber;
+import de.lessvoid.nifty.builder.ImageBuilder;
 import de.lessvoid.nifty.builder.PanelBuilder;
 import de.lessvoid.nifty.builder.TextBuilder;
 import de.lessvoid.nifty.controls.ListBox;
@@ -10,6 +11,7 @@ import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import de.lessvoid.nifty.tools.Color;
+import eduapp.AppContext;
 import eduapp.level.item.ItemParameters;
 import eduapp.ItemRegistry;
 import eduapp.gui.listbox.Line;
@@ -29,8 +31,10 @@ import java.util.List;
 public class GuiDictionary implements ScreenController {
 
     private static final String TAG_DICTIONARY = "dic";
+    private static final String TAG_ICONS = "ikony";
     private static final String SIZE_LINE_HEIGHT = "20";
     private static final String[] DISPLAY = new String[]{ItemParameters.FORMULA, ItemParameters.STATE};
+    private static final String[] ICONS = new String[]{ItemParameters.TOXIC, ItemParameters.FLAMABLE, ItemParameters.CHARGE};
     private Nifty nifty;
     private ItemRegistry ir;
     private Element panelContent;
@@ -87,13 +91,33 @@ public class GuiDictionary implements ScreenController {
 
         final Item descr = ir.get(ItemParameters.NAMES_CONVERT);
         if (selectedItem != null) {
+            final ItemRegistry ir = AppContext.getItemRegistry();
             final Screen current = nifty.getCurrentScreen();
             PanelBuilder pb;
             TextBuilder tb;
             String val;
             Element p;
             String[] split;
-
+            ImageBuilder ib;
+            // icons
+            pb = new PanelBuilder("p".concat("Icons"));
+            pb.childLayoutHorizontal();
+            pb.height("10%");
+            p = pb.build(nifty, current, panelContent);
+            for (String s : ICONS) {
+                val = selectedItem.getParam(s);
+                if (val != null) {
+                    ib = new ImageBuilder("i".concat(s));
+                    ib.filename("icons/" + ir.get(TAG_ICONS).getParam(s));
+                    
+                    pb = new PanelBuilder("p".concat(s));
+                    pb.childLayoutCenter();                    
+                    pb.width("10%");                    
+                    pb.image(ib);
+                    pb.build(nifty, current, p);
+                }
+            }
+            // other parameters
             for (String s : DISPLAY) {
                 val = selectedItem.getParam(s);
                 if (val != null) {
@@ -113,6 +137,11 @@ public class GuiDictionary implements ScreenController {
                     tb.height(SIZE_LINE_HEIGHT);
                     tb.build(nifty, current, p);
 
+                    pb = new PanelBuilder("gap2".concat(s));
+                    pb.childLayoutVertical();
+                    pb.height("2%");
+                    pb.build(nifty, current, p);
+
                     tb = new TextBuilder("t2".concat(s));
                     tb.style("base");
                     tb.text(val);
@@ -121,7 +150,7 @@ public class GuiDictionary implements ScreenController {
                     tb.build(nifty, current, p);
                 }
             }
-
+            // hyperlinks
             val = selectedItem.getParam(ItemParameters.LINKS);
             if (val != null) {
                 pb = new PanelBuilder("p".concat(ItemParameters.LINKS));
@@ -139,6 +168,11 @@ public class GuiDictionary implements ScreenController {
                 tb.color(Color.WHITE);
                 tb.height(SIZE_LINE_HEIGHT);
                 tb.build(nifty, current, p);
+
+                pb = new PanelBuilder("gap2".concat(ItemParameters.LINKS));
+                pb.childLayoutVertical();
+                pb.height("2%");
+                pb.build(nifty, current, p);
 
                 split = val.split(ItemParameters.SPLITTER);
                 for (String s2 : split) {

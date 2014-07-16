@@ -15,8 +15,8 @@
         <link>Odkazy</link>        
     </vec>
     <vec id="ikony">
-        <toxic></toxic>
-        <vodi></vodi>
-        <hori></hori>
+        <toxic>toxic.png</toxic>
+        <vodi>magnet.png</vodi>
+        <hori>flamable.png</hori>
     </vec>
 </dict>
