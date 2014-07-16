@@ -3,43 +3,43 @@
         <jmeno>Kyselina Sírová</jmeno>
         <skup>kapalné</skup>
         <vzorec>H2SO4</vzorec>
-        <link>http://cs.wikipedia.org/wiki/Kyselina_s%C3%ADrov%C3%A1</link>
+        <link>http://cs.wikipedia.org/wiki/Kyselina_sírová</link>
         <ikona>h2so4.png</ikona>
     </item>
     <item id="so2">
         <jmeno>Oxid siřičitý</jmeno>
         <skup>plynné; kapalné</skup>
         <vzorec>SO2</vzorec>
-        <link>http://cs.wikipedia.org/wiki/Oxid_si%C5%99i%C4%8Dit%C3%BD</link>
+        <link>http://cs.wikipedia.org/wiki/Oxid_siřičitý</link>
     </item>    
     <item id="so3">
         <jmeno>Oxid sírový</jmeno>
         <skup>pevné; kapalné</skup>
         <vzorec>SO3</vzorec>
-        <link>http://cs.wikipedia.org/wiki/Oxid_s%C3%ADrov%C3%BD</link>
+        <link>http://cs.wikipedia.org/wiki/Oxid_sírový</link>
     </item>    
     <item id="s">
         <jmeno>Síra</jmeno>
         <skup>pevné</skup>
         <vzorec>S</vzorec>
-        <link>http://cs.wikipedia.org/wiki/S%C3%ADra</link>
+        <link>http://cs.wikipedia.org/wiki/Síra;http://cs.wikipedia.org/wiki/Síra_(minerál)</link>
     </item>    
     <item id="v2o5">
         <jmeno>Oxid Vanadičný</jmeno>
         <skup>pevné</skup>
         <vzorec>V2O5</vzorec>
-        <link>http://cs.wikipedia.org/wiki/Oxid_vanadi%C4%8Dn%C3%BD</link>
+        <link>http://cs.wikipedia.org/wiki/Oxid_vanadičný</link>
     </item>    
     <item id="k2so4">
         <jmeno>Síran draselný</jmeno>
         <skup>pevné</skup>
         <vzorec>K2SO4</vzorec>
-        <link>http://cs.wikipedia.org/wiki/S%C3%ADran_draseln%C3%BD</link>
+        <link>http://cs.wikipedia.org/wiki/Síran_draselný</link>
     </item>    
     <item id="sio2">
         <jmeno>Oxid křemičitý</jmeno>
         <skup>pevné</skup>
         <vzorec>SiO2</vzorec>
-        <link>http://cs.wikipedia.org/wiki/Oxid_k%C5%99emi%C4%8Dit%C3%BD</link>
+        <link>http://cs.wikipedia.org/wiki/Oxid_křemičitý</link>
     </item>
 </dict>
