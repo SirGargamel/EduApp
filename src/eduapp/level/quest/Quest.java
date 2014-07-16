@@ -16,6 +16,13 @@ import java.util.logging.Logger;
  */
 public class Quest extends Item {
 
+    private static final String ACTION_DISPLAY = "Display";
+    private static final String ACTION_DISPLAY_DRAG = "D";
+    private static final String ACTION_DISPLAY_CONVERSION = "C";
+    private static final String ACTION_DISPLAY_GROUP = "G";
+    private static final String ACTION_DISPLAY_JMOL = "J";
+    private static final String ACTION_DISPLAY_QUESTION = "Q";
+    private static final String ACTION_DISPLAY_WEB = "W";
     private final List<QuestItem> data;
     private String name;
 
@@ -25,6 +32,47 @@ public class Quest extends Item {
 
     public void makeActive() {
         FlowManager.getInstance().displayQuest(this);
+    }
+
+    public void executeAction(final String action) {
+        if (action.startsWith(ACTION_DISPLAY)) {
+            final String rest = action.replace(ACTION_DISPLAY, "");
+
+            if (rest.startsWith(ACTION_DISPLAY_QUESTION)) {
+                final String number = rest.replace(ACTION_DISPLAY_QUESTION, "");
+                displayQuestion(extractQuestItem(Question.class, Integer.valueOf(number)));
+            } else if (rest.startsWith(ACTION_DISPLAY_JMOL)) {
+                final String number = rest.replace(ACTION_DISPLAY_JMOL, "");
+                displayJmolQuestion(extractQuestItem(JmolQuestion.class, Integer.valueOf(number)));
+            } else if (rest.startsWith(ACTION_DISPLAY_WEB)) {
+                final String number = rest.replace(ACTION_DISPLAY_WEB, "");
+                displayWebQuestion(extractQuestItem(WebQuestion.class, Integer.valueOf(number)));
+            } else if (rest.startsWith(ACTION_DISPLAY_GROUP)) {
+                final String number = rest.replace(ACTION_DISPLAY_GROUP, "");
+                displayGroups(extractQuestItem(GroupingQuest.class, Integer.valueOf(number)));
+            } else if (rest.startsWith(ACTION_DISPLAY_CONVERSION)) {
+                final String number = rest.replace(ACTION_DISPLAY_CONVERSION, "");
+                displayConversion(extractQuestItem(ConversionQuest.class, Integer.valueOf(number)));
+            } else if (rest.startsWith(ACTION_DISPLAY_DRAG)) {
+                final String number = rest.replace(ACTION_DISPLAY_DRAG, "");
+                displayDrag(extractQuestItem(DragQuest.class, Integer.valueOf(number)));
+            }
+        }
+    }
+
+    private <T extends QuestItem> T extractQuestItem(final Class<T> cls, final int pos) {
+        Object result = null;
+        int counter = 0;
+        for (QuestItem qi : getData()) {
+            if (cls.isAssignableFrom(qi.getClass())) {
+                counter++;
+                if (counter == pos) {
+                    result = qi;
+                    break;
+                }
+            }
+        }
+        return (T) result;
     }
 
     public void displayQuestion(Question question) {
@@ -65,7 +113,7 @@ public class Quest extends Item {
     public void displayConversion(ConversionQuest conversion) {
         FlowManager.getInstance().displayConversionScreen(conversion);
     }
-    
+
     public void displayDrag(DragQuest quest) {
         FlowManager.getInstance().displayDragScreen(quest);
     }

@@ -10,12 +10,13 @@ public class QuestMoveTrigger extends MoveTrigger<Quest> {
         if (action.isEmpty()) {
             target.makeActive();
         } else {
-            System.err.println("Unsupported action  - " + action);
+            target.executeAction(action);
         }
     }
 
     @Override
     public void onLeave() {
+        target.executeAction(action);
     }
 
     public QuestMoveTrigger(Spatial volume, Quest target, String action, boolean once, boolean active) {
