@@ -2,7 +2,7 @@ package eduapp.level.quest;
 
 import eduapp.FlowManager;
 import eduapp.JmolUtils;
-import eduapp.level.Item;
+import eduapp.level.item.Item;
 import eduapp.level.Level;
 import java.io.IOException;
 import java.net.URI;

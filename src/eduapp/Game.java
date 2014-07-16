@@ -11,7 +11,7 @@ import com.jme3.input.controls.KeyTrigger;
 import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.lessvoid.nifty.Nifty;
-import eduapp.level.Item;
+import eduapp.level.item.Item;
 import eduapp.level.quest.DragQuest;
 import eduapp.loaders.DictionaryLoader;
 import java.util.Set;

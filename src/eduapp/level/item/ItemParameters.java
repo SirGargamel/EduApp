@@ -1,4 +1,4 @@
-package eduapp.level;
+package eduapp.level.item;
 
 /**
  *
@@ -17,4 +17,7 @@ public interface ItemParameters {
     String SOURCE = "type";
     String DESCRIPTION = "popis";
     String ICON = "ikona";
+    String FLAMABLE = "hori";
+    String CHARGE = "vodi";
+    String TOXIC = "toxic";
 }

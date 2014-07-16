@@ -2,7 +2,7 @@ package eduapp.level.trigger;
 
 import com.jme3.bounding.BoundingVolume;
 import com.jme3.scene.Spatial;
-import eduapp.level.Item;
+import eduapp.level.item.Item;
 
 /**
  *

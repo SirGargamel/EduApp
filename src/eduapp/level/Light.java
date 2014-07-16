@@ -1,5 +1,6 @@
 package eduapp.level;
 
+import eduapp.level.item.Item;
 import eduapp.ItemRegistry;
 import com.jme3.bounding.BoundingBox;
 import com.jme3.bounding.BoundingSphere;

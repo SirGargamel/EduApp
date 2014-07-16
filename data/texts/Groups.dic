@@ -13,5 +13,10 @@
         <vzorec>Chemický vzorec</vzorec>
         <skup>Skupenství</skup>
         <link>Odkazy</link>        
-    </vec>            
+    </vec>
+    <vec id="ikony">
+        <toxic></toxic>
+        <vodi></vodi>
+        <hori></hori>
+    </vec>
 </dict>

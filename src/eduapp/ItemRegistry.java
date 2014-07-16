@@ -1,6 +1,6 @@
 package eduapp;
 
-import eduapp.level.Item;
+import eduapp.level.item.Item;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;

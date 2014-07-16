@@ -1,5 +1,6 @@
 package eduapp.level;
 
+import eduapp.level.item.Item;
 import com.jme3.asset.AssetManager;
 import com.jme3.bounding.BoundingBox;
 import com.jme3.input.InputManager;

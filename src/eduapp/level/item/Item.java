@@ -1,4 +1,4 @@
-package eduapp.level;
+package eduapp.level.item;
 
 import eduapp.ItemRegistry;
 import java.util.ArrayList;

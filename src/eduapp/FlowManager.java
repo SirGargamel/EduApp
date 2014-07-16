@@ -1,6 +1,6 @@
 package eduapp;
 
-import eduapp.level.ItemParameters;
+import eduapp.level.item.ItemParameters;
 import eduapp.level.Player;
 import com.jme3.app.state.AppState;
 import de.lessvoid.nifty.Nifty;
@@ -11,7 +11,7 @@ import eduapp.gui.GuiDrag;
 import eduapp.gui.GuiWorld;
 import eduapp.gui.GuiQuest;
 import eduapp.gui.GuiQuestInput;
-import eduapp.level.Item;
+import eduapp.level.item.Item;
 import eduapp.level.Light;
 import eduapp.level.quest.ConversionQuest;
 import eduapp.level.quest.DragQuest;

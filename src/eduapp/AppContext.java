@@ -1,7 +1,7 @@
 package eduapp;
 
 import com.jme3.app.SimpleApplication;
-import eduapp.level.Item;
+import eduapp.level.item.Item;
 
 /**
  *

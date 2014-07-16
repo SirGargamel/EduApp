@@ -2,8 +2,8 @@ package eduapp.loaders;
 
 import com.jme3.asset.AssetInfo;
 import com.jme3.asset.AssetLoader;
-import eduapp.level.ItemParameters;
-import eduapp.level.Item;
+import eduapp.level.item.ItemParameters;
+import eduapp.level.item.Item;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;

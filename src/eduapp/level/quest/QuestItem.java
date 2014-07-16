@@ -1,6 +1,6 @@
 package eduapp.level.quest;
 
-import eduapp.level.Item;
+import eduapp.level.item.Item;
 import eduapp.level.Level;
 
 /**

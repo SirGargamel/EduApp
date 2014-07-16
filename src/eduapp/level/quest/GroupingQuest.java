@@ -1,7 +1,7 @@
 package eduapp.level.quest;
 
-import eduapp.level.ItemParameters;
-import eduapp.level.Item;
+import eduapp.level.item.ItemParameters;
+import eduapp.level.item.Item;
 
 public class GroupingQuest extends QuestItem {
 
