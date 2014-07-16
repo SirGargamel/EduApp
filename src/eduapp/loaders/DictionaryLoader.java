@@ -25,7 +25,7 @@ public class DictionaryLoader implements AssetLoader {
     public static final String EXTENSION = "dic";
     private static final String ATTR_ID = "id";
     private static final String NODE_DICT = "dict";
-    private static final String NODE_ITEM = "item";
+    private static final String NODE_ITEM = "vec";
 
     @Override
     public Object load(AssetInfo assetInfo) throws IOException {

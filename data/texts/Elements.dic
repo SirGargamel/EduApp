@@ -1,45 +1,45 @@
 <dict id="dic">
-    <item id="h2so4">
+    <vec id="h2so4">
         <jmeno>Kyselina Sírová</jmeno>
         <skup>kapalné</skup>
         <vzorec>H2SO4</vzorec>
         <link>http://cs.wikipedia.org/wiki/Kyselina_sírová</link>
         <ikona>h2so4.png</ikona>
-    </item>
-    <item id="so2">
+    </vec>
+    <vec id="so2">
         <jmeno>Oxid siřičitý</jmeno>
         <skup>plynné; kapalné</skup>
         <vzorec>SO2</vzorec>
         <link>http://cs.wikipedia.org/wiki/Oxid_siřičitý</link>
-    </item>    
-    <item id="so3">
+    </vec>    
+    <vec id="so3">
         <jmeno>Oxid sírový</jmeno>
         <skup>pevné; kapalné</skup>
         <vzorec>SO3</vzorec>
         <link>http://cs.wikipedia.org/wiki/Oxid_sírový</link>
-    </item>    
-    <item id="s">
+    </vec>    
+    <vec id="s">
         <jmeno>Síra</jmeno>
         <skup>pevné</skup>
         <vzorec>S</vzorec>
         <link>http://cs.wikipedia.org/wiki/Síra;http://cs.wikipedia.org/wiki/Síra_(minerál)</link>
-    </item>    
-    <item id="v2o5">
+    </vec>    
+    <vec id="v2o5">
         <jmeno>Oxid Vanadičný</jmeno>
         <skup>pevné</skup>
         <vzorec>V2O5</vzorec>
         <link>http://cs.wikipedia.org/wiki/Oxid_vanadičný</link>
-    </item>    
-    <item id="k2so4">
+    </vec>    
+    <vec id="k2so4">
         <jmeno>Síran draselný</jmeno>
         <skup>pevné</skup>
         <vzorec>K2SO4</vzorec>
         <link>http://cs.wikipedia.org/wiki/Síran_draselný</link>
-    </item>    
-    <item id="sio2">
+    </vec>    
+    <vec id="sio2">
         <jmeno>Oxid křemičitý</jmeno>
         <skup>pevné</skup>
         <vzorec>SiO2</vzorec>
         <link>http://cs.wikipedia.org/wiki/Oxid_křemičitý</link>
-    </item>
+    </vec>
 </dict>

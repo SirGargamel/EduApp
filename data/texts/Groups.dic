@@ -1,17 +1,17 @@
 <dict id="groups">
-    <item id="skup">
+    <vec id="skup">
         <popis>Zařaďte prvky do skupin dle jejich skupenství</popis>
         <skup>plynné; kapalné; pevné</skup>        
-    </item>
-    <item id="vzorecJmeno">
+    </vec>
+    <vec id="vzorecJmeno">
         <popis>Převeďte vzorec prvku na jeho jméno</popis>
         <z>vzorec</z>
         <do>jmeno</do>
-    </item>
-    <item id="description">
+    </vec>
+    <vec id="description">
         <jmeno>Jméno</jmeno>
         <vzorec>Chemický vzorec</vzorec>
         <skup>Skupenství</skup>
         <link>Odkazy</link>        
-    </item>            
+    </vec>            
 </dict>
