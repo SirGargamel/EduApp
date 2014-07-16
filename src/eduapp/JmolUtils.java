@@ -6,8 +6,6 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -27,12 +25,17 @@ public class JmolUtils {
     private static JFrame frame;
 
     public static void displayModel(final String modelName) {
-        if (frame == null) {
-            initializeJmolPanel();
+        final File model = new File(JMOL_PATH.concat(modelName));
+        if (model.exists()) {
+            if (frame == null) {
+                initializeJmolPanel();
+            }
+
+            frame.setVisible(true);
+            jmolPanel.getViewer().openFile(model.getPath());
+        } else if (frame.isVisible()) {
+            frame.setVisible(false);
         }
-        
-        frame.setVisible(true);
-        jmolPanel.getViewer().openFile(JMOL_PATH.concat(modelName));
     }
 
     public static void closeViewer() {

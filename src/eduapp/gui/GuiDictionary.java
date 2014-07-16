@@ -14,6 +14,7 @@ import de.lessvoid.nifty.tools.Color;
 import eduapp.AppContext;
 import eduapp.level.item.ItemParameters;
 import eduapp.ItemRegistry;
+import eduapp.JmolUtils;
 import eduapp.gui.listbox.Line;
 import eduapp.level.item.Item;
 import java.awt.Desktop;
@@ -109,10 +110,10 @@ public class GuiDictionary implements ScreenController {
                 if (val != null) {
                     ib = new ImageBuilder("i".concat(s));
                     ib.filename("icons/" + ir.get(TAG_ICONS).getParam(s));
-                    
+
                     pb = new PanelBuilder("p".concat(s));
-                    pb.childLayoutCenter();                    
-                    pb.width("10%");                    
+                    pb.childLayoutCenter();
+                    pb.width("10%");
                     pb.image(ib);
                     pb.build(nifty, current, p);
                 }
@@ -186,6 +187,8 @@ public class GuiDictionary implements ScreenController {
                     tb.build(nifty, current, p);
                 }
             }
+            
+            JmolUtils.displayModel(selectedItem.getId().concat(".pdb"));
         }
 
         panelContent.layoutElements();
