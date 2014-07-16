@@ -55,7 +55,7 @@
         <layer id="description" childLayout="vertical">
             <panel height="19%" />            
             <panel id="panelText"  height="25%" align="left" childLayout="horizontal" visible="false">                                
-                <panel width="57%" />
+                <panel width="62%" />
                 <text id="text" width="30%" textHAlign="left" backgroundColor="#aaaa" color="#00ff00" text="" wrap="true" padding="5px" style="base"/>                
                 <effect>
                     <onCustom customKey="Show" name="fade" start="#0" end="#f" length="500" startDelay="0" inherit="true" />
@@ -64,8 +64,8 @@
             </panel>
         </layer>
         <layer id="description2" childLayout="horizontal">            
-            <panel width="80%"/>                                                                                
-            <image id="guide" filename="interface/guide.png" valign="top" halign="right" width="20%" height="20%" visible="false"/>                            
+            <panel width="87%"/>                                                                                
+            <image id="guide" filename="interface/guide.png" valign="top" halign="right" width="13%" height="20%" visible="false"/>                            
         </layer>            
     </screen>
     <screen id="pause" controller="eduapp.gui.GuiPause">        
@@ -152,7 +152,7 @@
         <layer childLayout="vertical">
             <panel height="19%" />            
             <panel id="panelText"  height="25%" align="left" childLayout="horizontal">                                
-                <panel width="57%" />
+                <panel width="62%" />
                 <text id="text" width="30%" textHAlign="left" backgroundColor="#aaaa" color="#00ff00" text="....." wrap="true" padding="5px" style="base"/>                
                 <effect>
                     <onCustom customKey="Show" name="fade" start="#0" end="#f" length="500" startDelay="0" inherit="true" />
@@ -161,8 +161,8 @@
             </panel>
         </layer>
         <layer childLayout="horizontal">            
-            <panel width="80%"/>                                                                                
-            <image filename="interface/guide.png" valign="top" halign="right" width="20%" height="20%"/>                            
+            <panel width="87%"/>                                                                                
+            <image filename="interface/guide.png" valign="top" halign="right" width="13%" height="20%"/>                            
         </layer>
     </screen>
     <controlDefinition name="line">
