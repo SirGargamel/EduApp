@@ -22,7 +22,7 @@ import org.xml.sax.SAXException;
  */
 public class DictionaryLoader implements AssetLoader {
 
-    public static final String EXTENSION = "dic";
+    public static final String EXTENSION = "xml";
     private static final String ATTR_ID = "id";
     private static final String NODE_DICT = "dict";
     private static final String NODE_ITEM = "vec";

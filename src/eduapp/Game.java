@@ -23,14 +23,16 @@ import java.util.Set;
 public class Game extends SimpleApplication {
 
     @Override
-    public void simpleInitApp() {
-        assetManager.registerLoader(LevelLoader.class, LevelLoader.EXTENSION);
+    public void simpleInitApp() {        
         assetManager.registerLoader(DictionaryLoader.class, DictionaryLoader.EXTENSION);
         
         assetManager.registerLocator("data/", FileLocator.class);
 
         loadDictionary(assetManager, AppContext.getItemRegistry(), "Elements");
         loadDictionary(assetManager, AppContext.getItemRegistry(), "Groups");
+        
+        assetManager.unregisterLoader(DictionaryLoader.class);
+        assetManager.registerLoader(LevelLoader.class, LevelLoader.EXTENSION);
 
         initKeyMappings();
 
