@@ -39,6 +39,7 @@ public class EduApp extends SimpleApplication {
 
             app.setShowSettings(false);
             app.setSettings(settings);
+            app.setPauseOnLostFocus(true);
 
             if (!DEBUG) {
                 app.setDisplayStatView(false);
