@@ -8,6 +8,7 @@ import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+import eduapp.EduApp;
 import eduapp.level.quest.Quest;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class Player extends Item {
     private boolean isRunning, scaleUp;
     private Quest currentQuest;
     private final List<String> inventory;
-    private Quaternion rot, add;
+    private Quaternion rot, target;
     private int counter;
 
     public Player(Vector3f initialPosition, String modelName) {
@@ -44,8 +45,8 @@ public class Player extends Item {
         setId(ID);
 
         rot = new Quaternion();
-        add = new Quaternion();
-        
+        target = new Quaternion();
+
         counter = LIMIT_COUNTER;
     }
 
@@ -54,10 +55,10 @@ public class Player extends Item {
         sb.append("models/");
         sb.append(modelName);
         sb.append(".j3o");
-        
-        final Node n = new Node("player");        
+
+        final Node n = new Node("player");
         inner = assetManager.loadModel(sb.toString());
-        n.attachChild(inner);        
+        n.attachChild(inner);
         model = n;
         final BoundingBox plB = (BoundingBox) model.getWorldBound();
         final float playerScale = PLAYER_HEIGHT / (plB.getYExtent() * 2.0f);
@@ -122,12 +123,16 @@ public class Player extends Item {
 
             if (counter >= LIMIT_COUNTER) {
                 final Random rnd = new Random();
-                add = new Quaternion(rnd.nextFloat(), rnd.nextFloat(), rnd.nextFloat(), rnd.nextFloat());
-                System.out.println("New add - " + add);
+                target = new Quaternion(rnd.nextFloat(), rnd.nextFloat(), rnd.nextFloat(), rnd.nextFloat());
                 counter = 0;
+                
+                if (EduApp.DEBUG) {
+                    System.out.println("New target rotation - " + target);
+                }
+                
             }
-            rot.slerp(add, tpf * COEFF_ROTATE);            
-            inner.rotate(rot);            
+            rot.slerp(target, tpf * COEFF_ROTATE);
+            inner.rotate(rot);
             counter++;
         }
     }

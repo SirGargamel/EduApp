@@ -17,6 +17,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import eduapp.Actions;
 import eduapp.AppContext;
+import eduapp.EduApp;
 import eduapp.FlowManager;
 import eduapp.level.Player;
 import eduapp.level.Level;
@@ -31,7 +32,7 @@ public class WorldScreen extends AbstractAppState {
     private static final float CAM_ELEVATION = 7.5f;
     private static final Vector3f LEFT = new Vector3f(-1, 0, 0);
     private static final Vector3f UP = new Vector3f(0, 0, -1);
-    private final Vector3f walkDirection = new Vector3f();    
+    private final Vector3f walkDirection = new Vector3f();
     private BulletAppState bulletAppState;
     private BetterCharacterControl playerPhysics;
     private Player player;
@@ -122,12 +123,12 @@ public class WorldScreen extends AbstractAppState {
         bulletAppState = new BulletAppState();
         bulletAppState.setThreadingType(BulletAppState.ThreadingType.PARALLEL);
         app.getStateManager().attach(bulletAppState);
-//        bulletAppState.setDebugEnabled(true);        
+        bulletAppState.setDebugEnabled(false);
 
         final CollisionShape sceneShape = CollisionShapeFactory.createMeshShape(currentLevel.getWorldNode());
         landscape = new RigidBodyControl(sceneShape, 0);
 
-        playerPhysics = new BetterCharacterControl(.15f, 1.5f, 50f);
+        playerPhysics = new BetterCharacterControl(.25f, 1.5f, 50f);
         player.getModel().addControl(playerPhysics);
 
         playerPhysics.setJumpForce(new Vector3f(0, 250f, 0));
@@ -156,26 +157,29 @@ public class WorldScreen extends AbstractAppState {
     }
 
     @Override
-    public void update(float tpf) {        
+    public void update(float tpf) {
         walkDirection.set(0, 0, 0);
         if (left) {
-            walkDirection.addLocal(LEFT);            
+            walkDirection.addLocal(LEFT);
         }
         if (right) {
-            walkDirection.addLocal(LEFT.negate());            
+            walkDirection.addLocal(LEFT.negate());
         }
-        if (up) {            
-            walkDirection.addLocal(UP);            
+        if (up) {
+            walkDirection.addLocal(UP);
         }
-        if (down) {            
-            walkDirection.addLocal(UP.negate());            
-        }        
+        if (down) {
+            walkDirection.addLocal(UP.negate());
+        }
         playerPhysics.setWalkDirection(walkDirection.normalizeLocal().multLocal(PLAYER_SPEED));
         final Vector3f loc = player.getModel().getWorldBound().getCenter();
         currentLevel.visit(loc);
-        cam.setLocation(loc.add(0, CAM_ELEVATION, 0));
-//        System.out.println(loc); 
+        cam.setLocation(loc.add(0, CAM_ELEVATION, 0));        
         player.update(tpf);
+        
+        if (EduApp.DEBUG) {
+            System.out.println(loc);
+        }
     }
 
     @Override

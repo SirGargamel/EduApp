@@ -10,6 +10,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import eduapp.AppContext;
+import eduapp.EduApp;
 import eduapp.FlowManager;
 import eduapp.ItemRegistry;
 import eduapp.level.quest.QuestItem;
@@ -107,7 +108,9 @@ public class Level {
         for (TriggerStub ts : stubs) {
             t = ts.generateTrigger(AppContext.getItemRegistry(), assetManager);
             triggers.add(t);
-            rootNode.attachChild(t.getGeometry());
+            if (EduApp.DEBUG) {
+                rootNode.attachChild(t.getGeometry());
+            }
             ir.put(t);
             if (t instanceof ActionTrigger) {
                 at = (ActionTrigger) t;
@@ -157,7 +160,9 @@ public class Level {
                     if (trigger instanceof MoveTrigger) {
                         mt = (MoveTrigger) trigger;
                         mt.onLeave();
-                        System.out.println("Action triggered on exit " + mt + " at " + pos);
+                        if (EduApp.DEBUG) {
+                            System.out.println("Action triggered on exit " + mt + " at " + pos);
+                        }
                     }
                 }
             }
@@ -173,7 +178,9 @@ public class Level {
                 if (trigger instanceof MoveTrigger) {
                     mt = (MoveTrigger) trigger;
                     mt.onEnter();
-                    System.out.println("Action triggered on enter " + mt + " at " + pos);
+                    if (EduApp.DEBUG) {
+                        System.out.println("Action triggered on enter " + mt + " at " + pos);
+                    }
                 }
             }
         }
@@ -183,7 +190,7 @@ public class Level {
         for (Trigger t : activeTriggers) {
             if (t instanceof ActionTrigger) {
                 // show icon
-                msg = FlowManager.getInstance().getCurrentQuest().findQuestItem(((ActionTrigger)t).description()).toNiftyString();
+                msg = FlowManager.getInstance().getCurrentQuest().findQuestItem(((ActionTrigger) t).description()).toNiftyString();
                 break;
             }
         }
@@ -200,7 +207,9 @@ public class Level {
             if (trg instanceof ActionTrigger) {
                 at = (ActionTrigger) trg;
                 at.onActivate();
-                System.out.println("Action triggered on activation " + at + " at " + pos);
+                if (EduApp.DEBUG) {
+                    System.out.println("Action triggered on activation " + at + " at " + pos);
+                }
             }
         }
     }
