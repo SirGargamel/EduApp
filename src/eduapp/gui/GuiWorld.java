@@ -8,7 +8,9 @@ import com.jme3.texture.Texture2D;
 import com.jme3.texture.plugins.AWTLoader;
 import de.lessvoid.nifty.EndNotify;
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.effects.Effect;
 import de.lessvoid.nifty.effects.EffectEventId;
+import de.lessvoid.nifty.effects.impl.Hint;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.elements.render.ImageRenderer;
 import de.lessvoid.nifty.elements.render.TextRenderer;
@@ -149,6 +151,14 @@ public class GuiWorld implements ScreenController {
 
             ir = e.getRenderer(ImageRenderer.class);
             ir.setImage(nifty.getRenderEngine().createImage(nifty.getCurrentScreen(), key, true));
+            List<Effect> list = e.getEffects(EffectEventId.onHover, Hint.class);
+            list.get(0).getParameters().setProperty("hintText", itemRegistry.get(items.get(i)).getParam(ItemParameters.NAME));
+
+//            final HoverEffectBuilder eb = new HoverEffectBuilder("hint");
+//            eb.getAttributes().setAttribute("hintDelay", "100");
+//            eb.getAttributes().setAttribute("hintText", di.getText());            
+//            pb.onHoverEffect(eb);
+
             e.show();
         }
     }
