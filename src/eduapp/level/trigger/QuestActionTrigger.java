@@ -2,7 +2,7 @@ package eduapp.level.trigger;
 
 import com.jme3.scene.Spatial;
 import eduapp.level.quest.ConversionQuest;
-import eduapp.level.quest.DragQuest;
+import eduapp.level.quest.EquationQuest;
 import eduapp.level.quest.GroupingQuest;
 import eduapp.level.quest.JmolQuestion;
 import eduapp.level.quest.Quest;

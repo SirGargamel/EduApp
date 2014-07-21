@@ -7,13 +7,13 @@ import java.util.List;
  *
  * @author Petr Ječmen
  */
-public class DragQuest extends QuestItem {
+public class EquationQuest extends QuestItem {
 
     private final List<DragItem> items;
     private final List<String> extra;
     private boolean finished;
 
-    public DragQuest(String reward) {
+    public EquationQuest(String reward) {
         super(reward);
         
         items = new LinkedList<>();
@@ -51,7 +51,7 @@ public class DragQuest extends QuestItem {
 
     @Override
     public String toNiftyString() {
-        return "TODO NiftyString";
+        return "Seřaďte předměty tak, aby rovnice platila.";
     }
 
     @Override

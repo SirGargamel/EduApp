@@ -1,7 +1,7 @@
 package eduapp.level.xml;
 
 import eduapp.level.quest.ConversionQuest;
-import eduapp.level.quest.DragQuest;
+import eduapp.level.quest.EquationQuest;
 import eduapp.level.quest.GroupingQuest;
 import eduapp.loaders.LevelLoader;
 import eduapp.level.quest.JmolQuestion;
@@ -97,13 +97,13 @@ public class XmlQuest extends XmlEntity<Quest> {
                         extractNodeText(e, ITEM_REWARD));
                 break;
             case ITEM_EQUATION:
-                DragQuest dq = new DragQuest(extractNodeText(e, ITEM_REWARD));
+                EquationQuest dq = new EquationQuest(extractNodeText(e, ITEM_REWARD));
                 split = extractNodeText(e, ITEM_DATA).split(QUESTION_SEPARATOR);
                 for (String s : split) {
                     if (s.startsWith(EQUATION_STATIC)) {
-                        dq.addItem(new DragQuest.DragItem(DragQuest.DragItemType.STATIC, s.substring(EQUATION_STATIC.length())));
+                        dq.addItem(new EquationQuest.DragItem(EquationQuest.DragItemType.STATIC, s.substring(EQUATION_STATIC.length())));
                     } else {
-                        dq.addItem(new DragQuest.DragItem(DragQuest.DragItemType.DRAG, s));
+                        dq.addItem(new EquationQuest.DragItem(EquationQuest.DragItemType.DRAG, s));
                     }
                 }
                 split = extractNodeText(e, EQUATION_EXTRA).split(QUESTION_SEPARATOR);

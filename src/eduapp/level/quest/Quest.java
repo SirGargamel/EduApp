@@ -55,7 +55,7 @@ public class Quest extends Item {
                 displayConversion(extractQuestItem(ConversionQuest.class, Integer.valueOf(number)));
             } else if (rest.startsWith(ACTION_DISPLAY_DRAG)) {
                 final String number = rest.replace(ACTION_DISPLAY_DRAG, "");
-                displayDrag(extractQuestItem(DragQuest.class, Integer.valueOf(number)));
+                displayDrag(extractQuestItem(EquationQuest.class, Integer.valueOf(number)));
             }
         }
     }
@@ -80,7 +80,7 @@ public class Quest extends Item {
             result = extractQuestItem(ConversionQuest.class, Integer.valueOf(number));
         } else if (rest.startsWith(ACTION_DISPLAY_DRAG)) {
             final String number = rest.replace(ACTION_DISPLAY_DRAG, "");
-            result = extractQuestItem(DragQuest.class, Integer.valueOf(number));
+            result = extractQuestItem(EquationQuest.class, Integer.valueOf(number));
         }
         return result;
     }
@@ -139,7 +139,7 @@ public class Quest extends Item {
         FlowManager.getInstance().displayConversionScreen(conversion);
     }
 
-    public void displayDrag(DragQuest quest) {
+    public void displayDrag(EquationQuest quest) {
         FlowManager.getInstance().displayDragScreen(quest);
     }
 

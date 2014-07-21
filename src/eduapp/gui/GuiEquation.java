@@ -13,8 +13,8 @@ import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import eduapp.FlowManager;
-import eduapp.level.quest.DragQuest;
-import eduapp.level.quest.DragQuest.DragItem;
+import eduapp.level.quest.EquationQuest;
+import eduapp.level.quest.EquationQuest.DragItem;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,10 +32,10 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
     private static final String SIZE_HEIGHT = "100px";
     private static final String SIZE_GAP = "10px";
     private Nifty nifty;
-    private DragQuest quest;
+    private EquationQuest quest;
     private Element panelDrag, panelDrop;
 
-    public void setData(DragQuest quest) {
+    public void setData(EquationQuest quest) {
         this.quest = quest;
     }
 
@@ -106,7 +106,7 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
         // bottom row    
         List<String> items = new LinkedList<>();
         for (DragItem di : quest.getItems()) {
-            if (di.getType().equals(DragQuest.DragItemType.DRAG)) {
+            if (di.getType().equals(EquationQuest.DragItemType.DRAG)) {
                 items.add(di.getText());
             }
         }

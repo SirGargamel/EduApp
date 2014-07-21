@@ -14,7 +14,7 @@ import eduapp.gui.GuiQuestInput;
 import eduapp.level.item.Item;
 import eduapp.level.Light;
 import eduapp.level.quest.ConversionQuest;
-import eduapp.level.quest.DragQuest;
+import eduapp.level.quest.EquationQuest;
 import eduapp.level.quest.GroupingQuest;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
@@ -169,7 +169,7 @@ public class FlowManager implements Observer {
         nifty.gotoScreen(SCREEN_CONVERSION);
     }
     
-    public void displayDragScreen(final DragQuest quest) {
+    public void displayDragScreen(final EquationQuest quest) {
         enableState(false);
         final GuiEquation control = (GuiEquation) nifty.getScreen(SCREEN_DRAG).getScreenController();
         control.setData(quest);
