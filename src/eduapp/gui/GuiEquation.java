@@ -23,12 +23,12 @@ import java.util.List;
  *
  * @author Petr Ječmen
  */
-public class GuiDrag implements ScreenController, DroppableDropFilter {
+public class GuiEquation implements ScreenController, DroppableDropFilter {
 
     private static final String DROP_ID = "drop-";
     private static final String PANEL_ID = "panel-";
     private static final String TEXT_ID = "text-";
-    private static final String SIZE_WIDTH = "150px";
+    private static final String SIZE_WIDTH = "100px";
     private static final String SIZE_HEIGHT = "100px";
     private static final String SIZE_GAP = "10px";
     private Nifty nifty;

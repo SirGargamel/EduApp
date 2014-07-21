@@ -126,8 +126,7 @@ public class Player extends Item {
                 System.out.println("New add - " + add);
                 counter = 0;
             }
-            rot.slerp(add, tpf * COEFF_ROTATE);
-            System.out.println(rot);
+            rot.slerp(add, tpf * COEFF_ROTATE);            
             inner.rotate(rot);            
             counter++;
         }

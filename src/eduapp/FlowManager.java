@@ -7,7 +7,7 @@ import de.lessvoid.nifty.Nifty;
 import eduapp.gui.GuiConversion;
 import eduapp.gui.GuiDescription;
 import eduapp.gui.GuiDictionary;
-import eduapp.gui.GuiDrag;
+import eduapp.gui.GuiEquation;
 import eduapp.gui.GuiWorld;
 import eduapp.gui.GuiQuest;
 import eduapp.gui.GuiQuestInput;
@@ -171,7 +171,7 @@ public class FlowManager implements Observer {
     
     public void displayDragScreen(final DragQuest quest) {
         enableState(false);
-        final GuiDrag control = (GuiDrag) nifty.getScreen(SCREEN_DRAG).getScreenController();
+        final GuiEquation control = (GuiEquation) nifty.getScreen(SCREEN_DRAG).getScreenController();
         control.setData(quest);
 
         storeActualScreen();
