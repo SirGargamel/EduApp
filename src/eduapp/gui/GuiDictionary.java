@@ -209,10 +209,11 @@ public class GuiDictionary implements ScreenController {
     public void listBoxItemClicked() {
     }
 
-    public void hyperlink(String link) throws IOException, URISyntaxException {
-        System.out.println("LINK - " + link);
-        if (Desktop.isDesktopSupported()) {
+    public void hyperlink(String link) throws IOException, URISyntaxException {        
+        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
             Desktop.getDesktop().browse(new URI(link));
+        } else {
+            System.err.println("Link opening not supported.");
         }
     }
 }
