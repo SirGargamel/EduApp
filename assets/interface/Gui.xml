@@ -192,7 +192,7 @@
             </panel> 
         </layer>
     </screen>
-    <screen id="drag" controller="eduapp.gui.GuiDrag">        
+    <screen id="drag" controller="eduapp.gui.GuiEquation">        
         <layer id="onlyLayer" childLayout="vertical">            
             <panel height="10%" width="100%" childLayout="vertical" />            
             <panel id="panelDrop" width="100%" height="30%" backgroundColor="#aaaaaaaa" childLayout="horizontal" visibleToMouse="true" />                                                                                                                   
