@@ -121,8 +121,7 @@ public class Player extends Item {
                 }
             }
             model.scale(val);
-            currentScale *= val;
-            System.out.println(tpf);
+            currentScale *= val;            
 
             if (counter >= LIMIT_COUNTER) {
                 final Random rnd = new Random();
