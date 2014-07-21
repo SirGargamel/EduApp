@@ -19,13 +19,13 @@ import java.util.Random;
  * @author Petr Jecmen
  */
 public class Player extends Item {
-
-    private static final float PLAYER_HEIGHT = 0.60f;
-    private static final float PLAYER_HEIGHT_MAX = 0.30f;
-    private static final float PLAYER_HEIGHT_MIN = 0.20f;
+    
+    private static final float PLAYER_HEIGHT = 0.75f;
+    private static final float PLAYER_SCALE_LIM = 0.75f;    
     private static final int LIMIT_COUNTER = 1000;
+    private static final float LIMIT_SCALE_TPF = 0.1f;
     private static final float COEFF_ROTATE = 0.001f;
-    private static final float COEFF_SCALE = 0.5f;
+    private static final float COEFF_SCALE = 0.35f;
     private static final String ID = "player";
     private final Vector3f initialPosition;
     private final String modelName;
@@ -34,7 +34,8 @@ public class Player extends Item {
     private Quest currentQuest;
     private final List<String> inventory;
     private Quaternion rot, target;
-    private int counter;
+    private int counter;    
+    private float playerScale, currentScale;
 
     public Player(Vector3f initialPosition, String modelName) {
         inventory = new ArrayList<>();
@@ -61,7 +62,8 @@ public class Player extends Item {
         n.attachChild(inner);
         model = n;
         final BoundingBox plB = (BoundingBox) model.getWorldBound();
-        final float playerScale = PLAYER_HEIGHT / (plB.getYExtent() * 2.0f);
+        playerScale = PLAYER_HEIGHT / (plB.getYExtent() * 2.0f);
+        currentScale = playerScale;
         model.scale(playerScale);
 
         isRunning = true;
@@ -103,23 +105,24 @@ public class Player extends Item {
     }
 
     public void update(float tpf) {
-        if (isRunning) {
-            final float scale = model.getWorldScale().x;
-            float val = 0;
+        if (isRunning && tpf <= LIMIT_SCALE_TPF) {    
+            float val = 1.0f;
             if (scaleUp) {
-                if (scale < PLAYER_HEIGHT_MAX) {
+                if (currentScale < playerScale / PLAYER_SCALE_LIM) {
                     val += tpf * COEFF_SCALE;
                 } else {
                     scaleUp = false;
                 }
             } else {
-                if (scale > PLAYER_HEIGHT_MIN) {
+                if (currentScale > playerScale * PLAYER_SCALE_LIM) {
                     val -= tpf * COEFF_SCALE;
                 } else {
                     scaleUp = true;
                 }
             }
-            model.scale(1.0f + val);
+            model.scale(val);
+            currentScale *= val;
+            System.out.println(tpf);
 
             if (counter >= LIMIT_COUNTER) {
                 final Random rnd = new Random();
