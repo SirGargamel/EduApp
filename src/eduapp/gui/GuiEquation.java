@@ -1,6 +1,7 @@
 package eduapp.gui;
 
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.builder.ImageBuilder;
 import de.lessvoid.nifty.builder.PanelBuilder;
 import de.lessvoid.nifty.builder.TextBuilder;
 import de.lessvoid.nifty.controls.Draggable;
@@ -12,9 +13,13 @@ import de.lessvoid.nifty.controls.dragndrop.builder.DroppableBuilder;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
+import eduapp.AppContext;
 import eduapp.FlowManager;
+import eduapp.ItemRegistry;
+import eduapp.level.item.ItemParameters;
 import eduapp.level.quest.EquationQuest;
 import eduapp.level.quest.EquationQuest.DragItem;
+import eduapp.level.quest.EquationQuest.Mode;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,7 +42,7 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
 
     public void setData(EquationQuest quest) {
         this.quest = quest;
-    }
+    }    
 
     @Override
     public void bind(Nifty nifty, Screen screen) {
@@ -115,6 +120,10 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
         }
         Collections.shuffle(items);
 
+        final ItemRegistry ir = AppContext.getItemRegistry();
+        final Mode mode = quest.getMode();
+        ImageBuilder ib;
+        String key;
         for (String s : items) {
             db = new DroppableBuilder("d".concat(s));
             db.width(SIZE_WIDTH);
@@ -128,19 +137,35 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
             dgb = new DraggableBuilder(s);
             dgb.width(SIZE_WIDTH);
             dgb.height(SIZE_HEIGHT);
-            dgb.padding(SIZE_GAP);
-            dgb.backgroundColor("#ffff00");
+            dgb.padding(SIZE_GAP);            
             dgb.valignCenter();
             dgb.childLayoutCenter();
 
-            tb = new TextBuilder(TEXT_ID.concat(s));
-            tb.text(s);
-            tb.style("base");
-            tb.color("#000000");
-
             d = db.build(nifty, current, panelDrag);
-            dg = dgb.build(nifty, current, d);
-            tb.build(nifty, current, dg);
+
+            switch (mode) {
+                case text:
+                    tb = new TextBuilder(TEXT_ID.concat(s));
+                    tb.text(ir.get(s).getParam(ItemParameters.FORMULA));
+                    tb.style("base");
+                    tb.color("#000000");
+
+                    dg = dgb.build(nifty, current, d);
+                    tb.build(nifty, current, dg);
+                    break;
+                case ikony:
+                    key = "icons/" + ir.get(s).getParam(ItemParameters.ICON);
+                    
+                    
+                    ib = new ImageBuilder("i".concat(s));
+                    ib.filename(key);                    
+                    ib.width("100%");
+                    ib.height("100%");
+                    dgb.image(ib);
+
+                    dgb.build(nifty, current, d);
+                    break;
+            }
         }
 
         panelDrag.layoutElements();

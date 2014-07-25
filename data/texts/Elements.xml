@@ -11,12 +11,14 @@
         <jmeno>Oxid křemičitý</jmeno>
         <skup>pevné</skup>
         <vzorec>SiO2</vzorec>
+        <ikona>sio2.png</ikona>
         <link>http://cs.wikipedia.org/wiki/Oxid_křemičitý</link>
     </vec>   
     <vec id="so3">
         <jmeno>Oxid sírový</jmeno>
         <skup>pevné; kapalné</skup>
         <vzorec>SO3</vzorec>
+        <ikona>so3.png</ikona>
         <link>http://cs.wikipedia.org/wiki/Oxid_sírový</link>
         <toxic/>
     </vec>
@@ -24,6 +26,7 @@
         <jmeno>Oxid siřičitý</jmeno>
         <skup>plynné; kapalné</skup>
         <vzorec>SO2</vzorec>
+        <ikona>so2.png</ikona>
         <link>http://cs.wikipedia.org/wiki/Oxid_siřičitý</link>
         <hori/>
         <toxic/>
@@ -39,6 +42,7 @@
         <jmeno>Síra</jmeno>
         <skup>pevné</skup>
         <vzorec>S</vzorec>
+        <ikona>s.png</ikona>
         <link>http://cs.wikipedia.org/wiki/Síra;http://cs.wikipedia.org/wiki/Síra_(minerál)</link>
         <hori/>
     </vec>          
@@ -52,7 +56,15 @@
         <jmeno>Voda</jmeno>
         <skup>kapalné</skup>
         <vzorec>H2O</vzorec>
+        <ikona>h2o.png</ikona>
         <link>http://cs.wikipedia.org/wiki/Voda</link>
         <vodi/>
+    </vec>    
+    <vec id="o2">
+        <jmeno>Kyslík</jmeno>
+        <skup>plynné</skup>
+        <vzorec>O2</vzorec>
+        <ikona>o2.png</ikona>
+        <link>http://cs.wikipedia.org/wiki/Kyslík</link>        
     </vec>
 </dict>

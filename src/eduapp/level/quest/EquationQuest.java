@@ -11,14 +11,16 @@ public class EquationQuest extends QuestItem {
 
     private final List<DragItem> items;
     private final List<String> extra;
+    private final Mode mode;
     private boolean finished;
 
-    public EquationQuest(String reward) {
+    public EquationQuest(Mode mode, String reward) {
         super(reward);
         
         items = new LinkedList<>();
         extra = new LinkedList<>();
         finished = false;
+        this.mode = mode;
     }
 
     public void addItem(final DragItem item) {
@@ -59,6 +61,10 @@ public class EquationQuest extends QuestItem {
         return "TODO task";
     }
 
+    public Mode getMode() {
+        return mode;
+    }
+
     public static class DragItem {
 
         private final DragItemType type;
@@ -82,5 +88,11 @@ public class EquationQuest extends QuestItem {
 
         DRAG,
         STATIC
+    }
+    
+    public static enum Mode {
+
+        text,
+        ikony;
     }
 }

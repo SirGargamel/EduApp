@@ -170,9 +170,10 @@
                 <Dite>tC1</Dite>
             </Prevod>
             <Rovnice id="d1">
+                <mod>ikony</mod>
                 <Odmena>h2so4</Odmena>
-                <Data>S::_+::O2::_=::SO2</Data>
-                <Extra>H2O::SO3::O</Extra>
+                <Data>s::_+::o2::_=::so2</Data>
+                <Extra>h2o::so3</Extra>
                 <Dite>tD1</Dite>
             </Rovnice>
         </Ukol>

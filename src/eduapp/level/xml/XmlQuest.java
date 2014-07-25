@@ -2,6 +2,7 @@ package eduapp.level.xml;
 
 import eduapp.level.quest.ConversionQuest;
 import eduapp.level.quest.EquationQuest;
+import eduapp.level.quest.EquationQuest.Mode;
 import eduapp.level.quest.GroupingQuest;
 import eduapp.loaders.LevelLoader;
 import eduapp.level.quest.JmolQuestion;
@@ -30,6 +31,7 @@ public class XmlQuest extends XmlEntity<Quest> {
     private static final String ITEM_DATA = "Data";
     private static final String ITEM_EQUATION = "Rovnice";
     private static final String ITEM_GROUPS = "Skupiny";
+    private static final String ITEM_MODE = "mod";
     private static final String ITEM_QUESTION = "Otazka";
     private static final String ITEM_QUESTION_JMOL = "Jmol";
     private static final String ITEM_QUESTION_WEB = "Web";
@@ -97,7 +99,7 @@ public class XmlQuest extends XmlEntity<Quest> {
                         extractNodeText(e, ITEM_REWARD));
                 break;
             case ITEM_EQUATION:
-                EquationQuest dq = new EquationQuest(extractNodeText(e, ITEM_REWARD));
+                EquationQuest dq = new EquationQuest(Mode.valueOf(extractNodeText(e, ITEM_MODE).toLowerCase()), extractNodeText(e, ITEM_REWARD));
                 split = extractNodeText(e, ITEM_DATA).split(QUESTION_SEPARATOR);
                 for (String s : split) {
                     if (s.startsWith(EQUATION_STATIC)) {
