@@ -31,7 +31,9 @@ public class XmlQuest extends XmlEntity<Quest> {
     private static final String ITEM_DATA = "Data";
     private static final String ITEM_EQUATION = "Rovnice";
     private static final String ITEM_GROUPS = "Skupiny";
-    private static final String ITEM_MODE = "mod";
+    private static final String ITEM_INPUT = "Vstup";
+    private static final String ITEM_MODE = "Mod";
+    private static final String ITEM_OUTPUT = "Vystup";
     private static final String ITEM_QUESTION = "Otazka";
     private static final String ITEM_QUESTION_JMOL = "Jmol";
     private static final String ITEM_QUESTION_WEB = "Web";
@@ -100,13 +102,13 @@ public class XmlQuest extends XmlEntity<Quest> {
                 break;
             case ITEM_EQUATION:
                 EquationQuest dq = new EquationQuest(Mode.valueOf(extractNodeText(e, ITEM_MODE).toLowerCase()), extractNodeText(e, ITEM_REWARD));
-                split = extractNodeText(e, ITEM_DATA).split(QUESTION_SEPARATOR);
+                split = extractNodeText(e, ITEM_INPUT).split(QUESTION_SEPARATOR);
                 for (String s : split) {
-                    if (s.startsWith(EQUATION_STATIC)) {
-                        dq.addItem(new EquationQuest.DragItem(EquationQuest.DragItemType.STATIC, s.substring(EQUATION_STATIC.length())));
-                    } else {
-                        dq.addItem(new EquationQuest.DragItem(EquationQuest.DragItemType.DRAG, s));
-                    }
+                    dq.addInput(s);
+                }
+                split = extractNodeText(e, ITEM_OUTPUT).split(QUESTION_SEPARATOR);
+                for (String s : split) {
+                    dq.addOutput(s);
                 }
                 split = extractNodeText(e, EQUATION_EXTRA).split(QUESTION_SEPARATOR);
                 for (String s : split) {

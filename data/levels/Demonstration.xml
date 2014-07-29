@@ -96,14 +96,14 @@
         </Directional>   							
     </Svetla>
     <Spoustece>        
-<!-- -->
+        <!-- -->
         <Pohyb>
             <Teleso>player</Teleso>
             <Cil>hlavniQuest</Cil>
             <Ukol></Ukol>    
             <Jednou/>        			
         </Pohyb>
- <!-- -->
+        <!-- -->
         <Akce id="tQ1">
             <Teleso>table1</Teleso>
             <Cil>hlavniQuest</Cil>
@@ -170,9 +170,10 @@
                 <Dite>tC1</Dite>
             </Prevod>
             <Rovnice id="d1">
-                <mod>ikony</mod>
+                <Mod>ikony</Mod>
                 <Odmena>h2so4</Odmena>
-                <Data>s::_+::o2::_=::so2</Data>
+                <Vstup>s::o2</Vstup>
+                <Vystup>so2</Vystup>
                 <Extra>h2o::so3</Extra>
                 <Dite>tD1</Dite>
             </Rovnice>

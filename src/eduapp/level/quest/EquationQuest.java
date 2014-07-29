@@ -9,30 +9,39 @@ import java.util.List;
  */
 public class EquationQuest extends QuestItem {
 
-    private final List<DragItem> items;
+    private final List<String> in, out;
     private final List<String> extra;
     private final Mode mode;
     private boolean finished;
 
     public EquationQuest(Mode mode, String reward) {
         super(reward);
-        
-        items = new LinkedList<>();
+
+        in = new LinkedList<>();
+        out = new LinkedList<>();
         extra = new LinkedList<>();
         finished = false;
         this.mode = mode;
     }
 
-    public void addItem(final DragItem item) {
-        items.add(item);
+    public void addInput(final String item) {
+        in.add(item);
     }
-    
+
+    public void addOutput(final String item) {
+        out.add(item);
+    }
+
     public void addExtra(final String item) {
         extra.add(item);
     }
 
-    public List<DragItem> getItems() {
-        return items;
+    public List<String> getInputs() {
+        return in;
+    }
+
+    public List<String> getOutputs() {
+        return out;
     }
 
     public List<String> getExtra() {
@@ -65,31 +74,6 @@ public class EquationQuest extends QuestItem {
         return mode;
     }
 
-    public static class DragItem {
-
-        private final DragItemType type;
-        private final String text;
-
-        public DragItemType getType() {
-            return type;
-        }
-
-        public String getText() {
-            return text;
-        }
-
-        public DragItem(DragItemType type, String text) {
-            this.type = type;
-            this.text = text;
-        }
-    }
-
-    public static enum DragItemType {
-
-        DRAG,
-        STATIC
-    }
-    
     public static enum Mode {
 
         text,
