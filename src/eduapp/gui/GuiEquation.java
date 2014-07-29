@@ -33,9 +33,9 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
     private static final String DROP_ID = "drop-";
     private static final String PANEL_ID = "panel-";
     private static final String TEXT_ID = "text-";
-    private static final String SIZE_WIDTH = "100px";
-    private static final String SIZE_HEIGHT = "100px";
-    private static final String SIZE_GAP = "10px";
+    private static final String SIZE_WIDTH = "128px";
+    private static final String SIZE_HEIGHT = "128px";
+    private static final String SIZE_GAP = "8px";
     private Nifty nifty;
     private EquationQuest quest;
     private Element panelDrag, panelDrop;
@@ -82,7 +82,7 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
                     db.height(SIZE_HEIGHT);
                     db.padding(SIZE_GAP);
                     db.marginLeft(SIZE_GAP);
-                    db.backgroundColor("#00ffff");
+                    db.backgroundColor("#000000");
                     db.valignCenter();
                     db.childLayoutCenter();
                     db.build(nifty, current, panelDrop).getNiftyControl(Droppable.class).addFilter(this);
@@ -129,7 +129,7 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
             db.width(SIZE_WIDTH);
             db.height(SIZE_HEIGHT);
             db.padding(SIZE_GAP);
-            db.backgroundColor("#00ffff");
+            db.backgroundColor("#ffffff");
             db.valignCenter();
             db.childLayoutCenter();
             db.margin(SIZE_GAP);
