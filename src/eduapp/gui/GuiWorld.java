@@ -124,42 +124,45 @@ public class GuiWorld implements ScreenController {
 
     public void setPlayer(Player player) {
         this.player = player;
+        refreshInventoryItems();
     }
 
     public void refreshInventoryItems() {
-        final List<String> items = player.getAllItems();
-        final AssetManager assetManager = AppContext.getApp().getAssetManager();
-        final ItemRegistry itemRegistry = AppContext.getItemRegistry();
+        if (player != null) {
+            final List<String> items = player.getAllItems();
+            final AssetManager assetManager = AppContext.getApp().getAssetManager();
+            final ItemRegistry itemRegistry = AppContext.getItemRegistry();
 
-        Element e;
-        ImageRenderer ir;
-        String key;
-        for (int i = 0; i < Math.min(items.size(), inv.size()); i++) {
-            e = inv.get(i);
-            key = "data/icons/" + itemRegistry.get(items.get(i)).getParam(ItemParameters.ICON);
+            Element e;
+            ImageRenderer ir;
+            String key;
+            for (int i = 0; i < Math.min(items.size(), inv.size()); i++) {
+                e = inv.get(i);
+                key = "data/icons/" + itemRegistry.get(items.get(i)).getParam(ItemParameters.ICON);
 
-            BufferedImage img = null;
-            try {
-                img = ImageIO.read(new File(key));
-            } catch (IOException ex) {
-                System.err.println(ex);
-            }
+                BufferedImage img = null;
+                try {
+                    img = ImageIO.read(new File(key));
+                } catch (IOException ex) {
+                    System.err.println(ex);
+                }
 
-            final AWTLoader loader = new AWTLoader();
-            final Texture tex = new Texture2D(loader.load(img, true));
-            ((DesktopAssetManager) assetManager).addToCache(new TextureKey(key), tex);
+                final AWTLoader loader = new AWTLoader();
+                final Texture tex = new Texture2D(loader.load(img, true));
+                ((DesktopAssetManager) assetManager).addToCache(new TextureKey(key), tex);
 
-            ir = e.getRenderer(ImageRenderer.class);
-            ir.setImage(nifty.getRenderEngine().createImage(nifty.getCurrentScreen(), key, true));
-            List<Effect> list = e.getEffects(EffectEventId.onHover, Hint.class);
-            list.get(0).getParameters().setProperty("hintText", itemRegistry.get(items.get(i)).getParam(ItemParameters.NAME));
+                ir = e.getRenderer(ImageRenderer.class);
+                ir.setImage(nifty.getRenderEngine().createImage(nifty.getCurrentScreen(), key, true));
+                List<Effect> list = e.getEffects(EffectEventId.onHover, Hint.class);
+                list.get(0).getParameters().setProperty("hintText", itemRegistry.get(items.get(i)).getParam(ItemParameters.NAME));
 
 //            final HoverEffectBuilder eb = new HoverEffectBuilder("hint");
 //            eb.getAttributes().setAttribute("hintDelay", "100");
 //            eb.getAttributes().setAttribute("hintText", di.getText());            
 //            pb.onHoverEffect(eb);
 
-            e.show();
+                e.show();
+            }
         }
     }
 }
