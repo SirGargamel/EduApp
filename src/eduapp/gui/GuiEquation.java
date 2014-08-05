@@ -84,12 +84,12 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
         tb = new TextBuilder(TEXT_ID.concat(ADD).concat(SPLITTER));
         tb.text(SPLITTER);
         tb.style("base");
-        tb.color("#000000");
+        tb.color("#ffffff");
         tb.build(nifty, current, d);
         buildEquationPart(quest.getOutputs(), current, false);
 
         // bottom row    
-        List<String> items = new LinkedList<>();
+        final List<String> items = new LinkedList<>();
         for (String s : quest.getInputs()) {
             items.add(s);
         }
@@ -112,7 +112,7 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
             db.width(SIZE_WIDTH);
             db.height(SIZE_HEIGHT);
             db.padding(SIZE_GAP);
-            db.backgroundColor("#ffffff");
+            db.backgroundColor("#000000");
             db.valignCenter();
             db.childLayoutCenter();
             db.margin(SIZE_GAP);
@@ -131,7 +131,7 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
                     tb = new TextBuilder(TEXT_ID.concat(s));
                     tb.text(ir.get(s).getParam(ItemParameters.FORMULA));
                     tb.style("base");
-                    tb.color("#000000");
+                    tb.color("#ffffff");
 
                     dg = dgb.build(nifty, current, d);
                     tb.build(nifty, current, dg);
@@ -233,7 +233,7 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
             tb = new TextBuilder(TEXT_ID.concat(text));
             tb.text(ADD);
             tb.style("base");
-            tb.color("#000000");
+            tb.color("#ffffff");
             tb.build(nifty, current, d);
         }
         text = data.get(data.size() - 1);

@@ -2,6 +2,7 @@ package eduapp.gui;
 
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.NiftyEventSubscriber;
+import de.lessvoid.nifty.builder.HoverEffectBuilder;
 import de.lessvoid.nifty.builder.ImageBuilder;
 import de.lessvoid.nifty.builder.PanelBuilder;
 import de.lessvoid.nifty.builder.TextBuilder;
@@ -176,6 +177,9 @@ public class GuiDictionary implements ScreenController {
                 pb.build(nifty, current, p);
 
                 split = val.split(ItemParameters.SPLITTER);
+                
+                HoverEffectBuilder heb = new HoverEffectBuilder("textColor");
+                heb.effectParameter("color", "#dfe3ee");
                 for (String s2 : split) {
                     tb = new TextBuilder("t2".concat(ItemParameters.LINKS).concat(s2));
                     tb.style("base");
@@ -184,6 +188,7 @@ public class GuiDictionary implements ScreenController {
                     tb.height(SIZE_LINE_HEIGHT);
                     tb.visibleToMouse(true);
                     tb.interactOnClick("hyperlink(" + s2 + ")");
+                    tb.onHoverEffect(heb);
                     tb.build(nifty, current, p);
                 }
             }

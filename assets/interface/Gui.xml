@@ -7,19 +7,18 @@
     </style>
     <style id="baseB">
         <attributes font="interface/Fonts/Base20B.fnt" inherit="true"/>     
-    </style>   
+    </style>        
     <screen id="start" controller="eduapp.gui.GuiMainMenu">
         <layer id="centerColumn" childLayout="vertical">
             <panel width="100%" height="40%" childLayout="vertical" />                  
-            <control id="LevelList" name="listBox" width="40%" align="center" vertical="optional" horizontal="optional" displayItems="4" selection="Single" />
+            <control id="LevelList" name="listBox" width="40%" align="center" vertical="optional" horizontal="optional" displayItems="4" selection="Single"/>
             <panel width="100%" height="10%" childLayout="vertical" /> 
-            <panel id="button" height="10%" width="15%" align="center" backgroundColor="#aaaa" childLayout="center" visibleToMouse="true">
+            <panel id="button" height="10%" width="15%" align="center" childLayout="center" visibleToMouse="true" backgroundColor="#3b5998ff">
                 <interact onClick="startGame()"/>
-                <effect>                    
-                    <onEndScreen name="move" mode="out" direction="bottom" length="300" startDelay="0" inherit="true"/>
-                    <onHover name="pulsate" scaleFactor="0.008" startColor="#f600" endColor="#ffff" post="true"/>
+                <effect>                                        
+                    <onHover name="border" color="#dfe3ee" border="2px"/>
                 </effect>
-                <text id="text" color="#000f" text="Start game!" align="center" valign="center" style="base"/>
+                <text id="text"  text="Začni hru!" align="center" valign="center" style="base"/>
             </panel>
         </layer>
     </screen>
@@ -27,7 +26,7 @@
         <layer id="foreground" childLayout="vertical">
             <panel height="10%" childLayout="horizontal">
                 <panel width="1%" childLayout="vertical" />
-                <panel id="panel1" width="10%" childLayout="center" backgroundColor="#aaaa">                    
+                <panel id="panel1" width="10%" childLayout="center" backgroundColor="#8b9dc388">                    
                     <image id="inv1" filename="interface/face1.png" valign="center" halign="center" width="50%" height="50%">
                         <effect>
                             <onHover name="hint" hintText="" />
@@ -35,7 +34,7 @@
                     </image>
                 </panel>
                 <panel width="1%" childLayout="vertical" />
-                <panel id="panel2" width="10%" childLayout="center" backgroundColor="#aaaa">
+                <panel id="panel2" width="10%" childLayout="center" backgroundColor="#8b9dc388">
                     <image id="inv2" filename="interface/face1.png" valign="center" halign="center" width="50%" height="50%">
                         <effect>
                             <onHover name="hint" hintText="" />
@@ -43,7 +42,7 @@
                     </image>
                 </panel>
                 <panel width="1%" childLayout="vertical" />
-                <panel id="panel3" width="10%" childLayout="center" backgroundColor="#aaaa">                    
+                <panel id="panel3" width="10%" childLayout="center" backgroundColor="#8b9dc388">                    
                     <image id="inv3" filename="interface/face1.png" valign="center" halign="center" width="50%" height="50%">
                         <effect>
                             <onHover name="hint" hintText="" />
@@ -51,7 +50,7 @@
                     </image>
                 </panel>
                 <panel width="1%" childLayout="vertical" />
-                <panel id="panel4" width="10%" childLayout="center" backgroundColor="#aaaa">
+                <panel id="panel4" width="10%" childLayout="center" backgroundColor="#8b9dc388">
                     <image id="inv4" filename="interface/face1.png" valign="center" halign="center" width="50%" height="50%">
                         <effect>
                             <onHover name="hint" hintText="" />
@@ -59,7 +58,7 @@
                     </image>
                 </panel>
                 <panel width="1%" childLayout="vertical" />
-                <panel id="panel5" width="10%" childLayout="center" backgroundColor="#aaaa">
+                <panel id="panel5" width="10%" childLayout="center" backgroundColor="#8b9dc388">
                     <image id="inv5" filename="interface/face1.png" valign="center" halign="center" width="50%" height="50%">
                         <effect>
                             <onHover name="hint" hintText="" />
@@ -68,19 +67,19 @@
                 </panel>
             </panel>
             <panel height="70%" childLayout="vertical" />
-            <panel id="panelDescr" childLayout="center">                 
-                <text id="textDescr" style="base" align="left" color="#00ff00" text="TEST DESCR" wrap="true"/>               
+            <panel id="panelDescr" childLayout="center" backgroundColor="#00000000">                 
+                <text id="textDescr" style="base" align="left" text="TEST DESCR" wrap="true"/>               
             </panel>
         </layer>   
         <layer id="description" childLayout="vertical">
-            <panel height="19%" />            
+            <panel height="18%" />            
             <panel id="panelText"  height="25%" align="left" childLayout="horizontal" visible="false">                                
-                <panel width="62%" />
-                <text id="text" width="30%" textHAlign="left" backgroundColor="#aaaa" color="#00ff00" text="" wrap="true" padding="5px" style="base"/>                
+                <panel width="62%" />                
+                <text id="text" width="30%" textHAlign="left" backgroundColor="#3b5998aa" color="#ffffffff" text="..." wrap="true" style="base"/>                
                 <effect>
                     <onCustom customKey="Show" name="fade" start="#0" end="#f" length="500" startDelay="0" inherit="true" />
                     <onCustom customKey="Hide" name="fade" start="#f" end="#0" length="500" startDelay="5000" inherit="true"/>                    
-                </effect>
+                </effect>                
             </panel>
         </layer>
         <layer id="description2" childLayout="horizontal">            
@@ -91,42 +90,42 @@
     <screen id="pause" controller="eduapp.gui.GuiPause">        
         <layer id="centerColumn" childLayout="vertical">
             <panel width="100%" height="40%" childLayout="vertical" />                                          
-            <panel id="buttonBack" height="10%" width="15%" align="center" backgroundColor="#aaaa" childLayout="center" visibleToMouse="true">
+            <panel id="buttonBack" height="10%" width="15%" align="center" backgroundColor="3b5998ff" childLayout="center" visibleToMouse="true">
                 <interact onClick="backToGame()"/>
-                <effect>                                        
-                    <onHover name="pulsate" scaleFactor="0.008" startColor="#f600" endColor="#ffff" post="true"/>
+                <effect>                                       
+                    <onHover name="border" color="#dfe3ee" border="2px"/>
                 </effect>
-                <text id="textBack" color="#000f" text="Zpět do hry" align="center" valign="center" style="base"/>
+                <text id="textBack" text="Zpět do hry" align="center" valign="center" style="base"/>
             </panel>
             <panel width="100%" height="5%" childLayout="vertical" /> 
-            <panel id="buttonMenu" height="10%" width="15%" align="center" backgroundColor="#aaaa" childLayout="center" visibleToMouse="true">
+            <panel id="buttonMenu" height="10%" width="15%" align="center" backgroundColor="3b5998ff" childLayout="center" visibleToMouse="true">
                 <interact onClick="backToMenu()"/>
-                <effect>                                        
-                    <onHover name="pulsate" scaleFactor="0.008" startColor="#f600" endColor="#ffff" post="true"/>
+                <effect>                                       
+                    <onHover name="border" color="#dfe3ee" border="2px"/>
                 </effect>
-                <text id="textMenu" color="#000f" text="Zpět do menu" align="center" valign="center" style="base"/>
+                <text id="textMenu" text="Zpět do menu" align="center" valign="center" style="base"/>
             </panel>
             <panel width="100%" height="5%" childLayout="vertical" /> 
-            <panel id="buttonExit" height="10%" width="15%" align="center" backgroundColor="#aaaa" childLayout="center" visibleToMouse="true">
+            <panel id="buttonExit" height="10%" width="15%" align="center" backgroundColor="3b5998ff" childLayout="center" visibleToMouse="true">
                 <interact onClick="exit()"/>
-                <effect>                                        
-                    <onHover name="pulsate" scaleFactor="0.008" startColor="#f600" endColor="#ffff" post="true"/>
+                <effect>                                       
+                    <onHover name="border" color="#dfe3ee" border="2px"/>
                 </effect>
-                <text id="textExit" color="#000f" text="Ukončit hru" align="center" valign="center" style="base"/>
+                <text id="textExit" text="Ukončit hru" align="center" valign="center" style="base"/>
             </panel>
         </layer>       
     </screen>
     <screen id="quest" controller="eduapp.gui.GuiQuest">        
         <layer id="centerColumn" childLayout="vertical">
             <panel width="100%" height="10%" childLayout="vertical" />            
-            <panel id="panelQuest" height="80%" width="80%" align="center" backgroundColor="#aaaa" childLayout="vertical" visibleToMouse="false" />            
+            <panel id="panelQuest" height="80%" width="80%" align="center" backgroundColor="#3b5998aa" childLayout="vertical" visibleToMouse="false" />            
         </layer>       
     </screen>
     <screen id="questInput" controller="eduapp.gui.GuiQuestInput">        
         <layer id="centerColumn" childLayout="vertical">
-            <panel width="100%" height="70%" childLayout="vertical" />            
-            <panel id="panelQuest" width="80%" height="10%"  align="center" backgroundColor="#aaaa" childLayout="vertical" visibleToMouse="true">                                
-                <text id="questText" height="50%" align="center" color="#ffffff" text=".." style="base"/>
+            <panel height="70%" />            
+            <panel id="panelQuest" width="80%" height="10%"  align="center" backgroundColor="#3b5998ff" childLayout="vertical" visibleToMouse="true">                                
+                <text id="questText" height="50%" align="center" text=".." style="base"/>
                 <control id="questInput" height="50%" name="textfield" />
                 <effect>
                     <onCustom customKey="Start" name="move" mode="in" direction="bottom" length="300" startDelay="0" inherit="true" />
@@ -141,12 +140,12 @@
             <panel width="100%" height="95%" childLayout="vertical" />            
             <panel id="panelQuest" width="100%" backgroundColor="#00000000" childLayout="horizontal" visibleToMouse="true">                                
                 <panel width="45%" />                                          
-                <panel id="buttonOk" align="center" width="10%" height="95%" backgroundColor="#aaaa" childLayout="center" visibleToMouse="true">
+                <panel id="buttonOk" align="center" width="10%" height="95%" backgroundColor="3b5998ff" childLayout="center" visibleToMouse="true">
                     <interact onClick="ok()"/>
-                    <effect>                                        
-                        <onHover name="pulsate" scaleFactor="0.008" startColor="#f600" endColor="#ffff" post="true"/>
+                    <effect>                                       
+                        <onHover name="border" color="#dfe3ee" border="2px"/>
                     </effect>
-                    <text id="text" color="#000f" text="Ok" align="center" valign="center" style="base"/>
+                    <text id="text" text="Ok" align="center" valign="center" style="base"/>
                 </panel>                
             </panel>
         </layer>       
@@ -154,16 +153,16 @@
     <screen id="conversion" controller="eduapp.gui.GuiConversion">        
         <layer id="onlyLayer" childLayout="vertical">   
             <panel height="10%"/>                                 
-            <panel height="75%" width="80%" align="center" backgroundColor="#aaaa" id="panelValues" childLayout="vertical" />
+            <panel height="75%" width="80%" align="center" backgroundColor="#3b5998aa" id="panelValues" childLayout="vertical" />
             <panel height="5%"/> 
             <panel id="panelOk" width="100%" height="5%" backgroundColor="#00000000" childLayout="horizontal" visibleToMouse="true">                                
                 <panel width="45%" />                                          
-                <panel id="buttonOk" align="center" width="10%" height="95%" backgroundColor="#aaaa" childLayout="center" visibleToMouse="true">
+                <panel id="buttonOk" align="center" width="10%" height="95%" backgroundColor="3b5998ff" childLayout="center" visibleToMouse="true">
                     <interact onClick="ok()"/>
-                    <effect>                                        
-                        <onHover name="pulsate" scaleFactor="0.008" startColor="#f600" endColor="#ffff" post="true"/>
+                    <effect>                                       
+                        <onHover name="border" color="#dfe3ee" border="2px"/>
                     </effect>
-                    <text id="text" color="#000f" text="Ok" align="center" valign="center" style="base"/>
+                    <text id="text" text="Ok" align="center" valign="center" style="base"/>
                 </panel>                
             </panel>            
         </layer>       
@@ -173,7 +172,7 @@
             <panel height="19%" />            
             <panel id="panelText"  height="25%" align="left" childLayout="horizontal">                                
                 <panel width="62%" />
-                <text id="text" width="30%" textHAlign="left" backgroundColor="#aaaa" color="#00ff00" text="....." wrap="true" padding="5px" style="base"/>                
+                <text id="text" width="30%" textHAlign="left" backgroundColor="#3b5998aa" text="....." wrap="true" padding="5px" style="base"/>                
                 <effect>
                     <onCustom customKey="Show" name="fade" start="#0" end="#f" length="500" startDelay="0" inherit="true" />
                     <onCustom customKey="Hide" name="fade" start="#f" end="#0" length="500" startDelay="5000" inherit="true"/>                    
@@ -186,27 +185,26 @@
         </layer>
     </screen>
     <controlDefinition name="line">
-        <panel childLayout="horizontal" width="100%" align="center">
+        <panel childLayout="horizontal" width="20%" align="center">
             <control id="#line-text" name="label" align="left" textHAlign="left" height="23px" width="*" wrap="true" style="base"/>
         </panel>
     </controlDefinition> 
     <screen id="dictionary" controller="eduapp.gui.GuiDictionary">  
         <layer id="complete" childLayout="center">      
-            <panel height="95%" width="95%" align="center" backgroundColor="#aaaa" childLayout="horizontal" visibleToMouse="true">                
-                <control id="tree" name="listBox" valign="center" vertical="optional" horizontal="off" width="25%" displayItems="15" style="base" inherit="true"
+            <panel height="95%" width="95%" align="center" backgroundColor="#3b5998aa" childLayout="horizontal" visibleToMouse="true">                
+                <control id="tree" name="listBox" valign="center" vertical="optional" horizontal="off" width="20%" displayItems="15" style="base" inherit="true"
                          viewConverterClass="eduapp.gui.listbox.LineListBoxViewConverter">
                     <control name="line" controller="de.lessvoid.nifty.controls.listbox.ListBoxItemController" margin="2px">
                         <interact onClick="listBoxItemClicked()" />
-                        <effect>
-                            <onCustom customKey="focus" name="colorBar" post="false" color="#444f" neverStopRendering="true" timeType="infinite" />
-                            <onCustom customKey="select" name="colorBar" post="false" color="#444f" neverStopRendering="true" timeType="infinite" />
-                            <onCustom customKey="select" name="textColor" post="false" color="#fc0f" neverStopRendering="true" timeType="infinite" />
-                            <onHover name="colorBar" color="#444f" post="false" neverStopRendering="true" timeType="infinite" inset="1px"/>
+                        <effect>                            
+                            <onCustom customKey="select" name="colorBar" post="false" color="#dfe3ee" neverStopRendering="true" timeType="infinite" />
+                            <onCustom customKey="select" name="textColor" post="false" color="#000000" neverStopRendering="true" timeType="infinite" />
+                            <onHover name="border" color="#dfe3ee" border="2px"/>
                             <onClick name="focus" targetElement="#parent#parent"/>
                         </effect>
                     </control>
                 </control>                
-                <panel childLayout="vertical" width="1%"/>
+                <panel width="1%"/>
                 <panel id="content" childLayout="vertical">
                 </panel>  
             </panel> 
@@ -214,17 +212,18 @@
     </screen>
     <screen id="drag" controller="eduapp.gui.GuiEquation">        
         <layer id="onlyLayer" childLayout="vertical">            
-            <panel height="10%" width="100%" childLayout="vertical" />            
-            <panel id="panelDrop" width="100%" height="30%" backgroundColor="#aaaaaaaa" childLayout="horizontal" visibleToMouse="true" />                                                                                                                   
-            <panel height="15%" childLayout="vertical" />
-            <panel id="panelDrag" width="100%" height="40%" backgroundColor="#11111111" childLayout="horizontal" visibleToMouse="true" />                                
+            <panel height="10%"/>            
+            <panel id="panelDrop" width="100%" height="30%" backgroundColor="#3b5998aa" childLayout="horizontal" visibleToMouse="true" />                                                                                                                   
+            <panel height="15%"/>
+            <panel id="panelDrag" width="100%" height="30%" backgroundColor="#f7f7f7aa" childLayout="horizontal" visibleToMouse="true" />                                
+            <panel height="10%"/>
             <panel height="*" childLayout="center">
-                <panel id="buttonOk" align="center" width="10%" height="90%" backgroundColor="#aaaa" childLayout="center" visibleToMouse="true">
+                <panel id="buttonOk" align="center" width="10%" height="90%" backgroundColor="#3b5998ff" childLayout="center" visibleToMouse="true">
                     <interact onClick="ok()"/>
-                    <effect>                                        
-                        <onHover name="pulsate" scaleFactor="0.008" startColor="#f600" endColor="#ffff" post="true"/>
+                    <effect>                                       
+                        <onHover name="border" color="#dfe3ee" border="2px"/>
                     </effect>
-                    <text id="text" color="#000f" text="Ok" align="center" valign="center" style="base"/>
+                    <text id="text" text="Ok" align="center" valign="center" style="base"/>
                 </panel>                
             </panel>
         </layer>       

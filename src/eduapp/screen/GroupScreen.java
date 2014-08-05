@@ -1,4 +1,4 @@
-package eduapp.state;
+package eduapp.screen;
 
 import com.jme3.app.Application;
 import com.jme3.app.state.AbstractAppState;
@@ -29,6 +29,7 @@ import com.jme3.texture.Texture;
 import com.zero_separation.plugins.imagepainter.ImagePainter;
 import eduapp.Actions;
 import eduapp.AppContext;
+import eduapp.Colors;
 import eduapp.FlowManager;
 import eduapp.level.item.ItemParameters;
 import eduapp.level.item.Item;
@@ -93,7 +94,7 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
         final String[] groups = group.getParam(ItemParameters.STATE).split(ItemParameters.SPLITTER);
 
         mat = new Material(app.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
-        mat.setColor("Color", ColorRGBA.Gray);
+        mat.setColor("Color", Colors.BLUE_DARK);
         int i = 0;
         final int count = groups.length;
         final float sizeGroup3D = (SIZE_WIDTH - SIZE_GAP * count) / (float) (count * 2);
@@ -131,7 +132,7 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
             assetManager.deleteFromCache(tex.getKey());
             Image img = tex.getImage();
             ImagePainter ip = new ImagePainter(img);
-            ip.paintTextArea(0, 0, img.getWidth(), img.getHeight(), bf, it.getParam(ItemParameters.FORMULA), ImagePainter.TextHAlign.Center, ImagePainter.TextVAlign.Center, ColorRGBA.Black, ImagePainter.BlendMode.SET);
+            ip.paintTextArea(0, 0, img.getWidth(), img.getHeight(), bf, it.getParam(ItemParameters.FORMULA), ImagePainter.TextHAlign.Center, ImagePainter.TextVAlign.Center, Colors.BLUE_DARK, ImagePainter.BlendMode.SET);
             mat.setTexture("ColorMap", tex);
 
             g = new Geometry(it.getParam(ItemParameters.STATE), new Box(Vector3f.ZERO, new Vector3f(SIZE_BOX_X, SIZE_BOX_Y, SIZE_BOX_Z)));

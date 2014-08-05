@@ -61,7 +61,7 @@ public class GuiConversion implements ScreenController {
         tb.style("baseB");
         tb.text(conversion.getParam(ItemParameters.DESCRIPTION));
         tb.alignCenter();
-        tb.color(Color.BLACK);
+        tb.color(Color.WHITE);
         e = tb.build(nifty, current, panelValues);
         panelValues.add(e);
 
@@ -81,7 +81,7 @@ public class GuiConversion implements ScreenController {
 
             pb = new PanelBuilder("p".concat(it.getId()));
             pb.childLayoutHorizontal();
-            pb.backgroundColor(Color.BLACK);
+            pb.backgroundColor("#8b9dc3");
             pb.width("100%");
             e = pb.build(nifty, current, panelValues);
 

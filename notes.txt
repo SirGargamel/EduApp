@@ -1,0 +1,14 @@
+Pouzite barvy - http://www.color-hex.com/color-palette/185
+ - #3b5998aa 	- barva pozadi	
+ - #3b5998ff	- barva button 
+ - #8b9dc388	- pozadi inventare
+ - #dfe3ee		- oramovani buttonu pri oznaceni
+ - #f7f7f7 		-
+ - #ffffffff 	- barva texty
+ 
+ 
+ --- Efekty
+ - button oramovani
+	<effect>                                       
+        <onHover name="border" color="#dfe3ee" border="2px"/>
+    </effect>

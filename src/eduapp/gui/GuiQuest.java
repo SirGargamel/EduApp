@@ -5,7 +5,6 @@ import de.lessvoid.nifty.builder.TextBuilder;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
-import de.lessvoid.nifty.tools.Color;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
 
@@ -40,24 +39,18 @@ public class GuiQuest implements ScreenController {
         }
 
         final Screen current = nifty.getCurrentScreen();
-        TextBuilder tb = new TextBuilder();
-        tb.text(quest.getName());
-        tb.style("baseB");
-        tb.alignCenter();
-        tb.color(Color.BLACK);
-        Element e = tb.build(nifty, current, panelQuest);
-        panelQuest.add(e);
-
+        TextBuilder tb;
+        Element e;
         for (QuestItem qi : quest.getData()) {
-            tb = new TextBuilder();
-            tb.text(qi.toNiftyString());
-            tb.style("base");
-            if (qi.isFinished()) {
-                tb.color(Color.BLACK);
+            if (!qi.isFinished()) {
+                tb = new TextBuilder();
+                tb.text(" - " + qi.toNiftyString());
+                tb.style("base");
+                tb.marginLeft("5");
+                tb.color("#ffffffff");
+                e = tb.build(nifty, current, panelQuest);
+                panelQuest.add(e);
             }
-            tb.marginLeft("5");
-            e = tb.build(nifty, current, panelQuest);
-            panelQuest.add(e);
         }
 
         panelQuest.layoutElements();
