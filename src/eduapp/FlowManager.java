@@ -84,6 +84,7 @@ public class FlowManager implements Observer {
         boolean isEnabled = currentState.isEnabled();
         enableState(!isEnabled);
         if (isEnabled) {
+            storeActualScreen();
             nifty.gotoScreen(SCREEN_PAUSE);
         } else {
             displayLastScreen();
