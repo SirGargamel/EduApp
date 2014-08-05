@@ -263,7 +263,7 @@ public class FlowManager implements Observer {
             QuestItem qi = (QuestItem) o;
 
             if (qi.isFinished()) {
-                FlowManager.getInstance().finishQuestItem("Úkol ".concat(qi.getTask()).concat(" byl splněn."));
+                FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi.getTask()).concat("\" byl splněn."));
                 deactiveChildren(qi);
                 player.addItemToInventory(qi.getReward());
             }
