@@ -33,7 +33,7 @@ public class JmolUtils {
 
             frame.setVisible(true);
             jmolPanel.getViewer().openFile(model.getPath());
-        } else if (frame.isVisible()) {
+        } else if (frame != null && frame.isVisible()) {
             frame.setVisible(false);
         }
     }
