@@ -1,6 +1,7 @@
 package eduapp.level.item;
 
 import eduapp.ItemRegistry;
+import eduapp.Utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -48,23 +49,11 @@ public class Item extends Observable implements Comparable<Item> {
     }
 
     public void setParam(String id, String param) {
-        String fixedP = param;
-
         if (!NO_ESCAPE.contains(id)) {
-            final String base = "208";
-            final Matcher m = Pattern.compile("[0-9]").matcher(fixedP);
-            String val;
-            int code;
-            while (m.find()) {
-                val = m.group();
-                code = Integer.valueOf(base.concat(val), 16);
-                fixedP = fixedP.replaceAll(
-                        val,
-                        String.valueOf((char) code));
-            }
+            params.put(id, Utils.convertNumbersToLowerIndexes(param));
+        } else {
+            params.put(id, param);
         }
-
-        params.put(id, fixedP);
     }
 
     public void setItemRegistry(ItemRegistry itemRegistry) {
