@@ -13,6 +13,7 @@ import eduapp.AppContext;
 import eduapp.EduApp;
 import eduapp.FlowManager;
 import eduapp.ItemRegistry;
+import eduapp.level.item.Item;
 import eduapp.level.quest.QuestItem;
 import eduapp.level.trigger.ActionTrigger;
 import eduapp.level.trigger.MoveTrigger;
@@ -41,6 +42,7 @@ public class Level {
     private final Set<Spatial> itemModels;
     private final Set<TriggerStub> stubs;
     private final Set<Trigger> triggers, activeTriggers;
+    private final Set<Item> dictionary;
 
     public static Level loadLevel(final String levelName, final AssetManager assetManager, final InputManager inputManager) {
         final String path = "levels/".concat(levelName).concat(".").concat(LevelLoader.EXTENSION);
@@ -51,13 +53,14 @@ public class Level {
         return result;
     }
 
-    public Level(final Background background, final Player player, final Set<Model> items, final Set<Light> lights, final Set<TriggerStub> triggerStubs, final Set<Quest> quests) {
+    public Level(final Background background, final Player player, final Set<Model> items, final Set<Light> lights, final Set<TriggerStub> triggerStubs, final Set<Quest> quests, final Set<Item> dictionary) {
         this.background = background;
         this.player = player;
         this.items = items;
         this.lights = lights;
         this.stubs = triggerStubs;
         this.quests = quests;
+        this.dictionary = dictionary;
 
         itemModels = new HashSet<>();
         rootNode = new Node(String.valueOf(Math.random()));
@@ -117,6 +120,10 @@ public class Level {
                 rootNode.addLight(at.getLight());
             }
             t.addObserver(flowManager);
+        }
+        // load dictionary
+        for (Item it : dictionary) {
+            ir.put(it);
         }
     }
 

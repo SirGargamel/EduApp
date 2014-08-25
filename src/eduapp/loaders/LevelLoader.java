@@ -7,6 +7,8 @@ import eduapp.level.Background;
 import eduapp.level.Model;
 import eduapp.level.Level;
 import eduapp.level.Light;
+import eduapp.level.item.Item;
+import eduapp.level.item.ItemParameters;
 import eduapp.level.quest.Quest;
 import eduapp.level.trigger.TriggerStub;
 import eduapp.level.xml.XmlBackground;
@@ -38,6 +40,8 @@ public class LevelLoader implements AssetLoader {
     public static final String ATTR_ID = "id";
     private static final String NODE_ACTION_ITEMS = "Spoustece";
     private static final String NODE_BACKGROUND = "Pozadi";
+    private static final String NODE_ELEMENTS = "Elementy";
+    private static final String NODE_MISC = "Misc";
     private static final String NODE_ITEMS = "Veci";
     private static final String NODE_ITEM = "Vec";
     private static final String NODE_LIGHTS = "Svetla";
@@ -59,9 +63,11 @@ public class LevelLoader implements AssetLoader {
             final Set<Model> items = loadItems(doc);
             final Set<Light> lights = loadLights(doc);
             final Set<TriggerStub> actionItems = loadTriggers(doc);
-            final Set<Quest> quests = loadQuests(doc);                       
+            final Set<Quest> quests = loadQuests(doc);
+            final Set<Item> dict = loadDictionary(doc, NODE_ELEMENTS);
+            dict.addAll(loadDictionary(doc, NODE_MISC));
             
-            result = new Level(background, player, items, lights, actionItems, quests);            
+            result = new Level(background, player, items, lights, actionItems, quests, dict);
         } catch (NullPointerException | ParserConfigurationException | SAXException ex) {
             ex.printStackTrace(System.err);
         }
@@ -169,5 +175,37 @@ public class LevelLoader implements AssetLoader {
             }
         }
         return result;
-    }   
+    }
+
+    private static Set<Item> loadDictionary(final Document doc, final String nodeName) {
+        final Set<Item> result = new HashSet<>();
+        try {
+            final Element dict = (Element) doc.getElementsByTagName(nodeName).item(0);
+            final String id = dict.getAttribute(ATTR_ID);
+            final NodeList nl = dict.getElementsByTagName(NODE_ITEM);
+            Node n, n2;
+            NodeList nlSub;
+            Item it;
+            for (int i = 0; i < nl.getLength(); i++) {
+                n = nl.item(i);
+                if (n.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
+                    nlSub = n.getChildNodes();
+                    it = new Item();
+                    it.setId(((Element) n).getAttribute(ATTR_ID));
+                    for (int j = 0; j < nlSub.getLength(); j++) {
+                        n2 = nlSub.item(j);
+                        if (n2.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
+                            it.setParam(n2.getNodeName(), n2.getTextContent());
+                        }
+                    }
+                    it.setParam(ItemParameters.SOURCE, id);
+                    result.add(it);
+                }
+            }
+        } catch (NullPointerException ex) {
+            ex.printStackTrace(System.err);
+        }
+
+        return result;
+    }
 }

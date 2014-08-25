@@ -1,8 +1,6 @@
 package eduapp;
 
 import com.jme3.app.SimpleApplication;
-import com.jme3.asset.AssetKey;
-import com.jme3.asset.AssetManager;
 import com.jme3.asset.plugins.FileLocator;
 import com.jme3.input.KeyInput;
 import com.jme3.input.MouseInput;
@@ -11,12 +9,9 @@ import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.system.AppSettings;
 import de.lessvoid.nifty.Nifty;
-import eduapp.level.item.Item;
-import eduapp.loaders.DictionaryLoader;
 import eduapp.loaders.LevelLoader;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.Set;
 import javax.imageio.ImageIO;
 
 /**
@@ -54,14 +49,7 @@ public class EduApp extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
-        assetManager.registerLoader(DictionaryLoader.class, DictionaryLoader.EXTENSION);
-
         assetManager.registerLocator("data/", FileLocator.class);
-
-        loadDictionary(assetManager, AppContext.getItemRegistry(), "Elements");
-        loadDictionary(assetManager, AppContext.getItemRegistry(), "Groups");
-
-        assetManager.unregisterLoader(DictionaryLoader.class);
         assetManager.registerLoader(LevelLoader.class, LevelLoader.EXTENSION);
 
         initKeyMappings();
@@ -88,14 +76,6 @@ public class EduApp extends SimpleApplication {
 //        quest.addExtra("h2o");
 //        quest.addExtra("o3");        
 //        FlowManager.getInstance().displayDragScreen(quest);
-    }
-
-    private void loadDictionary(final AssetManager assetManager, final ItemRegistry ir, final String dicName) {
-        final AssetKey<Set<Item>> key = new AssetKey<>("texts/".concat(dicName).concat(".").concat(DictionaryLoader.EXTENSION));
-        final Set<Item> elements = assetManager.loadAsset(key);
-        for (Item it : elements) {
-            ir.put(it);
-        }
     }
 
     private void initKeyMappings() {

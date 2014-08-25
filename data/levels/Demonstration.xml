@@ -179,4 +179,96 @@
             </Rovnice>
         </Ukol>
     </Ukoly>
+    <Elementy id="dic">
+        <Vec id="h2so4">
+            <jmeno>Kyselina sírová</jmeno>
+            <skup>kapalné</skup>
+            <vzorec>H2SO4</vzorec>
+            <link>http://cs.wikipedia.org/wiki/Kyselina_sírová</link>
+            <ikona>h2so4.png</ikona>
+            <vodi/>
+        </Vec>     
+        <Vec id="sio2">
+            <jmeno>Oxid křemičitý</jmeno>
+            <skup>pevné</skup>
+            <vzorec>SiO2</vzorec>
+            <ikona>sio2.png</ikona>
+            <link>http://cs.wikipedia.org/wiki/Oxid_křemičitý</link>
+        </Vec>   
+        <Vec id="so3">
+            <jmeno>Oxid sírový</jmeno>
+            <skup>pevné; kapalné</skup>
+            <vzorec>SO3</vzorec>
+            <ikona>so3.png</ikona>
+            <link>http://cs.wikipedia.org/wiki/Oxid_sírový</link>
+            <toxic/>
+        </Vec>
+        <Vec id="so2">
+            <jmeno>Oxid siřičitý</jmeno>
+            <skup>plynné; kapalné</skup>
+            <vzorec>SO2</vzorec>
+            <ikona>so2.png</ikona>
+            <link>http://cs.wikipedia.org/wiki/Oxid_siřičitý</link>
+            <hori/>
+            <toxic/>
+        </Vec>
+        <Vec id="v2o5">
+            <jmeno>Oxid vanadičný</jmeno>
+            <skup>pevné</skup>
+            <vzorec>V2O5</vzorec>
+            <link>http://cs.wikipedia.org/wiki/Oxid_vanadičný</link>
+            <toxic/>
+        </Vec>
+        <Vec id="s">
+            <jmeno>Síra</jmeno>
+            <skup>pevné</skup>
+            <vzorec>S</vzorec>
+            <ikona>s.png</ikona>
+            <link>http://cs.wikipedia.org/wiki/Síra;http://cs.wikipedia.org/wiki/Síra_(minerál)</link>
+            <hori/>
+        </Vec>          
+        <Vec id="k2so4">
+            <jmeno>Síran draselný</jmeno>
+            <skup>pevné</skup>
+            <vzorec>K2SO4</vzorec>
+            <link>http://cs.wikipedia.org/wiki/Síran_draselný</link>
+        </Vec>    
+        <Vec id="h2o">
+            <jmeno>Voda</jmeno>
+            <skup>kapalné</skup>
+            <vzorec>H2O</vzorec>
+            <ikona>h2o.png</ikona>
+            <link>http://cs.wikipedia.org/wiki/Voda</link>
+            <vodi/>
+        </Vec>    
+        <Vec id="o2">
+            <jmeno>Kyslík</jmeno>
+            <skup>plynné</skup>
+            <vzorec>O2</vzorec>
+            <ikona>o2.png</ikona>
+            <link>http://cs.wikipedia.org/wiki/Kyslík</link>        
+        </Vec>
+    </Elementy>
+    <Misc id="groups">
+        <Vec id="skup">
+            <popis>Zařaďte prvky do skupin dle jejich skupenství</popis>
+            <skup>plynné; kapalné; pevné</skup>        
+        </Vec>
+        <Vec id="vzorecJmeno">
+            <popis>Převeďte vzorec prvku na jeho jméno</popis>
+            <z>vzorec</z>
+            <do>jmeno</do>
+        </Vec>
+        <Vec id="description">
+            <jmeno>Jméno</jmeno>
+            <vzorec>Chemický vzorec</vzorec>
+            <skup>Skupenství</skup>
+            <link>Odkazy</link>        
+        </Vec>
+        <Vec id="ikony">
+            <toxic>toxic.png</toxic>
+            <vodi>magnet.png</vodi>
+            <hori>flamable.png</hori>
+        </Vec>
+    </Misc>
 </Level>
