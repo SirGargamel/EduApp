@@ -171,7 +171,7 @@ public class FlowManager implements Observer {
         nifty.gotoScreen(SCREEN_CONVERSION);
     }
 
-    public void displayDragScreen(final EquationQuest quest) {
+    public void displayEquationScreen(final EquationQuest quest) {
         enableState(false);
         final GuiEquation control = (GuiEquation) nifty.getScreen(SCREEN_DRAG).getScreenController();
         control.setData(quest);

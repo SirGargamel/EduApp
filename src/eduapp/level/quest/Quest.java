@@ -60,16 +60,16 @@ public class Quest extends Item {
                 displayConversion(extractQuestItem(ConversionQuest.class, Integer.valueOf(number)));
             } else if (rest.startsWith(ACTION_DISPLAY_DRAG)) {
                 final String number = rest.replace(ACTION_DISPLAY_DRAG, "");
-                displayDrag(extractQuestItem(EquationQuest.class, Integer.valueOf(number)));
+                displayEquation(extractQuestItem(EquationQuest.class, Integer.valueOf(number)));
             } else if (rest.startsWith(ACTION_DISPLAY_HELP)) {
                 if (getFailedQuestItem() != null) {
                     displayQuestion(help.getNextQuestion());
                 } else {
                     FlowManager.getInstance().displayMessage("Nemáte žádné špatně zodpovězené úkoly.", null);
-                }                        
+                }
             } else if (rest.startsWith(ACTION_DISPLAY_FINAL)) {
                 if (isFinished()) {
-                    displayDrag(finalQuest);
+                    displayEquation(finalQuest);
                 } else {
                     FlowManager.getInstance().displayMessage("Nejdříve musíte dokončit všechny základní úkoly.", null);
                 }
@@ -98,9 +98,9 @@ public class Quest extends Item {
         } else if (rest.startsWith(ACTION_DISPLAY_DRAG)) {
             final String number = rest.replace(ACTION_DISPLAY_DRAG, "");
             result = extractQuestItem(EquationQuest.class, Integer.valueOf(number));
-        } else if (rest.startsWith(ACTION_DISPLAY_HELP)) {            
+        } else if (rest.startsWith(ACTION_DISPLAY_HELP)) {
             result = help;
-        } else if (rest.startsWith(ACTION_DISPLAY_FINAL)) {            
+        } else if (rest.startsWith(ACTION_DISPLAY_FINAL)) {
             result = finalQuest;
         }
         return result;
@@ -171,8 +171,8 @@ public class Quest extends Item {
         FlowManager.getInstance().displayConversionScreen(conversion);
     }
 
-    public void displayDrag(EquationQuest quest) {
-        FlowManager.getInstance().displayDragScreen(quest);
+    public void displayEquation(EquationQuest quest) {
+        FlowManager.getInstance().displayEquationScreen(quest);
     }
 
     public List<QuestItem> getData() {
@@ -193,7 +193,7 @@ public class Quest extends Item {
             qi.setItemRegistry(itemRegistry);
         }
     }
-    
+
     public boolean isFinished() {
         boolean result = true;
         for (QuestItem qi : data) {
