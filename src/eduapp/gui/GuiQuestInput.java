@@ -68,7 +68,11 @@ public class GuiQuestInput implements ScreenController {
     @Override
     public void onStartScreen() {
         questionText.getRenderer(TextRenderer.class).setText(question.getQuestion());
-        questionInput.setText(question.getUserInput());
+        String text = question.getUserInput();
+        if (text == null) {
+            text = "";
+        }
+        questionInput.setText(text);
         panelQuest.startEffect(EffectEventId.onCustom, null, "Start");
     }
 
