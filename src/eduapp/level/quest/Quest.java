@@ -179,12 +179,12 @@ public class Quest extends Item {
     
     public boolean isFinished() {
         boolean result = true;
-//        for (QuestItem qi : data) {
-//            if (!qi.isFinished()) {
-//                result = false;
-//                break;
-//            }
-//        }
+        for (QuestItem qi : data) {
+            if (!qi.isFinished()) {
+                result = false;
+                break;
+            }
+        }
         return result;
     }
 }
