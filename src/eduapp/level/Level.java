@@ -38,7 +38,7 @@ public class Level {
     private final Player player;
     private final Set<Model> items;
     private final Set<Light> lights;
-    private final Set<Quest> quests;
+    private final Quest quest;
     private final Set<Spatial> itemModels;
     private final Set<TriggerStub> stubs;
     private final Set<Trigger> triggers, activeTriggers;
@@ -53,13 +53,13 @@ public class Level {
         return result;
     }
 
-    public Level(final Background background, final Player player, final Set<Model> items, final Set<Light> lights, final Set<TriggerStub> triggerStubs, final Set<Quest> quests, final Set<Item> dictionary) {
+    public Level(final Background background, final Player player, final Set<Model> items, final Set<Light> lights, final Set<TriggerStub> triggerStubs, final Quest quest, final Set<Item> dictionary) {
         this.background = background;
         this.player = player;
         this.items = items;
         this.lights = lights;
         this.stubs = triggerStubs;
-        this.quests = quests;
+        this.quest = quest;
         this.dictionary = dictionary;
 
         itemModels = new HashSet<>();
@@ -80,15 +80,14 @@ public class Level {
         player.addObserver(flowManager);
         ir.put(player);
 
-        for (Quest q : quests) {
-            ir.put(q);
-            q.assignInterfaces(this);
-            q.addObserver(flowManager);
 
-            for (QuestItem qi : q.getData()) {
-                qi.addObserver(flowManager);
-            }
+        ir.put(quest);
+        quest.assignInterfaces(this);
+        quest.addObserver(flowManager);
+        for (QuestItem qi : quest.getData()) {
+            qi.addObserver(flowManager);
         }
+
 
         Spatial s;
         for (Model i : items) {

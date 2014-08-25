@@ -63,11 +63,11 @@ public class LevelLoader implements AssetLoader {
             final Set<Model> items = loadItems(doc);
             final Set<Light> lights = loadLights(doc);
             final Set<TriggerStub> actionItems = loadTriggers(doc);
-            final Set<Quest> quests = loadQuests(doc);
+            final Quest quest = loadQuest(doc);
             final Set<Item> dict = loadDictionary(doc, NODE_ELEMENTS);
             dict.addAll(loadDictionary(doc, NODE_MISC));
             
-            result = new Level(background, player, items, lights, actionItems, quests, dict);
+            result = new Level(background, player, items, lights, actionItems, quest, dict);
         } catch (NullPointerException | ParserConfigurationException | SAXException ex) {
             ex.printStackTrace(System.err);
         }
@@ -156,21 +156,19 @@ public class LevelLoader implements AssetLoader {
         return result;
     }
 
-    private static Set<Quest> loadQuests(final Document doc) throws SAXException {
-        final Set<Quest> result = new HashSet<>();
+    private static Quest loadQuest(final Document doc) throws SAXException {
+        Quest result = null;
         final Node itemsNode = doc.getElementsByTagName(NODE_QUEST).item(0);
         Node node;
-        Element el;
-        Quest q;
+        Element el;        
         if (itemsNode.getNodeType() == Node.ELEMENT_NODE) {
             NodeList nl = itemsNode.getChildNodes();
             for (int i = 0; i < nl.getLength(); i++) {
                 node = nl.item(i);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     el = (Element) node;
-                    q = new XmlQuest(el).generateGameEntity();
-                    q.setId(el.getAttribute(ATTR_ID));
-                    result.add(q);
+                    result = new XmlQuest(el).generateGameEntity();
+                    result.setId(el.getAttribute(ATTR_ID));                    
                 }
             }
         }

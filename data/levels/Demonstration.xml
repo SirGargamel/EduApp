@@ -136,7 +136,7 @@
         </Akce>
     </Spoustece>
     <Ukoly>
-        <Ukol id="hlavniQuest" jmeno="Hlavní úkol">           
+        <Ukol id="hlavniQuest">           
             <Otazka id="q1">
                 <Otazka>Zadejte vzorec kyseliny sírové</Otazka>
                 <Odpoved>H2SO4</Odpoved>                

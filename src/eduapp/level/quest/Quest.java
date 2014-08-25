@@ -24,7 +24,6 @@ public class Quest extends Item {
     private static final String ACTION_DISPLAY_QUESTION = "Q";
     private static final String ACTION_DISPLAY_WEB = "W";
     private final List<QuestItem> data;
-    private String name;
 
     public Quest(List<QuestItem> data) {
         this.data = data;
@@ -145,18 +144,6 @@ public class Quest extends Item {
 
     public List<QuestItem> getData() {
         return data;
-    }
-
-    public String getName() {
-        if (name != null) {
-            return name;
-        } else {
-            return getId();
-        }
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void assignInterfaces(final Level level) {

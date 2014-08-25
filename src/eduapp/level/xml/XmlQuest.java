@@ -55,11 +55,7 @@ public class XmlQuest extends XmlEntity<Quest> {
                 lines.add(generateQuestItem(nl.item(i)));
             }
         }
-        final Quest result = new Quest(lines);
-        final String name = element.getAttribute(ATTR_NAME);
-        if (!name.isEmpty()) {
-            result.setName(name);
-        }
+        final Quest result = new Quest(lines);        
         return result;
     }
 
