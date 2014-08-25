@@ -1,34 +1,39 @@
 package eduapp.level.quest;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Set;
 
 public class HelpQuest extends QuestItem implements Observer {
 
-    final Set<Question> questions;
+    final List<Question> questions;
+    Question lastQuestion;
 
-    public HelpQuest(Set<Question> questions) {
+    public HelpQuest(List<Question> questions) {
         super(null);
-        
-        this.questions = questions;        
+
+        this.questions = questions;
         for (Question q : questions) {
             q.addObserver(this);
         }
-        
+
         finished = false;
+        lastQuestion = null;
     }
 
     public Question getNextQuestion() {
-        Question result = null;
         for (Question q : questions) {
             if (!q.isFinished()) {
-                result = q;
+                lastQuestion = q;
                 break;
             }
-        }        
-        return result;
-    }    
+        }
+        return lastQuestion;
+    }
+
+    public Question getLastQuestion() {
+        return lastQuestion;
+    }
 
     @Override
     public String toNiftyString() {

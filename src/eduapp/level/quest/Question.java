@@ -3,13 +3,15 @@ package eduapp.level.quest;
 public class Question extends QuestItem {
 
     private final String question, answer;
-    private String userInput;    
+    private final boolean mustBeCorrect;
+    private String userInput;
 
-    public Question(String question, String answer, String reward) {
+    public Question(String question, String answer, String reward, boolean mustBeCorrect) {
         super(reward);
 
         this.question = question;
         this.answer = answer;
+        this.mustBeCorrect = mustBeCorrect;
         userInput = null;
     }
 
@@ -19,6 +21,10 @@ public class Question extends QuestItem {
 
     public String getUserInput() {
         return userInput;
+    }
+
+    public boolean isMustBeCorrect() {
+        return mustBeCorrect;
     }
 
     public void setUserInput(String userInput) {

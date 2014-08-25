@@ -9,7 +9,7 @@ public class JmolQuestion extends Question {
     private final String modelName;
 
     public JmolQuestion(String question, String answer, String modelName, String reward) {
-        super(question, answer, reward);
+        super(question, answer, reward, false);
 
         this.modelName = modelName;
     }

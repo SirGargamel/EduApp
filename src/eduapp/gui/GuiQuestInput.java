@@ -28,7 +28,7 @@ public class GuiQuestInput implements ScreenController {
     private Element panelQuest;
 
     public void setQuestion(Question question) {
-        this.question = question;
+        this.question = question;        
     }
 
     @Override
@@ -43,15 +43,24 @@ public class GuiQuestInput implements ScreenController {
                     switch (nie) {
                         case SubmitText:
                             question.setUserInput(questionInput.getDisplayedText());
-                            if (question.isFinished()) {
+                            if (question.isMustBeCorrect()) {
+                                if (question.isFinished()) {
+                                    panelQuest.startEffect(EffectEventId.onCustom, new EndNotify() {
+                                        @Override
+                                        public void perform() {
+                                            FlowManager.getInstance().displayLastScreen();
+                                        }
+                                    }, "Ok");
+                                } else {
+                                    panelQuest.startEffect(EffectEventId.onCustom, null, "Wrong");
+                                }
+                            } else {
                                 panelQuest.startEffect(EffectEventId.onCustom, new EndNotify() {
                                     @Override
                                     public void perform() {
                                         FlowManager.getInstance().displayLastScreen();
                                     }
                                 }, "Ok");
-                            } else {
-                                panelQuest.startEffect(EffectEventId.onCustom, null, "Wrong");
                             }
                             break;
                         case Escape:

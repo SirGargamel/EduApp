@@ -139,7 +139,7 @@ public class FlowManager implements Observer {
         currentState = groupScreen;
         groupScreen.setEnabled(true);
 
-        displayMessage(group.getGroup().getParam(ItemParameters.DESCRIPTION), SCREEN_GROUPS);        
+        displayMessage(group.getGroup().getParam(ItemParameters.DESCRIPTION), SCREEN_GROUPS);
         nifty.gotoScreen(SCREEN_GROUPS);
     }
 
@@ -170,7 +170,7 @@ public class FlowManager implements Observer {
         storeActualScreen();
         nifty.gotoScreen(SCREEN_CONVERSION);
     }
-    
+
     public void displayDragScreen(final EquationQuest quest) {
         enableState(false);
         final GuiEquation control = (GuiEquation) nifty.getScreen(SCREEN_DRAG).getScreenController();
@@ -238,7 +238,7 @@ public class FlowManager implements Observer {
         final String message = "Převedli jste správně " + good + " věcí z " + total;
         displayMessage(message, SCREEN_WORLD);
     }
-    
+
     public void finishDrag(boolean result) {
         final String message;
         if (result) {
@@ -262,18 +262,22 @@ public class FlowManager implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof QuestItem) {
-            QuestItem qi = (QuestItem) o;
+            final QuestItem qi = (QuestItem) o;
 
             if (qi.isFinished()) {
-                FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi.getTask()).concat("\" byl splněn."));                
+                FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi.getTask()).concat("\" byl splněn."));
                 player.addItemToInventory(qi.getReward());
             } else if (qi instanceof HelpQuest) {
-                final QuestItem qi2 = currentQuest.getFailedQuestItem();
-                qi2.setFinished(true);
-                FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi2.getTask()).concat("\" byl splněn za pomoci bonusové otázky."));                
-                player.addItemToInventory(qi2.getReward());
+                final HelpQuest hp = (HelpQuest) qi;
+                final Question q = hp.getLastQuestion();
+                if (q != null && q.isFinished()) {
+                    final QuestItem qi2 = currentQuest.getFailedQuestItem();
+                    qi2.setFinished(true);
+                    FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi2.getTask()).concat("\" byl splněn za pomoci bonusové otázky."));
+                    player.addItemToInventory(qi2.getReward());
+                }
             }
-                   
+
             deactiveChildren(qi);
             enableState(true);
         } else if (o instanceof Player) {

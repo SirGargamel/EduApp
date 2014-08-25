@@ -14,6 +14,7 @@ import eduapp.level.quest.Question;
 import eduapp.level.quest.WebQuestion;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import org.w3c.dom.Element;
@@ -90,7 +91,7 @@ public class XmlQuest extends XmlEntity<Quest> {
                 result = new Question(
                         extractNodeText(e, ITEM_QUESTION),
                         extractNodeText(e, ITEM_ANSWER),
-                        extractNodeText(e, ITEM_REWARD));
+                        extractNodeText(e, ITEM_REWARD), false);
                 break;
             case ITEM_QUESTION_JMOL:
                 result = new JmolQuestion(
@@ -140,7 +141,7 @@ public class XmlQuest extends XmlEntity<Quest> {
     }
 
     private HelpQuest generateHelpQuest(final Node node) {
-        final Set<Question> questions = new HashSet<>();
+        final List<Question> questions = new LinkedList<>();
         String question = null;
 
         final NodeList nl = node.getChildNodes();
@@ -153,7 +154,7 @@ public class XmlQuest extends XmlEntity<Quest> {
                 if (question == null) {
                     question = text;
                 } else {
-                    questions.add(new Question(question, text, null));
+                    questions.add(new Question(question, text, null, true));
                     question = null;
                 }
             }
