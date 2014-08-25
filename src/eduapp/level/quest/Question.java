@@ -3,15 +3,14 @@ package eduapp.level.quest;
 public class Question extends QuestItem {
 
     private final String question, answer;
-    private String userInput;
-    private boolean finished;
+    private String userInput;    
 
     public Question(String question, String answer, String reward) {
         super(reward);
 
         this.question = question;
         this.answer = answer;
-        userInput = "";
+        userInput = null;
     }
 
     public String getQuestion() {
@@ -26,13 +25,10 @@ public class Question extends QuestItem {
         this.userInput = userInput.trim();
         if (answer.equalsIgnoreCase(userInput)) {
             finished = true;
+        } else {
+            failed = true;
         }
         finish();
-    }
-
-    @Override
-    public boolean isFinished() {
-        return finished;
     }
 
     @Override

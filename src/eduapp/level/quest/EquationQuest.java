@@ -12,7 +12,6 @@ public class EquationQuest extends QuestItem {
     private final List<String> in, out;
     private final List<String> extra;
     private final Mode mode;
-    private boolean finished;
 
     public EquationQuest(Mode mode, String reward) {
         super(reward);
@@ -48,16 +47,12 @@ public class EquationQuest extends QuestItem {
         return extra;
     }
 
-    @Override
-    public boolean isFinished() {
-        return finished;
-    }
-
-    public void setFinished(boolean finished) {
+    public void setResult(boolean finished) {
         this.finished = finished;
-        if (finished) {
-            this.finish();
+        if (!finished) {
+            failed = true;
         }
+        finish();
     }
 
     @Override
@@ -67,7 +62,7 @@ public class EquationQuest extends QuestItem {
 
     @Override
     public String getTask() {
-        return "TODO task";
+        return toNiftyString();
     }
 
     public Mode getMode() {

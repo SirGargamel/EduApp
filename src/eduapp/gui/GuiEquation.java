@@ -198,7 +198,7 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
                 }
             }
         }
-        quest.setFinished(result);
+        quest.setResult(result);
         FlowManager.getInstance().finishDrag(result);
     }
 

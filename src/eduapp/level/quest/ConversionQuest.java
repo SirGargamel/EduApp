@@ -11,12 +11,11 @@ public class ConversionQuest extends QuestItem {
     private Item conversion;
     private Item[] items;
     private int correct;
-    private boolean finished;
 
     public ConversionQuest(String conversionId, String data, String reward) {
         super(reward);
-        
-        this.conversionId = conversionId;        
+
+        this.conversionId = conversionId;
         final String[] split = data.split(ItemParameters.SPLITTER);
         itemList = new String[split.length];
         for (int i = 0; i < itemList.length; i++) {
@@ -45,19 +44,16 @@ public class ConversionQuest extends QuestItem {
         this.correct = value;
         if (correct / (double) itemList.length >= RATIO_SUCCESS) {
             finished = true;
-            finish();
+        } else {
+            failed = true;
         }
-    }
-
-    @Override
-    public boolean isFinished() {
-        return finished;
+        finish();
     }
 
     @Override
     public String toNiftyString() {
         initConversion();
-                
+
         return conversion.getParam(ItemParameters.DESCRIPTION);
     }
 

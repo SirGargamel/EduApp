@@ -54,6 +54,12 @@
             <Velikost>0.75</Velikost>
             <Rotace>0;0;0</Rotace>
         </Vec>
+        <Vec id="shelf5">
+            <Model>bench2-shelf.j3o</Model>
+            <Pozice>12.0;0;-3.25</Pozice>
+            <Velikost>0.75</Velikost>
+            <Rotace>0;180;0</Rotace>
+        </Vec>
     </Veci>
     <Svetla>						        
         <Point id="lEntrance">
@@ -134,6 +140,11 @@
             <Cil>hlavniQuest</Cil>
             <Ukol>DisplayD1</Ukol>            	
         </Akce>
+        <Akce id="tH1">
+            <Teleso>shelf5</Teleso>
+            <Cil>hlavniQuest</Cil>
+            <Ukol>DisplayH</Ukol>            	
+        </Akce>
     </Spoustece>
     <Ukoly>
         <Ukol id="hlavniQuest">           
@@ -177,6 +188,12 @@
                 <Extra>h2o::so3</Extra>
                 <Dite>tD1</Dite>
             </Rovnice>
+            <Pomocne>
+                <Otazka>Uveďte název R-věty, která popisují nebezpečnost kyseliny sírové</Otazka>
+                <Odpoved>R35</Odpoved>
+                <Otazka>Uveďte název H-věty, která popisují nebezpečnost kyseliny sírové</Otazka>
+                <Odpoved>H314</Odpoved>
+            </Pomocne>            
         </Ukol>
     </Ukoly>
     <Elementy id="dic">

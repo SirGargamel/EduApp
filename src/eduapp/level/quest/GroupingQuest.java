@@ -11,7 +11,6 @@ public class GroupingQuest extends QuestItem {
     private Item group;
     private Item[] items;
     private int correct;
-    private boolean finished;
 
     public GroupingQuest(String groupId, String data, String reward) {
         super(reward);
@@ -45,13 +44,10 @@ public class GroupingQuest extends QuestItem {
         this.correct = value;
         if (correct / (double) itemList.length >= RATIO_SUCCESS) {
             finished = true;
-            finish();
+        } else {
+            failed = true;
         }
-    }
-
-    @Override
-    public boolean isFinished() {
-        return finished;
+        finish();
     }
 
     @Override

@@ -16,6 +16,7 @@ import eduapp.level.Light;
 import eduapp.level.quest.ConversionQuest;
 import eduapp.level.quest.EquationQuest;
 import eduapp.level.quest.GroupingQuest;
+import eduapp.level.quest.HelpQuest;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
 import eduapp.level.quest.Question;
@@ -264,11 +265,16 @@ public class FlowManager implements Observer {
             QuestItem qi = (QuestItem) o;
 
             if (qi.isFinished()) {
-                FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi.getTask()).concat("\" byl splněn."));
-                deactiveChildren(qi);
+                FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi.getTask()).concat("\" byl splněn."));                
                 player.addItemToInventory(qi.getReward());
+            } else if (qi instanceof HelpQuest) {
+                final QuestItem qi2 = currentQuest.getFailedQuestItem();
+                qi2.setFinished(true);
+                FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi2.getTask()).concat("\" byl splněn za pomoci bonusové otázky."));                
+                player.addItemToInventory(qi2.getReward());
             }
-
+                   
+            deactiveChildren(qi);
             enableState(true);
         } else if (o instanceof Player) {
             final GuiWorld control = (GuiWorld) nifty.getScreen(SCREEN_WORLD).getScreenController();

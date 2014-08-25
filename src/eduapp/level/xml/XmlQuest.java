@@ -4,6 +4,7 @@ import eduapp.level.quest.ConversionQuest;
 import eduapp.level.quest.EquationQuest;
 import eduapp.level.quest.EquationQuest.Mode;
 import eduapp.level.quest.GroupingQuest;
+import eduapp.level.quest.HelpQuest;
 import eduapp.loaders.LevelLoader;
 import eduapp.level.quest.JmolQuestion;
 import eduapp.level.quest.Quest;
@@ -11,7 +12,9 @@ import eduapp.level.quest.QuestItem;
 import eduapp.level.quest.Question;
 import eduapp.level.quest.WebQuestion;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -22,9 +25,7 @@ import org.w3c.dom.NodeList;
  */
 public class XmlQuest extends XmlEntity<Quest> {
 
-    private static final String ATTR_NAME = "jmeno";
     private static final String EQUATION_EXTRA = "Extra";
-    private static final String EQUATION_STATIC = "_";
     private static final String ITEM_ANSWER = "Odpoved";
     private static final String ITEM_CHILD = "Dite";
     private static final String ITEM_CONVERSION = "Prevod";
@@ -38,6 +39,7 @@ public class XmlQuest extends XmlEntity<Quest> {
     private static final String ITEM_QUESTION_JMOL = "Jmol";
     private static final String ITEM_QUESTION_WEB = "Web";
     private static final String ITEM_REWARD = "Odmena";
+    private static final String ITEM_HELP = "Pomocne";
     private static final String QUESTION_SEPARATOR = "::";
 
     public XmlQuest(Element node) {
@@ -49,13 +51,18 @@ public class XmlQuest extends XmlEntity<Quest> {
         final NodeList nl = element.getChildNodes();
         final List<QuestItem> lines = new ArrayList<>(nl.getLength());
         Node node;
+        QuestItem qi;
         for (int i = 0; i < nl.getLength(); i++) {
             node = nl.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
-                lines.add(generateQuestItem(nl.item(i)));
+                qi = generateQuestItem(nl.item(i));
+                if (qi != null) {
+                    lines.add(qi);
+                }
             }
         }
-        final Quest result = new Quest(lines);        
+        final HelpQuest hq = generateHelpQuest(element.getElementsByTagName(ITEM_HELP).item(0));
+        final Quest result = new Quest(lines, hq);
         return result;
     }
 
@@ -112,15 +119,42 @@ public class XmlQuest extends XmlEntity<Quest> {
                 }
                 result = dq;
                 break;
+            case ITEM_HELP:
+                result = null;
+                break;
             default:
                 throw new IllegalArgumentException("Unsupported quest item type - " + node.getNodeName());
         }
-        final NodeList nl = e.getElementsByTagName(ITEM_CHILD);
-        for (int i = 0; i < nl.getLength(); i++) {
-            result.addChild(nl.item(i).getTextContent());
+        if (result != null) {
+            final NodeList nl = e.getElementsByTagName(ITEM_CHILD);
+            for (int i = 0; i < nl.getLength(); i++) {
+                result.addChild(nl.item(i).getTextContent());
+            }
+            result.setId(((Element) node).getAttribute(LevelLoader.ATTR_ID));
         }
-        result.setId(((Element) node).getAttribute(LevelLoader.ATTR_ID));
         return result;
+    }
+
+    private HelpQuest generateHelpQuest(final Node node) {
+        final Set<Question> questions = new HashSet<>();
+        String question = null;
+
+        final NodeList nl = node.getChildNodes();
+        Node n;
+        String text;
+        for (int i = 0; i < nl.getLength(); i++) {
+            n = nl.item(i);
+            if (n.getNodeType() == Node.ELEMENT_NODE) {
+                text = nl.item(i).getTextContent();
+                if (question == null) {
+                    question = text;
+                } else {
+                    questions.add(new Question(question, text, null));
+                    question = null;
+                }
+            }
+        }
+        return new HelpQuest(questions);
     }
 
     private static String extractNodeText(Element e, String nodeName) {

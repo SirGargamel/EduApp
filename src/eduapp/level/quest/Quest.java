@@ -20,13 +20,16 @@ public class Quest extends Item {
     private static final String ACTION_DISPLAY_DRAG = "D";
     private static final String ACTION_DISPLAY_CONVERSION = "C";
     private static final String ACTION_DISPLAY_GROUP = "G";
+    private static final String ACTION_DISPLAY_HELP = "H";
     private static final String ACTION_DISPLAY_JMOL = "J";
     private static final String ACTION_DISPLAY_QUESTION = "Q";
     private static final String ACTION_DISPLAY_WEB = "W";
     private final List<QuestItem> data;
+    private final HelpQuest help;
 
-    public Quest(List<QuestItem> data) {
+    public Quest(List<QuestItem> data, HelpQuest help) {
         this.data = data;
+        this.help = help;
     }
 
     public void makeActive() {
@@ -55,6 +58,10 @@ public class Quest extends Item {
             } else if (rest.startsWith(ACTION_DISPLAY_DRAG)) {
                 final String number = rest.replace(ACTION_DISPLAY_DRAG, "");
                 displayDrag(extractQuestItem(EquationQuest.class, Integer.valueOf(number)));
+            } else if (rest.startsWith(ACTION_DISPLAY_HELP)) {
+                if (getFailedQuestItem() != null) {
+                    displayQuestion(help.getNextQuestion());
+                }
             }
         }
     }
@@ -80,6 +87,19 @@ public class Quest extends Item {
         } else if (rest.startsWith(ACTION_DISPLAY_DRAG)) {
             final String number = rest.replace(ACTION_DISPLAY_DRAG, "");
             result = extractQuestItem(EquationQuest.class, Integer.valueOf(number));
+        } else if (rest.startsWith(ACTION_DISPLAY_HELP)) {            
+            result = help;
+        }
+        return result;
+    }
+
+    public QuestItem getFailedQuestItem() {
+        QuestItem result = null;
+        for (QuestItem qi : data) {
+            if (qi.isFailed() && !qi.isFinished()) {
+                result = qi;
+                break;
+            }
         }
         return result;
     }
@@ -144,6 +164,10 @@ public class Quest extends Item {
 
     public List<QuestItem> getData() {
         return data;
+    }
+
+    public HelpQuest getHelp() {
+        return help;
     }
 
     public void assignInterfaces(final Level level) {

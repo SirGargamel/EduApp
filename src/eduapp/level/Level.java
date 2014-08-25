@@ -87,6 +87,7 @@ public class Level {
         for (QuestItem qi : quest.getData()) {
             qi.addObserver(flowManager);
         }
+        quest.getHelp().addObserver(flowManager);
 
 
         Spatial s;
@@ -122,6 +123,7 @@ public class Level {
         }
         // load dictionary
         for (Item it : dictionary) {
+            it.addObserver(flowManager);
             ir.put(it);
         }
     }

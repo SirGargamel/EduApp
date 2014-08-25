@@ -10,13 +10,31 @@ import eduapp.level.Level;
 public abstract class QuestItem extends Item {
 
     protected Level level;
-    private String reward;
+    private final String reward;
+    protected boolean failed, finished;
 
     public QuestItem(String reward) {
         this.reward = reward;
+        failed = false;
+        finished = false;
     }
 
-    public abstract boolean isFinished();
+    public boolean isFinished() {
+        return finished;
+    }
+    
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
+
+    public boolean isFailed() {
+        return failed;
+    }
+
+    public void setFailed(boolean failed) {
+        this.failed = failed;
+    }
 
     public abstract String toNiftyString();
 

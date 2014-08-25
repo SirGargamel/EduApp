@@ -47,7 +47,12 @@ public class GuiQuest implements ScreenController {
                 tb.text(" - " + qi.toNiftyString());
                 tb.style("base");
                 tb.marginLeft("5");
-                tb.color("#ffffffff");
+                if (qi.isFailed()) {
+                    tb.color("#ff0000ff");
+                } else {
+                    tb.color("#ffffffff");
+                }
+                
                 e = tb.build(nifty, current, panelQuest);
                 panelQuest.add(e);
             }
