@@ -1,6 +1,7 @@
 package eduapp.gui;
 
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.builder.HoverEffectBuilder;
 import de.lessvoid.nifty.builder.ImageBuilder;
 import de.lessvoid.nifty.builder.PanelBuilder;
 import de.lessvoid.nifty.builder.TextBuilder;
@@ -10,6 +11,9 @@ import de.lessvoid.nifty.controls.DroppableDropFilter;
 import de.lessvoid.nifty.controls.dragndrop.DroppableControl;
 import de.lessvoid.nifty.controls.dragndrop.builder.DraggableBuilder;
 import de.lessvoid.nifty.controls.dragndrop.builder.DroppableBuilder;
+import de.lessvoid.nifty.effects.Effect;
+import de.lessvoid.nifty.effects.EffectEventId;
+import de.lessvoid.nifty.effects.impl.Hint;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
@@ -106,7 +110,7 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
         ImageBuilder ib;
         String key;
         DroppableBuilder db;
-        DraggableBuilder dgb;
+        DraggableBuilder dgb;        
         for (String s : items) {
             db = new DroppableBuilder("d".concat(s));
             db.width(SIZE_WIDTH);
@@ -143,6 +147,10 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
                     ib.filename(key);
                     ib.width("100%");
                     ib.height("100%");
+                    final HoverEffectBuilder eb = new HoverEffectBuilder("hint");
+                    eb.getAttributes().setAttribute("hintDelay", "50");
+                    eb.getAttributes().setAttribute("hintText", ir.get(s).getParam(ItemParameters.NAME));
+                    ib.onHoverEffect(eb);
                     dgb.image(ib);
 
                     dgb.build(nifty, current, d);
