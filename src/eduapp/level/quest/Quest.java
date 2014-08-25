@@ -176,4 +176,15 @@ public class Quest extends Item {
             qi.setItemRegistry(itemRegistry);
         }
     }
+    
+    public boolean isFinished() {
+        boolean result = true;
+//        for (QuestItem qi : data) {
+//            if (!qi.isFinished()) {
+//                result = false;
+//                break;
+//            }
+//        }
+        return result;
+    }
 }
