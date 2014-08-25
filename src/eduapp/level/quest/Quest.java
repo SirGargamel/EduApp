@@ -19,6 +19,7 @@ public class Quest extends Item {
     private static final String ACTION_DISPLAY = "Display";
     private static final String ACTION_DISPLAY_DRAG = "D";
     private static final String ACTION_DISPLAY_CONVERSION = "C";
+    private static final String ACTION_DISPLAY_FINAL = "F";
     private static final String ACTION_DISPLAY_GROUP = "G";
     private static final String ACTION_DISPLAY_HELP = "H";
     private static final String ACTION_DISPLAY_JMOL = "J";
@@ -26,10 +27,12 @@ public class Quest extends Item {
     private static final String ACTION_DISPLAY_WEB = "W";
     private final List<QuestItem> data;
     private final HelpQuest help;
+    private final FinalQuest finalQuest;
 
-    public Quest(List<QuestItem> data, HelpQuest help) {
+    public Quest(List<QuestItem> data, HelpQuest help, FinalQuest finalQuest) {
         this.data = data;
         this.help = help;
+        this.finalQuest = finalQuest;
     }
 
     public void makeActive() {
@@ -61,6 +64,14 @@ public class Quest extends Item {
             } else if (rest.startsWith(ACTION_DISPLAY_HELP)) {
                 if (getFailedQuestItem() != null) {
                     displayQuestion(help.getNextQuestion());
+                } else {
+                    FlowManager.getInstance().displayMessage("Nemáte žádné špatně zodpovězené úkoly.", null);
+                }                        
+            } else if (rest.startsWith(ACTION_DISPLAY_FINAL)) {
+                if (isFinished()) {
+                    displayDrag(finalQuest);
+                } else {
+                    FlowManager.getInstance().displayMessage("Nejdříve musíte dokončit všechny základní úkoly.", null);
                 }
             }
         }
@@ -89,6 +100,8 @@ public class Quest extends Item {
             result = extractQuestItem(EquationQuest.class, Integer.valueOf(number));
         } else if (rest.startsWith(ACTION_DISPLAY_HELP)) {            
             result = help;
+        } else if (rest.startsWith(ACTION_DISPLAY_FINAL)) {            
+            result = finalQuest;
         }
         return result;
     }
@@ -168,6 +181,10 @@ public class Quest extends Item {
 
     public HelpQuest getHelp() {
         return help;
+    }
+
+    public FinalQuest getFinalQuest() {
+        return finalQuest;
     }
 
     public void assignInterfaces(final Level level) {

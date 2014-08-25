@@ -30,6 +30,11 @@
             <Pozice>8;0;-2.5</Pozice>
             <Velikost>0.5</Velikost>
         </Vec>
+        <Vec id="table3">
+            <Model>bench2-table.j3o</Model>
+            <Pozice>15;0;-0.5</Pozice>
+            <Velikost>0.5</Velikost>
+        </Vec>
         <Vec id="shelf1">
             <Model>bench2-shelf.j3o</Model>
             <Pozice>17.75;0;-4.0</Pozice>
@@ -140,10 +145,15 @@
             <Cil>hlavniQuest</Cil>
             <Ukol>DisplayD1</Ukol>            	
         </Akce>
-        <Akce id="tH1">
+        <Akce id="tH">
             <Teleso>shelf5</Teleso>
             <Cil>hlavniQuest</Cil>
             <Ukol>DisplayH</Ukol>            	
+        </Akce>
+        <Akce id="tF">
+            <Teleso>table3</Teleso>
+            <Cil>hlavniQuest</Cil>
+            <Ukol>DisplayF</Ukol>            	
         </Akce>
     </Spoustece>
     <Ukoly>
@@ -193,7 +203,11 @@
                 <Odpoved>R35</Odpoved>
                 <Otazka>Uveďte název H-věty, která popisují nebezpečnost kyseliny sírové</Otazka>
                 <Odpoved>H314</Odpoved>
-            </Pomocne>            
+            </Pomocne>  
+            <Final>
+                <Vstup>s::o2</Vstup>
+                <Vystup>so2</Vystup>
+            </Final>          
         </Ukol>
     </Ukoly>
     <Elementy id="dic">

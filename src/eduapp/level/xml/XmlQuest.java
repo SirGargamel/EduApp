@@ -3,6 +3,7 @@ package eduapp.level.xml;
 import eduapp.level.quest.ConversionQuest;
 import eduapp.level.quest.EquationQuest;
 import eduapp.level.quest.EquationQuest.Mode;
+import eduapp.level.quest.FinalQuest;
 import eduapp.level.quest.GroupingQuest;
 import eduapp.level.quest.HelpQuest;
 import eduapp.loaders.LevelLoader;
@@ -31,6 +32,7 @@ public class XmlQuest extends XmlEntity<Quest> {
     private static final String ITEM_CONVERSION = "Prevod";
     private static final String ITEM_DATA = "Data";
     private static final String ITEM_EQUATION = "Rovnice";
+    private static final String ITEM_FINAL = "Final";
     private static final String ITEM_GROUPS = "Skupiny";
     private static final String ITEM_INPUT = "Vstup";
     private static final String ITEM_MODE = "Mod";
@@ -62,7 +64,8 @@ public class XmlQuest extends XmlEntity<Quest> {
             }
         }
         final HelpQuest hq = generateHelpQuest(element.getElementsByTagName(ITEM_HELP).item(0));
-        final Quest result = new Quest(lines, hq);
+        final FinalQuest fq = generateFinalQuest(element.getElementsByTagName(ITEM_FINAL).item(0));
+        final Quest result = new Quest(lines, hq, fq);
         return result;
     }
 
@@ -120,6 +123,7 @@ public class XmlQuest extends XmlEntity<Quest> {
                 result = dq;
                 break;
             case ITEM_HELP:
+            case ITEM_FINAL:
                 result = null;
                 break;
             default:
@@ -155,6 +159,20 @@ public class XmlQuest extends XmlEntity<Quest> {
             }
         }
         return new HelpQuest(questions);
+    }
+
+    private FinalQuest generateFinalQuest(final Node node) {
+        FinalQuest result = new FinalQuest();
+        final Element e = (Element) node;
+        String[] split = extractNodeText(e, ITEM_INPUT).split(QUESTION_SEPARATOR);
+        for (String s : split) {
+            result.addInput(s);
+        }
+        split = extractNodeText(e, ITEM_OUTPUT).split(QUESTION_SEPARATOR);
+        for (String s : split) {
+            result.addOutput(s);
+        }
+        return result;
     }
 
     private static String extractNodeText(Element e, String nodeName) {
