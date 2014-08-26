@@ -78,7 +78,7 @@ public class FlowManager implements Observer {
 
         gotoWorldScreen();
         final GuiWorld control = (GuiWorld) nifty.getScreen(SCREEN_WORLD).getScreenController();
-        control.setNotification("Level " + levelName + "\n H\u2082 SO\u2084");
+        control.setNotification("-- Ovládání --\n Šipky - pohyb\n Mezerník - akce\n D - slovník pojmů\n Q - seznam úkolů");
     }
 
     public void handlePause() {
