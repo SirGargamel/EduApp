@@ -153,7 +153,8 @@ public class WorldScreen extends AbstractAppState {
         super.setEnabled(enabled);
         if (player != null) {
             player.setEnabled(enabled);
-        }
+            playerPhysics.setWalkDirection(Vector3f.ZERO);
+        }        
     }
 
     @Override
