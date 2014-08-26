@@ -144,13 +144,15 @@ public class FlowManager implements Observer {
     }
 
     public void displayQuest(final Quest quest) {
-        enableState(false);
-        currentQuest = quest;
-        final GuiQuest control = (GuiQuest) nifty.getScreen(SCREEN_QUEST).getScreenController();
-        control.setQuest(quest);
+        if (currentQuest != null) {
+            enableState(false);
+            currentQuest = quest;
+            final GuiQuest control = (GuiQuest) nifty.getScreen(SCREEN_QUEST).getScreenController();
+            control.setQuest(quest);
 
-        storeActualScreen();
-        nifty.gotoScreen(SCREEN_QUEST);
+            storeActualScreen();
+            nifty.gotoScreen(SCREEN_QUEST);
+        }
     }
 
     public void displayQuestion(final Question question) {
