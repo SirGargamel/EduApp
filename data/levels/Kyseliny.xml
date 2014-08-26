@@ -4,9 +4,9 @@
             --------WWWWWWWWWWW
             --------WFFFFFFFFFW
             ---WWWWWWFWFFFFFFFW
-            PPPWFFFFFFWWWFFWWWW
-            PPPFFFFFFFWFFFFFFFW
-            PPPWFFFFFFWFFFFFFFW
+            WWWWFFFFFFWWWFFWWWW
+            WFFFFFFFFFWFFFFFFFW
+            WWWWFFFFFFWFFFFFFFW
             0--WWWWWWWWWWWWWWWW                         
         </Hodnoty>
         <Textura tag="F">floorWhiteStone.png</Textura>
@@ -16,7 +16,7 @@
         <Prazdne>-</Prazdne>
     </Pozadi>
     <Hrac>
-        <Pozice>14.5;-3.5</Pozice>
+        <Pozice>1.5;-1.5</Pozice>
         <Model>h2o</Model>
     </Hrac>
     <Veci>
@@ -109,7 +109,7 @@
     <Spoustece>        
         <!-- -->
         <Pohyb>
-            <Teleso>player</Teleso>
+            <Teleso>3.0;-1.5;0.25</Teleso>
             <Cil>hlavniQuest</Cil>
             <Ukol></Ukol>    
             <Jednou/>        			
