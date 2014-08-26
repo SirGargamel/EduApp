@@ -1,13 +1,13 @@
 <Level>
     <Pozadi>                
         <Hodnoty> 
-            --------WWWWWWWWWWW
-            --------WFFFFFFFFFW
-            ---WWWWWWFWFFFFFFFW
-            WWWWFFFFFFWWWFFWWWW
-            WFFFFFFFFFWFFFFFFFW
-            WWWWFFFFFFWFFFFFFFW
-            0--WWWWWWWWWWWWWWWW                         
+            -------WWWWWWWWWWWW
+            -------WFFFFFFFFFFW
+            --WWWWWWFFWFFFFFFFW
+            WWWFFFFFFFWWWWWWFFW
+            WFFFFFFFFFFWFFFFFFW
+            WWWFFFFFFFFWFFFFFFW
+            0-WWWWWWWWWWWWWWWWW                         
         </Hodnoty>
         <Textura tag="F">floorWhiteStone.png</Textura>
         <Textura tag="P">floorBrick.png</Textura>
@@ -22,17 +22,18 @@
     <Veci>
         <Vec id="table1">
             <Model>bench2-table.j3o</Model>
-            <Pozice>9;0;-0.5</Pozice>
+            <Pozice>10.5;0;-1.0</Pozice>
             <Velikost>0.5</Velikost>
+            <Rotace>0;90;0</Rotace>
         </Vec>
         <Vec id="table2">
             <Model>bench2-table.j3o</Model>
-            <Pozice>8;0;-2.5</Pozice>
-            <Velikost>0.5</Velikost>
+            <Pozice>7;0;-2.5</Pozice>
+            <Velikost>0.5</Velikost>            
         </Vec>
         <Vec id="table3">
             <Model>bench2-table.j3o</Model>
-            <Pozice>15;0;-0.5</Pozice>
+            <Pozice>15;0;-0.25</Pozice>
             <Velikost>0.5</Velikost>
         </Vec>
         <Vec id="shelf1">
@@ -109,7 +110,7 @@
     <Spoustece>        
         <!-- -->
         <Pohyb>
-            <Teleso>3.0;-1.5;0.25</Teleso>
+            <Teleso>3.0;-1.5;0.5</Teleso>
             <Cil>hlavniQuest</Cil>
             <Ukol></Ukol>    
             <Jednou/>        			
