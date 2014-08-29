@@ -40,21 +40,25 @@ public class GuiQuest implements ScreenController {
 
         final Screen current = nifty.getCurrentScreen();
         TextBuilder tb;
-        Element e;
+        tb = new TextBuilder();
+        tb.text("-- Seznam úkolů --");
+        tb.style("baseB");
+        tb.alignCenter();
+        tb.color("#ffffffff");        
+        tb.build(nifty, current, panelQuest);
         for (QuestItem qi : quest.getData()) {
             if (!qi.isFinished()) {
                 tb = new TextBuilder();
                 tb.text(" - " + qi.toNiftyString());
                 tb.style("base");
-                tb.marginLeft("5");
+                tb.margin("10");
                 if (qi.isFailed()) {
                     tb.color("#ff0000ff");
                 } else {
                     tb.color("#ffffffff");
                 }
-                
-                e = tb.build(nifty, current, panelQuest);
-                panelQuest.add(e);
+
+                tb.build(nifty, current, panelQuest);
             }
         }
 
