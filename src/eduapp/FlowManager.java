@@ -269,6 +269,8 @@ public class FlowManager implements Observer {
             if (qi.isFinished()) {
                 FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi.getTask()).concat("\" byl splněn."));
                 player.addItemToInventory(qi.getReward());
+            } else if (qi.isFailed()) {
+                FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi.getTask()).concat("\" nebyl splněn."));
             } else if (qi instanceof HelpQuest) {
                 final HelpQuest hp = (HelpQuest) qi;
                 final Question q = hp.getLastQuestion();
