@@ -150,7 +150,7 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
                     final HoverEffectBuilder eb = new HoverEffectBuilder("hint");
                     eb.getAttributes().setAttribute("hintDelay", "50");
                     eb.getAttributes().setAttribute("hintText", ir.get(s).getParam(ItemParameters.NAME));
-                    ib.onHoverEffect(eb);
+                    dgb.onHoverEffect(eb);
                     dgb.image(ib);
 
                     dgb.build(nifty, current, d);
