@@ -282,6 +282,7 @@ public class FlowManager implements Observer {
                 }
             }
 
+            JmolUtils.closeViewer();
             deactiveChildren(qi);
             enableState(true);
         } else if (o instanceof Player) {
