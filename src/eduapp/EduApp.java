@@ -1,6 +1,7 @@
 package eduapp;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.asset.AssetKey;
 import com.jme3.asset.plugins.FileLocator;
 import com.jme3.input.KeyInput;
 import com.jme3.input.MouseInput;
@@ -9,9 +10,15 @@ import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.system.AppSettings;
 import de.lessvoid.nifty.Nifty;
+import eduapp.level.Level;
 import eduapp.loaders.LevelLoader;
+import eduapp.loaders.StateLoader;
 import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
@@ -42,7 +49,7 @@ public class EduApp extends SimpleApplication {
             }
 
             app.start();
-            
+
             JmolUtils.initializeJmolPanel();
             JmolUtils.closeViewer();
         } catch (Exception ex) {
@@ -54,6 +61,7 @@ public class EduApp extends SimpleApplication {
     public void simpleInitApp() {
         assetManager.registerLocator("data/", FileLocator.class);
         assetManager.registerLoader(LevelLoader.class, LevelLoader.EXTENSION);
+        assetManager.registerLoader(StateLoader.class, StateLoader.EXTENSION);
 
         initKeyMappings();
 
@@ -66,7 +74,10 @@ public class EduApp extends SimpleApplication {
 
         AppContext.setApp(this);
         FlowManager.getInstance().setNifty(nifty);
-
+        
+        final String path = "state." + StateLoader.EXTENSION;
+        final AssetKey<Integer> key = new AssetKey<>(path);
+        FlowManager.getInstance().setLevelState(assetManager.loadAsset(key));
         FlowManager.getInstance().gotoMainMenu();
 
         // DEBUG

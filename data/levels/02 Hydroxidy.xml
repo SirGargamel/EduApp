@@ -1,0 +1,48 @@
+<Level>
+    <Pozadi>                
+        <Hodnoty> 
+            -------WWWWWWWWWWWW
+            -------WFFFFFFFFFFW
+            --WWWWWWFFWFFFFFFFW
+            WWWFFFFFFFWWWWWWFFW
+            WFFFFFFFFFFWFFFFFFW
+            WWWFFFFFFFFWFFFFFFW
+            0-WWWWWWWWWWWWWWWWW                         
+        </Hodnoty>
+        <Textura tag="F">floorWhiteStone.png</Textura>
+        <Textura tag="P">floorBrick.png</Textura>
+        <Textura tag="W">wallConcrete.png</Textura>        
+        <Zed>W</Zed>
+        <Prazdne>-</Prazdne>
+    </Pozadi>
+    <Hrac>
+        <Pozice>1.5;-1.5</Pozice>
+        <Model>h2o</Model>
+    </Hrac>
+    <Veci>
+        
+    </Veci>
+    <Svetla>						        
+           							
+    </Svetla>
+    <Spoustece>        
+        
+    </Spoustece>
+    <Ukoly>
+        <Ukol id="hlavniQuest">                    
+            <Pomocne>               
+            </Pomocne>  
+            <Final>
+                <Pocet>1</Pocet>
+                <Vstup></Vstup>
+                <Vystup></Vystup>
+            </Final>          
+        </Ukol>
+    </Ukoly>
+    <Elementy id="dic">
+        
+    </Elementy>
+    <Misc id="groups">
+        
+    </Misc>
+</Level>

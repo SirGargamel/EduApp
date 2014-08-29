@@ -8,6 +8,7 @@ import eduapp.gui.GuiConversion;
 import eduapp.gui.GuiDescription;
 import eduapp.gui.GuiDictionary;
 import eduapp.gui.GuiEquation;
+import eduapp.gui.GuiMainMenu;
 import eduapp.gui.GuiWorld;
 import eduapp.gui.GuiQuest;
 import eduapp.gui.GuiQuestInput;
@@ -24,9 +25,16 @@ import eduapp.level.trigger.Trigger;
 import eduapp.screen.GroupScreen;
 import eduapp.screen.StartScreen;
 import eduapp.screen.WorldScreen;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Stack;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -71,6 +79,20 @@ public class FlowManager implements Observer {
 
     public static FlowManager getInstance() {
         return instance;
+    }
+    
+    public void setLevelState(final int state) {
+        GuiMainMenu control = (GuiMainMenu) nifty.getScreen(SCREEN_START).getScreenController();
+        control.setLevelCount(state);
+    }
+    
+    public void saveLevelState(final String levelName) {
+        final String[] split = levelName.split(" ");
+        try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File("data\\state.lvl")))) {
+            out.write(Integer.parseInt(split[0].trim()));
+        } catch (IOException  ex) {
+            Logger.getLogger(FlowManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void loadLevel(String levelName) {

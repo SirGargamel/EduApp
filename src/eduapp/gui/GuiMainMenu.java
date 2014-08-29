@@ -22,16 +22,7 @@ public class GuiMainMenu implements ScreenController {
 
     @Override
     public void bind(Nifty nifty, Screen screen) {
-        listBox = nifty.getCurrentScreen().findNiftyControl(LISTBOX_NAME, ListBox.class);
-        final File f = new File("data\\levels");
-        for (String s : f.list(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.endsWith(LEVEL_EXTENSION);
-            }
-        })) {
-            listBox.addItem(s.replace(LEVEL_EXTENSION, ""));
-        }
+        listBox = nifty.getCurrentScreen().findNiftyControl(LISTBOX_NAME, ListBox.class);        
     }
 
     @Override
@@ -44,6 +35,23 @@ public class GuiMainMenu implements ScreenController {
 
     public void startGame() {
         FlowManager.getInstance().loadLevel(listBox.getFocusItem());
+    }
+
+    public void setLevelCount(int levelCount) {
+        final File f = new File("data\\levels");
+        int counter = 0;
+        for (String s : f.list(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.endsWith(LEVEL_EXTENSION);
+            }
+        })) {
+            listBox.addItem(s.replace(LEVEL_EXTENSION, ""));
+            counter++;
+            if (counter >= levelCount) {
+                break;
+            }
+        }
     }
 
     @NiftyEventSubscriber(pattern = "LevelList.*")
