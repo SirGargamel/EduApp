@@ -31,6 +31,7 @@ public class XmlQuest extends XmlEntity<Quest> {
     private static final String ITEM_ANSWER = "Odpoved";
     private static final String ITEM_CHILD = "Dite";
     private static final String ITEM_CONVERSION = "Prevod";
+    private static final String ITEM_COUNT = "Pocet";
     private static final String ITEM_DATA = "Data";
     private static final String ITEM_EQUATION = "Rovnice";
     private static final String ITEM_FINAL = "Final";
@@ -163,8 +164,8 @@ public class XmlQuest extends XmlEntity<Quest> {
     }
 
     private FinalQuest generateFinalQuest(final Node node) {
-        FinalQuest result = new FinalQuest();
         final Element e = (Element) node;
+        FinalQuest result = new FinalQuest(Integer.parseInt(extractNodeText(e, ITEM_COUNT)));
         String[] split = extractNodeText(e, ITEM_INPUT).split(QUESTION_SEPARATOR);
         for (String s : split) {
             result.addInput(s);

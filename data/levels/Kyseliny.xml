@@ -206,6 +206,7 @@
                 <Odpoved>H314</Odpoved>
             </Pomocne>  
             <Final>
+                <Pocet>10</Pocet>
                 <Vstup>s::o2</Vstup>
                 <Vystup>so2</Vystup>
             </Final>          

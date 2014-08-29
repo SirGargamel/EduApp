@@ -24,48 +24,7 @@
     </screen>
     <screen id="game" controller="eduapp.gui.GuiWorld">        
         <layer id="foreground" childLayout="vertical">
-            <panel height="10%" childLayout="horizontal">
-                <panel width="1%" childLayout="vertical" />
-                <panel id="panel1" width="10%" childLayout="center" backgroundColor="#8b9dc388">                    
-                    <image id="inv1" filename="interface/face1.png" valign="center" halign="center" width="50%" height="50%">
-                        <effect>
-                            <onHover name="hint" hintText="" />
-                        </effect>
-                    </image>
-                </panel>
-                <panel width="1%" childLayout="vertical" />
-                <panel id="panel2" width="10%" childLayout="center" backgroundColor="#8b9dc388">
-                    <image id="inv2" filename="interface/face1.png" valign="center" halign="center" width="50%" height="50%">
-                        <effect>
-                            <onHover name="hint" hintText="" />
-                        </effect>
-                    </image>
-                </panel>
-                <panel width="1%" childLayout="vertical" />
-                <panel id="panel3" width="10%" childLayout="center" backgroundColor="#8b9dc388">                    
-                    <image id="inv3" filename="interface/face1.png" valign="center" halign="center" width="50%" height="50%">
-                        <effect>
-                            <onHover name="hint" hintText="" />
-                        </effect>
-                    </image>
-                </panel>
-                <panel width="1%" childLayout="vertical" />
-                <panel id="panel4" width="10%" childLayout="center" backgroundColor="#8b9dc388">
-                    <image id="inv4" filename="interface/face1.png" valign="center" halign="center" width="50%" height="50%">
-                        <effect>
-                            <onHover name="hint" hintText="" />
-                        </effect>
-                    </image>
-                </panel>
-                <panel width="1%" childLayout="vertical" />
-                <panel id="panel5" width="10%" childLayout="center" backgroundColor="#8b9dc388">
-                    <image id="inv5" filename="interface/face1.png" valign="center" halign="center" width="50%" height="50%">
-                        <effect>
-                            <onHover name="hint" hintText="" />
-                        </effect>
-                    </image>
-                </panel>
-            </panel>
+            <panel id="panelInv" height="10%" childLayout="horizontal" />
             <panel height="70%" childLayout="vertical" />
             <panel id="panelDescr" childLayout="center" backgroundColor="#00000000">                 
                 <text id="textDescr" style="base" align="left" text="TEST DESCR" wrap="true"/>               

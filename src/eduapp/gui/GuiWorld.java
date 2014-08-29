@@ -1,18 +1,12 @@
 package eduapp.gui;
 
-import com.jme3.asset.AssetManager;
-import com.jme3.asset.DesktopAssetManager;
-import com.jme3.asset.TextureKey;
-import com.jme3.texture.Texture;
-import com.jme3.texture.Texture2D;
-import com.jme3.texture.plugins.AWTLoader;
 import de.lessvoid.nifty.EndNotify;
 import de.lessvoid.nifty.Nifty;
-import de.lessvoid.nifty.effects.Effect;
+import de.lessvoid.nifty.builder.HoverEffectBuilder;
+import de.lessvoid.nifty.builder.ImageBuilder;
+import de.lessvoid.nifty.builder.PanelBuilder;
 import de.lessvoid.nifty.effects.EffectEventId;
-import de.lessvoid.nifty.effects.impl.Hint;
 import de.lessvoid.nifty.elements.Element;
-import de.lessvoid.nifty.elements.render.ImageRenderer;
 import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
@@ -20,12 +14,7 @@ import eduapp.AppContext;
 import eduapp.level.item.ItemParameters;
 import eduapp.ItemRegistry;
 import eduapp.level.Player;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import javax.imageio.ImageIO;
 
 /**
  *
@@ -35,18 +24,20 @@ public class GuiWorld implements ScreenController {
 
     private static final String NAME_PANEL_TEXT = "panelText";
     private static final String NAME_PANEL_IMAGE = "panelDescr";
+    private static final String NAME_PANEL_INV = "panelInv";
     private static final String NAME_TEXT = "text";
     private static final String NAME_IMAGE = "guide";
     private static final String NAME_DESCR = "textDescr";
+    private static final int SIZE_GAP = 1;
     private Nifty nifty;
-    private List<Element> inv;
     private Player player;
     private String notification, descr;
     private Element questionText;
     private Element panelQuest;
     private Element image;
     private Element description;
-    private Element panelImage;
+    private Element panelImage, panelInv;
+    private int itemCount = 10;
 
     public void displayDescription(String message) {
         if (message == null || message.isEmpty()) {
@@ -91,28 +82,16 @@ public class GuiWorld implements ScreenController {
     public void bind(Nifty nifty, Screen screen) {
         this.nifty = nifty;
 
-        inv = new ArrayList<>(5);
-        inv.add(nifty.getCurrentScreen().findElementByName("inv1"));
-        inv.add(nifty.getCurrentScreen().findElementByName("inv2"));
-        inv.add(nifty.getCurrentScreen().findElementByName("inv3"));
-        inv.add(nifty.getCurrentScreen().findElementByName("inv4"));
-        inv.add(nifty.getCurrentScreen().findElementByName("inv5"));
-
         panelQuest = nifty.getCurrentScreen().findElementByName(NAME_PANEL_TEXT);
         questionText = nifty.getCurrentScreen().findElementByName(NAME_TEXT);
         image = nifty.getCurrentScreen().findElementByName(NAME_IMAGE);
         description = nifty.getCurrentScreen().findElementByName(NAME_DESCR);
         panelImage = nifty.getCurrentScreen().findElementByName(NAME_PANEL_IMAGE);
+        panelInv = nifty.getCurrentScreen().findElementByName(NAME_PANEL_INV);
     }
 
     @Override
     public void onStartScreen() {
-        for (Element e : inv) {
-            e.hide();
-        }
-
-        refreshInventoryItems();
-
         if (notification != null) {
             displayNotification();
         }
@@ -126,42 +105,49 @@ public class GuiWorld implements ScreenController {
         this.player = player;
         refreshInventoryItems();
     }
+    
+    public void setItemCout(final int itemCount) {
+        this.itemCount = itemCount;
+        refreshInventoryItems();
+    }
 
     public void refreshInventoryItems() {
         if (player != null) {
             final List<String> items = player.getAllItems();
-            final AssetManager assetManager = AppContext.getApp().getAssetManager();
             final ItemRegistry itemRegistry = AppContext.getItemRegistry();
+            
+            for (Element e : panelInv.getElements()) {
+                e.markForRemoval();
+            }      
+            nifty.executeEndOfFrameElementActions();
+            
+            final int sizeFullItem = 100 / itemCount;
+            final String sizeItem = Integer.toString(sizeFullItem - SIZE_GAP);
 
-            Element e;
-            ImageRenderer ir;
             String key;
-            for (int i = 0; i < Math.min(items.size(), inv.size()); i++) {
-                e = inv.get(i);
-                key = "data/icons/" + itemRegistry.get(items.get(i)).getParam(ItemParameters.ICON);
+            PanelBuilder pb;
+            for (String s : items) {
+                key = "icons/" + itemRegistry.get(s).getParam(ItemParameters.ICON);
+                
+                pb = new PanelBuilder("gap" + s);
+                pb.width(Integer.toString(SIZE_GAP) + "%");
+                pb.build(nifty, nifty.getCurrentScreen(), panelInv);
 
-                BufferedImage img = null;
-                try {
-                    img = ImageIO.read(new File(key));
-                } catch (IOException ex) {
-                    System.err.println(ex);
-                }
+                pb = new PanelBuilder("panel" + s);
+                pb.width(sizeItem + "%");
+                pb.childLayoutCenter();
+                pb.backgroundColor("#8b9dc388");
 
-                final AWTLoader loader = new AWTLoader();
-                final Texture tex = new Texture2D(loader.load(img, true));
-                ((DesktopAssetManager) assetManager).addToCache(new TextureKey(key), tex);
+                final HoverEffectBuilder eb = new HoverEffectBuilder("hint");
+                eb.getAttributes().setAttribute("hintDelay", "100");
+                eb.getAttributes().setAttribute("hintText", itemRegistry.get(s).getParam(ItemParameters.NAME));
+                pb.onHoverEffect(eb);
 
-                ir = e.getRenderer(ImageRenderer.class);
-                ir.setImage(nifty.getRenderEngine().createImage(nifty.getCurrentScreen(), key, true));
-                List<Effect> list = e.getEffects(EffectEventId.onHover, Hint.class);
-                list.get(0).getParameters().setProperty("hintText", itemRegistry.get(items.get(i)).getParam(ItemParameters.NAME));
+                final ImageBuilder ib = new ImageBuilder("image" + s);
+                ib.filename(key);
+                pb.image(ib);
 
-//            final HoverEffectBuilder eb = new HoverEffectBuilder("hint");
-//            eb.getAttributes().setAttribute("hintDelay", "100");
-//            eb.getAttributes().setAttribute("hintText", di.getText());            
-//            pb.onHoverEffect(eb);
-
-                e.show();
+                pb.build(nifty, nifty.getCurrentScreen(), panelInv);
             }
         }
     }

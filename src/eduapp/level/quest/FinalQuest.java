@@ -4,11 +4,14 @@ package eduapp.level.quest;
  *
  * @author Petr Ječmen
  */
-public class FinalQuest extends EquationQuest {          
+public class FinalQuest extends EquationQuest {  
+    
+    private final int itemCount;
 
-    public FinalQuest() {
+    public FinalQuest(final int itemCount) {
         super(Mode.ikony, null);           
-        finished = false;        
+        finished = false; 
+        this.itemCount = itemCount;
     }
 
     @Override
@@ -20,4 +23,8 @@ public class FinalQuest extends EquationQuest {
     public String getTask() {
         return toNiftyString();
     }    
+
+    public int getItemCount() {
+        return itemCount;
+    }
 }
