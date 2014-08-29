@@ -45,7 +45,7 @@ public class JmolUtils {
         }
     }
 
-    private static void initializeJmolPanel() {
+    public static void initializeJmolPanel() {
         frame = new JFrame();
         try {
             frame.setIconImage(ImageIO.read(new File(ICON_PATH)));

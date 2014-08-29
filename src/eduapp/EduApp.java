@@ -42,6 +42,9 @@ public class EduApp extends SimpleApplication {
             }
 
             app.start();
+            
+            JmolUtils.initializeJmolPanel();
+            JmolUtils.closeViewer();
         } catch (Exception ex) {
             System.err.println(ex);
         }
