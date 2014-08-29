@@ -162,7 +162,7 @@
             <Otazka id="q1">
                 <Otazka>Zadejte vzorec kyseliny sírové</Otazka>
                 <Odpoved>H2SO4</Odpoved>                
-                <Odmena>h2so4</Odmena>
+                <Odmena>h2so4;h2so4</Odmena>
                 <Dite>tQ1</Dite>                
             </Otazka>
             <Jmol id="j1">

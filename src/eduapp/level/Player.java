@@ -19,13 +19,14 @@ import java.util.Random;
  * @author Petr Jecmen
  */
 public class Player extends Item {
-    
+
     private static final float PLAYER_HEIGHT = 0.75f;
-    private static final float PLAYER_SCALE_LIM = 0.75f;    
+    private static final float PLAYER_SCALE_LIM = 0.75f;
     private static final int LIMIT_COUNTER = 1000;
     private static final float LIMIT_SCALE_TPF = 0.1f;
     private static final float COEFF_ROTATE = 0.001f;
     private static final float COEFF_SCALE = 0.35f;
+    private static final String SPLITTER = ";";
     private static final String ID = "player";
     private final Vector3f initialPosition;
     private final String modelName;
@@ -34,7 +35,7 @@ public class Player extends Item {
     private Quest currentQuest;
     private final List<String> inventory;
     private Quaternion rot, target;
-    private int counter;    
+    private int counter;
     private float playerScale, currentScale;
 
     public Player(Vector3f initialPosition, String modelName) {
@@ -85,8 +86,11 @@ public class Player extends Item {
         this.currentQuest = currentQuest;
     }
 
-    public void addItemToInventory(final String itemId) {
-        inventory.add(itemId);
+    public void addItemToInventory(final String itemIds) {
+        final String[] split = itemIds.split(SPLITTER);
+        for (String s : split) {
+            inventory.add(s.trim());
+        }
 
         setChanged();
         notifyObservers();
@@ -105,7 +109,7 @@ public class Player extends Item {
     }
 
     public void update(float tpf) {
-        if (isRunning && tpf <= LIMIT_SCALE_TPF) {    
+        if (isRunning && tpf <= LIMIT_SCALE_TPF) {
             float val = 1.0f;
             if (scaleUp) {
                 if (currentScale < playerScale / PLAYER_SCALE_LIM) {
@@ -121,17 +125,17 @@ public class Player extends Item {
                 }
             }
             model.scale(val);
-            currentScale *= val;            
+            currentScale *= val;
 
             if (counter >= LIMIT_COUNTER) {
                 final Random rnd = new Random();
                 target = new Quaternion(rnd.nextFloat(), rnd.nextFloat(), rnd.nextFloat(), rnd.nextFloat());
                 counter = 0;
-                
+
                 if (EduApp.DEBUG) {
                     System.out.println("New target rotation - " + target);
                 }
-                
+
             }
             rot.slerp(target, tpf * COEFF_ROTATE);
             inner.rotate(rot);
