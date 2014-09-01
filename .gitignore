@@ -2,3 +2,4 @@
 *.mf
 /build/
 /dist/
+/data/jmol/model
