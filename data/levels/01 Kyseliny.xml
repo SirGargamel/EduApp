@@ -158,44 +158,24 @@
         </Akce>
     </Spoustece>
     <Ukoly>
-        <Ukol id="hlavniQuest">           
-            <Otazka id="q1">
-                <Otazka>Zadejte vzorec kyseliny sírové</Otazka>
-                <Odpoved>H2SO4</Odpoved>                
-                <Odmena>h2so4;h2so4</Odmena>
-                <Dite>tQ1</Dite>                
-            </Otazka>
+        <Ukol id="hlavniQuest">                       
             <Jmol id="j1">                
                 <Data>so2;so3;h2so4;h2o;v2o5;k2so4;sio2</Data>                
-                <Odmena>h2so4</Odmena>
+                <Odmena>o2;o2</Odmena>
                 <Dite>tJ1</Dite>                
-            </Jmol>            
-            <Web id="w1">
-                <Otazka>Uveďte zastaralý název kyseliny sírové</Otazka>
-                <Odpoved>vitriol</Odpoved> 
-                <Data>http://cs.wikipedia.org/wiki/Kyselina_s%C3%ADrov%C3%A1</Data>
-                <Odmena>h2so4</Odmena>
-                <Dite>tW1</Dite>
-            </Web>
-            <Skupiny id="g1">
-                <Otazka>skup</Otazka>
-                <Data>h2so4;so2;so3;v2o5;k2so4;sio2</Data>
-                <Odmena>h2so4</Odmena>
-                <Dite>tG1</Dite>
-            </Skupiny>
+            </Jmol>                           
             <Prevod id="c1">
                 <Otazka>vzorecJmeno</Otazka>
-                <Data>h2so4;so2;so3;v2o5;k2so4;sio2</Data>
-                <Odmena>h2so4</Odmena>
+                <Data>s;so2;so3;h2so4;h2o;v2o5;k2so4;sio2</Data>
+                <Odmena>so2;so2</Odmena>
                 <Dite>tC1</Dite>
             </Prevod>
-            <Rovnice id="d1">
-                <Mod>text</Mod>
+            <Skupiny id="g1">
+                <Otazka>skup</Otazka>
+                <Data>s;so2;so3;h2so4;h2o;v2o5;k2so4;sio2</Data>
                 <Odmena>h2so4</Odmena>
-                <Rovnice>s+o2=so2</Rovnice>                
-                <Extra></Extra>
-                <Dite>tD1</Dite>
-            </Rovnice>
+                <Dite>tG1</Dite>
+            </Skupiny>            
             <Pomocne>
                 <Otazka>Uveďte název R-věty, která popisují nebezpečnost kyseliny sírové</Otazka>
                 <Odpoved>R35</Odpoved>
@@ -207,7 +187,23 @@
                 <Rovnice>s+o2=so2</Rovnice>
                 <Rovnice>so2+o2=so3</Rovnice>
                 <Rovnice>so3+h2o=h2so4</Rovnice>
-            </Final>          
+            </Final>
+            <!--         
+            <Web id="w1">
+                <Otazka>Uveďte zastaralý název kyseliny sírové</Otazka>
+                <Odpoved>vitriol</Odpoved> 
+                <Data>http://cs.wikipedia.org/wiki/Kyselina_s%C3%ADrov%C3%A1</Data>
+                <Odmena>h2so4</Odmena>
+                <Dite>tW1</Dite>
+            </Web>
+            <Rovnice id="d1">
+                <Mod>text</Mod>
+                <Odmena>h2so4</Odmena>
+                <Rovnice>s+o2=so2</Rovnice>                
+                <Extra></Extra>
+                <Dite>tD1</Dite>
+            </Rovnice>
+            -->          
         </Ukol>
     </Ukoly>
     <Elementy id="dic">
