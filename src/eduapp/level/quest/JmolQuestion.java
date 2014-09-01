@@ -1,20 +1,23 @@
 package eduapp.level.quest;
 
+import java.util.*;
+
 /**
  *
  * @author Petr Ječmen
  */
 public class JmolQuestion extends QuestItem {
 
-    private final String[] modelNames;
+    private final List<String> modelNames;
 
-    public JmolQuestion(String[] modelNames, String reward) {
+    public JmolQuestion(String[] models, String reward) {
         super(reward);
 
-        this.modelNames = modelNames;
+        this.modelNames = Arrays.asList(models);
+        Collections.shuffle(modelNames);
     }
 
-    public String[] getModelNames() {
+    public Collection<String> getModelNames() {
         return modelNames;
     }
 
