@@ -42,8 +42,8 @@ public class JmolUtils {
                 Logger.getLogger(JmolUtils.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            frame.setVisible(true);
             jmolPanel.getViewer().openFile(PATH_LOCAL.toString());
+            frame.setVisible(true);
             result = true;
         } else if (frame != null && frame.isVisible()) {
             frame.setVisible(false);
@@ -66,14 +66,14 @@ public class JmolUtils {
             System.err.println("Error setting icon to JMol panel.");
             System.err.println(ex);
         }
-        Container contentPane = frame.getContentPane();
-        jmolPanel = new JmolPanel();
+        frame.setAutoRequestFocus(false);
+        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
+        jmolPanel = new JmolPanel();
         jmolPanel.setPreferredSize(new Dimension(200, 200));
 
+        final Container contentPane = frame.getContentPane();
         contentPane.add(jmolPanel);
-
-        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
         frame.pack();
         frame.setVisible(true);
