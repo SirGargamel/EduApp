@@ -1,14 +1,12 @@
 package eduapp.level.quest;
 
 import eduapp.FlowManager;
-import eduapp.JmolUtils;
 import eduapp.level.item.Item;
 import eduapp.level.Level;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  *
@@ -137,21 +135,7 @@ public class Quest extends Item {
     }
 
     public void displayJmolQuestion(final JmolQuestion question) {
-        FlowManager.getInstance().displayQuestion(question);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                synchronized (this) {
-                    try {
-                        this.wait(500);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(Quest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                    }
-                }
-                JmolUtils.displayModel(question.getModelName());
-            }
-        }).start();
-
+        FlowManager.getInstance().displayJmolQuestion(question);
     }
 
     public void displayWebQuestion(WebQuestion question) {

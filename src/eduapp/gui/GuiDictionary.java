@@ -204,7 +204,7 @@ public class GuiDictionary implements ScreenController {
             }
         }
 
-        JmolUtils.displayModel(selectedItem.getId().concat(".pdb"));
+        JmolUtils.displayModel(selectedItem.getId());
     }
 
     private void buildWordbookData() {

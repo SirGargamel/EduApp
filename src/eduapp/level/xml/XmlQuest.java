@@ -34,18 +34,16 @@ public class XmlQuest extends XmlEntity<Quest> {
     private static final String ITEM_DATA = "Data";
     private static final String ITEM_EQUATION = "Rovnice";
     private static final String ITEM_FINAL = "Final";
-    private static final String ITEM_GROUPS = "Skupiny";
-    private static final String ITEM_INPUT = "Vstup";
-    private static final String ITEM_MODE = "Mod";
-    private static final String ITEM_OUTPUT = "Vystup";
+    private static final String ITEM_GROUPS = "Skupiny";    
+    private static final String ITEM_MODE = "Mod";    
     private static final String ITEM_QUESTION = "Otazka";
     private static final String ITEM_QUESTION_JMOL = "Jmol";
     private static final String ITEM_QUESTION_WEB = "Web";
     private static final String ITEM_REWARD = "Odmena";
     private static final String ITEM_HELP = "Pomocne";
-    private static final String QUESTION_SEPARATOR_MISC = ";";
-    private static final String QUESTION_SEPARATOR_OUT = "=";
-    private static final String QUESTION_SEPARATOR_ITEM = "\\+";
+    private static final String SEPARATOR_BASIC = ";";
+    private static final String SEPARATOR_QUESTION_OUT = "=";
+    private static final String SEPARATOR_QUESTION_ITEM = "\\+";
 
     public XmlQuest(Element node) {
         super(node);
@@ -96,10 +94,8 @@ public class XmlQuest extends XmlEntity<Quest> {
                         extractNodeText(e, ITEM_REWARD), false);
                 break;
             case ITEM_QUESTION_JMOL:
-                result = new JmolQuestion(
-                        extractNodeText(e, ITEM_QUESTION),
-                        extractNodeText(e, ITEM_ANSWER),
-                        extractNodeText(e, ITEM_DATA),
+                result = new JmolQuestion(                        
+                        extractNodeText(e, ITEM_DATA).split(SEPARATOR_BASIC),
                         extractNodeText(e, ITEM_REWARD));
                 break;
             case ITEM_QUESTION_WEB:
@@ -117,17 +113,17 @@ public class XmlQuest extends XmlEntity<Quest> {
                 for (int i = 0; i < nl.getLength(); i++) {
                     eq = new Equation();
                     text = nl.item(i).getTextContent();
-                    split = text.substring(text.indexOf(QUESTION_SEPARATOR_OUT) + 1).split(QUESTION_SEPARATOR_ITEM);
+                    split = text.substring(text.indexOf(SEPARATOR_QUESTION_OUT) + 1).split(SEPARATOR_QUESTION_ITEM);
                     for (String s : split) {
                         eq.addOutput(s);
                     }
-                    split = text.substring(0, text.indexOf(QUESTION_SEPARATOR_OUT)).split(QUESTION_SEPARATOR_ITEM);
+                    split = text.substring(0, text.indexOf(SEPARATOR_QUESTION_OUT)).split(SEPARATOR_QUESTION_ITEM);
                     for (String s : split) {
                         eq.addInput(s);
                     }
                     dq.addEquation(eq);
                 }
-                split = extractNodeText(e, EQUATION_EXTRA).split(QUESTION_SEPARATOR_MISC);
+                split = extractNodeText(e, EQUATION_EXTRA).split(SEPARATOR_BASIC);
                 for (String s : split) {
                     if (!s.isEmpty()) {
                         dq.addExtra(s);
@@ -185,11 +181,11 @@ public class XmlQuest extends XmlEntity<Quest> {
         for (int i = 0; i < nl.getLength(); i++) {
             eq = new Equation();
             text = nl.item(i).getTextContent();
-            split = text.substring(text.indexOf(QUESTION_SEPARATOR_OUT) + 1).split(QUESTION_SEPARATOR_ITEM);
+            split = text.substring(text.indexOf(SEPARATOR_QUESTION_OUT) + 1).split(SEPARATOR_QUESTION_ITEM);
             for (String s : split) {
                 eq.addOutput(s);
             }
-            split = text.substring(0, text.indexOf(QUESTION_SEPARATOR_OUT)).split(QUESTION_SEPARATOR_ITEM);
+            split = text.substring(0, text.indexOf(SEPARATOR_QUESTION_OUT)).split(SEPARATOR_QUESTION_ITEM);
             for (String s : split) {
                 eq.addInput(s);
             }

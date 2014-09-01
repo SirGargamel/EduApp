@@ -6,6 +6,12 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.CopyOption;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,23 +25,33 @@ import org.jmol.api.JmolViewer;
  */
 public class JmolUtils {
 
-    private static final String JMOL_PATH = "data\\jmol\\";
-    private static final String ICON_PATH = "data\\icon.png";
+    private static final String PATH_JMOL = "data\\jmol\\";
+    private static final String EXT_MODEL = ".pdb";
+    private static final String ICON_JMOL = "data\\icon.png";
+    private static final Path PATH_LOCAL = new File(PATH_JMOL + "model").toPath();
     private static JmolPanel jmolPanel;
     private static JFrame frame;
 
-    public static void displayModel(final String modelName) {
-        final File model = new File(JMOL_PATH.concat(modelName));
+    public static boolean displayModel(final String modelName) {
+        final File model = new File(PATH_JMOL.concat(modelName).concat(EXT_MODEL));
+        boolean result = false;;
         if (model.exists()) {
             if (frame == null) {
                 initializeJmolPanel();
             }
+            try {
+                java.nio.file.Files.copy(model.toPath(), PATH_LOCAL, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException ex) {
+                Logger.getLogger(JmolUtils.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             frame.setVisible(true);
-            jmolPanel.getViewer().openFile(model.getPath());
+            jmolPanel.getViewer().openFile(PATH_LOCAL.toString());
+            result = true;
         } else if (frame != null && frame.isVisible()) {
-            frame.setVisible(false);
+            frame.setVisible(false);            
         }
+        return result;
     }
 
     public static void closeViewer() {
@@ -48,7 +64,7 @@ public class JmolUtils {
     public static void initializeJmolPanel() {
         frame = new JFrame();
         try {
-            frame.setIconImage(ImageIO.read(new File(ICON_PATH)));
+            frame.setIconImage(ImageIO.read(new File(ICON_JMOL)));
         } catch (IOException ex) {
             System.err.println("Error setting icon to JMol panel.");
             System.err.println(ex);
@@ -57,6 +73,7 @@ public class JmolUtils {
         jmolPanel = new JmolPanel();
 
         jmolPanel.setPreferredSize(new Dimension(200, 200));
+        
         contentPane.add(jmolPanel);
 
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);

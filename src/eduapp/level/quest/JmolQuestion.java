@@ -4,17 +4,27 @@ package eduapp.level.quest;
  *
  * @author Petr Ječmen
  */
-public class JmolQuestion extends Question {
+public class JmolQuestion extends QuestItem {
 
-    private final String modelName;
+    private final String[] modelNames;
 
-    public JmolQuestion(String question, String answer, String modelName, String reward) {
-        super(question, answer, reward, false);
+    public JmolQuestion(String[] modelNames, String reward) {
+        super(reward);
 
-        this.modelName = modelName;
+        this.modelNames = modelNames;
     }
 
-    public String getModelName() {
-        return modelName;
+    public String[] getModelNames() {
+        return modelNames;
+    }
+
+    @Override
+    public String toNiftyString() {
+        return "Dle modelu napište vzorec molekuly.";
+    }
+
+    @Override
+    public String getTask() {
+        return toNiftyString();
     }
 }

@@ -18,6 +18,7 @@ import eduapp.level.quest.ConversionQuest;
 import eduapp.level.quest.EquationQuest;
 import eduapp.level.quest.GroupingQuest;
 import eduapp.level.quest.HelpQuest;
+import eduapp.level.quest.JmolQuestion;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
 import eduapp.level.quest.Question;
@@ -27,9 +28,9 @@ import eduapp.screen.StartScreen;
 import eduapp.screen.WorldScreen;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Stack;
@@ -80,17 +81,17 @@ public class FlowManager implements Observer {
     public static FlowManager getInstance() {
         return instance;
     }
-    
+
     public void setLevelState(final int state) {
         GuiMainMenu control = (GuiMainMenu) nifty.getScreen(SCREEN_START).getScreenController();
         control.setLevelCount(state);
     }
-    
+
     public void saveLevelState(final String levelName) {
         final String[] split = levelName.split(" ");
         try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File("data\\state.lvl")))) {
             out.write(Integer.parseInt(split[0].trim()));
-        } catch (IOException  ex) {
+        } catch (IOException ex) {
             Logger.getLogger(FlowManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -170,7 +171,7 @@ public class FlowManager implements Observer {
             enableState(false);
             if (quest != currentQuest) {
                 final GuiWorld control = (GuiWorld) nifty.getScreen(SCREEN_WORLD).getScreenController();
-                control.setItemCout(quest.getFinalQuest().getItemCount());                
+                control.setItemCout(quest.getFinalQuest().getItemCount());
             }
 
             currentQuest = quest;
@@ -189,6 +190,43 @@ public class FlowManager implements Observer {
 
         storeActualScreen();
         nifty.gotoScreen(SCREEN_QUEST_INPUT);
+    }
+
+    public void displayJmolQuestion(final JmolQuestion question) {
+        enableState(false);
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final GuiQuestInput control = (GuiQuestInput) nifty.getScreen(SCREEN_QUEST_INPUT).getScreenController();
+                Question q;
+                boolean allCorrect = true;
+                for (String model : question.getModelNames()) {                                                            
+                    if (JmolUtils.displayModel(model)) {
+                        q = new Question("Zadejte vzorec molekuly.", model, null, false);
+                        control.setQuestion(q);
+                        storeActualScreen();
+                        nifty.gotoScreen(SCREEN_QUEST_INPUT);
+
+                        while (!q.isFinished() && !q.isFailed()) {
+                            synchronized (FlowManager.this) {
+                                try {
+                                    FlowManager.this.wait(100);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(FlowManager.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        }
+                        allCorrect &= !q.isFailed();
+                    }
+                }
+                question.setFailed(!allCorrect);
+                question.setFinished(allCorrect);
+                gotoWorldScreen();
+                question.finish();
+            }
+        });
+        t.start();
     }
 
     public void displayConversionScreen(final ConversionQuest quest) {
