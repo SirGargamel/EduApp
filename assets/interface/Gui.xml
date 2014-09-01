@@ -171,11 +171,10 @@
     </screen>
     <screen id="drag" controller="eduapp.gui.GuiEquation">        
         <layer id="onlyLayer" childLayout="vertical">            
-            <panel height="10%"/>            
-            <panel id="panelDrop" width="100%" height="30%" backgroundColor="#3b5998aa" childLayout="horizontal" visibleToMouse="true" />                                                                                                                   
-            <panel height="15%"/>
-            <panel id="panelDrag" width="100%" height="30%" backgroundColor="#f7f7f7aa" childLayout="horizontal" visibleToMouse="true" />                                
-            <panel height="10%"/>
+            <panel height="5%"/>            
+            <panel id="panelDrop" width="100%" height="50%" backgroundColor="#3b5998aa" childLayout="vertical" visibleToMouse="true" />                                                                                                                   
+            <panel height="5%"/>
+            <panel id="panelDrag" width="100%" height="35%" backgroundColor="#f7f7f7aa" childLayout="vertical" visibleToMouse="true" />            
             <panel height="*" childLayout="center">
                 <panel id="buttonOk" align="center" width="10%" height="90%" backgroundColor="#3b5998ff" childLayout="center" visibleToMouse="true">
                     <interact onClick="ok()"/>

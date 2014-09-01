@@ -16,7 +16,7 @@
         <Prazdne>-</Prazdne>
     </Pozadi>
     <Hrac>
-        <Pozice>1.5;-1.5</Pozice>
+        <Pozice>12.5;-3.5</Pozice>
         <Model>h2o</Model>
     </Hrac>
     <Veci>
@@ -108,9 +108,9 @@
         </Directional>   							
     </Svetla>
     <Spoustece>        
-        <!-- -->
+        <!-- 3.0;-1.5;0.5 -->
         <Pohyb>
-            <Teleso>3.0;-1.5;0.5</Teleso>
+            <Teleso>player</Teleso>
             <Cil>hlavniQuest</Cil>
             <Ukol></Ukol>    
             <Jednou/>        			
@@ -192,11 +192,10 @@
                 <Dite>tC1</Dite>
             </Prevod>
             <Rovnice id="d1">
-                <Mod>ikony</Mod>
+                <Mod>text</Mod>
                 <Odmena>h2so4</Odmena>
-                <Vstup>s::o2</Vstup>
-                <Vystup>so2</Vystup>
-                <Extra>h2o::so3</Extra>
+                <Rovnice>s+o2=so2</Rovnice>                
+                <Extra></Extra>
                 <Dite>tD1</Dite>
             </Rovnice>
             <Pomocne>
@@ -207,8 +206,9 @@
             </Pomocne>  
             <Final>
                 <Pocet>10</Pocet>
-                <Vstup>s::o2</Vstup>
-                <Vystup>so2</Vystup>
+                <Rovnice>s+o2=so2</Rovnice>
+                <Rovnice>so2+o2=so3</Rovnice>
+                <Rovnice>so3+h2o=h2so4</Rovnice>
             </Final>          
         </Ukol>
     </Ukoly>

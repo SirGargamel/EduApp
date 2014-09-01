@@ -9,38 +9,29 @@ import java.util.List;
  */
 public class EquationQuest extends QuestItem {
 
-    private final List<String> in, out;
+    private final List<Equation> equations;
     private final List<String> extra;
     private final Mode mode;
 
     public EquationQuest(Mode mode, String reward) {
         super(reward);
 
-        in = new LinkedList<>();
-        out = new LinkedList<>();
+        equations = new LinkedList<>();
         extra = new LinkedList<>();
         finished = false;
         this.mode = mode;
-    }
-
-    public void addInput(final String item) {
-        in.add(item);
-    }
-
-    public void addOutput(final String item) {
-        out.add(item);
     }
 
     public void addExtra(final String item) {
         extra.add(item);
     }
 
-    public List<String> getInputs() {
-        return in;
+    public void addEquation(final Equation eq) {
+        equations.add(eq);
     }
 
-    public List<String> getOutputs() {
-        return out;
+    public List<Equation> getEquations() {
+        return equations;
     }
 
     public List<String> getExtra() {
@@ -73,5 +64,31 @@ public class EquationQuest extends QuestItem {
 
         text,
         ikony;
+    }
+
+    public static class Equation {
+
+        private final List<String> in, out;
+
+        public Equation() {
+            in = new LinkedList<>();
+            out = new LinkedList<>();
+        }
+
+        public void addInput(final String item) {
+            in.add(item);
+        }
+
+        public void addOutput(final String item) {
+            out.add(item);
+        }
+
+        public List<String> getInputs() {
+            return in;
+        }
+        
+        public List<String> getOutputs() {
+            return out;
+        }
     }
 }

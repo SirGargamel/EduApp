@@ -2,6 +2,7 @@ package eduapp.level.xml;
 
 import eduapp.level.quest.ConversionQuest;
 import eduapp.level.quest.EquationQuest;
+import eduapp.level.quest.EquationQuest.Equation;
 import eduapp.level.quest.EquationQuest.Mode;
 import eduapp.level.quest.FinalQuest;
 import eduapp.level.quest.GroupingQuest;
@@ -13,10 +14,8 @@ import eduapp.level.quest.QuestItem;
 import eduapp.level.quest.Question;
 import eduapp.level.quest.WebQuestion;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -44,7 +43,9 @@ public class XmlQuest extends XmlEntity<Quest> {
     private static final String ITEM_QUESTION_WEB = "Web";
     private static final String ITEM_REWARD = "Odmena";
     private static final String ITEM_HELP = "Pomocne";
-    private static final String QUESTION_SEPARATOR = "::";
+    private static final String QUESTION_SEPARATOR_MISC = ";";
+    private static final String QUESTION_SEPARATOR_OUT = "=";
+    private static final String QUESTION_SEPARATOR_ITEM = "\\+";
 
     public XmlQuest(Element node) {
         super(node);
@@ -109,18 +110,28 @@ public class XmlQuest extends XmlEntity<Quest> {
                         extractNodeText(e, ITEM_REWARD));
                 break;
             case ITEM_EQUATION:
-                EquationQuest dq = new EquationQuest(Mode.valueOf(extractNodeText(e, ITEM_MODE).toLowerCase()), extractNodeText(e, ITEM_REWARD));
-                split = extractNodeText(e, ITEM_INPUT).split(QUESTION_SEPARATOR);
-                for (String s : split) {
-                    dq.addInput(s);
+                final EquationQuest dq = new EquationQuest(Mode.valueOf(extractNodeText(e, ITEM_MODE).toLowerCase()), extractNodeText(e, ITEM_REWARD));
+                final NodeList nl = e.getElementsByTagName(ITEM_EQUATION);
+                Equation eq;
+                String text;
+                for (int i = 0; i < nl.getLength(); i++) {
+                    eq = new Equation();
+                    text = nl.item(i).getTextContent();
+                    split = text.substring(text.indexOf(QUESTION_SEPARATOR_OUT) + 1).split(QUESTION_SEPARATOR_ITEM);
+                    for (String s : split) {
+                        eq.addOutput(s);
+                    }
+                    split = text.substring(0, text.indexOf(QUESTION_SEPARATOR_OUT)).split(QUESTION_SEPARATOR_ITEM);
+                    for (String s : split) {
+                        eq.addInput(s);
+                    }
+                    dq.addEquation(eq);
                 }
-                split = extractNodeText(e, ITEM_OUTPUT).split(QUESTION_SEPARATOR);
+                split = extractNodeText(e, EQUATION_EXTRA).split(QUESTION_SEPARATOR_MISC);
                 for (String s : split) {
-                    dq.addOutput(s);
-                }
-                split = extractNodeText(e, EQUATION_EXTRA).split(QUESTION_SEPARATOR);
-                for (String s : split) {
-                    dq.addExtra(s);
+                    if (!s.isEmpty()) {
+                        dq.addExtra(s);
+                    }
                 }
                 result = dq;
                 break;
@@ -166,13 +177,23 @@ public class XmlQuest extends XmlEntity<Quest> {
     private FinalQuest generateFinalQuest(final Node node) {
         final Element e = (Element) node;
         FinalQuest result = new FinalQuest(Integer.parseInt(extractNodeText(e, ITEM_COUNT)));
-        String[] split = extractNodeText(e, ITEM_INPUT).split(QUESTION_SEPARATOR);
-        for (String s : split) {
-            result.addInput(s);
-        }
-        split = extractNodeText(e, ITEM_OUTPUT).split(QUESTION_SEPARATOR);
-        for (String s : split) {
-            result.addOutput(s);
+
+        final NodeList nl = e.getElementsByTagName(ITEM_EQUATION);
+        Equation eq;
+        String text;
+        String[] split;
+        for (int i = 0; i < nl.getLength(); i++) {
+            eq = new Equation();
+            text = nl.item(i).getTextContent();
+            split = text.substring(text.indexOf(QUESTION_SEPARATOR_OUT) + 1).split(QUESTION_SEPARATOR_ITEM);
+            for (String s : split) {
+                eq.addOutput(s);
+            }
+            split = text.substring(0, text.indexOf(QUESTION_SEPARATOR_OUT)).split(QUESTION_SEPARATOR_ITEM);
+            for (String s : split) {
+                eq.addInput(s);
+            }
+            result.addEquation(eq);
         }
         return result;
     }
