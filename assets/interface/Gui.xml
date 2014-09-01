@@ -151,7 +151,7 @@
     <screen id="dictionary" controller="eduapp.gui.GuiDictionary">  
         <layer id="complete" childLayout="center">      
             <panel height="95%" width="95%" align="center" backgroundColor="#3b5998aa" childLayout="horizontal" visibleToMouse="true">                
-                <control id="tree" name="listBox" valign="center" vertical="optional" horizontal="off" width="20%" displayItems="15" style="base" inherit="true"
+                <control id="tree" name="listBox" valign="center" vertical="optional" horizontal="off" width="20%" displayItems="30" style="base" inherit="true"
                          viewConverterClass="eduapp.gui.listbox.LineListBoxViewConverter">
                     <control name="line" controller="de.lessvoid.nifty.controls.listbox.ListBoxItemController" margin="2px">
                         <interact onClick="listBoxItemClicked()" />

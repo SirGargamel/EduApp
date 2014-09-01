@@ -47,6 +47,7 @@ public class LevelLoader implements AssetLoader {
     private static final String NODE_LIGHTS = "Svetla";
     private static final String NODE_PLAYER = "Hrac";
     private static final String NODE_QUEST = "Ukoly";
+    private static final String NODE_WORD = "Slovnik";
 
     @Override
     public Object load(AssetInfo assetInfo) throws IOException {
@@ -65,6 +66,7 @@ public class LevelLoader implements AssetLoader {
             final Set<TriggerStub> actionItems = loadTriggers(doc);
             final Quest quest = loadQuest(doc);
             final Set<Item> dict = loadDictionary(doc, NODE_ELEMENTS);
+            dict.addAll(loadDictionary(doc, NODE_WORD));
             dict.addAll(loadDictionary(doc, NODE_MISC));
             
             result = new Level(background, player, items, lights, actionItems, quest, dict);

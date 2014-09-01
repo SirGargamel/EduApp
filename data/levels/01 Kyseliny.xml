@@ -282,6 +282,44 @@
             <link>http://cs.wikipedia.org/wiki/Kyslík</link>        
         </Vec>
     </Elementy>
+    <Slovnik id="word">
+        <Vec id="katalyzator">
+            <jmeno>Katalyzátor</jmeno>
+            <popis>Zde bude popis....</popis>
+        </Vec>
+        <Vec id="nosic">
+            <jmeno>Nosič</jmeno>
+            <popis>Zde bude popis....</popis>
+        </Vec>
+        <Vec id="aktivace">
+            <jmeno>Aktivace</jmeno>
+            <popis>Zde bude popis....</popis>
+        </Vec>
+        <Vec id="silikagel">
+            <jmeno>Silikagel</jmeno>
+            <popis>Zde bude popis....</popis>
+        </Vec>
+        <Vec id="kremelina">
+            <jmeno>Křemelina</jmeno>
+            <popis>Zde bude popis....</popis>
+        </Vec>
+        <Vec id="oxidace">
+            <jmeno>Oxidace</jmeno>
+            <popis>Zde bude popis....</popis>
+        </Vec>
+        <Vec id="exoterm">
+            <jmeno>Exotermická reakce</jmeno>
+            <popis>Zde bude popis....</popis>
+        </Vec>
+        <Vec id="amfoterni">
+            <jmeno>Amfoterní</jmeno>
+            <popis>Zde bude popis....</popis>
+        </Vec>
+        <Vec id="redukce">
+            <jmeno>Redukce</jmeno>
+            <popis>Zde bude popis....</popis>
+        </Vec>
+    </Slovnik>
     <Misc id="groups">
         <Vec id="skup">
             <popis>Zařaďte prvky do skupin dle jejich skupenství</popis>
