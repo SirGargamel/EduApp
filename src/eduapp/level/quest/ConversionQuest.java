@@ -1,6 +1,6 @@
 package eduapp.level.quest;
 
-import eduapp.level.item.ItemParameters;
+import eduapp.level.item.ItemParameter;
 import eduapp.level.item.Item;
 
 public class ConversionQuest extends QuestItem {
@@ -16,7 +16,7 @@ public class ConversionQuest extends QuestItem {
         super(reward);
 
         this.conversionId = conversionId;
-        final String[] split = data.split(ItemParameters.SPLITTER);
+        final String[] split = data.split(ItemParameter.SPLITTER);
         itemList = new String[split.length];
         for (int i = 0; i < itemList.length; i++) {
             itemList[i] = split[i].trim();
@@ -54,7 +54,7 @@ public class ConversionQuest extends QuestItem {
     public String toNiftyString() {
         initConversion();
 
-        return conversion.getParam(ItemParameters.DESCRIPTION);
+        return conversion.getParam(ItemParameter.DESCRIPTION);
     }
 
     @Override

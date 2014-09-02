@@ -1,6 +1,6 @@
 package eduapp;
 
-import eduapp.level.item.ItemParameters;
+import eduapp.level.item.ItemParameter;
 import eduapp.level.Player;
 import com.jme3.app.state.AppState;
 import de.lessvoid.nifty.Nifty;
@@ -168,7 +168,7 @@ public class FlowManager implements Observer {
         currentState = groupScreen;
         groupScreen.setEnabled(true);
 
-        displayMessage(group.getGroup().getParam(ItemParameters.DESCRIPTION), SCREEN_GROUPS);
+        displayMessage(group.getGroup().getParam(ItemParameter.DESCRIPTION), SCREEN_GROUPS);
         nifty.gotoScreen(SCREEN_GROUPS);
     }
 

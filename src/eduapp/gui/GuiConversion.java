@@ -12,7 +12,7 @@ import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import de.lessvoid.nifty.tools.Color;
 import eduapp.FlowManager;
-import eduapp.level.item.ItemParameters;
+import eduapp.level.item.ItemParameter;
 import eduapp.level.item.Item;
 import eduapp.level.quest.ConversionQuest;
 
@@ -50,7 +50,7 @@ public class GuiConversion implements ScreenController {
         final Screen current = nifty.getCurrentScreen();
 
         final Item conversion = quest.getConversion();
-        final String from = conversion.getParam(ItemParameters.FROM);
+        final String from = conversion.getParam(ItemParameter.FROM);
 
         PanelBuilder pb;
         TextBuilder tb;
@@ -59,7 +59,7 @@ public class GuiConversion implements ScreenController {
 
         tb = new TextBuilder();
         tb.style("baseB");
-        tb.text(conversion.getParam(ItemParameters.DESCRIPTION));
+        tb.text(conversion.getParam(ItemParameter.DESCRIPTION));
         tb.alignCenter();
         tb.color(Color.WHITE);
         e = tb.build(nifty, current, panelValues);
@@ -112,7 +112,7 @@ public class GuiConversion implements ScreenController {
     }
 
     public void ok() {
-        final String to = quest.getConversion().getParam(ItemParameters.TO);
+        final String to = quest.getConversion().getParam(ItemParameter.TO);
         int counter = 0;
         TextField tf;
         String user, answer;

@@ -8,7 +8,7 @@ import eduapp.level.Model;
 import eduapp.level.Level;
 import eduapp.level.Light;
 import eduapp.level.item.Item;
-import eduapp.level.item.ItemParameters;
+import eduapp.level.item.ItemParameter;
 import eduapp.level.quest.Quest;
 import eduapp.level.trigger.TriggerStub;
 import eduapp.level.xml.XmlBackground;
@@ -198,7 +198,7 @@ public class LevelLoader implements AssetLoader {
                             it.setParam(n2.getNodeName(), n2.getTextContent());
                         }
                     }
-                    it.setParam(ItemParameters.SOURCE, id);
+                    it.setParam(ItemParameter.SOURCE, id);
                     result.add(it);
                 }
             }

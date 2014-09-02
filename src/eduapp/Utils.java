@@ -40,4 +40,8 @@ public class Utils {
         }
         return fixedP;
     }
+    
+    public static String generateIconFilename(final String itemId) {
+        return "icons\\" + itemId + ".png";
+    }
 }

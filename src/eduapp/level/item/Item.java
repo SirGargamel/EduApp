@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -18,7 +16,7 @@ import java.util.regex.Pattern;
  */
 public class Item extends Observable implements Comparable<Item> {
 
-    private static final String FIELD_COMPARE = ItemParameters.NAME;
+    private static final String FIELD_COMPARE = ItemParameter.NAME;
     private static final List<String> NO_ESCAPE;
     protected ItemRegistry itemRegistry;
     private String id;
@@ -26,9 +24,8 @@ public class Item extends Observable implements Comparable<Item> {
     private final Set<String> children;
 
     static {
-        NO_ESCAPE = new ArrayList<>();
-        NO_ESCAPE.add(ItemParameters.ICON);
-        NO_ESCAPE.add(ItemParameters.LINKS);
+        NO_ESCAPE = new ArrayList<>();        
+        NO_ESCAPE.add(ItemParameter.LINKS);
     }
 
     public Item() {

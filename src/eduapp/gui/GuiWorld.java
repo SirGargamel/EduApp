@@ -11,8 +11,9 @@ import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import eduapp.AppContext;
-import eduapp.level.item.ItemParameters;
+import eduapp.level.item.ItemParameter;
 import eduapp.ItemRegistry;
+import eduapp.Utils;
 import eduapp.level.Player;
 import java.util.List;
 
@@ -123,12 +124,9 @@ public class GuiWorld implements ScreenController {
             
             final int sizeFullItem = 100 / itemCount;
             final String sizeItem = Integer.toString(sizeFullItem - SIZE_GAP);
-
-            String key;
+            
             PanelBuilder pb;
-            for (String s : items) {
-                key = "icons/" + itemRegistry.get(s).getParam(ItemParameters.ICON);
-                
+            for (String s : items) {                
                 pb = new PanelBuilder("gap" + s);
                 pb.width(Integer.toString(SIZE_GAP) + "%");
                 pb.build(nifty, nifty.getCurrentScreen(), panelInv);
@@ -140,11 +138,11 @@ public class GuiWorld implements ScreenController {
 
                 final HoverEffectBuilder eb = new HoverEffectBuilder("hint");
                 eb.getAttributes().setAttribute("hintDelay", "100");
-                eb.getAttributes().setAttribute("hintText", itemRegistry.get(s).getParam(ItemParameters.NAME));
+                eb.getAttributes().setAttribute("hintText", itemRegistry.get(s).getParam(ItemParameter.NAME));
                 pb.onHoverEffect(eb);
 
                 final ImageBuilder ib = new ImageBuilder("image" + s);
-                ib.filename(key);
+                ib.filename(Utils.generateIconFilename(s));
                 pb.image(ib);
 
                 pb.build(nifty, nifty.getCurrentScreen(), panelInv);

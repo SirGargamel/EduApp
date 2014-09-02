@@ -17,7 +17,8 @@ import de.lessvoid.nifty.screen.ScreenController;
 import eduapp.AppContext;
 import eduapp.FlowManager;
 import eduapp.ItemRegistry;
-import eduapp.level.item.ItemParameters;
+import eduapp.Utils;
+import eduapp.level.item.ItemParameter;
 import eduapp.level.quest.EquationQuest;
 import eduapp.level.quest.EquationQuest.Equation;
 import eduapp.level.quest.EquationQuest.Mode;
@@ -178,23 +179,21 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
             switch (mode) {
                 case text:
                     tb = new TextBuilder(TEXT_ID.concat(s));
-                    tb.text(ir.get(s).getParam(ItemParameters.FORMULA));
+                    tb.text(ir.get(s).getParam(ItemParameter.FORMULA));
                     tb.style("base");
                     tb.color("#ffffff");
 
                     dg = dgb.build(nifty, current, d);
                     tb.build(nifty, current, dg);
                     break;
-                case ikony:
-                    key = "icons/" + ir.get(s).getParam(ItemParameters.ICON);
-
+                case ikony:                    
                     ib = new ImageBuilder("i".concat(s));
-                    ib.filename(key);
+                    ib.filename(Utils.generateIconFilename(s));
                     ib.width("100%");
                     ib.height("100%");
                     final HoverEffectBuilder eb = new HoverEffectBuilder("hint");
                     eb.getAttributes().setAttribute("hintDelay", "50");
-                    eb.getAttributes().setAttribute("hintText", ir.get(s).getParam(ItemParameters.NAME));
+                    eb.getAttributes().setAttribute("hintText", ir.get(s).getParam(ItemParameter.NAME));
                     dgb.onHoverEffect(eb);
                     dgb.image(ib);
 

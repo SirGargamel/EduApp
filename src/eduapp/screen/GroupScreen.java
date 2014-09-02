@@ -31,7 +31,7 @@ import eduapp.Actions;
 import eduapp.AppContext;
 import eduapp.Colors;
 import eduapp.FlowManager;
-import eduapp.level.item.ItemParameters;
+import eduapp.level.item.ItemParameter;
 import eduapp.level.item.Item;
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +91,7 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
         Geometry g;
 
         // generate circles for groups        
-        final String[] groups = group.getParam(ItemParameters.STATE).split(ItemParameters.SPLITTER);
+        final String[] groups = group.getParam(ItemParameter.STATE).split(ItemParameter.SPLITTER);
 
         mat = new Material(app.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
         mat.setColor("Color", Colors.BLUE_DARK);
@@ -132,10 +132,10 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
             assetManager.deleteFromCache(tex.getKey());
             Image img = tex.getImage();
             ImagePainter ip = new ImagePainter(img);
-            ip.paintTextArea(0, 0, img.getWidth(), img.getHeight(), bf, it.getParam(ItemParameters.FORMULA), ImagePainter.TextHAlign.Center, ImagePainter.TextVAlign.Center, Colors.BLUE_DARK, ImagePainter.BlendMode.SET);
+            ip.paintTextArea(0, 0, img.getWidth(), img.getHeight(), bf, it.getParam(ItemParameter.FORMULA), ImagePainter.TextHAlign.Center, ImagePainter.TextVAlign.Center, Colors.BLUE_DARK, ImagePainter.BlendMode.SET);
             mat.setTexture("ColorMap", tex);
 
-            g = new Geometry(it.getParam(ItemParameters.STATE), new Box(Vector3f.ZERO, new Vector3f(SIZE_BOX_X, SIZE_BOX_Y, SIZE_BOX_Z)));
+            g = new Geometry(it.getParam(ItemParameter.STATE), new Box(Vector3f.ZERO, new Vector3f(SIZE_BOX_X, SIZE_BOX_Y, SIZE_BOX_Z)));
             g.setMaterial(mat);
             g.move(POS_OFFSET_BOX_X + i * (SIZE_BOX_X + SIZE_GAP), POS_OFFSET_BOX_Y, -SIZE_BOX_Z / 2.0f);
 
@@ -198,7 +198,7 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
                         System.err.println("Item missing group param - " + id);
                     } else {
                         add = true;
-                        vals = val.split(ItemParameters.SPLITTER);
+                        vals = val.split(ItemParameter.SPLITTER);
                         for (String s : vals) {
                             if (!groups.contains(s)) {
                                 System.err.println("Item contains illegal group param - " + s);
@@ -272,7 +272,7 @@ public class GroupScreen extends AbstractAppState implements ActionListener, Ana
 
             gr = s.getName();
             for (int i = 9; i < results.size(); i += 10) {
-                vals = results.getCollision(i).getGeometry().getName().split(ItemParameters.SPLITTER);
+                vals = results.getCollision(i).getGeometry().getName().split(ItemParameter.SPLITTER);
                 match = false;
                 for (String str : vals) {
                     if (str.trim().equalsIgnoreCase(gr)) {

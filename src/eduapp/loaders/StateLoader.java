@@ -8,7 +8,7 @@ import eduapp.level.Model;
 import eduapp.level.Level;
 import eduapp.level.Light;
 import eduapp.level.item.Item;
-import eduapp.level.item.ItemParameters;
+import eduapp.level.item.ItemParameter;
 import eduapp.level.quest.Quest;
 import eduapp.level.trigger.TriggerStub;
 import eduapp.level.xml.XmlBackground;

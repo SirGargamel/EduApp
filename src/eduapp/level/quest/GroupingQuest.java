@@ -1,6 +1,6 @@
 package eduapp.level.quest;
 
-import eduapp.level.item.ItemParameters;
+import eduapp.level.item.ItemParameter;
 import eduapp.level.item.Item;
 
 public class GroupingQuest extends QuestItem {
@@ -16,7 +16,7 @@ public class GroupingQuest extends QuestItem {
         super(reward);
         
         this.groupId = groupId;
-        final String[] split = data.split(ItemParameters.SPLITTER);
+        final String[] split = data.split(ItemParameter.SPLITTER);
         itemList = new String[split.length];
         for (int i = 0; i < itemList.length; i++) {
             itemList[i] = split[i].trim();
@@ -54,7 +54,7 @@ public class GroupingQuest extends QuestItem {
     public String toNiftyString() {
         initGroup();
                 
-        return group.getParam(ItemParameters.DESCRIPTION);
+        return group.getParam(ItemParameter.DESCRIPTION);
     }
 
     @Override
