@@ -22,9 +22,8 @@
     <Veci>
         <Vec id="table1">
             <Model>bench2-table.j3o</Model>
-            <Pozice>10.5;0;-1.0</Pozice>
+            <Pozice>5.5;0;-1.0</Pozice>
             <Velikost>0.5</Velikost>
-            <Rotace>0;90;0</Rotace>
         </Vec>
         <Vec id="table2">
             <Model>bench2-table.j3o</Model>
@@ -116,10 +115,10 @@
             <Jednou/>        			
         </Pohyb>
         <!-- -->
-        <Akce id="tQ1">
+        <Akce id="tP1">
             <Teleso>table1</Teleso>
             <Cil>hlavniQuest</Cil>
-            <Ukol>DisplayQ1</Ukol>            	
+            <Ukol>DisplayP1</Ukol>            	
         </Akce>
         <Akce id="tJ1">
             <Teleso>table2</Teleso>
@@ -177,7 +176,12 @@
                 <Data>s;so2;so3;h2so4;h2o;v2o5;k2so4;sio2</Data>
                 <Odmena>k2so4</Odmena>
                 <Dite>tG1</Dite>
-            </Skupiny>                    
+            </Skupiny>
+            <Pexeso id="p1">
+                <Data>hnojiva;leciva;elektrolyt;cisteni</Data>
+                <Odmena>so3;so3</Odmena>
+                <Dite>tP1</Dite>
+            </Pexeso>                    
             <Pomocne>
                 <Otazka>Uveďte název R-věty, která popisují nebezpečnost kyseliny sírové</Otazka>
                 <Odpoved>R35</Odpoved>
@@ -269,6 +273,18 @@
             <skup>plynné</skup>
             <vzorec>O2</vzorec>            
             <link>http://cs.wikipedia.org/wiki/Kyslík</link>        
+        </Vec>
+        <Vec id="hnojiva">
+            <popis>Průmyslová hnojiva</popis>
+        </Vec>
+        <Vec id="leciva">
+            <popis>Výroba léčiv</popis>
+        </Vec>
+        <Vec id="elektrolyt">
+            <popis>Elektrolyt do akumulátorů</popis>
+        </Vec>
+        <Vec id="cisteni">
+            <popis>Výroba čistících prostředků</popis>
         </Vec>
     </Elementy>
     <Slovnik id="word">

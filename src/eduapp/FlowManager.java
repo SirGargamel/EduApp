@@ -9,6 +9,7 @@ import eduapp.gui.GuiDescription;
 import eduapp.gui.GuiDictionary;
 import eduapp.gui.GuiEquation;
 import eduapp.gui.GuiMainMenu;
+import eduapp.gui.GuiPexeso;
 import eduapp.gui.GuiWorld;
 import eduapp.gui.GuiQuest;
 import eduapp.gui.GuiQuestInput;
@@ -19,6 +20,7 @@ import eduapp.level.quest.EquationQuest;
 import eduapp.level.quest.GroupingQuest;
 import eduapp.level.quest.HelpQuest;
 import eduapp.level.quest.JmolQuestion;
+import eduapp.level.quest.PexesoQuest;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
 import eduapp.level.quest.Question;
@@ -48,6 +50,7 @@ public class FlowManager implements Observer {
     private static final String SCREEN_DRAG = "drag";
     private static final String SCREEN_GROUPS = "groups";
     private static final String SCREEN_PAUSE = "pause";
+    private static final String SCREEN_PEXESO = "pexeso";
     private static final String SCREEN_QUEST = "quest";
     private static final String SCREEN_QUEST_INPUT = "questInput";
     private static final String SCREEN_START = "start";
@@ -266,6 +269,14 @@ public class FlowManager implements Observer {
 
         storeActualScreen();
         nifty.gotoScreen(SCREEN_DRAG);
+    }
+    public void displayPexesoScreen(final PexesoQuest quest) {
+        enableState(false);
+        final GuiPexeso control = (GuiPexeso) nifty.getScreen(SCREEN_PEXESO).getScreenController();
+        control.setData(quest);
+
+        storeActualScreen();
+        nifty.gotoScreen(SCREEN_PEXESO);
     }
 
     public void dictionaryAction() {

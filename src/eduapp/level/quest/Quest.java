@@ -21,6 +21,7 @@ public class Quest extends Item {
     private static final String ACTION_DISPLAY_GROUP = "G";
     private static final String ACTION_DISPLAY_HELP = "H";
     private static final String ACTION_DISPLAY_JMOL = "J";
+    private static final String ACTION_DISPLAY_PEXESO = "P";
     private static final String ACTION_DISPLAY_QUESTION = "Q";
     private static final String ACTION_DISPLAY_WEB = "W";
     private final List<QuestItem> data;
@@ -62,6 +63,9 @@ public class Quest extends Item {
             } else if (rest.startsWith(ACTION_DISPLAY_DRAG)) {
                 final String number = rest.replace(ACTION_DISPLAY_DRAG, "");
                 displayEquation(extractQuestItem(EquationQuest.class, Integer.valueOf(number)));
+            } else if (rest.startsWith(ACTION_DISPLAY_PEXESO)) {
+                final String number = rest.replace(ACTION_DISPLAY_PEXESO, "");
+                displayPexeso(extractQuestItem(PexesoQuest.class, Integer.valueOf(number)));
             } else if (rest.startsWith(ACTION_DISPLAY_HELP)) {
                 if (getFailedQuestItem() != null) {
                     displayQuestion(help.getNextQuestion());
@@ -99,6 +103,9 @@ public class Quest extends Item {
         } else if (rest.startsWith(ACTION_DISPLAY_DRAG)) {
             final String number = rest.replace(ACTION_DISPLAY_DRAG, "");
             result = extractQuestItem(EquationQuest.class, Integer.valueOf(number));
+        } else if (rest.startsWith(ACTION_DISPLAY_PEXESO)) {
+            final String number = rest.replace(ACTION_DISPLAY_PEXESO, "");
+            result = extractQuestItem(PexesoQuest.class, Integer.valueOf(number));
         } else if (rest.startsWith(ACTION_DISPLAY_HELP)) {
             result = help;
         } else if (rest.startsWith(ACTION_DISPLAY_FINAL)) {
@@ -133,15 +140,15 @@ public class Quest extends Item {
         return (T) result;
     }
 
-    public void displayQuestion(Question question) {
+    private void displayQuestion(Question question) {
         FlowManager.getInstance().displayQuestion(question);
     }
 
-    public void displayJmolQuestion(final JmolQuestion question) {
+    private void displayJmolQuestion(final JmolQuestion question) {
         FlowManager.getInstance().displayJmolQuestion(question);
     }
 
-    public void displayWebQuestion(WebQuestion question) {
+    private void displayWebQuestion(WebQuestion question) {
         try {
             java.awt.Desktop.getDesktop().browse(new URI(question.getWeb()));
             FlowManager.getInstance().displayQuestion(question);
@@ -150,16 +157,20 @@ public class Quest extends Item {
         }
     }
 
-    public void displayGroups(GroupingQuest group) {
+    private void displayGroups(GroupingQuest group) {
         FlowManager.getInstance().gotoGroupScreen(group);
     }
 
-    public void displayConversion(ConversionQuest conversion) {
+    private void displayConversion(ConversionQuest conversion) {
         FlowManager.getInstance().displayConversionScreen(conversion);
     }
 
-    public void displayEquation(EquationQuest quest) {
+    private void displayEquation(EquationQuest quest) {
         FlowManager.getInstance().displayEquationScreen(quest);
+    }
+
+    private void displayPexeso(PexesoQuest quest) {
+        FlowManager.getInstance().displayPexesoScreen(quest);
     }
 
     public List<QuestItem> getData() {

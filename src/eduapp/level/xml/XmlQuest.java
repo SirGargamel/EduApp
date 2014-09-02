@@ -9,6 +9,7 @@ import eduapp.level.quest.GroupingQuest;
 import eduapp.level.quest.HelpQuest;
 import eduapp.loaders.LevelLoader;
 import eduapp.level.quest.JmolQuestion;
+import eduapp.level.quest.PexesoQuest;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
 import eduapp.level.quest.Question;
@@ -36,8 +37,9 @@ public class XmlQuest extends XmlEntity<Quest> {
     private static final String ITEM_EQUATION = "Rovnice";
     private static final String ITEM_ENDING = "Konec";
     private static final String ITEM_FINAL = "Final";
-    private static final String ITEM_GROUPS = "Skupiny";    
-    private static final String ITEM_MODE = "Mod";    
+    private static final String ITEM_GROUPS = "Skupiny";
+    private static final String ITEM_MODE = "Mod";
+    private static final String ITEM_PEXESO = "Pexeso";
     private static final String ITEM_QUESTION = "Otazka";
     private static final String ITEM_QUESTION_JMOL = "Jmol";
     private static final String ITEM_QUESTION_WEB = "Web";
@@ -69,7 +71,7 @@ public class XmlQuest extends XmlEntity<Quest> {
         final HelpQuest hq = generateHelpQuest(element.getElementsByTagName(ITEM_HELP).item(0));
         final FinalQuest fq = generateFinalQuest(element.getElementsByTagName(ITEM_FINAL).item(0));
         final Quest result = new Quest(
-                lines, hq, fq, 
+                lines, hq, fq,
                 extractNodeText(element, ITEM_DESCRIPTION),
                 extractNodeText(element, ITEM_ENDING));
         return result;
@@ -99,7 +101,7 @@ public class XmlQuest extends XmlEntity<Quest> {
                         extractNodeText(e, ITEM_REWARD), false);
                 break;
             case ITEM_QUESTION_JMOL:
-                result = new JmolQuestion(                        
+                result = new JmolQuestion(
                         extractNodeText(e, ITEM_DATA).split(SEPARATOR_BASIC),
                         extractNodeText(e, ITEM_REWARD));
                 break;
@@ -135,6 +137,11 @@ public class XmlQuest extends XmlEntity<Quest> {
                     }
                 }
                 result = dq;
+                break;
+            case ITEM_PEXESO:
+                result = new PexesoQuest(
+                        extractNodeText(e, ITEM_DATA).split(SEPARATOR_BASIC), 
+                        extractNodeText(e, ITEM_REWARD));
                 break;
             case ITEM_HELP:
             case ITEM_FINAL:
