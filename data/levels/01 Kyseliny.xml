@@ -157,25 +157,27 @@
             <Ukol>DisplayF</Ukol>            	
         </Akce>
     </Spoustece>
-    <Ukoly>
-        <Ukol id="hlavniQuest">                       
-            <Jmol id="j1">                
-                <Data>so2;so3;h2so4;h2o;v2o5;k2so4;sio2</Data>                
-                <Odmena>o2;o2</Odmena>
-                <Dite>tJ1</Dite>                
-            </Jmol>                           
+    <Ukoly>        
+        <Ukol id="hlavniQuest">
+            <Popis>Popis levelu ... \n Další řádek !</Popis>
+            <Konec>Popis konce levelu.</Konec>                       
             <Prevod id="c1">
                 <Otazka>vzorecJmeno</Otazka>
                 <Data>s;so2;so3;h2so4;h2o;v2o5;k2so4;sio2</Data>
                 <Odmena>so2;so2</Odmena>
                 <Dite>tC1</Dite>
             </Prevod>
+            <Jmol id="j1">                
+                <Data>so2;so3;h2so4;h2o;v2o5;k2so4;sio2</Data>                
+                <Odmena>o2;o2</Odmena>
+                <Dite>tJ1</Dite>                
+            </Jmol>                                       
             <Skupiny id="g1">
                 <Otazka>skup</Otazka>
                 <Data>s;so2;so3;h2so4;h2o;v2o5;k2so4;sio2</Data>
-                <Odmena>h2so4</Odmena>
+                <Odmena>k2so4</Odmena>
                 <Dite>tG1</Dite>
-            </Skupiny>            
+            </Skupiny>                    
             <Pomocne>
                 <Otazka>Uveďte název R-věty, která popisují nebezpečnost kyseliny sírové</Otazka>
                 <Odpoved>R35</Odpoved>

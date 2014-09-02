@@ -26,15 +26,18 @@ public class Quest extends Item {
     private final List<QuestItem> data;
     private final HelpQuest help;
     private final FinalQuest finalQuest;
+    private final String description, ending;
 
-    public Quest(List<QuestItem> data, HelpQuest help, FinalQuest finalQuest) {
+    public Quest(List<QuestItem> data, HelpQuest help, FinalQuest finalQuest, final String description, final String ending) {
         this.data = data;
         this.help = help;
         this.finalQuest = finalQuest;
+        this.description = description;
+        this.ending = ending;
     }
 
     public void makeActive() {
-        FlowManager.getInstance().displayQuest(this);
+        FlowManager.getInstance().makeQuestActive(this);
     }
 
     public void executeAction(final String action) {
@@ -187,5 +190,13 @@ public class Quest extends Item {
             }
         }
         return result;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getEnding() {
+        return ending;
     }
 }

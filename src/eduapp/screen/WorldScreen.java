@@ -41,9 +41,15 @@ public class WorldScreen extends AbstractAppState {
     private boolean left, right, up, down;
     private ActionListener keyListener;
     private Camera cam;
+    private String levelName;
 
     public void setLevelName(String levelName) {
+        this.levelName = levelName;
         currentLevel = Level.loadLevel(levelName, AppContext.getApp().getAssetManager(), AppContext.getApp().getInputManager());
+    }
+
+    public String getLevelName() {
+        return levelName;
     }
 
     @Override

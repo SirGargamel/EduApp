@@ -32,7 +32,9 @@ public class XmlQuest extends XmlEntity<Quest> {
     private static final String ITEM_CONVERSION = "Prevod";
     private static final String ITEM_COUNT = "Pocet";
     private static final String ITEM_DATA = "Data";
+    private static final String ITEM_DESCRIPTION = "Popis";
     private static final String ITEM_EQUATION = "Rovnice";
+    private static final String ITEM_ENDING = "Konec";
     private static final String ITEM_FINAL = "Final";
     private static final String ITEM_GROUPS = "Skupiny";    
     private static final String ITEM_MODE = "Mod";    
@@ -66,7 +68,10 @@ public class XmlQuest extends XmlEntity<Quest> {
         }
         final HelpQuest hq = generateHelpQuest(element.getElementsByTagName(ITEM_HELP).item(0));
         final FinalQuest fq = generateFinalQuest(element.getElementsByTagName(ITEM_FINAL).item(0));
-        final Quest result = new Quest(lines, hq, fq);
+        final Quest result = new Quest(
+                lines, hq, fq, 
+                extractNodeText(element, ITEM_DESCRIPTION),
+                extractNodeText(element, ITEM_ENDING));
         return result;
     }
 
@@ -133,6 +138,8 @@ public class XmlQuest extends XmlEntity<Quest> {
                 break;
             case ITEM_HELP:
             case ITEM_FINAL:
+            case ITEM_DESCRIPTION:
+            case ITEM_ENDING:
                 result = null;
                 break;
             default:
@@ -195,6 +202,6 @@ public class XmlQuest extends XmlEntity<Quest> {
     }
 
     private static String extractNodeText(Element e, String nodeName) {
-        return e.getElementsByTagName(nodeName).item(0).getTextContent();
+        return e.getElementsByTagName(nodeName).item(0).getTextContent().replace("\\n", "\n");
     }
 }

@@ -16,10 +16,19 @@ public class GuiQuest implements ScreenController {
 
     private Nifty nifty;
     private Quest quest;
+    private boolean descr, ending;
     private Element panelQuest;
 
     public void setQuest(Quest quest) {
         this.quest = quest;
+    }
+
+    public void displayDescription() {
+        descr = true;
+    }
+    
+    public void displatEnding() {
+        ending = true;
     }
 
     @Override
@@ -30,7 +39,15 @@ public class GuiQuest implements ScreenController {
 
     @Override
     public void onStartScreen() {
-        buildQuestText();
+        if (descr) {
+            buildSimpleText(quest.getDescription());
+            descr = false;
+        } else if (ending) {
+            buildSimpleText(quest.getEnding());
+            ending = false;
+        } else {
+            buildQuestText();
+        }
     }
 
     private void buildQuestText() {
@@ -44,7 +61,7 @@ public class GuiQuest implements ScreenController {
         tb.text("-- Seznam úkolů --");
         tb.style("baseB");
         tb.alignCenter();
-        tb.color("#ffffffff");        
+        tb.color("#ffffffff");
         tb.build(nifty, current, panelQuest);
         for (QuestItem qi : quest.getData()) {
             if (!qi.isFinished()) {
@@ -63,6 +80,21 @@ public class GuiQuest implements ScreenController {
         }
 
         panelQuest.layoutElements();
+    }
+
+    private void buildSimpleText(final String text) {
+        for (Element e : panelQuest.getElements()) {
+            e.markForRemoval();
+        }
+        
+        TextBuilder tb;
+        tb = new TextBuilder();
+        tb.text(text);
+        tb.style("base");
+        tb.alignCenter();
+        tb.marginLeft("5px");
+        tb.color("#ffffffff");
+        tb.build(nifty, nifty.getCurrentScreen(), panelQuest);
     }
 
     @Override

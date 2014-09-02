@@ -37,7 +37,7 @@ public class GuiMainMenu implements ScreenController {
         FlowManager.getInstance().loadLevel(listBox.getFocusItem());
     }
 
-    public void setLevelCount(int levelCount) {
+    public void setLevelCount(int finishedLevelCount) {
         final File f = new File("data\\levels");
         int counter = 0;
         for (String s : f.list(new FilenameFilter() {
@@ -48,7 +48,7 @@ public class GuiMainMenu implements ScreenController {
         })) {
             listBox.addItem(s.replace(LEVEL_EXTENSION, ""));
             counter++;
-            if (counter >= levelCount) {
+            if (counter > finishedLevelCount) {
                 break;
             }
         }

@@ -1,5 +1,7 @@
 package eduapp.level.quest;
 
+import eduapp.FlowManager;
+
 /**
  *
  * @author Petr Ječmen
@@ -12,6 +14,14 @@ public class FinalQuest extends EquationQuest {
         super(Mode.ikony, null);           
         finished = false; 
         this.itemCount = itemCount;
+    }
+    
+    @Override
+    public void setResult(boolean finished) {
+        if (finished) {
+            setFinished(true);
+            FlowManager.getInstance().displayQuestFinish();
+        }
     }
 
     @Override
