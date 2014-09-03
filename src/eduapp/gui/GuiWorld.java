@@ -106,7 +106,7 @@ public class GuiWorld implements ScreenController {
         this.player = player;
         refreshInventoryItems();
     }
-    
+
     public void setItemCout(final int itemCount) {
         this.itemCount = itemCount;
         refreshInventoryItems();
@@ -116,17 +116,17 @@ public class GuiWorld implements ScreenController {
         if (player != null) {
             final List<String> items = player.getAllItems();
             final ItemRegistry itemRegistry = AppContext.getItemRegistry();
-            
+
             for (Element e : panelInv.getElements()) {
                 e.markForRemoval();
-            }      
+            }
             nifty.executeEndOfFrameElementActions();
-            
+
             final int sizeFullItem = 100 / itemCount;
             final String sizeItem = Integer.toString(sizeFullItem - SIZE_GAP);
-            
+
             PanelBuilder pb;
-            for (String s : items) {                
+            for (String s : items) {
                 pb = new PanelBuilder("gap" + s);
                 pb.width(Integer.toString(SIZE_GAP) + "%");
                 pb.build(nifty, nifty.getCurrentScreen(), panelInv);
@@ -143,6 +143,7 @@ public class GuiWorld implements ScreenController {
 
                 final ImageBuilder ib = new ImageBuilder("image" + s);
                 ib.filename(Utils.generateIconFilename(s));
+                ib.height("100%");
                 pb.image(ib);
 
                 pb.build(nifty, nifty.getCurrentScreen(), panelInv);
