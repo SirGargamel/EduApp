@@ -120,13 +120,25 @@ public class XmlQuest extends XmlEntity<Quest> {
                 for (int i = 0; i < nl.getLength(); i++) {
                     eq = new Equation();
                     text = nl.item(i).getTextContent();
-                    split = text.substring(text.indexOf(SEPARATOR_QUESTION_OUT) + 1).split(SEPARATOR_QUESTION_ITEM);
-                    for (String s : split) {
-                        eq.addOutput(s);
-                    }
                     split = text.substring(0, text.indexOf(SEPARATOR_QUESTION_OUT)).split(SEPARATOR_QUESTION_ITEM);
                     for (String s : split) {
                         eq.addInput(s);
+                    }
+                    final int index = text.indexOf(SEPARATOR_BASIC);
+                    if (index >= 0) {
+                        split = text.substring(text.indexOf(SEPARATOR_QUESTION_OUT) + 1, index).split(SEPARATOR_QUESTION_ITEM);
+                        for (String s : split) {
+                            eq.addOutput(s);
+                        }
+                        split = text.substring(text.indexOf(SEPARATOR_BASIC) + 1).split(SEPARATOR_BASIC);
+                        for (String s : split) {
+                            eq.addCatalyst(s);
+                        }
+                    } else {
+                        split = text.substring(text.indexOf(SEPARATOR_QUESTION_OUT) + 1).split(SEPARATOR_QUESTION_ITEM);
+                        for (String s : split) {
+                            eq.addOutput(s);
+                        }
                     }
                     dq.addEquation(eq);
                 }
@@ -140,7 +152,7 @@ public class XmlQuest extends XmlEntity<Quest> {
                 break;
             case ITEM_PEXESO:
                 result = new PexesoQuest(
-                        extractNodeText(e, ITEM_DATA).split(SEPARATOR_BASIC), 
+                        extractNodeText(e, ITEM_DATA).split(SEPARATOR_BASIC),
                         extractNodeText(e, ITEM_REWARD));
                 break;
             case ITEM_HELP:
@@ -195,14 +207,26 @@ public class XmlQuest extends XmlEntity<Quest> {
         for (int i = 0; i < nl.getLength(); i++) {
             eq = new Equation();
             text = nl.item(i).getTextContent();
-            split = text.substring(text.indexOf(SEPARATOR_QUESTION_OUT) + 1).split(SEPARATOR_QUESTION_ITEM);
-            for (String s : split) {
-                eq.addOutput(s);
-            }
             split = text.substring(0, text.indexOf(SEPARATOR_QUESTION_OUT)).split(SEPARATOR_QUESTION_ITEM);
             for (String s : split) {
                 eq.addInput(s);
             }
+            final int index = text.indexOf(SEPARATOR_BASIC);
+                    if (index >= 0) {
+                        split = text.substring(text.indexOf(SEPARATOR_QUESTION_OUT) + 1, index).split(SEPARATOR_QUESTION_ITEM);
+                        for (String s : split) {
+                            eq.addOutput(s);
+                        }
+                        split = text.substring(text.indexOf(SEPARATOR_BASIC) + 1).split(SEPARATOR_BASIC);
+                        for (String s : split) {
+                            eq.addCatalyst(s);
+                        }
+                    } else {
+                        split = text.substring(text.indexOf(SEPARATOR_QUESTION_OUT) + 1).split(SEPARATOR_QUESTION_ITEM);
+                        for (String s : split) {
+                            eq.addOutput(s);
+                        }
+                    }
             result.addEquation(eq);
         }
         return result;

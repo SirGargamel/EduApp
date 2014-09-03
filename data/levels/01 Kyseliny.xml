@@ -136,7 +136,7 @@
             <Ukol>DisplayC1</Ukol>            	
         </Akce>
         <Akce id="tG1">
-            <Teleso>table1</Teleso>
+            <Teleso>table2</Teleso>
             <Cil>hlavniQuest</Cil>
             <Ukol>DisplayG1</Ukol>            	
         </Akce>
@@ -156,7 +156,7 @@
             <Ukol>DisplayG4</Ukol>            	
         </Akce>
         <Akce id="tD1">
-            <Teleso>shelf4</Teleso>
+            <Teleso>table1</Teleso>
             <Cil>hlavniQuest</Cil>
             <Ukol>DisplayD1</Ukol>            	
         </Akce>
@@ -166,7 +166,7 @@
             <Ukol>DisplayH</Ukol>            	
         </Akce>
         <Akce id="tF">
-            <Teleso>table3</Teleso>
+            <Teleso>table1</Teleso>
             <Cil>hlavniQuest</Cil>
             <Ukol>DisplayF</Ukol>            	
         </Akce>
@@ -214,7 +214,16 @@
                 <Data>hnojiva;leciva;elektrolyt;cisteni</Data>
                 <Odmena>so3;so3</Odmena>
                 <Dite>tP1</Dite>
-            </Pexeso>                    
+            </Pexeso>
+            <Rovnice id="d1">
+                <Mod>text</Mod>
+                <Odmena>h2so4</Odmena>
+                <Rovnice>s+o2=so2;v2o5;sio2</Rovnice>
+                <Rovnice>so2+o2=so3;k2so4</Rovnice>
+                <Rovnice>so3+h2o=h2so4</Rovnice>                
+                <Extra></Extra>
+                <Dite>tD1</Dite>
+            </Rovnice>                    
             <Pomocne>
                 <Otazka>Uveďte název R-věty, která popisují nebezpečnost kyseliny sírové</Otazka>
                 <Odpoved>R35</Odpoved>
@@ -222,9 +231,9 @@
                 <Odpoved>H314</Odpoved>
             </Pomocne>  
             <Final>
-                <Pocet>10</Pocet>
-                <Rovnice>s+o2=so2</Rovnice>
-                <Rovnice>so2+o2=so3</Rovnice>
+                <Pocet>12</Pocet>
+                <Rovnice>s+o2=so2;v2o5;sio2</Rovnice>
+                <Rovnice>so2+o2=so3;k2so4</Rovnice>
                 <Rovnice>so3+h2o=h2so4</Rovnice>
             </Final>
             <!--         

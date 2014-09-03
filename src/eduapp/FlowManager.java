@@ -325,16 +325,6 @@ public class FlowManager implements Observer {
         displayMessage(message, SCREEN_WORLD);
     }
 
-    public void finishDrag(boolean result) {
-        final String message;
-        if (result) {
-            message = "Úspěšně jste doplnili rovnici.";
-        } else {
-            message = "Rovnice nebyla doplněna správně.";
-        }
-        displayMessage(message, SCREEN_WORLD);
-    }
-
     public void finishQuestItem(final String text) {
         displayMessage(text, SCREEN_WORLD);
     }

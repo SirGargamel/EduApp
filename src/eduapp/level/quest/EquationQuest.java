@@ -68,11 +68,12 @@ public class EquationQuest extends QuestItem {
 
     public static class Equation {
 
-        private final List<String> in, out;
+        private final List<String> in, out, catalysts;
 
         public Equation() {
             in = new LinkedList<>();
             out = new LinkedList<>();
+            catalysts = new LinkedList<>();
         }
 
         public void addInput(final String item) {
@@ -82,6 +83,10 @@ public class EquationQuest extends QuestItem {
         public void addOutput(final String item) {
             out.add(item);
         }
+        
+        public void addCatalyst(final String item) {
+            catalysts.add(item);
+        }
 
         public List<String> getInputs() {
             return in;
@@ -89,6 +94,10 @@ public class EquationQuest extends QuestItem {
         
         public List<String> getOutputs() {
             return out;
+        }
+
+        public List<String> getCatalysts() {
+            return catalysts;
         }
     }
 }
