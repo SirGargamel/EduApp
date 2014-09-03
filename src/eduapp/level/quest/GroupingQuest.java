@@ -60,7 +60,7 @@ public class GroupingQuest extends QuestItem {
         if (group != null) {
             return group.getParam(ItemParameter.DESCRIPTION);
         } else {
-            return "Rozřaďtě prvky podle toho, jestli danou vlastnost mají nebo ne - " + groupId;
+            return "Rozřaďtě prvky podle toho, jestli danou vlastnost mají nebo ne - " + itemRegistry.get("description").getParam(groupId);
         }
     }
 

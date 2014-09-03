@@ -381,7 +381,7 @@
             <link>Odkazy</link>
             <hori>Hořlavina</hori>
             <toxic>Žíravina</toxic>
-            <rozp>Rozpustná ve vodě</rozp>
+            <rozp>Rozpustný ve vodě</rozp>
         </Vec>
         <Vec id="ikony">
             <toxic>toxic.png</toxic>
