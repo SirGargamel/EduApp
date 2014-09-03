@@ -195,11 +195,13 @@ public class Level {
 
         // check for action triggers
         String msg = null;
-        for (Trigger t : activeTriggers) {
-            if (t instanceof ActionTrigger) {
-                // show icon
-                msg = FlowManager.getInstance().getCurrentQuest().findQuestItem(((ActionTrigger) t).description()).toNiftyString();
-                break;
+        if (FlowManager.getInstance().getCurrentQuest() != null) {            
+            for (Trigger t : activeTriggers) {
+                if (t instanceof ActionTrigger) {
+                    // show icon
+                    msg = FlowManager.getInstance().getCurrentQuest().findQuestItem(((ActionTrigger) t).description()).toNiftyString();
+                    break;
+                }
             }
         }
 
