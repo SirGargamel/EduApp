@@ -1,6 +1,5 @@
 package eduapp;
 
-import eduapp.level.item.ItemParameter;
 import eduapp.level.Player;
 import com.jme3.app.state.AppState;
 import de.lessvoid.nifty.Nifty;
@@ -8,6 +7,7 @@ import eduapp.gui.GuiConversion;
 import eduapp.gui.GuiDescription;
 import eduapp.gui.GuiDictionary;
 import eduapp.gui.GuiEquation;
+import eduapp.gui.GuiGroups;
 import eduapp.gui.GuiMainMenu;
 import eduapp.gui.GuiPexeso;
 import eduapp.gui.GuiWorld;
@@ -25,7 +25,6 @@ import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
 import eduapp.level.quest.Question;
 import eduapp.level.trigger.Trigger;
-import eduapp.screen.GroupScreen;
 import eduapp.screen.StartScreen;
 import eduapp.screen.WorldScreen;
 import java.io.BufferedOutputStream;
@@ -58,7 +57,6 @@ public class FlowManager implements Observer {
     private static final FlowManager instance;
     private final WorldScreen worldScreen;
     private final StartScreen startScreen;
-    private final GroupScreen groupScreen;
     private Player player;
     private Nifty nifty;
     private Quest currentQuest;
@@ -73,7 +71,6 @@ public class FlowManager implements Observer {
     private FlowManager() {
         worldScreen = new WorldScreen();
         startScreen = new StartScreen();
-        groupScreen = new GroupScreen();
 
         AppContext.getApp().getStateManager().attach(startScreen);
         currentState = startScreen;
@@ -161,17 +158,13 @@ public class FlowManager implements Observer {
         currentState = startScreen;
     }
 
-    public void gotoGroupScreen(final GroupingQuest group) {
-        groupScreen.setGrouping(group.getGroup());
-        groupScreen.setItems(group.getItems());
+    public void displayGroupScreen(final GroupingQuest group) {
+        enableState(false);
 
-        lastScreens.push(nifty.getCurrentScreen().getScreenId());
-        AppContext.getApp().getStateManager().detach(currentState);
-        AppContext.getApp().getStateManager().attach(groupScreen);
-        currentState = groupScreen;
-        groupScreen.setEnabled(true);
+        final GuiGroups control = (GuiGroups) nifty.getScreen(SCREEN_GROUPS).getScreenController();
+        control.setData(group);
 
-        displayMessage(group.getGroup().getParam(ItemParameter.DESCRIPTION), SCREEN_GROUPS);
+        storeActualScreen();
         nifty.gotoScreen(SCREEN_GROUPS);
     }
 
@@ -270,6 +263,7 @@ public class FlowManager implements Observer {
         storeActualScreen();
         nifty.gotoScreen(SCREEN_DRAG);
     }
+
     public void displayPexesoScreen(final PexesoQuest quest) {
         enableState(false);
         final GuiPexeso control = (GuiPexeso) nifty.getScreen(SCREEN_PEXESO).getScreenController();
@@ -324,13 +318,6 @@ public class FlowManager implements Observer {
         }
 
         enableState(true);
-    }
-
-    public void finishGroupScreen() {
-        final int[] results = groupScreen.checkGrouping();
-        final String message = "Zařadili jste správně " + results[0] + " předmětů z " + results[1];
-        gotoWorldScreen();
-        displayMessage(message, SCREEN_WORLD);
     }
 
     public void finishConversion(int good, int total) {

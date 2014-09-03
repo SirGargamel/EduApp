@@ -14,7 +14,7 @@ public class GroupingQuest extends QuestItem {
 
     public GroupingQuest(String groupId, String data, String reward) {
         super(reward);
-        
+
         this.groupId = groupId;
         final String[] split = data.split(ItemParameter.SPLITTER);
         itemList = new String[split.length];
@@ -40,6 +40,10 @@ public class GroupingQuest extends QuestItem {
         return items;
     }
 
+    public String getGroupId() {
+        return groupId;
+    }
+
     public void setResult(int value) {
         this.correct = value;
         if (correct / (double) itemList.length >= RATIO_SUCCESS) {
@@ -53,8 +57,11 @@ public class GroupingQuest extends QuestItem {
     @Override
     public String toNiftyString() {
         initGroup();
-                
-        return group.getParam(ItemParameter.DESCRIPTION);
+        if (group != null) {
+            return group.getParam(ItemParameter.DESCRIPTION);
+        } else {
+            return "Rozřaďtě prvky podle toho, jestli danou vlastnost mají nebo ne - " + groupId;
+        }
     }
 
     @Override

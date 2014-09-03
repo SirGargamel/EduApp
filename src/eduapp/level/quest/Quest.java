@@ -158,7 +158,7 @@ public class Quest extends Item {
     }
 
     private void displayGroups(GroupingQuest group) {
-        FlowManager.getInstance().gotoGroupScreen(group);
+        FlowManager.getInstance().displayGroupScreen(group);
     }
 
     private void displayConversion(ConversionQuest conversion) {

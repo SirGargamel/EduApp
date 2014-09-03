@@ -1,29 +1,235 @@
 package eduapp.gui;
 
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.builder.EffectBuilder;
+import de.lessvoid.nifty.builder.PanelBuilder;
+import de.lessvoid.nifty.builder.TextBuilder;
+import de.lessvoid.nifty.controls.Draggable;
+import de.lessvoid.nifty.controls.Droppable;
+import de.lessvoid.nifty.controls.DroppableDropFilter;
+import de.lessvoid.nifty.controls.dragndrop.builder.DraggableBuilder;
+import de.lessvoid.nifty.controls.dragndrop.builder.DroppableBuilder;
+import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
-import eduapp.FlowManager;
+import eduapp.AppContext;
+import eduapp.ItemRegistry;
+import eduapp.level.item.Item;
+import eduapp.level.item.ItemParameter;
+import eduapp.level.quest.GroupingQuest;
+import java.util.List;
 
 /**
  *
  * @author Petr Ječmen
  */
-public class GuiGroups implements ScreenController {
+public class GuiGroups implements ScreenController, DroppableDropFilter {
+
+    private static final String SIZE_UNIT = "px";
+    private static final int SIZE_GAP = 5;
+    private static final int COUNT_ITEMS_PER_LINE = 5;
+    private static final int SIZE_ITEM_HEIGHT = 32;
+    private GroupingQuest gq;
+    private Element groups, items;
+    private Nifty nifty;
+
+    public void setData(GroupingQuest gq) {
+        this.gq = gq;
+    }
 
     @Override
     public void bind(Nifty nifty, Screen screen) {
+        this.nifty = nifty;
+        groups = nifty.getCurrentScreen().findElementByName("panelGroups");
+        items = nifty.getCurrentScreen().findElementByName("panelItems");
     }
 
     @Override
     public void onStartScreen() {
+        for (Element e : groups.getElements()) {
+            e.markForRemoval();
+        }
+        for (Element e : items.getElements()) {
+            e.markForRemoval();
+        }
+        nifty.executeEndOfFrameElementActions();
+
+        final Screen currentScreen = nifty.getCurrentScreen();
+
+        String[] groupNames;
+        if (gq.getGroup() == null) {
+            final ItemRegistry ir = AppContext.getItemRegistry();
+            final String groupName = ir.get("description").getParam(gq.getGroupId()).toLowerCase();
+            groupNames = new String[]{
+                "Je " + groupName,
+                "Není " + groupName};
+        } else {
+            groupNames = gq.getGroup().getParam(gq.getGroupId()).split(";");
+        }
+        final int itemCount = gq.getItems().length;
+        final int groupCount = groupNames.length;
+        final int groupWidth = (groups.getWidth() - (groupCount + 1) * SIZE_GAP) / groupCount;
+        final int itemWidth = (items.getWidth() - (COUNT_ITEMS_PER_LINE + 1) * SIZE_GAP) / COUNT_ITEMS_PER_LINE;
+        final int itemLineCount = (int) Math.ceil(itemCount / (double) COUNT_ITEMS_PER_LINE);
+        final int itemPanelHeight = (items.getHeight() - (itemLineCount + 1) * SIZE_GAP) / itemLineCount;
+
+        DroppableBuilder db;
+        PanelBuilder pb;
+        TextBuilder tb;
+        EffectBuilder eb;
+        Element p = null, e;
+        pb = new PanelBuilder("gap");
+        pb.width(buildSize(SIZE_GAP));
+        pb.build(nifty, currentScreen, groups);
+        for (String s : groupNames) {
+            pb = new PanelBuilder(s);
+            pb.childLayoutVertical();
+            pb.alignCenter();
+            pb.width(buildSize(groupWidth));
+            tb = new TextBuilder("text" + s);
+            tb.text(s);
+            tb.style("base");
+            tb.alignCenter();
+            pb.text(tb);
+            p = pb.build(nifty, currentScreen, groups);
+
+            for (int i = 0; i < itemCount; i++) {
+                db = new DroppableBuilder(s + "-" + Integer.toString(i));
+                eb = new EffectBuilder("border");
+                eb.effectParameter("color", "#000000");
+                eb.effectParameter("border", "1px");
+                db.onActiveEffect(eb);
+
+                db.childLayoutCenter();
+                db.alignCenter();
+                db.width(buildSize(itemWidth));
+                db.height(buildSize(SIZE_ITEM_HEIGHT));
+                db.build(nifty, currentScreen, p).getNiftyControl(Droppable.class).addFilter(this);
+
+                pb = new PanelBuilder("gap" + s + "-" + Integer.toString(i));
+                pb.height("2px");
+                pb.build(nifty, currentScreen, p);
+            }
+            pb = new PanelBuilder("gap" + s);
+            pb.width(buildSize(SIZE_GAP));
+            pb.build(nifty, currentScreen, groups);
+        }
+
+        int counter = COUNT_ITEMS_PER_LINE;
+        DraggableBuilder dgb;
+        String id;
+        pb = new PanelBuilder("gap2");
+        pb.width(buildSize(SIZE_GAP));
+        pb.build(nifty, currentScreen, items);
+        for (Item i : gq.getItems()) {
+            id = i.getId();
+            if (counter >= COUNT_ITEMS_PER_LINE) {
+                pb = new PanelBuilder("itemPanel" + id);
+                pb.childLayoutHorizontal();
+                pb.height(buildSize(itemPanelHeight));
+                p = pb.build(nifty, currentScreen, items);
+                counter = 0;
+            }
+            counter++;
+
+            db = new DroppableBuilder("drop" + id);
+            db.width(buildSize(itemWidth));
+            db.height(buildSize(SIZE_ITEM_HEIGHT));
+            db.childLayoutCenter();
+            e = db.build(nifty, currentScreen, p);
+            e.getNiftyControl(Droppable.class).addFilter(this);
+
+            dgb = new DraggableBuilder(id);
+            dgb.width(buildSize(itemWidth));
+            dgb.height(buildSize(SIZE_ITEM_HEIGHT));
+            eb = new EffectBuilder("border");
+            eb.effectParameter("color", "#ffffff");
+            eb.effectParameter("border", "1px");
+            dgb.onActiveEffect(eb);
+            tb = new TextBuilder("text" + id);
+            tb.text(i.getParam(ItemParameter.NAME));
+            tb.style("base");
+            dgb.text(tb);
+            dgb.childLayoutCenter();
+            dgb.build(nifty, currentScreen, e);
+
+            pb = new PanelBuilder("gap" + id);
+            pb.width(buildSize(SIZE_GAP));
+            pb.build(nifty, currentScreen, items);
+        }
     }
 
     @Override
     public void onEndScreen() {
     }
 
-    public void ok() {        
-        FlowManager.getInstance().finishGroupScreen();
+    public void ok() {
+        final ItemRegistry ir = AppContext.getItemRegistry();
+        final List<Element> elements = groups.getElements();
+        final String paramId = gq.getGroupId();
+        int correctCount = 0;
+        String itemId, groupId, val;
+        Item item;
+        Element element;
+        if (gq.getGroup() != null) {
+            for (Element e : elements) {
+                groupId = e.getId();
+                for (Element el : e.getElements()) {
+                    element = extractElement(el);
+                    if (element != null) {
+                        itemId = element.getId();
+                        item = ir.get(itemId);
+                        val = item.getParam(paramId);
+                        if (val.contains(groupId)) {
+                            correctCount++;
+                        }
+                    }
+                }
+            }
+        } else {
+            final Element has = elements.get(1);
+            final Element hasNot = elements.get(3);
+            for (Element e : has.getElements()) {
+                element = extractElement(e);
+                if (element != null) {
+                    itemId = element.getId();
+                    item = ir.get(itemId);
+                    val = item.getParam(paramId);
+                    if (val != null) {
+                        correctCount++;
+                    }
+                }
+            }
+            for (Element e : hasNot.getElements()) {
+                element = extractElement(e);
+                if (element != null) {
+                    itemId = element.getId();
+                    item = ir.get(itemId);
+                    val = item.getParam(paramId);
+                    if (val == null) {
+                        correctCount++;
+                    }
+                }
+            }
+        }
+
+        gq.setResult(correctCount);
+    }
+
+    private Element extractElement(final Element container) {
+        Element result = null;
+        if (!container.getElements().isEmpty() && !container.getElements().get(0).getElements().isEmpty()) {
+            result = container.getElements().get(0).getElements().get(0);
+        }
+        return result;
+    }
+
+    private String buildSize(final int size) {
+        return Integer.toString(size).concat(SIZE_UNIT);
+    }
+    
+    @Override
+    public boolean accept(Droppable dropSource, Draggable draggedItem, Droppable droppedAt) {
+        return droppedAt.getElement().getElements().get(0).getElements().isEmpty();
     }
 }

@@ -116,7 +116,7 @@
         </Pohyb>
         <!-- -->
         <Akce id="tP1">
-            <Teleso>table1</Teleso>
+            <Teleso>shelf3</Teleso>
             <Cil>hlavniQuest</Cil>
             <Ukol>DisplayP1</Ukol>            	
         </Akce>
@@ -136,9 +136,24 @@
             <Ukol>DisplayC1</Ukol>            	
         </Akce>
         <Akce id="tG1">
-            <Teleso>shelf3</Teleso>
+            <Teleso>table1</Teleso>
             <Cil>hlavniQuest</Cil>
             <Ukol>DisplayG1</Ukol>            	
+        </Akce>
+        <Akce id="tG2">
+            <Teleso>table2</Teleso>
+            <Cil>hlavniQuest</Cil>
+            <Ukol>DisplayG2</Ukol>            	
+        </Akce>
+        <Akce id="tG3">
+            <Teleso>table2</Teleso>
+            <Cil>hlavniQuest</Cil>
+            <Ukol>DisplayG3</Ukol>            	
+        </Akce>
+        <Akce id="tG4">
+            <Teleso>table2</Teleso>
+            <Cil>hlavniQuest</Cil>
+            <Ukol>DisplayG4</Ukol>            	
         </Akce>
         <Akce id="tD1">
             <Teleso>shelf4</Teleso>
@@ -174,8 +189,26 @@
             <Skupiny id="g1">
                 <Otazka>skup</Otazka>
                 <Data>s;so2;so3;h2so4;h2o;v2o5;k2so4;sio2</Data>
-                <Odmena>k2so4</Odmena>
+                <Odmena>k2so4;s</Odmena>
                 <Dite>tG1</Dite>
+            </Skupiny>
+            <Skupiny id="g2">
+                <Otazka>hori</Otazka>
+                <Data>s;so2;so3;h2so4;h2o;v2o5;k2so4;sio2</Data>
+                <Odmena>sio2</Odmena>
+                <Dite>tG2</Dite>
+            </Skupiny>
+            <Skupiny id="g3">
+                <Otazka>toxic</Otazka>
+                <Data>s;so2;so3;h2so4;h2o;v2o5;k2so4;sio2</Data>
+                <Odmena>h2o</Odmena>
+                <Dite>tG3</Dite>
+            </Skupiny>
+            <Skupiny id="g4">
+                <Otazka>rozp</Otazka>
+                <Data>s;so2;so3;h2so4;h2o;v2o5;k2so4;sio2</Data>
+                <Odmena>v2o5</Odmena>
+                <Dite>tG4</Dite>
             </Skupiny>
             <Pexeso id="p1">
                 <Data>hnojiva;leciva;elektrolyt;cisteni</Data>
@@ -215,36 +248,39 @@
     <Elementy id="dic">
         <Vec id="h2so4">
             <jmeno>Kyselina sírová</jmeno>
-            <skup>kapalné</skup>
+            <skup>kapalné</skup>            
             <vzorec>H2SO4</vzorec>
             <link>http://cs.wikipedia.org/wiki/Kyselina_sírová</link>
             <vodi/>
+            <rozp/>
         </Vec>     
         <Vec id="sio2">
             <jmeno>Oxid křemičitý</jmeno>
             <skup>pevné</skup>
-            <vzorec>SiO2</vzorec>
+            <vzorec>SiO2</vzorec>            
             <link>http://cs.wikipedia.org/wiki/Oxid_křemičitý</link>
         </Vec>   
         <Vec id="so3">
             <jmeno>Oxid sírový</jmeno>
             <skup>pevné; kapalné</skup>
-            <vzorec>SO3</vzorec>
+            <vzorec>SO3</vzorec>            
             <link>http://cs.wikipedia.org/wiki/Oxid_sírový</link>
             <toxic/>
+            <rozp/>
         </Vec>
         <Vec id="so2">
             <jmeno>Oxid siřičitý</jmeno>
-            <skup>plynné; kapalné</skup>
+            <skup>plynné; kapalné</skup>            
             <vzorec>SO2</vzorec>            
             <link>http://cs.wikipedia.org/wiki/Oxid_siřičitý</link>
             <hori/>
             <toxic/>
+            <rozp/>
         </Vec>
         <Vec id="v2o5">
             <jmeno>Oxid vanadičný</jmeno>
             <skup>pevné</skup>
-            <vzorec>V2O5</vzorec>
+            <vzorec>V2O5</vzorec>            
             <link>http://cs.wikipedia.org/wiki/Oxid_vanadičný</link>
             <toxic/>
         </Vec>
@@ -254,12 +290,14 @@
             <vzorec>S</vzorec>            
             <link>http://cs.wikipedia.org/wiki/Síra;http://cs.wikipedia.org/wiki/Síra_(minerál)</link>
             <hori/>
+            <rozp/>
         </Vec>          
         <Vec id="k2so4">
             <jmeno>Síran draselný</jmeno>
             <skup>pevné</skup>
             <vzorec>K2SO4</vzorec>
             <link>http://cs.wikipedia.org/wiki/Síran_draselný</link>
+            <rozp/>
         </Vec>    
         <Vec id="h2o">
             <jmeno>Voda</jmeno>
@@ -267,6 +305,7 @@
             <vzorec>H2O</vzorec>            
             <link>http://cs.wikipedia.org/wiki/Voda</link>
             <vodi/>
+            <rozp/>
         </Vec>    
         <Vec id="o2">
             <jmeno>Kyslík</jmeno>
@@ -328,8 +367,8 @@
     <Misc id="groups">
         <Vec id="skup">
             <popis>Zařaďte prvky do skupin dle jejich skupenství</popis>
-            <skup>plynné; kapalné; pevné</skup>        
-        </Vec>
+            <skup>plynné;kapalné;pevné</skup>        
+        </Vec>        
         <Vec id="vzorecJmeno">
             <popis>Převeďte vzorec prvku na jeho jméno</popis>
             <z>vzorec</z>
@@ -339,7 +378,10 @@
             <jmeno>Jméno</jmeno>
             <vzorec>Chemický vzorec</vzorec>
             <skup>Skupenství</skup>
-            <link>Odkazy</link>        
+            <link>Odkazy</link>
+            <hori>Hořlavina</hori>
+            <toxic>Žíravina</toxic>
+            <rozp>Rozpustná ve vodě</rozp>
         </Vec>
         <Vec id="ikony">
             <toxic>toxic.png</toxic>
