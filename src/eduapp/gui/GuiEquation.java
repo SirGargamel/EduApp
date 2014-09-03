@@ -270,9 +270,9 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
         for (int i = 0; i < data.size() - 1; i++) {
             text = data.get(i);
             if (input) {
-                db = new DroppableBuilder(DROP_ID_IN.concat(text));
+                db = new DroppableBuilder(DROP_ID_IN.concat(text).concat(Integer.toString(i)));
             } else {
-                db = new DroppableBuilder(DROP_ID_OUT.concat(text));
+                db = new DroppableBuilder(DROP_ID_OUT.concat(text).concat(Integer.toString(i)));
             }
             db.width(buildSize(itemWidth));
             db.height(buildSize(itemHeight));
@@ -292,7 +292,7 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
             pb.childLayoutCenter();
             d = pb.build(nifty, current, panel);
 
-            tb = new TextBuilder(TEXT_ID.concat(ADD));
+            tb = new TextBuilder(TEXT_ID.concat(ADD).concat(text).concat(Integer.toString(i)));
             tb.text(ADD);
             tb.style("base");
             tb.color("#ffffff");
@@ -349,7 +349,7 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
             pb.build(nifty, current, e);
         }
 
-        tb = new TextBuilder(TEXT_ID.concat(ADD).concat(SPLITTER));
+        tb = new TextBuilder(TEXT_ID.concat(SPLITTER));
         tb.text(SPLITTER);
         tb.style("base");
         tb.color("#ffffff");
