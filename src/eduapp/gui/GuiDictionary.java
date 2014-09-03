@@ -36,7 +36,7 @@ public class GuiDictionary implements ScreenController {
     private static final String TAG_ICONS = "ikony";
     private static final String SIZE_LINE_HEIGHT = "20";
     private static final String[] DISPLAY_ELEMENT = new String[]{ItemParameter.FORMULA, ItemParameter.STATE};
-    private static final String[] ICONS = new String[]{ItemParameter.TOXIC, ItemParameter.FLAMABLE, ItemParameter.CHARGE};
+    private static final String[] ICONS = new String[]{ItemParameter.TOXIC, ItemParameter.FLAMABLE, ItemParameter.CHARGE, ItemParameter.SOLUBLE};
     private Nifty nifty;
     private ItemRegistry ir;
     private Element panelContent;
@@ -62,7 +62,6 @@ public class GuiDictionary implements ScreenController {
 
     @Override
     public void onStartScreen() {
-//        buildItemTree();
     }
 
     private void buildItemTree() {
@@ -72,13 +71,13 @@ public class GuiDictionary implements ScreenController {
         String val;
         for (Item it : ir.listItems()) {
             val = it.getParam(ItemParameter.SOURCE);
-            if (TAG_DICTIONARY.equals(val) || TAG_WORDBOOK.equals(val)) {
+            if ((TAG_DICTIONARY.equals(val) || TAG_WORDBOOK.equals(val)) && it.getParam(ItemParameter.NAME) != null) {
                 displayedItems.add(it);
             }
         }
         Collections.sort(displayedItems);
 
-        for (Item it : displayedItems) {
+        for (Item it : displayedItems) {            
             tree.addItem(new Line(it.getParam(ItemParameter.NAME)));
         }
 
@@ -216,7 +215,7 @@ public class GuiDictionary implements ScreenController {
         final String val = selectedItem.getParam(ItemParameter.DESCRIPTION);
         if (val != null) {
             pb = new PanelBuilder("p".concat(ItemParameter.DESCRIPTION));
-            pb.childLayoutCenter();            
+            pb.childLayoutCenter();
             pb.height("100%");
             p = pb.build(nifty, current, panelContent);
 

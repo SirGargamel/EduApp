@@ -387,6 +387,7 @@
             <toxic>toxic.png</toxic>
             <vodi>magnet.png</vodi>
             <hori>flamable.png</hori>
+            <rozp>water.png</rozp>
         </Vec>
     </Misc>
 </Level>

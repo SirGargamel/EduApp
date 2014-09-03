@@ -19,4 +19,5 @@ public interface ItemParameter {
     String FLAMABLE = "hori";
     String CHARGE = "vodi";
     String TOXIC = "toxic";
+    String SOLUBLE = "rozp";
 }

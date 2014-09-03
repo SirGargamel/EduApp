@@ -69,10 +69,12 @@ public class Item extends Observable implements Comparable<Item> {
     public int compareTo(Item o) {
         final String s1 = getParam(FIELD_COMPARE);
         final String s2 = o.getParam(FIELD_COMPARE);
-        if (s1 != null) {
+        if (s1 != null && s2 != null) {
             return s1.compareTo(s2);
+        } else if (s1 != null) {
+            return -1;
         } else if (s2 != null) {
-            return s2.compareTo(s1);
+            return 1;
         } else {
             return 0;
         }
