@@ -198,9 +198,10 @@ public class XmlQuest extends XmlEntity<Quest> {
 
     private FinalQuest generateFinalQuest(final Node node) {
         final Element e = (Element) node;
-        FinalQuest result = new FinalQuest(Integer.parseInt(extractNodeText(e, ITEM_COUNT)));
+        FinalQuest result = new FinalQuest();
 
         final NodeList nl = e.getElementsByTagName(ITEM_EQUATION);
+        int itemCount = 0;
         Equation eq;
         String text;
         String[] split;
@@ -216,19 +217,23 @@ public class XmlQuest extends XmlEntity<Quest> {
                         split = text.substring(text.indexOf(SEPARATOR_QUESTION_OUT) + 1, index).split(SEPARATOR_QUESTION_ITEM);
                         for (String s : split) {
                             eq.addOutput(s);
+                            itemCount++;
                         }
                         split = text.substring(text.indexOf(SEPARATOR_BASIC) + 1).split(SEPARATOR_BASIC);
                         for (String s : split) {
                             eq.addCatalyst(s);
+                            itemCount++;
                         }
                     } else {
                         split = text.substring(text.indexOf(SEPARATOR_QUESTION_OUT) + 1).split(SEPARATOR_QUESTION_ITEM);
                         for (String s : split) {
                             eq.addOutput(s);
+                            itemCount++;
                         }
                     }
             result.addEquation(eq);
         }
+        result.setItemCount(itemCount);
         return result;
     }
 

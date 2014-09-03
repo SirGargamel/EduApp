@@ -8,9 +8,9 @@ import eduapp.FlowManager;
  */
 public class FinalQuest extends EquationQuest {  
     
-    private final int itemCount;
+    private int itemCount;
 
-    public FinalQuest(final int itemCount) {
+    public FinalQuest() {
         super(Mode.ikony, null);           
         finished = false; 
         this.itemCount = itemCount;
@@ -33,6 +33,10 @@ public class FinalQuest extends EquationQuest {
     public String getTask() {
         return toNiftyString();
     }    
+
+    public void setItemCount(int itemCount) {
+        this.itemCount = itemCount;
+    }
 
     public int getItemCount() {
         return itemCount;
