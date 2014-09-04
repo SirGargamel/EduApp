@@ -124,6 +124,6 @@ public class GuiConversion implements ScreenController {
                 counter++;
             }
         }
-        FlowManager.getInstance().finishConversion(counter, quest.getItems().length);
+        quest.setResult(counter);
     }
 }

@@ -326,11 +326,6 @@ public class FlowManager implements Observer {
         enableState(true);
     }
 
-    public void finishConversion(int good, int total) {
-        final String message = "Převedli jste správně " + good + " věcí z " + total;
-        displayMessage(message, SCREEN_WORLD);
-    }
-
     public void finishQuestItem(final String text) {
         displayMessage(text, SCREEN_WORLD);
     }
