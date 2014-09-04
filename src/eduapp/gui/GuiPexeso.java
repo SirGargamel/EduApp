@@ -111,6 +111,9 @@ public class GuiPexeso implements ScreenController {
                 pb.interactOnClick("text(" + c.id + ")");
                 tb = new TextBuilder("t".concat(c.id));
                 tb.style("base");
+                tb.width("100%");
+                tb.height("100%");
+                tb.wrap(true);
                 tb.color(Color.BLACK);
                 tb.text(AppContext.getItemRegistry().get(c.id).getParam(ItemParameter.DESCRIPTION));
                 pb.text(tb);
