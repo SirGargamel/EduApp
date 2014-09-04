@@ -132,7 +132,7 @@
             <Ukol></Ukol>    
             <Jednou/>        			
         </Pohyb>
-        <!-- -->
+        <!-- quests -->
         <Akce id="tC1">
             <Teleso>questItem1</Teleso>
             <Cil>hlavniQuest</Cil>

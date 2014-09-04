@@ -10,15 +10,10 @@ import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.system.AppSettings;
 import de.lessvoid.nifty.Nifty;
-import eduapp.level.Level;
 import eduapp.loaders.LevelLoader;
 import eduapp.loaders.StateLoader;
 import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
@@ -27,7 +22,7 @@ import javax.imageio.ImageIO;
  */
 public class EduApp extends SimpleApplication {
 
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
 
     public static void main(String[] args) {
         try {
