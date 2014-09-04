@@ -220,7 +220,7 @@
                 <Dite>tG4</Dite>
             </Skupiny>
             <Pexeso id="p1">
-                <Data>hnojiva;leciva;elektrolyt;cisteni</Data>
+                <Data>hnojiva;leciva;elektrolyt;cisteni;plasty;vybusniny;barvy;papir</Data>
                 <Odmena>so3;so3</Odmena>
                 <Dite>tP1</Dite>
             </Pexeso>                    
@@ -243,8 +243,7 @@
                 <Odmena>h2so4</Odmena>
                 <Dite>tW1</Dite>
             </Web>
-            <!--         
-            
+            <!--                     
             <Rovnice id="d1">
                 <Mod>text</Mod>
                 <Odmena>h2so4</Odmena>
@@ -334,6 +333,18 @@
         </Vec>
         <Vec id="cisteni">
             <popis>Výroba čistících prostředků</popis>
+        </Vec>
+        <Vec id="plasty">
+            <popis>Výroba plastů</popis>
+        </Vec>
+        <Vec id="vybusniny">
+            <popis>Výroba výbušnin</popis>
+        </Vec>
+        <Vec id="barvy">
+            <popis>Výroba barev</popis>
+        </Vec>
+        <Vec id="papir">
+            <popis>V papírenském průmyslu</popis>
         </Vec>
     </Elementy>
     <Slovnik id="word">
