@@ -183,7 +183,7 @@ public class FlowManager implements Observer {
     public void displayQuestFinish() {
         enableState(false);
         final GuiQuest control = (GuiQuest) nifty.getScreen(SCREEN_QUEST).getScreenController();
-        control.displatEnding();
+        control.displayEnding();
         storeActualScreen();
         nifty.gotoScreen(SCREEN_QUEST);
         saveLevelState(worldScreen.getLevelName());

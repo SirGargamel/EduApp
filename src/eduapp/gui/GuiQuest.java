@@ -32,7 +32,7 @@ public class GuiQuest implements ScreenController {
         descr = true;
     }
 
-    public void displatEnding() {
+    public void displayEnding() {
         ending = true;
     }
 
