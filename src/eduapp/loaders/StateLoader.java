@@ -2,6 +2,7 @@ package eduapp.loaders;
 
 import com.jme3.asset.AssetInfo;
 import com.jme3.asset.AssetLoader;
+import com.jme3.asset.AssetNotFoundException;
 import eduapp.level.Player;
 import eduapp.level.Background;
 import eduapp.level.Model;
@@ -42,7 +43,7 @@ public class StateLoader implements AssetLoader {
 
     @Override
     public Object load(AssetInfo assetInfo) throws IOException {
-        int result = 1;
+        int result;
         try (BufferedReader in = new BufferedReader(new InputStreamReader(assetInfo.openStream()))) {
             result = in.read();
         }

@@ -2,6 +2,7 @@ package eduapp;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetKey;
+import com.jme3.asset.AssetNotFoundException;
 import com.jme3.asset.plugins.FileLocator;
 import com.jme3.input.KeyInput;
 import com.jme3.input.MouseInput;
@@ -31,7 +32,7 @@ public class EduApp extends SimpleApplication {
             settings.setRenderer(AppSettings.LWJGL_OPENGL_ANY);
             settings.setWidth(1024);
             settings.setHeight(768);
-            settings.setTitle("EduApp");            
+            settings.setTitle("EduApp");
             settings.setIcons(new BufferedImage[]{ImageIO.read(new File("data/icon.png"))});
 
             app.setShowSettings(false);
@@ -40,7 +41,7 @@ public class EduApp extends SimpleApplication {
 
             if (!DEBUG) {
                 app.setDisplayStatView(false);
-                app.setDisplayFps(false);                
+                app.setDisplayFps(false);
             }
 
             app.start();
@@ -69,10 +70,16 @@ public class EduApp extends SimpleApplication {
 
         AppContext.setApp(this);
         FlowManager.getInstance().setNifty(nifty);
-        
+
         final String path = "state." + StateLoader.EXTENSION;
         final AssetKey<Integer> key = new AssetKey<>(path);
-        FlowManager.getInstance().setLevelState(assetManager.loadAsset(key));
+        int levelState = 0;
+        try {
+            levelState = assetManager.loadAsset(key);
+        } catch (AssetNotFoundException e) {
+            // do nothing
+        }
+        FlowManager.getInstance().setLevelState(levelState);
         FlowManager.getInstance().gotoMainMenu();
 
         // DEBUG
