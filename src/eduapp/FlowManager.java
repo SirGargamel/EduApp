@@ -106,8 +106,14 @@ public class FlowManager implements Observer {
         worldScreen.setLevelName(levelName);
 
         gotoWorldScreen();
-        final GuiWorld control = (GuiWorld) nifty.getScreen(SCREEN_WORLD).getScreenController();
-        control.setNotification("-- Ovládání --\n Šipky - pohyb\n Mezerník - akce\n D - slovník pojmů\n Q - seznam úkolů");
+        final GuiQuest control = (GuiQuest) nifty.getScreen(SCREEN_QUEST).getScreenController();
+        control.setDescriptionControls(""
+                + "-- Ovládání --\n"
+                + "Šipky - pohyb\n"
+                + "Mezerník - akce\n"
+                + "S - slovník pojmů\n"
+                + "Q - seznam úkol\n"
+                + "Esc - návrat");
     }
 
     public void handlePause() {
@@ -193,7 +199,7 @@ public class FlowManager implements Observer {
 
             currentQuest = quest;
             final GuiQuest control = (GuiQuest) nifty.getScreen(SCREEN_QUEST).getScreenController();
-            control.setQuest(quest);
+            control.setQuest(quest);            
             control.displayDescription();
             storeActualScreen();
             nifty.gotoScreen(SCREEN_QUEST);

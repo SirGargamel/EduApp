@@ -18,15 +18,20 @@ public class GuiQuest implements ScreenController {
     private Quest quest;
     private boolean descr, ending;
     private Element panelQuest;
+    private String descriptionControls;
 
     public void setQuest(Quest quest) {
         this.quest = quest;
     }
 
+    public void setDescriptionControls(String descriptionControls) {
+        this.descriptionControls = descriptionControls;
+    }
+
     public void displayDescription() {
         descr = true;
     }
-    
+
     public void displatEnding() {
         ending = true;
     }
@@ -40,7 +45,7 @@ public class GuiQuest implements ScreenController {
     @Override
     public void onStartScreen() {
         if (descr) {
-            buildSimpleText(quest.getDescription());
+            buildSimpleText(quest.getDescription() + "\n\n" + descriptionControls);
             descr = false;
         } else if (ending) {
             buildSimpleText(quest.getEnding());
@@ -86,7 +91,7 @@ public class GuiQuest implements ScreenController {
         for (Element e : panelQuest.getElements()) {
             e.markForRemoval();
         }
-        
+
         TextBuilder tb;
         tb = new TextBuilder();
         tb.text(text);

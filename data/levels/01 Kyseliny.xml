@@ -1,13 +1,13 @@
 <Level>
     <Pozadi>                
         <Hodnoty> 
-            -------WWWWWWWWWWWW
-            -------WFFFFFFFFFFW
-            --WWWWWWFFWFFFFFFFW
-            WWWFFFFFFFWWWWWWFFW
-            WFFFFFFFFFFWFFFFFFW
-            WWWFFFFFFFFWFFFFFFW
-            0-WWWWWWWWWWWWWWWWW                         
+            -----WWWWWWWWWWWW
+            -----WFFFFFFFFFW
+            WWWWWWFFFFFFFFFW
+            WFFFFFFFWWWWWFWW
+            WFFFFFFFFWFFFFFW
+            WFFFFFFFFWFFFFFW
+            0WWWWWWWWWWWWWWW                         
         </Hodnoty>
         <Textura tag="F">floorWhiteStone.png</Textura>
         <Textura tag="P">floorBrick.png</Textura>
@@ -16,63 +16,62 @@
         <Prazdne>-</Prazdne>
     </Pozadi>
     <Hrac>
-        <Pozice>1.5;-1.5</Pozice>
+        <Pozice>1.5;-0.5</Pozice>
         <Model>h2o</Model>
     </Hrac>
     <Veci>
-        <Vec id="table1">
+        <Vec id="questItem1">
             <Model>bench2-table.j3o</Model>
-            <Pozice>5.5;0;-1.0</Pozice>
+            <Pozice>5.0;0;-0.5</Pozice>
             <Velikost>0.5</Velikost>
         </Vec>
-        <Vec id="table2">
+        <Vec id="questItem2">
             <Model>bench2-table.j3o</Model>
-            <Pozice>7;0;-2.5</Pozice>
+            <Pozice>3.5;0;-2.5</Pozice>
             <Velikost>0.5</Velikost>            
         </Vec>
-        <Vec id="table3">
+        <Vec id="questItem3">
             <Model>bench2-table.j3o</Model>
-            <Pozice>15;0;-0.25</Pozice>
+            <Pozice>8.5;0;-1.0</Pozice>
             <Velikost>0.5</Velikost>
-        </Vec>
-        <Vec id="shelf1">
-            <Model>bench2-shelf.j3o</Model>
-            <Pozice>17.75;0;-4.0</Pozice>
-            <Velikost>0.75</Velikost>
             <Rotace>0;-90;0</Rotace>
         </Vec>
-        <Vec id="shelf2">
+        <Vec id="questItem4">
+            <Model>bench2-table.j3o</Model>
+            <Pozice>9.5;0;-4.5</Pozice>
+            <Velikost>0.5</Velikost>            
+        </Vec>
+        <Vec id="questItem5">
             <Model>bench2-shelf.j3o</Model>
-            <Pozice>17.75;0;-1.0</Pozice>
+            <Pozice>6.75;0;-4.75</Pozice>
+            <Velikost>0.75</Velikost>            
+        </Vec>        
+        <Vec id="questItem6">
+            <Model>bench2-shelf.j3o</Model>
+            <Pozice>11.0;0;-4.75</Pozice>
+            <Velikost>0.75</Velikost>            
+        </Vec>                        
+        <Vec id="questItem7">
+            <Model>bench2-shelf.j3o</Model>
+            <Pozice>14.75;0;-4.0</Pozice>
             <Velikost>0.75</Velikost>
             <Rotace>0;-90;0</Rotace>
+        </Vec>        
+        <!-- FINAL QUEST -->
+        <Vec id="questItemH">
+            <Model>bench2-table.j3o</Model>
+            <Pozice>14.5;0;-1.0</Pozice>
+            <Velikost>0.5</Velikost>
+            <Rotace>0;-90;0</Rotace>
         </Vec>
-        <Vec id="shelf3">
+        <Vec id="questItemF">
             <Model>bench2-shelf.j3o</Model>
-            <Pozice>11.25;0;-1.0</Pozice>
+            <Pozice>10.25;0;-1.0</Pozice>
             <Velikost>0.75</Velikost>
             <Rotace>0;90;0</Rotace>
-        </Vec>
-        <Vec id="shelf4">
-            <Model>bench2-shelf.j3o</Model>
-            <Pozice>14.0;0;-4.75</Pozice>
-            <Velikost>0.75</Velikost>
-            <Rotace>0;0;0</Rotace>
-        </Vec>
-        <Vec id="shelf5">
-            <Model>bench2-shelf.j3o</Model>
-            <Pozice>12.0;0;-3.25</Pozice>
-            <Velikost>0.75</Velikost>
-            <Rotace>0;180;0</Rotace>
-        </Vec>
+        </Vec>        
     </Veci>
-    <Svetla>						        
-        <Point id="lEntrance">
-            <Coords>2.5;2.0;-1.5</Coords>
-            <Color>White</Color>
-            <Intensity>4</Intensity>
-            <Range>1</Range>			
-        </Point>
+    <Svetla>        
         <Point id="lRoom1"> 
             <Coords>7.0;2.5;-2.5</Coords>
             <Color>White</Color>
@@ -107,7 +106,7 @@
         </Directional>   							
     </Svetla>
     <Spoustece>        
-        <!-- 3.0;-1.5;0.5 -->
+        <!-- initial quest assignment -->
         <Pohyb>
             <Teleso>player</Teleso>
             <Cil>hlavniQuest</Cil>
@@ -115,65 +114,56 @@
             <Jednou/>        			
         </Pohyb>
         <!-- -->
-        <Akce id="tP1">
-            <Teleso>shelf3</Teleso>
-            <Cil>hlavniQuest</Cil>
-            <Ukol>DisplayP1</Ukol>            	
-        </Akce>
-        <Akce id="tJ1">
-            <Teleso>table2</Teleso>
-            <Cil>hlavniQuest</Cil>
-            <Ukol>DisplayJ1</Ukol>            	
-        </Akce>                        
-        <Akce id="tW1">
-            <Teleso>shelf1</Teleso>
-            <Cil>hlavniQuest</Cil>
-            <Ukol>DisplayW1</Ukol>            	
-        </Akce>
         <Akce id="tC1">
-            <Teleso>shelf2</Teleso>
+            <Teleso>questItem1</Teleso>
             <Cil>hlavniQuest</Cil>
             <Ukol>DisplayC1</Ukol>            	
         </Akce>
+        <Akce id="tJ1">
+            <Teleso>questItem2</Teleso>
+            <Cil>hlavniQuest</Cil>
+            <Ukol>DisplayJ1</Ukol>            	
+        </Akce>
         <Akce id="tG1">
-            <Teleso>table2</Teleso>
+            <Teleso>questItem3</Teleso>
             <Cil>hlavniQuest</Cil>
             <Ukol>DisplayG1</Ukol>            	
         </Akce>
         <Akce id="tG2">
-            <Teleso>table2</Teleso>
+            <Teleso>questItem4</Teleso>
             <Cil>hlavniQuest</Cil>
             <Ukol>DisplayG2</Ukol>            	
         </Akce>
         <Akce id="tG3">
-            <Teleso>table2</Teleso>
+            <Teleso>questItem5</Teleso>
             <Cil>hlavniQuest</Cil>
             <Ukol>DisplayG3</Ukol>            	
         </Akce>
         <Akce id="tG4">
-            <Teleso>table2</Teleso>
+            <Teleso>questItem6</Teleso>
             <Cil>hlavniQuest</Cil>
             <Ukol>DisplayG4</Ukol>            	
         </Akce>
-        <Akce id="tD1">
-            <Teleso>table1</Teleso>
+        <Akce id="tP1">
+            <Teleso>questItem7</Teleso>
             <Cil>hlavniQuest</Cil>
-            <Ukol>DisplayD1</Ukol>            	
-        </Akce>
+            <Ukol>DisplayP1</Ukol>            	
+        </Akce>            
+        <!-- Final -->
         <Akce id="tH">
-            <Teleso>shelf5</Teleso>
+            <Teleso>questItemH</Teleso>
             <Cil>hlavniQuest</Cil>
             <Ukol>DisplayH</Ukol>            	
         </Akce>
         <Akce id="tF">
-            <Teleso>table1</Teleso>
+            <Teleso>questItemF</Teleso>
             <Cil>hlavniQuest</Cil>
             <Ukol>DisplayF</Ukol>            	
         </Akce>
     </Spoustece>
     <Ukoly>        
         <Ukol id="hlavniQuest">
-            <Popis>Popis levelu ... \n Další řádek !</Popis>
+            <Popis>Úvodní popis patra ... \nMůže být několika-řádkový...</Popis>
             <Konec>Popis konce levelu.</Konec>                       
             <Prevod id="c1">
                 <Otazka>vzorecJmeno</Otazka>
@@ -227,7 +217,6 @@
                 <Rovnice>so2+o2=so3;k2so4</Rovnice>
                 <Rovnice>so3+h2o=h2so4</Rovnice>
             </Final>
-            <!--         
             <Web id="w1">
                 <Otazka>Uveďte zastaralý název kyseliny sírové</Otazka>
                 <Odpoved>vitriol</Odpoved> 
@@ -235,6 +224,8 @@
                 <Odmena>h2so4</Odmena>
                 <Dite>tW1</Dite>
             </Web>
+            <!--         
+            
             <Rovnice id="d1">
                 <Mod>text</Mod>
                 <Odmena>h2so4</Odmena>
