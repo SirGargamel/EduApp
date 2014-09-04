@@ -38,8 +38,7 @@ public class Level {
     private final Player player;
     private final Set<Model> items;
     private final Set<Light> lights;
-    private final Quest quest;
-    private final Set<Spatial> itemModels;
+    private final Quest quest;    
     private final Set<TriggerStub> stubs;
     private final Set<Trigger> triggers, activeTriggers;
     private final Set<Item> dictionary;
@@ -61,8 +60,7 @@ public class Level {
         this.stubs = triggerStubs;
         this.quest = quest;
         this.dictionary = dictionary;
-
-        itemModels = new HashSet<>();
+        
         rootNode = new Node(String.valueOf(Math.random()));
         triggers = new HashSet<>();
         activeTriggers = new HashSet<>();
@@ -93,7 +91,6 @@ public class Level {
         Spatial s;
         for (Model i : items) {
             s = i.generateItem(assetManager);
-            itemModels.add(s);
             rootNode.attachChild(s);
             ir.put(i);
             i.addObserver(flowManager);
@@ -132,17 +129,9 @@ public class Level {
         return rootNode;
     }
 
-    public Node getWorldNode() {
-        return background.getRootNode();
-    }
-
     public Player getPlayer() {
         return player;
-    }
-
-    public Set<Spatial> getItems() {
-        return itemModels;
-    }
+    }    
 
     public void attachChild(final Spatial item) {
         rootNode.attachChild(item);

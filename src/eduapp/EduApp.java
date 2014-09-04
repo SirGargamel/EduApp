@@ -27,7 +27,7 @@ import javax.imageio.ImageIO;
  */
 public class EduApp extends SimpleApplication {
 
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
 
     public static void main(String[] args) {
         try {
@@ -36,7 +36,7 @@ public class EduApp extends SimpleApplication {
             settings.setRenderer(AppSettings.LWJGL_OPENGL_ANY);
             settings.setWidth(1024);
             settings.setHeight(768);
-            settings.setTitle("EduApp");
+            settings.setTitle("EduApp");            
             settings.setIcons(new BufferedImage[]{ImageIO.read(new File("data/icon.png"))});
 
             app.setShowSettings(false);
@@ -45,7 +45,7 @@ public class EduApp extends SimpleApplication {
 
             if (!DEBUG) {
                 app.setDisplayStatView(false);
-                app.setDisplayFps(false);
+                app.setDisplayFps(false);                
             }
 
             app.start();

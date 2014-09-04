@@ -60,17 +60,15 @@ public class WorldScreen extends AbstractAppState {
     }
 
     private void prepareWorld(Application app) {
-        if (player == null) {
-            initPlayer();
-            currentLevel.getRootNode().attachChild(player.getModel());
-            initCollisions(app);
-        } else {
-            player.setEnabled(true);
-        }
-        ((SimpleApplication) app).getRootNode().attachChild(currentLevel.getRootNode());
+        initPlayer();        
 
+        initCollisions(app);
+        currentLevel.getRootNode().attachChild(player.getModel());        
+        ((SimpleApplication) app).getRootNode().attachChild(currentLevel.getRootNode());
+        
         initKeys(app.getInputManager());
         initCamera(app);
+        
     }
 
     private void initPlayer() {
@@ -131,7 +129,7 @@ public class WorldScreen extends AbstractAppState {
         app.getStateManager().attach(bulletAppState);
         bulletAppState.setDebugEnabled(EduApp.DEBUG);
 
-        final CollisionShape sceneShape = CollisionShapeFactory.createMeshShape(currentLevel.getWorldNode());
+        final CollisionShape sceneShape = CollisionShapeFactory.createMeshShape(currentLevel.getRootNode());
         landscape = new RigidBodyControl(sceneShape, 0);
 
         playerPhysics = new BetterCharacterControl(.25f, 1.5f, 50f);
@@ -143,15 +141,6 @@ public class WorldScreen extends AbstractAppState {
 
         bulletAppState.getPhysicsSpace().add(landscape);
         bulletAppState.getPhysicsSpace().add(playerPhysics);
-
-        CollisionShape cs;
-        RigidBodyControl rbc;
-        for (Spatial s : currentLevel.getItems()) {
-            cs = CollisionShapeFactory.createBoxShape((Node) s);
-            rbc = new RigidBodyControl(cs, 0);
-            s.addControl(rbc);
-            bulletAppState.getPhysicsSpace().add(rbc);
-        }
     }
 
     @Override
@@ -160,7 +149,7 @@ public class WorldScreen extends AbstractAppState {
         if (player != null) {
             player.setEnabled(enabled);
             playerPhysics.setWalkDirection(Vector3f.ZERO);
-        }        
+        }
     }
 
     @Override
@@ -181,9 +170,9 @@ public class WorldScreen extends AbstractAppState {
         playerPhysics.setWalkDirection(walkDirection.normalizeLocal().multLocal(PLAYER_SPEED));
         final Vector3f loc = player.getModel().getWorldBound().getCenter();
         currentLevel.visit(loc);
-        cam.setLocation(loc.add(0, CAM_ELEVATION, 0));        
+        cam.setLocation(loc.add(0, CAM_ELEVATION, 0));
         player.update(tpf);
-        
+
         if (EduApp.DEBUG) {
             System.out.println(loc);
         }
