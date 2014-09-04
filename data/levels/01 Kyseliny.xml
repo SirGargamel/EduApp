@@ -1,7 +1,7 @@
 <Level>
     <Pozadi>                
         <Hodnoty> 
-            -----WWWWWWWWWWWW
+            -----WWWWWWWWWWW
             -----WFFFFFFFFFW
             WWWWWWFFFFFFFFFW
             WFFFFFFFWWWWWFWW
@@ -16,14 +16,14 @@
         <Prazdne>-</Prazdne>
     </Pozadi>
     <Hrac>
-        <Pozice>1.5;-0.5</Pozice>
+        <Pozice>9.5;-3.5</Pozice>
         <Model>h2o</Model>
     </Hrac>
     <Veci>
         <Vec id="questItem1">
-            <Model>bench2-table.j3o</Model>
-            <Pozice>5.0;0;-0.5</Pozice>
-            <Velikost>0.5</Velikost>
+            <Model>chem-lab-table/chem-lab-table.j3o</Model>
+            <Pozice>5.0;0;-0.1</Pozice>
+            <Velikost>0.3</Velikost>
         </Vec>
         <Vec id="questItem2">
             <Model>bench2-table.j3o</Model>
@@ -42,9 +42,9 @@
             <Velikost>0.5</Velikost>            
         </Vec>
         <Vec id="questItem5">
-            <Model>bench2-shelf.j3o</Model>
+            <Model>SKP-01/SKP-01.j3o</Model>
             <Pozice>6.75;0;-4.75</Pozice>
-            <Velikost>0.75</Velikost>            
+            <Velikost>0.15</Velikost>            
         </Vec>        
         <Vec id="questItem6">
             <Model>bench2-shelf.j3o</Model>
@@ -52,24 +52,43 @@
             <Velikost>0.75</Velikost>            
         </Vec>                        
         <Vec id="questItem7">
-            <Model>bench2-shelf.j3o</Model>
+            <Model>SKP-01/SKP-01.j3o</Model>
             <Pozice>14.75;0;-4.0</Pozice>
-            <Velikost>0.75</Velikost>
+            <Velikost>0.15</Velikost>
             <Rotace>0;-90;0</Rotace>
         </Vec>        
         <!-- FINAL QUEST -->
         <Vec id="questItemH">
-            <Model>bench2-table.j3o</Model>
-            <Pozice>14.5;0;-1.0</Pozice>
-            <Velikost>0.5</Velikost>
-            <Rotace>0;-90;0</Rotace>
+            <Model>Work-Desk/Work-Desk.j3o</Model>
+            <Pozice>14.0;0;-0.25</Pozice>
+            <Velikost>1.5</Velikost>
+            <Rotace>0;180;0</Rotace>
         </Vec>
         <Vec id="questItemF">
-            <Model>bench2-shelf.j3o</Model>
-            <Pozice>10.25;0;-1.0</Pozice>
-            <Velikost>0.75</Velikost>
+            <Model>Protector-XL/Protector-XL.j3o</Model>
+            <Pozice>10.5;0;-0.25</Pozice>
+            <Velikost>0.02</Velikost>
             <Rotace>0;90;0</Rotace>
-        </Vec>        
+        </Vec>
+        <!-- Extra -->
+        <Vec id="item1">
+            <Model>chemistry_setup/chemistry_setup.j3o</Model>
+            <Pozice>3.25;0.75;-2.25</Pozice>
+            <Velikost>0.1</Velikost>
+            <Rotace>0;90;0</Rotace>
+        </Vec>
+        <Vec id="item2">
+            <Model>Chem-Set/Chem-Set.j3o</Model>
+            <Pozice>8.5;0.75;-0.6</Pozice>
+            <Velikost>0.03</Velikost>
+            <Rotace>0;90;0</Rotace>
+        </Vec>
+        <Vec id="item3">
+            <Model>cards/cards.j3o</Model>
+            <Pozice>9.75;0.75;-4.5</Pozice>
+            <Velikost>0.3</Velikost>
+            <Rotace>0;00;0</Rotace>
+        </Vec>          
     </Veci>
     <Svetla>        
         <Point id="lRoom1"> 
@@ -130,7 +149,7 @@
             <Ukol>DisplayG1</Ukol>            	
         </Akce>
         <Akce id="tG2">
-            <Teleso>questItem4</Teleso>
+            <Teleso>questItem7</Teleso>
             <Cil>hlavniQuest</Cil>
             <Ukol>DisplayG2</Ukol>            	
         </Akce>
@@ -145,7 +164,7 @@
             <Ukol>DisplayG4</Ukol>            	
         </Akce>
         <Akce id="tP1">
-            <Teleso>questItem7</Teleso>
+            <Teleso>questItem4</Teleso>
             <Cil>hlavniQuest</Cil>
             <Ukol>DisplayP1</Ukol>            	
         </Akce>            
