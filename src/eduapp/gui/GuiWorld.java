@@ -42,6 +42,7 @@ public class GuiWorld implements ScreenController {
 
     public void displayDescription(String message) {
         if (message == null || message.isEmpty()) {
+            descr = null;
             if (panelImage != null && panelImage.isVisible()) {
                 panelImage.hide();
             }
