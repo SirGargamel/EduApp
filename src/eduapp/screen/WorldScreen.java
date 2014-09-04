@@ -129,7 +129,7 @@ public class WorldScreen extends AbstractAppState {
         bulletAppState = new BulletAppState();
         bulletAppState.setThreadingType(BulletAppState.ThreadingType.PARALLEL);
         app.getStateManager().attach(bulletAppState);
-        bulletAppState.setDebugEnabled(false);
+        bulletAppState.setDebugEnabled(EduApp.DEBUG);
 
         final CollisionShape sceneShape = CollisionShapeFactory.createMeshShape(currentLevel.getWorldNode());
         landscape = new RigidBodyControl(sceneShape, 0);
