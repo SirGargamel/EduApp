@@ -210,6 +210,7 @@ public class XmlQuest extends XmlEntity<Quest> {
             text = nl.item(i).getTextContent();
             split = text.substring(0, text.indexOf(SEPARATOR_QUESTION_OUT)).split(SEPARATOR_QUESTION_ITEM);
             for (String s : split) {
+                itemCount++;
                 eq.addInput(s);
             }
             final int index = text.indexOf(SEPARATOR_BASIC);
