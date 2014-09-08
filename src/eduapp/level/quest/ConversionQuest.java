@@ -2,6 +2,10 @@ package eduapp.level.quest;
 
 import eduapp.level.item.ItemParameter;
 import eduapp.level.item.Item;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class ConversionQuest extends QuestItem {
 
@@ -9,7 +13,7 @@ public class ConversionQuest extends QuestItem {
     private final String conversionId;
     private final String[] itemList;
     private Item conversion;
-    private Item[] items;
+    private List<Item> items;
     private int correct;
 
     public ConversionQuest(String conversionId, String data, String reward) {
@@ -30,13 +34,14 @@ public class ConversionQuest extends QuestItem {
         return conversion;
     }
 
-    public Item[] getItems() {
+    public Collection<Item> getItems() {
         if (items == null) {
-            items = new Item[itemList.length];
-            for (int i = 0; i < items.length; i++) {
-                items[i] = itemRegistry.get(itemList[i]);
+            items = new ArrayList<>(itemList.length);
+            for (String s : itemList) {
+                items.add(itemRegistry.get(s));
             }
         }
+        Collections.shuffle(items);
         return items;
     }
 
