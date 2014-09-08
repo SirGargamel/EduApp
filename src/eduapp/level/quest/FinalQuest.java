@@ -11,9 +11,8 @@ public class FinalQuest extends EquationQuest {
     private int itemCount;
 
     public FinalQuest() {
-        super(Mode.ikony, null);           
-        finished = false; 
-        this.itemCount = itemCount;
+        super(Mode.text, null);           
+        finished = false;
     }
     
     @Override
