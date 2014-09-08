@@ -13,8 +13,6 @@ import com.jme3.input.InputManager;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
-import com.jme3.scene.Node;
-import com.jme3.scene.Spatial;
 import eduapp.Actions;
 import eduapp.AppContext;
 import eduapp.EduApp;
@@ -45,7 +43,11 @@ public class WorldScreen extends AbstractAppState {
 
     public void setLevelName(String levelName) {
         this.levelName = levelName;
+        if (currentLevel != null) {
+            currentLevel.getRootNode().removeFromParent();
+        }
         currentLevel = Level.loadLevel(levelName, AppContext.getApp().getAssetManager(), AppContext.getApp().getInputManager());
+        prepareWorld(AppContext.getApp());
     }
 
     public String getLevelName() {
@@ -55,20 +57,20 @@ public class WorldScreen extends AbstractAppState {
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
         super.initialize(stateManager, app);
-
-        prepareWorld(app);
+        
+        initKeys(app.getInputManager());
     }
 
     private void prepareWorld(Application app) {
-        initPlayer();        
+        initPlayer();
 
         initCollisions(app);
-        currentLevel.getRootNode().attachChild(player.getModel());        
+        currentLevel.getRootNode().attachChild(player.getModel());
         ((SimpleApplication) app).getRootNode().attachChild(currentLevel.getRootNode());
-        
+
         initKeys(app.getInputManager());
         initCamera(app);
-        
+
     }
 
     private void initPlayer() {
@@ -185,7 +187,7 @@ public class WorldScreen extends AbstractAppState {
         final InputManager inputManager = AppContext.getApp().getInputManager();
         inputManager.removeListener(keyListener);
 
-        currentLevel.getRootNode().removeFromParent();
+//        currentLevel.getRootNode().removeFromParent();
     }
 
     public void debugAction() {

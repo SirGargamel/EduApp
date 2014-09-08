@@ -114,7 +114,7 @@ public class GuiWorld implements ScreenController {
     }
 
     public void refreshInventoryItems() {
-        if (player != null) {
+        if (player != null && panelInv != null) {
             final List<String> items = player.getAllItems();
             final ItemRegistry itemRegistry = AppContext.getItemRegistry();
 
