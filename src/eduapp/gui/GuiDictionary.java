@@ -226,6 +226,8 @@ public class GuiDictionary implements ScreenController {
             tb.height(SIZE_LINE_HEIGHT);
             tb.build(nifty, current, p);
         }
+        
+        JmolUtils.displayModel(selectedItem.getId());
     }
 
     @Override
@@ -238,9 +240,6 @@ public class GuiDictionary implements ScreenController {
             selectedItem = displayedItems.get(i);
         }
         buildDataPanel();
-    }
-
-    public void listBoxItemClicked() {
     }
 
     public void hyperlink(String link) throws IOException, URISyntaxException {
