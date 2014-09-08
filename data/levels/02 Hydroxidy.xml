@@ -29,20 +29,125 @@
         
     </Spoustece>
     <Ukoly>
-        <Ukol id="hlavniQuest">                    
+        <Ukol id="hlavniQuest">
+            <Prevod id="c1">
+                <Otazka>vzorecJmeno</Otazka>
+                <Data>h2;na;h2o;naoh</Data>
+                <Odmena>h2</Odmena>
+                <Dite>tC1</Dite>
+            </Prevod>
+            <Jmol id="j1">                
+                <Data>h2;na;h2o;naoh</Data>                
+                <Odmena>naoh</Odmena>
+                <Dite>tJ1</Dite>                
+            </Jmol>
+            <Skupiny id="g1">
+                <Otazka>skup</Otazka>
+                <Data>h2;na;h2o;naoh</Data>
+                <Odmena>na</Odmena>
+                <Dite>tG1</Dite>
+            </Skupiny>
+            <Skupiny id="g2">
+                <Otazka>hori</Otazka>
+                <Data>h2;na;h2o;naoh</Data>
+                <Odmena>naoh</Odmena>
+                <Dite>tG2</Dite>
+            </Skupiny>
+            <Skupiny id="g3">
+                <Otazka>toxic</Otazka>
+                <Data>h2;na;h2o;naoh</Data>
+                <Odmena>na2o</Odmena>
+                <Dite>tG3</Dite>
+            </Skupiny>
+            <Skupiny id="g4">
+                <Otazka>rozp</Otazka>
+                <Data>h2;na;naoh</Data>
+                <Odmena>h2o</Odmena>
+                <Dite>tG4</Dite>
+            </Skupiny>                     
             <Pomocne>               
             </Pomocne>  
             <Final>
-                <Pocet>1</Pocet>
                 <Vstup></Vstup>
                 <Vystup></Vystup>
             </Final>          
         </Ukol>
     </Ukoly>
     <Elementy id="dic">
-        
+        <Vec id="na">
+            <jmeno>Sodík</jmeno>
+            <skup>pevné</skup>            
+            <vzorec>Na</vzorec>
+            <link>http://cs.wikipedia.org/wiki/Sodík; http://www.novinky.cz/zena/zdravi/255159-sodik-a-jeho-vyznam-pro-organismus-aneb-zachazejme-se-soli-opatrne.html; http://www.prvky.com/11.html</link>            
+            <hori/>
+            <toxic/>
+        </Vec>     
+        <Vec id="naoh">
+            <jmeno>Hydroxid sodný</jmeno>
+            <skup>pevné</skup>
+            <vzorec>NaOH</vzorec>            
+            <link>http://cs.wikipedia.org/wiki/Hydroxid_sodný; http://www.zschemie.euweb.cz/kyseliny/kyseliny24.html</link>
+            <rozp/>
+        </Vec>   
+        <Vec id="na2o">
+            <jmeno>Oxid sodný</jmeno>
+            <skup>pevné</skup>
+            <vzorec>Na2O</vzorec>            
+            <link>http://cs.wikipedia.org/wiki/Oxid_sodný; http://encyklopedie.vseved.cz/oxid+sodný</link>
+            <toxic/>
+            <rozp/>
+        </Vec>
+        <Vec id="h2o">
+            <jmeno>Voda</jmeno>
+            <skup>kapalné</skup>
+            <vzorec>H2O</vzorec>            
+            <link>http://cs.wikipedia.org/wiki/Voda</link>
+            <vodi/>
+            <rozp/>
+        </Vec>
+        <Vec id="h2">
+            <jmeno>Vodík</jmeno>
+            <skup>plynné</skup>
+            <vzorec>H2</vzorec>            
+            <link>http://cs.wikipedia.org/wiki/Vodík</link>
+            <vodi/>            
+            <hori/>
+        </Vec>
     </Elementy>
+    <Slovnik id="word">
+        <Vec id="katalyzator">
+            <jmeno>Exotermní reakce</jmeno>
+            <popis>Zde bude popis....</popis>
+        </Vec>
+        <Vec id="nosic">
+            <jmeno>Endotermní reakce</jmeno>
+            <popis>Zde bude popis....</popis>
+        </Vec>        
+    </Slovnik>
     <Misc id="groups">
-        
+        <Vec id="skup">
+            <popis>Zařaďte prvky do skupin dle jejich skupenství</popis>
+            <skup>plynné;kapalné;pevné</skup>        
+        </Vec>        
+        <Vec id="vzorecJmeno">
+            <popis>Převeďte vzorec prvku na jeho jméno</popis>
+            <z>vzorec</z>
+            <do>jmeno</do>
+        </Vec>
+        <Vec id="description">
+            <jmeno>Jméno</jmeno>
+            <vzorec>Chemický vzorec</vzorec>
+            <skup>Skupenství</skup>
+            <link>Odkazy</link>
+            <hori>Hořlavina</hori>
+            <toxic>Žíravina</toxic>
+            <rozp>Rozpustný ve vodě</rozp>
+        </Vec>
+        <Vec id="ikony">
+            <toxic>toxic.png</toxic>
+            <vodi>magnet.png</vodi>
+            <hori>flamable.png</hori>
+            <rozp>water.png</rozp>
+        </Vec>
     </Misc>
 </Level>
