@@ -79,6 +79,9 @@ public class WorldScreen extends AbstractAppState {
     }
 
     private void initKeys(final InputManager inputManager) {
+        if (keyListener != null) {
+            AppContext.getApp().getInputManager().removeListener(keyListener);
+        }
         keyListener = new ActionListener() {
             @Override
             public void onAction(String name, boolean isPressed, float tpf) {
@@ -183,9 +186,8 @@ public class WorldScreen extends AbstractAppState {
     @Override
     public void cleanup() {
         super.cleanup();
-
-        final InputManager inputManager = AppContext.getApp().getInputManager();
-        inputManager.removeListener(keyListener);
+        
+        AppContext.getApp().getInputManager().removeListener(keyListener);
 
 //        currentLevel.getRootNode().removeFromParent();
     }
