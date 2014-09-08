@@ -145,6 +145,7 @@ public class GuiWorld implements ScreenController {
                 final ImageBuilder ib = new ImageBuilder("image" + s);
                 ib.filename(Utils.generateIconFilename(s));
                 ib.height("100%");
+                ib.width("100%");
                 pb.image(ib);
 
                 pb.build(nifty, nifty.getCurrentScreen(), panelInv);

@@ -141,5 +141,6 @@ public class Player extends Item {
             inner.rotate(rot);
             counter++;
         }
+        System.out.println(tpf);
     }
 }
