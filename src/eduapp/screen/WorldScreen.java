@@ -189,7 +189,10 @@ public class WorldScreen extends AbstractAppState {
         
         AppContext.getApp().getInputManager().removeListener(keyListener);
 
-//        currentLevel.getRootNode().removeFromParent();
+        currentLevel.getRootNode().removeFromParent();
+        
+        bulletAppState.getPhysicsSpace().remove(landscape);
+        bulletAppState.getPhysicsSpace().remove(playerPhysics);
     }
 
     public void debugAction() {
