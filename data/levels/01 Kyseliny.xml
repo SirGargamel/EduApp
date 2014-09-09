@@ -231,7 +231,6 @@
                 <Odpoved>H314</Odpoved>
             </Pomocne>  
             <Final>
-                <Pocet>12</Pocet>
                 <Rovnice>s+o2=so2;v2o5;sio2</Rovnice>
                 <Rovnice>so2+o2=so3;k2so4</Rovnice>
                 <Rovnice>so3+h2o=h2so4</Rovnice>
