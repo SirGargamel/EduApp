@@ -9,9 +9,8 @@
             WFFFFFFFFWFFFFFW
             0WWWWWWWWWWWWWWW                         
         </Hodnoty>
-        <Textura tag="F">floorWhiteStone.png</Textura>
-        <Textura tag="P">floorBrick.png</Textura>
-        <Textura tag="W">wallConcrete.png</Textura>        
+        <Textura tag="F">floorWhiteStone.png</Textura>        
+        <Textura tag="W">wallBrick2.png</Textura>        
         <Zed>W</Zed>
         <Prazdne>-</Prazdne>
     </Pozadi>
@@ -90,38 +89,44 @@
             <Rotace>0;00;0</Rotace>
         </Vec>          
     </Veci>
-    <Svetla>        
-        <Point id="lRoom1"> 
-            <Coords>7.0;2.5;-2.5</Coords>
+    <Svetla>
+        <Point id="lStart"> 
+            <Coords>3.5;2.0;-1.5</Coords>
             <Color>White</Color>
             <Intensity>1</Intensity>
-            <Range>10</Range>            
+            <Range>5</Range>            
+        </Point>              
+        <Point id="lTurn1"> 
+            <Coords>7.5;2.0;-1.5</Coords>
+            <Color>White</Color>
+            <Intensity>1</Intensity>
+            <Range>5</Range>            
         </Point>
-        <Point id="lRoom2a"> 
-            <Coords>13.0;2.5;-4.0</Coords>            
+        <Point id="lTurn2"> 
+            <Coords>8.0;2.0;-4.0</Coords>            
             <Intensity>0.75</Intensity>
             <Range>5</Range>            
         </Point>
-        <Point id="lRoom2b"> 
-            <Coords>16.0;2.5;-4.0</Coords>            
+        <Point id="lCorridor"> 
+            <Coords>11.0;2.0;-4.0</Coords>            
             <Intensity>0.75</Intensity>
             <Range>5</Range>            
         </Point>
-        <Point id="lRoom3a"> 
-            <Coords>13.0;2.5;-2.0</Coords>            
+        <Point id="lTurn3"> 
+            <Coords>14.0;2.0;-4.0</Coords>            
             <Intensity>0.75</Intensity>
             <Range>5</Range>            
         </Point>
         <Point id="lRoom3b"> 
-            <Coords>16.0;2.5;-2.0</Coords>            
+            <Coords>12.5;2.0;-1.0</Coords>            
             <Intensity>0.75</Intensity>
-            <Range>5</Range>            
+            <Range>7</Range>            
         </Point>	
         <Ambient>
             <Intensity>0.3</Intensity>
         </Ambient>
         <Directional>
-            <Intensity>0.1</Intensity>            
+            <Intensity>0.2</Intensity>            
         </Directional>   							
     </Svetla>
     <Spoustece>        
