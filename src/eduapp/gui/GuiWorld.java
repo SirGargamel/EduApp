@@ -77,6 +77,8 @@ public class GuiWorld implements ScreenController {
                     }, "Hide");
                 }
             }, "Show");
+            
+            notification = null;
         }
     }
 
