@@ -263,7 +263,7 @@
             <jmeno>Kyselina sírová</jmeno>
             <skup>kapalné</skup>            
             <vzorec>H2SO4</vzorec>
-            <link>http://cs.wikipedia.org/wiki/Kyselina_sírová</link>
+            <link>http://cs.wikipedia.org/wiki/Kyselina_sírová;http://www.zschemie.euweb.cz/kyseliny/kyseliny15.html;http://www.emulgatory.cz/seznam-ecek/E513</link>
             <toxic/>
             <rozp/>
         </Vec>     
@@ -271,13 +271,13 @@
             <jmeno>Oxid křemičitý</jmeno>
             <skup>pevné</skup>
             <vzorec>SiO2</vzorec>            
-            <link>http://cs.wikipedia.org/wiki/Oxid_křemičitý</link>
+            <link>http://cs.wikipedia.org/wiki/Oxid_křemičitý;http://www.emulgatory.cz/seznam-ecek/E551;http://lekarske.slovniky.cz/pojem/oxid-kremicity</link>
         </Vec>   
         <Vec id="so3">
             <jmeno>Oxid sírový</jmeno>
             <skup>pevné;plynné;kapalné</skup>
             <vzorec>SO3</vzorec>            
-            <link>http://cs.wikipedia.org/wiki/Oxid_sírový</link>
+            <link>http://cs.wikipedia.org/wiki/Oxid_sírový;http://irz.cz/node/80</link>
             <toxic/>
             <rozp/>
         </Vec>
@@ -285,7 +285,7 @@
             <jmeno>Oxid siřičitý</jmeno>
             <skup>plynné</skup>            
             <vzorec>SO2</vzorec>            
-            <link>http://cs.wikipedia.org/wiki/Oxid_siřičitý</link>
+            <link>http://cs.wikipedia.org/wiki/Oxid_siřičitý;http://www.emulgatory.cz/seznam-ecek/E220;http://ucebnicechemie.wz.cz/index.php?sloucenina=oxid_siricity</link>
             <toxic/>
             <rozp/>
         </Vec>
@@ -293,7 +293,7 @@
             <jmeno>Oxid vanadičný</jmeno>
             <skup>pevné</skup>
             <vzorec>V2O5</vzorec>            
-            <link>http://cs.wikipedia.org/wiki/Oxid_vanadičný</link>
+            <link>http://cs.wikipedia.org/wiki/Oxid_vanadičný;http://chemie.gfxs.cz/index.php?pg=prvek&amp;prvek_id=23</link>
             <rozp/>
         </Vec>
         <Vec id="s">
@@ -308,7 +308,7 @@
             <jmeno>Síran draselný</jmeno>
             <skup>pevné</skup>
             <vzorec>K2SO4</vzorec>
-            <link>http://cs.wikipedia.org/wiki/Síran_draselný</link>
+            <link>http://cs.wikipedia.org/wiki/Síran_draselný;http://www.emulgatory.cz/seznam-ecek/E515</link>
             <rozp/>
         </Vec>    
         <Vec id="h2o">
