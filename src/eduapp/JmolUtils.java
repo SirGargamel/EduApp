@@ -76,7 +76,7 @@ public class JmolUtils {
         contentPane.add(jmolPanel);
 
         frame.pack();
-        frame.setVisible(true);
+        frame.setVisible(false);
     }
 
     private static class JmolPanel extends JPanel {
