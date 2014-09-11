@@ -93,7 +93,7 @@ public class FlowManager implements Observer {
         final String[] split = levelName.split(" ");
         final int levelVal = Integer.parseInt(split[0].trim());
         if (levelVal > finishedLevelCount) {
-            finishedLevelCount = levelVal;
+            setLevelState(levelVal);
         }
         try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File("data\\state.lvl")))) {
             out.write(finishedLevelCount);

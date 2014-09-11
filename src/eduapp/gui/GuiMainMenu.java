@@ -22,7 +22,7 @@ public class GuiMainMenu implements ScreenController {
 
     @Override
     public void bind(Nifty nifty, Screen screen) {
-        listBox = nifty.getCurrentScreen().findNiftyControl(LISTBOX_NAME, ListBox.class);        
+        listBox = nifty.getCurrentScreen().findNiftyControl(LISTBOX_NAME, ListBox.class);
     }
 
     @Override
@@ -40,6 +40,9 @@ public class GuiMainMenu implements ScreenController {
     public void setLevelCount(int finishedLevelCount) {
         final File f = new File("data\\levels");
         int counter = 0;
+        if (listBox.itemCount() > 0) {
+            listBox.clear();
+        }
         for (String s : f.list(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
