@@ -203,7 +203,7 @@
             <Skupiny id="g1">
                 <Otazka>skup</Otazka>
                 <Data>s;so2;so3;h2so4;h2o;v2o5;k2so4;sio2</Data>
-                <Odmena>k2so4;s</Odmena>
+                <Odmena>h2so4;s</Odmena>
                 <Dite>tG1</Dite>
             </Skupiny>
             <Skupiny id="g2">
@@ -221,7 +221,7 @@
             <Skupiny id="g4">
                 <Otazka>rozp</Otazka>
                 <Data>s;so2;so3;h2so4;h2o;v2o5;k2so4;sio2</Data>
-                <Odmena>v2o5;h2so4</Odmena>
+                <Odmena>v2o5;k2so4</Odmena>
                 <Dite>tG4</Dite>
             </Skupiny>
             <Pexeso id="p1">
@@ -264,7 +264,7 @@
             <skup>kapalné</skup>            
             <vzorec>H2SO4</vzorec>
             <link>http://cs.wikipedia.org/wiki/Kyselina_sírová</link>
-            <vodi/>
+            <toxic/>
             <rozp/>
         </Vec>     
         <Vec id="sio2">
@@ -275,7 +275,7 @@
         </Vec>   
         <Vec id="so3">
             <jmeno>Oxid sírový</jmeno>
-            <skup>pevné; kapalné</skup>
+            <skup>pevné;plynné;kapalné</skup>
             <vzorec>SO3</vzorec>            
             <link>http://cs.wikipedia.org/wiki/Oxid_sírový</link>
             <toxic/>
@@ -283,10 +283,9 @@
         </Vec>
         <Vec id="so2">
             <jmeno>Oxid siřičitý</jmeno>
-            <skup>plynné; kapalné</skup>            
+            <skup>plynné</skup>            
             <vzorec>SO2</vzorec>            
             <link>http://cs.wikipedia.org/wiki/Oxid_siřičitý</link>
-            <hori/>
             <toxic/>
             <rozp/>
         </Vec>
@@ -295,13 +294,13 @@
             <skup>pevné</skup>
             <vzorec>V2O5</vzorec>            
             <link>http://cs.wikipedia.org/wiki/Oxid_vanadičný</link>
-            <toxic/>
+            <rozp/>
         </Vec>
         <Vec id="s">
             <jmeno>Síra</jmeno>
             <skup>pevné</skup>
             <vzorec>S</vzorec>            
-            <link>http://cs.wikipedia.org/wiki/Síra;http://cs.wikipedia.org/wiki/Síra_(minerál)</link>
+            <link>http://cs.wikipedia.org/wiki/Síra;http://cs.wikipedia.org/wiki/Síra_(minerál);http://www.zschemie.euweb.cz/sira/sira2.html;http://www.tabulka.cz/prvky/ukaz.asp?id=16</link>
             <hori/>
             <rozp/>
         </Vec>          
@@ -314,10 +313,9 @@
         </Vec>    
         <Vec id="h2o">
             <jmeno>Voda</jmeno>
-            <skup>kapalné</skup>
+            <skup>pevné;plynné;kapalné</skup>
             <vzorec>H2O</vzorec>            
             <link>http://cs.wikipedia.org/wiki/Voda</link>
-            <vodi/>
             <rozp/>
         </Vec>    
         <Vec id="o2">
