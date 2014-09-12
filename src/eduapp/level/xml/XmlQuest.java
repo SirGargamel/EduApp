@@ -98,7 +98,7 @@ public class XmlQuest extends XmlEntity<Quest> {
                 result = new Question(
                         extractNodeText(e, ITEM_QUESTION),
                         extractNodeText(e, ITEM_ANSWER),
-                        extractNodeText(e, ITEM_REWARD), false);
+                        extractNodeText(e, ITEM_REWARD), false, false);
                 break;
             case ITEM_QUESTION_JMOL:
                 result = new JmolQuestion(
@@ -188,7 +188,7 @@ public class XmlQuest extends XmlEntity<Quest> {
                 if (question == null) {
                     question = text;
                 } else {
-                    questions.add(new Question(question, text, null, true));
+                    questions.add(new Question(question, text, null, true, false));
                     question = null;
                 }
             }

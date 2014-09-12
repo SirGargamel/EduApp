@@ -225,7 +225,7 @@ public class FlowManager implements Observer {
                 boolean allCorrect = true;
                 for (String model : question.getModelNames()) {
                     if (JmolUtils.displayModel(model)) {
-                        q = new Question("Zadejte vzorec molekuly.", model, null, false);
+                        q = new Question("Zadejte vzorec molekuly.", model, null, false, true);
                         control.setQuestion(q);
                         storeActualScreen();
                         nifty.gotoScreen(SCREEN_QUEST_INPUT);
