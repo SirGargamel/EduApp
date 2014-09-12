@@ -1,6 +1,7 @@
 package eduapp.gui;
 
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.builder.EffectBuilder;
 import de.lessvoid.nifty.builder.HoverEffectBuilder;
 import de.lessvoid.nifty.builder.ImageBuilder;
 import de.lessvoid.nifty.builder.PanelBuilder;
@@ -102,8 +103,10 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
         for (Equation eq : quest.getEquations()) {
             pb = new PanelBuilder(PANEL_ID.concat(Integer.toString(counter++)));
             pb.height(buildSize(panelHeight));
+            pb.width("100%");
             pb.valignCenter();
             pb.childLayoutHorizontal();
+            pb.onActiveEffect(new EffectBuilder("border").effectParameter("border", "1px"));
             p = pb.build(nifty, current, panelDrop);
 
             buildEquationPart(eq.getInputs(), current, true, p);
@@ -354,7 +357,7 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
 
         tb = new TextBuilder(TEXT_ID.concat(SPLITTER));
         tb.text(SPLITTER);
-        tb.alignCenter();        
+        tb.alignCenter();
         tb.style("base");
         tb.color("#ffffff");
         tb.padding(buildSize(SIZE_GAP));
