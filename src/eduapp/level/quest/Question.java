@@ -34,11 +34,16 @@ public class Question extends QuestItem {
 
     public void setUserInput(String userInput) {
         this.userInput = userInput.trim();
-        if (answer.equalsIgnoreCase(userInput)) {
-            finished = true;
+        boolean result;
+        if (isMustMatchCase()) {
+            result = answer.equals(userInput);
         } else {
-            failed = true;
+            result = answer.equalsIgnoreCase(userInput);
         }
+        
+        finished = result;
+        failed = !result;
+
         finish();
     }
 
