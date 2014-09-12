@@ -9,6 +9,7 @@ import eduapp.level.Level;
  */
 public abstract class QuestItem extends Item {
 
+    protected static final int MAX_ERROR_COUNT = 1;
     protected Level level;
     private final String reward;
     protected boolean failed, finished;

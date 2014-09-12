@@ -23,7 +23,7 @@ public class Quest extends Item {
     private static final String ACTION_DISPLAY_JMOL = "J";
     private static final String ACTION_DISPLAY_PEXESO = "P";
     private static final String ACTION_DISPLAY_QUESTION = "Q";
-    private static final String ACTION_DISPLAY_WEB = "W";
+    private static final String ACTION_DISPLAY_WEB = "W";    
     private final List<QuestItem> data;
     private final HelpQuest help;
     private final FinalQuest finalQuest;

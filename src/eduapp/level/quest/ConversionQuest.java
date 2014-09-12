@@ -2,19 +2,18 @@ package eduapp.level.quest;
 
 import eduapp.level.item.ItemParameter;
 import eduapp.level.item.Item;
+import static eduapp.level.quest.QuestItem.MAX_ERROR_COUNT;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 public class ConversionQuest extends QuestItem {
-
-    private static final double RATIO_SUCCESS = 0.8;
+    
     private final String conversionId;
     private final String[] itemList;
     private Item conversion;
-    private List<Item> items;
-    private int correct;
+    private List<Item> items;    
 
     public ConversionQuest(String conversionId, String data, String reward) {
         super(reward);
@@ -25,8 +24,6 @@ public class ConversionQuest extends QuestItem {
         for (int i = 0; i < itemList.length; i++) {
             itemList[i] = split[i].trim();
         }
-
-        correct = 0;
     }
 
     public Item getConversion() {
@@ -45,9 +42,8 @@ public class ConversionQuest extends QuestItem {
         return items;
     }
 
-    public void setResult(int value) {
-        this.correct = value;
-        if (correct / (double) itemList.length >= RATIO_SUCCESS) {
+    public void setResult(int correct) {        
+        if (itemList.length - correct >= MAX_ERROR_COUNT) {
             finished = true;
         } else {
             failed = true;

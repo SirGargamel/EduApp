@@ -1,5 +1,6 @@
 package eduapp.level.quest;
 
+import static eduapp.level.quest.QuestItem.MAX_ERROR_COUNT;
 import java.util.*;
 
 /**
@@ -19,6 +20,15 @@ public class JmolQuestion extends QuestItem {
 
     public Collection<String> getModelNames() {
         return modelNames;
+    }
+    
+    public void setResult(int correct) {        
+        if (modelNames.size() - correct >= MAX_ERROR_COUNT) {
+            finished = true;
+        } else {
+            failed = true;
+        }
+        finish();
     }
 
     @Override

@@ -222,7 +222,7 @@ public class FlowManager implements Observer {
             public void run() {
                 final GuiQuestInput control = (GuiQuestInput) nifty.getScreen(SCREEN_QUEST_INPUT).getScreenController();
                 Question q;
-                boolean allCorrect = true;
+                int correctCounter = 0;
                 for (String model : question.getModelNames()) {
                     if (JmolUtils.displayModel(model)) {
                         q = new Question("Zadejte vzorec molekuly.", model, null, false, true);
@@ -239,11 +239,12 @@ public class FlowManager implements Observer {
                                 }
                             }
                         }
-                        allCorrect &= !q.isFailed();
+                        if (!q.isFailed()) {
+                            correctCounter++;
+                        }
                     }
                 }
-                question.setFailed(!allCorrect);
-                question.setFinished(allCorrect);
+                question.setResult(correctCounter);
                 gotoWorldScreen();
                 question.finish();
             }
