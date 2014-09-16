@@ -23,7 +23,7 @@ public class JmolQuestion extends QuestItem {
     }
     
     public void setResult(int correct) {        
-        if (modelNames.size() - correct >= MAX_ERROR_COUNT) {
+        if (modelNames.size() - correct <= MAX_ERROR_COUNT) {
             finished = true;
         } else {
             failed = true;

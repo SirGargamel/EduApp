@@ -43,7 +43,7 @@ public class ConversionQuest extends QuestItem {
     }
 
     public void setResult(int correct) {        
-        if (itemList.length - correct >= MAX_ERROR_COUNT) {
+        if (itemList.length - correct <= MAX_ERROR_COUNT) {
             finished = true;
         } else {
             failed = true;
