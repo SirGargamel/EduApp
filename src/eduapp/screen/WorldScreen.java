@@ -43,12 +43,7 @@ public class WorldScreen extends AbstractAppState {
 
     public void setLevelName(String levelName) {
         this.levelName = levelName;
-        if (currentLevel != null) {
-            currentLevel.getRootNode().removeFromParent();
-
-            bulletAppState.getPhysicsSpace().remove(landscape);
-            bulletAppState.getPhysicsSpace().remove(playerPhysics);
-        }
+        manualCleanup();
         currentLevel = Level.loadLevel(levelName, AppContext.getApp().getAssetManager(), AppContext.getApp().getInputManager());
         prepareWorld(AppContext.getApp());
     }
@@ -191,6 +186,15 @@ public class WorldScreen extends AbstractAppState {
         super.cleanup();
 
         AppContext.getApp().getInputManager().removeListener(keyListener);
+    }
+
+    public void manualCleanup() {
+        if (currentLevel != null) {
+            currentLevel.getRootNode().removeFromParent();
+
+            bulletAppState.getPhysicsSpace().remove(landscape);
+            bulletAppState.getPhysicsSpace().remove(playerPhysics);
+        }
     }
 
     public void debugAction() {

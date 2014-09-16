@@ -157,6 +157,7 @@ public class FlowManager implements Observer {
     }
 
     public void gotoMainMenu() {
+        worldScreen.manualCleanup();
         AppContext.getApp().getStateManager().detach(currentState);
         AppContext.getApp().getStateManager().attach(startScreen);
         storeActualScreen();
