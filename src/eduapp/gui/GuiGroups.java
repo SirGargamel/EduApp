@@ -1,5 +1,6 @@
 package eduapp.gui;
 
+import de.lessvoid.nifty.EndNotify;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.builder.EffectBuilder;
 import de.lessvoid.nifty.builder.PanelBuilder;
@@ -9,9 +10,13 @@ import de.lessvoid.nifty.controls.Droppable;
 import de.lessvoid.nifty.controls.DroppableDropFilter;
 import de.lessvoid.nifty.controls.dragndrop.builder.DraggableBuilder;
 import de.lessvoid.nifty.controls.dragndrop.builder.DroppableBuilder;
+import de.lessvoid.nifty.effects.EffectEventId;
+import de.lessvoid.nifty.effects.EffectImpl;
 import de.lessvoid.nifty.elements.Element;
+import de.lessvoid.nifty.elements.render.PanelRenderer;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
+import de.lessvoid.nifty.tools.Color;
 import eduapp.AppContext;
 import eduapp.ItemRegistry;
 import eduapp.level.item.Item;
@@ -30,7 +35,7 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
     private static final int COUNT_ITEMS_PER_LINE = 5;
     private static final int SIZE_ITEM_HEIGHT = 32;
     private GroupingQuest gq;
-    private Element groups, items;
+    private Element groups, items, panelData;
     private Nifty nifty;
 
     public void setData(GroupingQuest gq) {
@@ -42,6 +47,7 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
         this.nifty = nifty;
         groups = nifty.getCurrentScreen().findElementByName("panelGroups");
         items = nifty.getCurrentScreen().findElementByName("panelItems");
+        panelData = nifty.getCurrentScreen().findElementByName("panelData");
     }
 
     @Override
@@ -182,6 +188,8 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
                         val = item.getParam(paramId);
                         if (val.contains(groupId)) {
                             correctCount++;
+                        } else {
+                            element.getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#ff0000"));
                         }
                     }
                 }
@@ -197,6 +205,8 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
                     val = item.getParam(paramId);
                     if (val != null) {
                         correctCount++;
+                    } else {
+                        element.getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#ff0000"));
                     }
                 }
             }
@@ -208,12 +218,20 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
                     val = item.getParam(paramId);
                     if (val == null) {
                         correctCount++;
+                    } else {
+                        element.getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#ff0000"));
                     }
                 }
             }
         }
 
-        gq.setResult(correctCount);
+        final int fCorrectCount = correctCount;
+        panelData.startEffect(EffectEventId.onCustom, new EndNotify() {
+            @Override
+            public void perform() {
+                gq.setResult(fCorrectCount);
+            }
+        }, "Ok");
     }
 
     private Element extractElement(final Element container) {
@@ -227,7 +245,7 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
     private String buildSize(final int size) {
         return Integer.toString(size).concat(SIZE_UNIT);
     }
-    
+
     @Override
     public boolean accept(Droppable dropSource, Draggable draggedItem, Droppable droppedAt) {
         return droppedAt.getElement().getElements().get(0).getElements().isEmpty();

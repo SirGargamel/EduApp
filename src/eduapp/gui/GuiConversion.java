@@ -1,14 +1,15 @@
 package eduapp.gui;
 
-import com.jme3.niftygui.RenderFontJme;
+import de.lessvoid.nifty.EndNotify;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.builder.PanelBuilder;
 import de.lessvoid.nifty.builder.TextBuilder;
 import de.lessvoid.nifty.controls.TextField;
 import de.lessvoid.nifty.controls.textfield.builder.TextFieldBuilder;
+import de.lessvoid.nifty.effects.EffectEventId;
 import de.lessvoid.nifty.elements.Element;
+import de.lessvoid.nifty.elements.render.PanelRenderer;
 import de.lessvoid.nifty.elements.render.TextRenderer;
-import de.lessvoid.nifty.elements.render.TextRenderer.RenderFontNull;
 import de.lessvoid.nifty.input.NiftyInputEvent;
 import de.lessvoid.nifty.screen.KeyInputHandler;
 import de.lessvoid.nifty.screen.Screen;
@@ -25,8 +26,6 @@ import eduapp.level.quest.ConversionQuest;
  */
 public class GuiConversion implements ScreenController {
 
-    private static final String SIZE_LINE_HEIGHT = "10%";
-    private static final String SIZE_FULL = "100%";
     private Nifty nifty;
     private ConversionQuest quest;
     private Element panelValues;
@@ -79,7 +78,7 @@ public class GuiConversion implements ScreenController {
             pb = new PanelBuilder("pG1".concat(it.getId()));
             pb.width("1%");
             pb.build(nifty, current, e);
-            
+
             tb = new TextBuilder("t".concat(it.getId()));
             tb.textHAlignLeft();
             tb.style("base");
@@ -87,15 +86,15 @@ public class GuiConversion implements ScreenController {
             tb.color(Color.WHITE);
             tb.width("30%");
             tb.build(nifty, current, e);
-            
+
             pb = new PanelBuilder("pG2".concat(it.getId()));
             pb.width("29%");
             pb.build(nifty, current, e);
 
             tfb = new TextFieldBuilder("tf".concat(it.getId()));
             tfb.alignRight();
-            tfb.width("40%");          
-            text = tfb.build(nifty, current, e);            
+            tfb.width("40%");
+            text = tfb.build(nifty, current, e);
             text.addInputHandler(new KeyInputHandler() {
                 @Override
                 public boolean keyEvent(NiftyInputEvent nie) {
@@ -123,8 +122,19 @@ public class GuiConversion implements ScreenController {
             answer = it.getParam(to);
             if (user.equalsIgnoreCase(answer)) {
                 counter++;
+            } else {
+                tf.getElement().getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#ff0000"));
             }
         }
-        quest.setResult(counter);
+
+
+        final int fCounter = counter;
+        panelValues.startEffect(EffectEventId.onCustom, new EndNotify() {
+            @Override
+            public void perform() {
+                quest.setResult(fCounter);
+            }
+        }, "Ok");
+
     }
 }

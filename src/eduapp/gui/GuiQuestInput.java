@@ -4,14 +4,18 @@ import de.lessvoid.nifty.EndNotify;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.controls.TextField;
 import de.lessvoid.nifty.effects.EffectEventId;
+import de.lessvoid.nifty.effects.impl.ColorBar;
 import de.lessvoid.nifty.elements.Element;
+import de.lessvoid.nifty.elements.render.PanelRenderer;
 import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.input.NiftyInputEvent;
 import de.lessvoid.nifty.screen.KeyInputHandler;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
+import de.lessvoid.nifty.tools.Color;
 import eduapp.FlowManager;
 import eduapp.level.quest.Question;
+import java.util.Stack;
 
 /**
  *
@@ -25,10 +29,10 @@ public class GuiQuestInput implements ScreenController {
     private Question question;
     private Element questionText;
     private TextField questionInput;
-    private Element panelQuest;
+    private Element panelQuest, inputField;
 
     public void setQuestion(Question question) {
-        this.question = question;        
+        this.question = question;
     }
 
     @Override
@@ -36,6 +40,9 @@ public class GuiQuestInput implements ScreenController {
         panelQuest = nifty.getCurrentScreen().findElementByName(NAME_QUESTION_PANEL);
         questionText = nifty.getCurrentScreen().findElementByName(NAME_QUESTION_TEXT);
         questionInput = nifty.getCurrentScreen().findNiftyControl(NAME_QUESTION_INPUT, TextField.class);
+        inputField = questionInput.getElement().getElements().get(0);
+        inputField.getEffects(EffectEventId.onFocus, ColorBar.class).get(0).getParameters().put("color", "#00000000");
+
         questionInput.getElement().addInputHandler(new KeyInputHandler() {
             @Override
             public boolean keyEvent(NiftyInputEvent nie) {
@@ -43,24 +50,36 @@ public class GuiQuestInput implements ScreenController {
                     switch (nie) {
                         case SubmitText:
                             question.setUserInput(questionInput.getDisplayedText());
-                            if (question.isMustBeCorrect()) {
-                                if (question.isFinished()) {
-                                    panelQuest.startEffect(EffectEventId.onCustom, new EndNotify() {
-                                        @Override
-                                        public void perform() {
-                                            FlowManager.getInstance().displayLastScreen();
-                                        }
-                                    }, "Ok");
-                                } else {
-                                    panelQuest.startEffect(EffectEventId.onCustom, null, "Wrong");
-                                }
-                            } else {
+
+                            if (question.isFinished()) {
+                                inputField.getEffects(EffectEventId.onFocus, ColorBar.class).get(0).getParameters().put("color", "#00ff00ff");
+                                inputField.startEffect(EffectEventId.onFocus);
+                                inputField.getEffects(EffectEventId.onFocus, ColorBar.class).get(0).getParameters().put("color", "#00000000");
                                 panelQuest.startEffect(EffectEventId.onCustom, new EndNotify() {
                                     @Override
                                     public void perform() {
                                         FlowManager.getInstance().displayLastScreen();
                                     }
                                 }, "Ok");
+                            } else {
+                                inputField.getEffects(EffectEventId.onFocus, ColorBar.class).get(0).getParameters().put("color", "#ff0000ff");
+                                inputField.startEffect(EffectEventId.onFocus);
+                                inputField.getEffects(EffectEventId.onFocus, ColorBar.class).get(0).getParameters().put("color", "#00000000");
+                                if (question.isMustBeCorrect()) {
+                                    panelQuest.startEffect(EffectEventId.onCustom, null, "Wrong");
+                                } else {
+                                    panelQuest.startEffect(EffectEventId.onCustom, new EndNotify() {
+                                        @Override
+                                        public void perform() {
+                                            panelQuest.startEffect(EffectEventId.onCustom, new EndNotify() {
+                                                @Override
+                                                public void perform() {
+                                                    FlowManager.getInstance().displayLastScreen();
+                                                }
+                                            }, "Ok");
+                                        }
+                                    }, "Wrong");
+                                }
                             }
                             break;
                         case Escape:

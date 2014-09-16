@@ -7,7 +7,10 @@
     </style>
     <style id="baseB">
         <attributes font="interface/Fonts/Base20B.fnt" inherit="true"/>     
-    </style>        
+    </style>
+    <style id="error">
+        <attributes font="interface/Fonts/Base20.fnt" backgroundColor="#ff0000" inherit="true"/>     
+    </style>         
     <screen id="start" controller="eduapp.gui.GuiMainMenu">
         <layer id="centerColumn" childLayout="vertical">
             <panel width="100%" height="40%" childLayout="vertical" />                  
@@ -88,7 +91,7 @@
                 <control id="questInput" height="50%" name="textfield" />
                 <effect>
                     <onCustom customKey="Start" name="move" mode="in" direction="bottom" length="300" startDelay="0" inherit="true" />
-                    <onCustom customKey="Ok" name="move" mode="out" direction="bottom" length="300" startDelay="0" inherit="true"/>
+                    <onCustom customKey="Ok" name="move" mode="out" direction="bottom" length="500" startDelay="0" inherit="true"/>
                     <onCustom customKey="Wrong" name="shake" distance="5.0" global="true" />
                 </effect>
             </panel>
@@ -97,9 +100,12 @@
     <screen id="groups" controller="eduapp.gui.GuiGroups">    
         <layer id="onlyLayer" childLayout="vertical">    
             <panel height="10%"/>                                 
-            <panel height="75%" width="80%" align="center" backgroundColor="#3b5998aa" childLayout="vertical">
+            <panel id="panelData" height="75%" width="80%" align="center" backgroundColor="#3b5998aa" childLayout="vertical">
                 <panel height="75%" id="panelGroups" childLayout="horizontal"/>
                 <panel height="*" id="panelItems" childLayout="vertical" padding="5px"/>
+                <effect>                    
+                    <onCustom customKey="Ok" name="fade" start="#ff" end="#00" length="5000" inherit="true"/>                    
+                </effect>
             </panel>
             <panel height="5%"/> 
             <panel id="panelOk" width="100%" height="5%" backgroundColor="#00000000" childLayout="horizontal" visibleToMouse="true">                                
@@ -117,7 +123,11 @@
     <screen id="conversion" controller="eduapp.gui.GuiConversion">        
         <layer id="onlyLayer" childLayout="vertical">   
             <panel height="10%"/>                                 
-            <panel height="75%" width="80%" align="center" backgroundColor="#3b5998aa" id="panelValues" childLayout="vertical" />
+            <panel height="75%" width="80%" align="center" backgroundColor="#3b5998aa" id="panelValues" childLayout="vertical">
+                <effect>                    
+                    <onCustom customKey="Ok" name="fade" start="#ff" end="#00" length="5000" inherit="true"/>                    
+                </effect>
+            </panel>
             <panel height="5%"/> 
             <panel id="panelOk" width="100%" height="5%" backgroundColor="#00000000" childLayout="horizontal" visibleToMouse="true">                                
                 <panel width="45%" />                                          
