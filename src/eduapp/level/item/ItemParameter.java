@@ -8,6 +8,7 @@ public interface ItemParameter {
 
     String NAMES_CONVERT = "description";
     String FORMULA = "vzorec";
+    String FORMULA_ORIG = "vzorecOrig";
     String FROM = "z";
     String LINKS = "link";
     String NAME = "jmeno";

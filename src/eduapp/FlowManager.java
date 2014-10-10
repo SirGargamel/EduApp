@@ -15,6 +15,7 @@ import eduapp.gui.GuiQuest;
 import eduapp.gui.GuiQuestInput;
 import eduapp.level.item.Item;
 import eduapp.level.Light;
+import eduapp.level.item.ItemParameter;
 import eduapp.level.quest.ConversionQuest;
 import eduapp.level.quest.EquationQuest;
 import eduapp.level.quest.GroupingQuest;
@@ -224,9 +225,11 @@ public class FlowManager implements Observer {
                 final GuiQuestInput control = (GuiQuestInput) nifty.getScreen(SCREEN_QUEST_INPUT).getScreenController();
                 Question q;
                 int correctCounter = 0;
+                ItemRegistry ir = AppContext.getItemRegistry();
+                Item i;
                 for (String model : question.getModelNames()) {
                     if (JmolUtils.displayModel(model)) {
-                        q = new Question("Zadejte vzorec molekuly.", model, null, false, true);
+                        q = new Question("Zadejte vzorec molekuly.", ir.get(model).getParam(ItemParameter.FORMULA_ORIG), null, false, true);
                         control.setQuestion(q);
                         storeActualScreen();
                         nifty.gotoScreen(SCREEN_QUEST_INPUT);

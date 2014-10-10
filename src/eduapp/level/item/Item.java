@@ -48,6 +48,9 @@ public class Item extends Observable implements Comparable<Item> {
     public void setParam(String id, String param) {
         if (!NO_ESCAPE.contains(id)) {
             params.put(id, Utils.convertNumbersToLowerIndexes(param));
+            if (id.equals(ItemParameter.FORMULA)) {
+                params.put(ItemParameter.FORMULA_ORIG, param);
+            }
         } else {
             params.put(id, param);
         }
