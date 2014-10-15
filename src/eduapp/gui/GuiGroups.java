@@ -32,7 +32,7 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
 
     private static final String SIZE_UNIT = "px";
     private static final int SIZE_GAP = 5;
-    private static final int COUNT_ITEMS_PER_LINE = 5;
+    private static final int COUNT_ITEMS_PER_LINE = 4;
     private static final int SIZE_ITEM_HEIGHT = 32;
     private GroupingQuest gq;
     private Element groups, items, panelData;
