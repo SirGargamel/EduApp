@@ -140,6 +140,6 @@ public class Player extends Item {
             rot.slerp(target, tpf * COEFF_ROTATE);
             inner.rotate(rot);
             counter++;
-        }        
+        }
     }
 }

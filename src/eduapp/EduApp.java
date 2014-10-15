@@ -30,9 +30,11 @@ public class EduApp extends SimpleApplication {
             SimpleApplication app = new EduApp();
             AppSettings settings = new AppSettings(true);
             settings.setRenderer(AppSettings.LWJGL_OPENGL_ANY);
-            settings.setWidth(1024);
-            settings.setHeight(768);
+            settings.setWidth(800);
+            settings.setHeight(600);
             settings.setTitle("EduApp");
+            settings.setDepthBits(16);
+            settings.setAudioRenderer(null);
             settings.setIcons(new BufferedImage[]{ImageIO.read(new File("data/icon.png"))});
 
             app.setShowSettings(false);

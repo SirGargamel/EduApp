@@ -20,6 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import jme3tools.optimize.GeometryBatchFactory;
 
 /**
  *
@@ -27,7 +28,7 @@ import java.util.Set;
  */
 public class Background {
 
-    private static final Vector3f TILE_SIZE_FLOOR = new Vector3f(Level.TILE_SIZE, -0.01f, Level.TILE_SIZE);
+    private static final Vector3f TILE_SIZE_FLOOR = new Vector3f(Level.TILE_SIZE, 0.01f, Level.TILE_SIZE);
     private static final Vector3f TILE_SIZE_WALL = new Vector3f(Level.TILE_SIZE, 2.0f, Level.TILE_SIZE);
     private static final char CHAR_EMPTY = ' ';
     private static final char CHAR_BLOCK = ';';
@@ -70,7 +71,7 @@ public class Background {
         List<Character> line = new LinkedList<>();
         for (int index = 0; index < values.length(); index++) {
             ch = values.charAt(index);
-            if (ch == '\n') {                
+            if (ch == '\n') {
                 width = Math.max(width, line.size());
                 line = new LinkedList<>();
                 tiles.add(line);
@@ -163,6 +164,8 @@ public class Background {
         g.setQueueBucket(Bucket.Transparent);
         g.move(0, 0, -height);
         rootNode.attachChild(g);
+        
+        rootNode = (Node) GeometryBatchFactory.optimize(rootNode);
     }
 
     public Node getRootNode() {

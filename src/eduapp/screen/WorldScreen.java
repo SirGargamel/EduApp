@@ -27,7 +27,7 @@ import eduapp.level.Level;
 public class WorldScreen extends AbstractAppState {
 
     private static final float PLAYER_SPEED = 1.5f;
-    private static final float CAM_ELEVATION = 7.5f;
+    private static final float CAM_ELEVATION = 5.5f;
     private static final Vector3f LEFT = new Vector3f(-1, 0, 0);
     private static final Vector3f UP = new Vector3f(0, 0, -1);
     private final Vector3f walkDirection = new Vector3f();
@@ -130,9 +130,10 @@ public class WorldScreen extends AbstractAppState {
         bulletAppState = new BulletAppState();
         bulletAppState.setThreadingType(BulletAppState.ThreadingType.PARALLEL);
         app.getStateManager().attach(bulletAppState);
-        bulletAppState.setDebugEnabled(EduApp.DEBUG);
+        bulletAppState.setDebugEnabled(EduApp.DEBUG);                
 
         final CollisionShape sceneShape = CollisionShapeFactory.createMeshShape(currentLevel.getRootNode());
+//        final CollisionShape sceneShape = CollisionShapeFactory.createMeshShape(currentLevel.getBackground());
         landscape = new RigidBodyControl(sceneShape, 0);
 
         playerPhysics = new BetterCharacterControl(.25f, 1.5f, 50f);

@@ -3,7 +3,9 @@ package eduapp.level;
 import eduapp.level.item.Item;
 import com.jme3.asset.AssetManager;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+import jme3tools.optimize.GeometryBatchFactory;
 
 /**
  *

@@ -38,7 +38,7 @@ public class Level {
     private final Player player;
     private final Set<Model> items;
     private final Set<Light> lights;
-    private final Quest quest;    
+    private final Quest quest;
     private final Set<TriggerStub> stubs;
     private final Set<Trigger> triggers, activeTriggers;
     private final Set<Item> dictionary;
@@ -60,7 +60,7 @@ public class Level {
         this.stubs = triggerStubs;
         this.quest = quest;
         this.dictionary = dictionary;
-        
+
         rootNode = new Node(String.valueOf(Math.random()));
         triggers = new HashSet<>();
         activeTriggers = new HashSet<>();
@@ -94,7 +94,7 @@ public class Level {
             rootNode.attachChild(s);
             ir.put(i);
             i.addObserver(flowManager);
-        }
+        }        
         // create lights
         for (Light l : lights) {
             ir.put(l);
@@ -122,7 +122,7 @@ public class Level {
         for (Item it : dictionary) {
             it.addObserver(flowManager);
             ir.put(it);
-        }
+        }                       
     }
 
     public Node getRootNode() {
@@ -131,7 +131,7 @@ public class Level {
 
     public Player getPlayer() {
         return player;
-    }    
+    }
 
     public void attachChild(final Spatial item) {
         rootNode.attachChild(item);
@@ -184,7 +184,7 @@ public class Level {
 
         // check for action triggers
         String msg = null;
-        if (FlowManager.getInstance().getCurrentQuest() != null) {            
+        if (FlowManager.getInstance().getCurrentQuest() != null) {
             for (Trigger t : activeTriggers) {
                 if (t instanceof ActionTrigger) {
                     // show icon
