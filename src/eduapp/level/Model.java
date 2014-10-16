@@ -30,17 +30,18 @@ public class Model extends Item {
 
     public Spatial generateItem(final AssetManager assetManager) {
         model = assetManager.loadModel("models/".concat(modelName));
+        model = GeometryBatchFactory.optimize((Node) model);
         model.scale(scale);
         model.move(position);
         model.rotate(rotate[0], rotate[1], rotate[2]);
-        
+
         final Node n = (Node) model;
         for (Spatial s : n.getChildren()) {
             if (s instanceof CameraNode || s instanceof LightNode) {
                 n.detachChild(s);
             }
-        }       
-        
+        }
+
         return model;
     }
 
