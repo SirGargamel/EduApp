@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import org.jmol.adapter.smarter.SmarterJmolAdapter;
 import org.jmol.api.JmolAdapter;
 import org.jmol.api.JmolViewer;
@@ -68,6 +69,8 @@ public class JmolUtils {
         }
         frame.setAutoRequestFocus(false);
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        frame.setUndecorated(true);
+        frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
 
         jmolPanel = new JmolPanel();
         jmolPanel.setPreferredSize(new Dimension(200, 200));
