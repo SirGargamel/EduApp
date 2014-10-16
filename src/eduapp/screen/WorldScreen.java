@@ -170,6 +170,11 @@ public class WorldScreen extends AbstractAppState {
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
+        if (enabled) {
+            bulletAppState.setSpeed(1);
+        } else {
+            bulletAppState.setSpeed(0);
+        }
         if (player != null) {
             player.setEnabled(enabled);
             playerPhysics.setWalkDirection(Vector3f.ZERO);
