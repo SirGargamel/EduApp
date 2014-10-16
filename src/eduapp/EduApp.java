@@ -23,17 +23,20 @@ import javax.imageio.ImageIO;
  */
 public class EduApp extends SimpleApplication {
 
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
 
     public static void main(String[] args) {
         try {
-            SimpleApplication app = new EduApp();
-            AppSettings settings = new AppSettings(true);
+            final SimpleApplication app = new EduApp();
+            final AppSettings settings = new AppSettings(true);
             settings.setRenderer(AppSettings.LWJGL_OPENGL_ANY);
             settings.setWidth(800);
             settings.setHeight(600);
             settings.setTitle("EduApp");
             settings.setDepthBits(16);
+            settings.setBitsPerPixel(16);
+            settings.setFrequency(30);
+            settings.setVSync(true);            
             settings.setAudioRenderer(null);
             settings.setIcons(new BufferedImage[]{ImageIO.read(new File("data/icon.png"))});
 
