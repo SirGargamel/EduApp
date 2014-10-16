@@ -1,14 +1,12 @@
 package eduapp.screen;
 
-import com.bulletphysics.collision.shapes.BoxShape;
 import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.bullet.BulletAppState;
-import com.jme3.bullet.collision.shapes.BoxCollisionShape;
+import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.collision.shapes.CollisionShape;
-import com.jme3.bullet.collision.shapes.HullCollisionShape;
 import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.util.CollisionShapeFactory;
@@ -133,12 +131,13 @@ public class WorldScreen extends AbstractAppState {
 
     private void initCollisions(Application app) {
         bulletAppState = new BulletAppState();
-        bulletAppState.setThreadingType(BulletAppState.ThreadingType.PARALLEL);
-        app.getStateManager().attach(bulletAppState);
+        bulletAppState.setThreadingType(BulletAppState.ThreadingType.PARALLEL);        
         bulletAppState.setDebugEnabled(EduApp.DEBUG);
+        bulletAppState.setBroadphaseType(PhysicsSpace.BroadphaseType.AXIS_SWEEP_3_32);
+        app.getStateManager().attach(bulletAppState);
 
         bulletAppState.getPhysicsSpace().setAccuracy(1f / 30f);
-        bulletAppState.getPhysicsSpace().setMaxSubSteps(2);
+        bulletAppState.getPhysicsSpace().setMaxSubSteps(2);        
 
         CollisionShape shape = CollisionShapeFactory.createMeshShape(currentLevel.getBackground());
         landscape = new RigidBodyControl(shape, 0);
