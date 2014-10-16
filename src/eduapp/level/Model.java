@@ -3,6 +3,8 @@ package eduapp.level;
 import eduapp.level.item.Item;
 import com.jme3.asset.AssetManager;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.CameraNode;
+import com.jme3.scene.LightNode;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import jme3tools.optimize.GeometryBatchFactory;
@@ -31,6 +33,14 @@ public class Model extends Item {
         model.scale(scale);
         model.move(position);
         model.rotate(rotate[0], rotate[1], rotate[2]);
+        
+        final Node n = (Node) model;
+        for (Spatial s : n.getChildren()) {
+            if (s instanceof CameraNode || s instanceof LightNode) {
+                n.detachChild(s);
+            }
+        }       
+        
         return model;
     }
 
