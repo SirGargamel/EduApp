@@ -1,10 +1,12 @@
 package eduapp.level.trigger;
 
 import com.jme3.asset.AssetManager;
+import com.jme3.bounding.BoundingBox;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.debug.WireBox;
 import com.jme3.scene.debug.WireSphere;
@@ -109,8 +111,11 @@ public class TriggerStub {
             final Item item = items.get(volumeDescription);
             if (item != null) {
                 if (item instanceof Model) {
-                    Model i = (Model) item;
-                    result = i.getModel().clone();
+                    final Model i = (Model) item;
+                    final BoundingBox bv = (BoundingBox) i.getModel().getWorldBound();
+                    final WireBox mesh = new WireBox(bv.getXExtent(), bv.getYExtent(), bv.getZExtent());
+                    mesh.setBound(bv);
+                    result = new Geometry(volumeDescription, mesh);
                 } else if (item instanceof Player) {
                     Player p = (Player) item;
                     result = new Geometry("wireframe sphere", new WireSphere(0.5f));
