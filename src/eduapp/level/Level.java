@@ -128,6 +128,10 @@ public class Level {
     public Node getRootNode() {
         return rootNode;
     }
+    
+    public Node getBackground() {
+        return background.getRootNode();
+    }
 
     public Player getPlayer() {
         return player;

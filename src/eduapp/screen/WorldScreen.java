@@ -1,11 +1,14 @@
 package eduapp.screen;
 
+import com.bulletphysics.collision.shapes.BoxShape;
 import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.bullet.BulletAppState;
+import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
+import com.jme3.bullet.collision.shapes.HullCollisionShape;
 import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.util.CollisionShapeFactory;
@@ -13,6 +16,8 @@ import com.jme3.input.InputManager;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
+import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 import eduapp.Actions;
 import eduapp.AppContext;
 import eduapp.EduApp;
@@ -130,11 +135,13 @@ public class WorldScreen extends AbstractAppState {
         bulletAppState = new BulletAppState();
         bulletAppState.setThreadingType(BulletAppState.ThreadingType.PARALLEL);
         app.getStateManager().attach(bulletAppState);
-        bulletAppState.setDebugEnabled(EduApp.DEBUG);                
+        bulletAppState.setDebugEnabled(EduApp.DEBUG);
 
-        final CollisionShape sceneShape = CollisionShapeFactory.createMeshShape(currentLevel.getRootNode());
-//        final CollisionShape sceneShape = CollisionShapeFactory.createMeshShape(currentLevel.getBackground());
-        landscape = new RigidBodyControl(sceneShape, 0);
+        bulletAppState.getPhysicsSpace().setAccuracy(1f / 30f);
+        bulletAppState.getPhysicsSpace().setMaxSubSteps(2);
+
+        CollisionShape shape = CollisionShapeFactory.createMeshShape(currentLevel.getBackground());
+        landscape = new RigidBodyControl(shape, 0);
 
         playerPhysics = new BetterCharacterControl(.25f, 1.5f, 50f);
         player.getModel().addControl(playerPhysics);
@@ -145,6 +152,19 @@ public class WorldScreen extends AbstractAppState {
 
         bulletAppState.getPhysicsSpace().add(landscape);
         bulletAppState.getPhysicsSpace().add(playerPhysics);
+
+        RigidBodyControl rbc;
+        for (Spatial s : currentLevel.getRootNode().getChildren()) {
+            if (s == currentLevel.getBackground() || !(s instanceof Node)) {
+                continue;
+            }
+
+            shape = CollisionShapeFactory.createDynamicMeshShape(s);
+            rbc = new RigidBodyControl(shape, 0);
+            rbc.setPhysicsRotation(s.getWorldRotation());
+            rbc.setPhysicsLocation(s.getWorldTranslation());
+            bulletAppState.getPhysicsSpace().add(rbc);
+        }
     }
 
     @Override
