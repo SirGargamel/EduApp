@@ -22,7 +22,7 @@
         <Vec id="questItem1">
             <Model>chem-lab-table/chem-lab-table.j3o</Model>
             <Pozice>5.0;0;-0.1</Pozice>
-            <Velikost>30.0</Velikost>
+            <Velikost>3.0</Velikost>
         </Vec>
         <Vec id="questItem2">
             <Model>bench2-table.j3o</Model>
