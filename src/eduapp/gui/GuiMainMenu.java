@@ -80,12 +80,12 @@ public class GuiMainMenu implements ScreenController {
             ImageBuilder ib;
             for (int i = 0; i < listBox.itemCount() - 1; i++) {
                 pb = new PanelBuilder("rew" + i);
-                pb.width("10%");
-                pb.backgroundColor("#8b9dc388");
+                pb.width("15%");
+//                pb.backgroundColor("#8b9dc388");
                 pb.childLayoutCenter();
 
                 ib = new ImageBuilder("image" + i);
-                ib.filename(Utils.generateIconFilename(Integer.toString(i + 1)));
+                ib.filename(Utils.generateIconFilename("award-" + Integer.toString(i + 1)));
                 ib.height("100%");
                 ib.width("100%");
                 pb.image(ib);
