@@ -67,7 +67,7 @@
         <Vec id="questItemF">
             <Model>Protector-XL/Protector-XL.j3o</Model>
             <Pozice>10.5;0;-0.25</Pozice>
-            <Velikost>0.4</Velikost>
+            <Velikost>2</Velikost>
             <Rotace>0;90;0</Rotace>
         </Vec>
         <!-- Extra -->
