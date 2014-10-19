@@ -23,7 +23,7 @@ import javax.imageio.ImageIO;
  */
 public class EduApp extends SimpleApplication {
 
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
 
     public static void main(String[] args) {
         try {
