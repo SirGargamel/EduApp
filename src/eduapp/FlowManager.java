@@ -226,7 +226,6 @@ public class FlowManager implements Observer {
                 Question q;
                 int correctCounter = 0;
                 ItemRegistry ir = AppContext.getItemRegistry();
-                Item i;
                 for (String model : question.getModelNames()) {
                     if (JmolUtils.displayModel(model)) {
                         q = new Question("Zadejte vzorec molekuly.", ir.get(model).getParam(ItemParameter.FORMULA_ORIG), null, false, true);
@@ -250,7 +249,6 @@ public class FlowManager implements Observer {
                 }
                 question.setResult(correctCounter);
                 gotoWorldScreen();
-                question.finish();
             }
         });
         t.start();
