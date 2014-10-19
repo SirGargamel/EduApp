@@ -73,7 +73,10 @@ public class GuiQuest implements ScreenController {
                 tb = new TextBuilder();
                 tb.text(" - " + qi.toNiftyString());
                 tb.style("base");
-                tb.margin("10");
+                tb.margin("5px");
+                tb.width("100%");
+                tb.textHAlignLeft();
+                tb.wrap(true);
                 if (qi.isFailed()) {
                     tb.color("#ff0000ff");
                 } else {
@@ -97,6 +100,8 @@ public class GuiQuest implements ScreenController {
         tb.text(text);
         tb.style("base");
         tb.alignCenter();
+        tb.wrap(true);
+        tb.width("100%");
         tb.marginLeft("5px");
         tb.color("#ffffffff");
         tb.build(nifty, nifty.getCurrentScreen(), panelQuest);
