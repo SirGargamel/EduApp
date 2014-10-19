@@ -188,6 +188,7 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
                         val = item.getParam(paramId);
                         if (val.contains(groupId)) {
                             correctCount++;
+                            element.getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#00ff00"));
                         } else {
                             element.getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#ff0000"));
                         }
@@ -205,6 +206,7 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
                     val = item.getParam(paramId);
                     if (val != null) {
                         correctCount++;
+                        element.getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#00ff00"));
                     } else {
                         element.getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#ff0000"));
                     }
@@ -218,9 +220,18 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
                     val = item.getParam(paramId);
                     if (val == null) {
                         correctCount++;
+                        element.getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#00ff00"));
                     } else {
                         element.getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#ff0000"));
                     }
+                }
+            }
+        }
+        for (Element e : items.getElements()) {
+            for (Element el : e.getElements()) {
+                element = el.getElements().get(0);
+                if (element != null) {
+                    element.getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#ff0000"));
                 }
             }
         }

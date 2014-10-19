@@ -122,6 +122,7 @@ public class GuiConversion implements ScreenController {
             answer = it.getParam(to);
             if (user.equalsIgnoreCase(answer)) {
                 counter++;
+                tf.getElement().getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#00ff00"));
             } else {
                 tf.getElement().getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#ff0000"));
             }
