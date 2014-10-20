@@ -12,6 +12,8 @@ import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.util.CollisionShapeFactory;
 import com.jme3.input.InputManager;
 import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.AnalogListener;
+import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
@@ -41,6 +43,8 @@ public class WorldScreen extends AbstractAppState {
     private Level currentLevel;
     private boolean left, right, up, down;
     private ActionListener keyListener;
+    private AnalogListener mouseListener;
+    private Vector2f mousePos;
     private Camera cam;
     private String levelName;
 
@@ -83,6 +87,9 @@ public class WorldScreen extends AbstractAppState {
         if (keyListener != null) {
             AppContext.getApp().getInputManager().removeListener(keyListener);
         }
+        if (mouseListener != null) {
+            AppContext.getApp().getInputManager().removeListener(mouseListener);
+        }
         keyListener = new ActionListener() {
             @Override
             public void onAction(String name, boolean isPressed, float tpf) {
@@ -118,6 +125,18 @@ public class WorldScreen extends AbstractAppState {
         inputManager.addListener(keyListener, Actions.ACTION.toString());
         inputManager.addListener(keyListener, Actions.QUEST.toString());
         inputManager.addListener(keyListener, Actions.DICTIONARY.toString());
+        mouseListener = new AnalogListener() {
+
+            @Override
+            public void onAnalog(String name, float value, float tpf) {
+                if (name.equals(Actions.LEFT_CLICK.toString())) {
+                    final Vector2f pos = inputManager.getCursorPosition();
+                    mousePos = pos.subtract(EduApp.WIDTH / 2, EduApp.HEIGHT / 2);
+                    mousePos.normalizeLocal();
+                }
+            }
+        };
+        inputManager.addListener(mouseListener, Actions.LEFT_CLICK.toString());
     }
 
     private void initCamera(Application app) {
@@ -184,7 +203,7 @@ public class WorldScreen extends AbstractAppState {
     public void update(float tpf) {
         walkDirection.set(0, 0, 0);
         if (left) {
-            walkDirection.addLocal(LEFT);
+            walkDirection.addLocal(LEFT);            
         }
         if (right) {
             walkDirection.addLocal(LEFT.negate());
@@ -194,6 +213,10 @@ public class WorldScreen extends AbstractAppState {
         }
         if (down) {
             walkDirection.addLocal(UP.negate());
+        }
+        if (mousePos != null) {
+            walkDirection.addLocal(mousePos.x, 0, -mousePos.y);
+            mousePos = null;
         }
         playerPhysics.setWalkDirection(walkDirection.normalizeLocal().multLocal(PLAYER_SPEED));
         final Vector3f loc = player.getModel().getWorldBound().getCenter();

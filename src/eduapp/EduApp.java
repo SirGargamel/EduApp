@@ -24,14 +24,16 @@ import javax.imageio.ImageIO;
 public class EduApp extends SimpleApplication {
 
     public static final boolean DEBUG = false;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 600;
 
     public static void main(String[] args) {
         try {
             final SimpleApplication app = new EduApp();
             final AppSettings settings = new AppSettings(true);
             settings.setRenderer(AppSettings.LWJGL_OPENGL_ANY);
-            settings.setWidth(800);
-            settings.setHeight(600);
+            settings.setWidth(WIDTH);
+            settings.setHeight(HEIGHT);
             settings.setTitle("EduApp");
             settings.setDepthBits(16);
             settings.setBitsPerPixel(16);

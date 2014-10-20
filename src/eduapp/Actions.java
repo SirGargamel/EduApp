@@ -8,7 +8,6 @@ public enum Actions {
 
     LEFT,
     LEFT_CLICK,
-    MOUSE_MOVE,
     RIGHT,
     UP,
     DOWN,
