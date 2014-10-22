@@ -11,7 +11,6 @@ import de.lessvoid.nifty.controls.DroppableDropFilter;
 import de.lessvoid.nifty.controls.dragndrop.builder.DraggableBuilder;
 import de.lessvoid.nifty.controls.dragndrop.builder.DroppableBuilder;
 import de.lessvoid.nifty.effects.EffectEventId;
-import de.lessvoid.nifty.effects.EffectImpl;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.elements.render.PanelRenderer;
 import de.lessvoid.nifty.screen.Screen;
@@ -228,10 +227,9 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
             }
         }
         for (Element e : items.getElements()) {
-            for (Element el : e.getElements()) {
-                element = el.getElements().get(0);
-                if (element != null) {
-                    element.getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#ff0000"));
+            for (Element el : e.getElements()) {                
+                if (el.getElements().size() > 1) {
+                    el.getElements().get(0).getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#ff0000"));
                 }
             }
         }
