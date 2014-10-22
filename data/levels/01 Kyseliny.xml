@@ -188,8 +188,8 @@
     </Spoustece>
     <Ukoly>        
         <Ukol id="hlavniQuest">
-            <Popis>Úvodní popis patra ... \nMůže být několika-řádkový...</Popis>
-            <Konec>Popis konce levelu.</Konec>                       
+            <Popis>Vítejte v úvodním úrovní hry EduApp.\nV této úrovni se dozvíte o kyselině, k čemu se používá a také jak ji vyrobit. Nezapomeňte si nastudovat vše potřebné ve vašem slovníčku ;-)</Popis>
+            <Konec>Gratuliji !!!\nÚspěšně jste dokončili úrovenň o kyseline sírové.</Konec>                       
             <Prevod id="c1">
                 <Otazka>vzorecJmeno</Otazka>
                 <Data>s;so2;so3;h2so4;h2o;v2o5;k2so4;sio2</Data>
@@ -232,9 +232,19 @@
             </Pexeso>                    
             <Pomocne>
                 <Otazka>Uveďte název R-věty, která popisují nebezpečnost kyseliny sírové</Otazka>
-                <Odpoved>R35</Odpoved>
+                <Odpoved>R35</Odpoved>                
                 <Otazka>Uveďte název H-věty, která popisují nebezpečnost kyseliny sírové</Otazka>
                 <Odpoved>H314</Odpoved>
+                <Otazka>Uveďte zastaralý název kyseliny sírové</Otazka>
+                <Odpoved>vitriol</Odpoved>
+                <Otazka>Uveďte název R-věty, která popisují nebezpečnost kyseliny sírové</Otazka>
+                <Odpoved>R35</Odpoved>
+                <Otazka>Uveďte zastaralý název kyseliny sírové</Otazka>
+                <Odpoved>vitriol</Odpoved>
+                <Otazka>Uveďte název H-věty, která popisují nebezpečnost kyseliny sírové</Otazka>
+                <Odpoved>H314</Odpoved>
+                <Otazka>Uveďte název R-věty, která popisují nebezpečnost kyseliny sírové</Otazka>
+                <Odpoved>R35</Odpoved>
             </Pomocne>  
             <Final>
                 <Rovnice>s+o2=so2;v2o5;sio2</Rovnice>
