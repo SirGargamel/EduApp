@@ -59,6 +59,12 @@ public class JmolUtils {
         }
     }
 
+    public static void hideViewer() {
+        if (frame != null) {
+            frame.setVisible(false);
+        }
+    }
+
     public static void initializeJmolPanel() {
         frame = new JFrame();
         try {

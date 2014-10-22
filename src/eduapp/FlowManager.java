@@ -247,6 +247,7 @@ public class FlowManager implements Observer {
                         }
                     }
                 }
+                JmolUtils.hideViewer();
                 question.setResult(correctCounter);
                 gotoWorldScreen();
             }

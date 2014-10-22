@@ -232,6 +232,7 @@ public class GuiDictionary implements ScreenController {
 
     @Override
     public void onEndScreen() {
+        JmolUtils.hideViewer();
     }
 
     @NiftyEventSubscriber(id = "tree")
