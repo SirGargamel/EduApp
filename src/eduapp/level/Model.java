@@ -2,6 +2,7 @@ package eduapp.level;
 
 import eduapp.level.item.Item;
 import com.jme3.asset.AssetManager;
+import com.jme3.asset.AssetNotFoundException;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.CameraNode;
 import com.jme3.scene.LightNode;
@@ -15,6 +16,7 @@ import jme3tools.optimize.GeometryBatchFactory;
  */
 public class Model extends Item {
 
+    private static final String EXTENSION = ".j3o";
     private final String modelName;
     private final Vector3f position;
     private final float scale;
@@ -29,7 +31,21 @@ public class Model extends Item {
     }
 
     public Spatial generateItem(final AssetManager assetManager) {
-        model = assetManager.loadModel("models/".concat(modelName));
+        String name;
+        if (!modelName.endsWith(EXTENSION)) {
+            name = modelName.concat(EXTENSION);
+        } else {
+            name = modelName;
+        }
+
+        try {
+            model = assetManager.loadModel("models/".concat(name));
+        } catch (AssetNotFoundException ex) {
+            name = modelName.concat("/").concat(name);
+            model = assetManager.loadModel("models/".concat(name));
+        }
+
+
         model = GeometryBatchFactory.optimize((Node) model);
         model.scale(scale);
         model.move(position);
