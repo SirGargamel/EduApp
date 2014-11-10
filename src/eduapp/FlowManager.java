@@ -2,6 +2,8 @@ package eduapp;
 
 import eduapp.level.Player;
 import com.jme3.app.state.AppState;
+import com.jme3.asset.AssetManager;
+import com.jme3.asset.plugins.ZipLocator;
 import de.lessvoid.nifty.Nifty;
 import eduapp.gui.GuiConversion;
 import eduapp.gui.GuiDescription;
@@ -26,6 +28,7 @@ import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
 import eduapp.level.quest.Question;
 import eduapp.level.trigger.Trigger;
+import eduapp.loaders.LevelLoader;
 import eduapp.screen.StartScreen;
 import eduapp.screen.WorldScreen;
 import java.io.BufferedOutputStream;
@@ -64,6 +67,7 @@ public class FlowManager implements Observer {
     private AppState currentState;
     private Stack<String> lastScreens;
     private int finishedLevelCount;
+    private String levelName;
 
     static {
         instance = new FlowManager();
@@ -104,6 +108,15 @@ public class FlowManager implements Observer {
     }
 
     public void loadLevel(String levelName) {
+        final AssetManager am = AppContext.getApp().getAssetManager();
+        if (this.levelName != null) {
+            am.unregisterLocator(this.levelName.concat(".").concat(LevelLoader.EXTENSION_PACKAGE), ZipLocator.class);
+            this.levelName = null;
+        }
+
+        this.levelName = levelName;
+        am.registerLocator("data\\".concat(levelName).concat(".").concat(LevelLoader.EXTENSION_PACKAGE), ZipLocator.class);
+
         worldScreen.setLevelName(levelName);
 
         gotoWorldScreen();
@@ -185,7 +198,7 @@ public class FlowManager implements Observer {
     public void displayQuestFinish() {
         enableState(false);
         final GuiQuest control = (GuiQuest) nifty.getScreen(SCREEN_QUEST).getScreenController();
-        control.displayEnding();        
+        control.displayEnding();
         nifty.gotoScreen(SCREEN_QUEST);
         saveLevelState(worldScreen.getLevelName());
     }
@@ -200,7 +213,7 @@ public class FlowManager implements Observer {
 
             currentQuest = quest;
             final GuiQuest control = (GuiQuest) nifty.getScreen(SCREEN_QUEST).getScreenController();
-            control.setQuest(quest);            
+            control.setQuest(quest);
             control.displayDescription();
             storeActualScreen();
             nifty.gotoScreen(SCREEN_QUEST);

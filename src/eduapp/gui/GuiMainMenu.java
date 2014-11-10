@@ -11,6 +11,7 @@ import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import eduapp.FlowManager;
 import eduapp.Utils;
+import eduapp.loaders.LevelLoader;
 import java.io.File;
 import java.io.FilenameFilter;
 
@@ -19,9 +20,8 @@ import java.io.FilenameFilter;
  * @author Petr Ječmen
  */
 public class GuiMainMenu implements ScreenController {
-
+    
     private static final String LISTBOX_NAME = "LevelList";
-    private static final String LEVEL_EXTENSION = ".xml";
     private Nifty nifty;
     private ListBox<String> listBox;
     private Element rewards;
@@ -47,7 +47,7 @@ public class GuiMainMenu implements ScreenController {
     }
 
     public void setLevelCount(int finishedLevelCount) {
-        final File f = new File("data\\levels");
+        final File f = new File("data");
         int counter = 0;
         if (listBox.itemCount() > 0) {
             listBox.clear();
@@ -55,16 +55,16 @@ public class GuiMainMenu implements ScreenController {
         for (String s : f.list(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
-                return name.endsWith(LEVEL_EXTENSION);
+                return name.endsWith(LevelLoader.EXTENSION_PACKAGE);
             }
         })) {
-            listBox.addItem(s.replace(LEVEL_EXTENSION, ""));
+            listBox.addItem(s.replace(".".concat(LevelLoader.EXTENSION_PACKAGE), ""));
             counter++;
             if (counter > finishedLevelCount) {
                 break;
             }
-        }
-
+        }        
+        
         buildRewards();
     }
 

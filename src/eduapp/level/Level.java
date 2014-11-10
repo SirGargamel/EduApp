@@ -19,7 +19,6 @@ import eduapp.level.trigger.ActionTrigger;
 import eduapp.level.trigger.MoveTrigger;
 import eduapp.level.trigger.Trigger;
 import eduapp.level.trigger.TriggerStub;
-import eduapp.loaders.LevelLoader;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -44,8 +43,7 @@ public class Level {
     private final Set<Item> dictionary;
 
     public static Level loadLevel(final String levelName, final AssetManager assetManager, final InputManager inputManager) {
-        final String path = "levels/".concat(levelName).concat(".").concat(LevelLoader.EXTENSION);
-        final AssetKey<Level> key = new AssetKey<>(path);
+        final AssetKey<Level> key = new AssetKey<>("level.xml");
         final Level result = assetManager.loadAsset(key);
         result.generateLevel(assetManager, inputManager);
         ((DesktopAssetManager) assetManager).clearCache();
@@ -94,7 +92,7 @@ public class Level {
             rootNode.attachChild(s);
             ir.put(i);
             i.addObserver(flowManager);
-        }        
+        }
         // create lights
         for (Light l : lights) {
             ir.put(l);
@@ -122,13 +120,13 @@ public class Level {
         for (Item it : dictionary) {
             it.addObserver(flowManager);
             ir.put(it);
-        }                       
+        }
     }
 
     public Node getRootNode() {
         return rootNode;
     }
-    
+
     public Node getBackground() {
         return background.getRootNode();
     }

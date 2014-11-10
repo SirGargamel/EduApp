@@ -39,7 +39,7 @@ import org.xml.sax.SAXException;
  */
 public class StateLoader implements AssetLoader {
 
-    public static final String EXTENSION = "lvl";
+    public static final String EXTENSION = "game";
 
     @Override
     public Object load(AssetInfo assetInfo) throws IOException {

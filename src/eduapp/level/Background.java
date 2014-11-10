@@ -103,7 +103,7 @@ public class Background {
                         //                        mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
                         mat = new Material(assetManager, "lights/Lighting.j3md");
                         //                        mat.setTexture("ColorMap", assetManager.loadTexture(new StringBuilder("materials").append("/").append(textureMapping.get(ch)).toString()));
-                        mat.setTexture("DiffuseMap", assetManager.loadTexture(new StringBuilder("materials").append("/").append(textureMapping.get(ch)).toString()));
+                        mat.setTexture("DiffuseMap", assetManager.loadTexture(textureMapping.get(ch).toString()));
                         matCache.put(ch, mat);
                     }
                     if (walls.contains(ch)) {

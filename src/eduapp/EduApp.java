@@ -62,7 +62,7 @@ public class EduApp extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         assetManager.registerLocator("data/", FileLocator.class);
-        assetManager.registerLoader(LevelLoader.class, LevelLoader.EXTENSION);
+        assetManager.registerLoader(LevelLoader.class, LevelLoader.EXTENSION_DEF);
         assetManager.registerLoader(StateLoader.class, StateLoader.EXTENSION);
 
         initKeyMappings();

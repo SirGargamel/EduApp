@@ -36,7 +36,8 @@ import org.xml.sax.SAXException;
  */
 public class LevelLoader implements AssetLoader {
 
-    public static final String EXTENSION = "xml";
+    public static final String EXTENSION_PACKAGE = "lvl";
+    public static final String EXTENSION_DEF = "xml";
     public static final String ATTR_ID = "id";
     private static final String NODE_ACTION_ITEMS = "Spoustece";
     private static final String NODE_BACKGROUND = "Pozadi";
