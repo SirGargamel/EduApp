@@ -9,6 +9,7 @@ import eduapp.level.quest.GroupingQuest;
 import eduapp.level.quest.HelpQuest;
 import eduapp.loaders.LevelLoader;
 import eduapp.level.quest.JmolQuestion;
+import eduapp.level.quest.MultiAnswerQuestion;
 import eduapp.level.quest.PexesoQuest;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
@@ -38,10 +39,11 @@ public class XmlQuest extends XmlEntity<Quest> {
     private static final String ITEM_ENDING = "Konec";
     private static final String ITEM_FINAL = "Final";
     private static final String ITEM_GROUPS = "Skupiny";
-    private static final String ITEM_MODE = "Mod";
+    private static final String ITEM_MODE = "Mod";    
     private static final String ITEM_PEXESO = "Pexeso";
     private static final String ITEM_QUESTION = "Otazka";
     private static final String ITEM_QUESTION_JMOL = "Jmol";
+    private static final String ITEM_QUESTION_MULTI = "Multi";
     private static final String ITEM_QUESTION_WEB = "Web";
     private static final String ITEM_REWARD = "Odmena";
     private static final String ITEM_HELP = "Pomocne";
@@ -111,6 +113,13 @@ public class XmlQuest extends XmlEntity<Quest> {
                         extractNodeText(e, ITEM_ANSWER),
                         extractNodeText(e, ITEM_DATA),
                         extractNodeText(e, ITEM_REWARD));
+                break;
+            case ITEM_QUESTION_MULTI:
+                result = new MultiAnswerQuestion(
+                        extractNodeText(e, ITEM_QUESTION),
+                        extractNodeText(e, ITEM_ANSWER).split(SEPARATOR_BASIC),
+                        extractNodeText(e, ITEM_DATA).split(SEPARATOR_BASIC),
+                        extractNodeText(e, ITEM_REWARD));                
                 break;
             case ITEM_EQUATION:
                 final EquationQuest dq = new EquationQuest(Mode.valueOf(extractNodeText(e, ITEM_MODE).toLowerCase()), extractNodeText(e, ITEM_REWARD));

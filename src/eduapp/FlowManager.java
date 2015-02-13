@@ -11,6 +11,7 @@ import eduapp.gui.GuiDictionary;
 import eduapp.gui.GuiEquation;
 import eduapp.gui.GuiGroups;
 import eduapp.gui.GuiMainMenu;
+import eduapp.gui.GuiMultiAnswer;
 import eduapp.gui.GuiPexeso;
 import eduapp.gui.GuiWorld;
 import eduapp.gui.GuiQuest;
@@ -23,6 +24,7 @@ import eduapp.level.quest.EquationQuest;
 import eduapp.level.quest.GroupingQuest;
 import eduapp.level.quest.HelpQuest;
 import eduapp.level.quest.JmolQuestion;
+import eduapp.level.quest.MultiAnswerQuestion;
 import eduapp.level.quest.PexesoQuest;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
@@ -56,6 +58,7 @@ public class FlowManager implements Observer {
     private static final String SCREEN_PEXESO = "pexeso";
     private static final String SCREEN_QUEST = "quest";
     private static final String SCREEN_QUEST_INPUT = "questInput";
+    private static final String SCREEN_QUEST_MULTI = "multiAnswer";
     private static final String SCREEN_START = "start";
     private static final String SCREEN_WORLD = "game";
     private static final FlowManager instance;
@@ -227,6 +230,15 @@ public class FlowManager implements Observer {
 
         storeActualScreen();
         nifty.gotoScreen(SCREEN_QUEST_INPUT);
+    }
+    
+    public void displayQuestionMulti(final MultiAnswerQuestion question) {
+        enableState(false);
+        final GuiMultiAnswer control = (GuiMultiAnswer) nifty.getScreen(SCREEN_QUEST_MULTI).getScreenController();
+        control.setQuestion(question);
+
+        storeActualScreen();
+        nifty.gotoScreen(SCREEN_QUEST_MULTI);
     }
 
     public void displayJmolQuestion(final JmolQuestion question) {

@@ -23,7 +23,8 @@ public class Quest extends Item {
     private static final String ACTION_DISPLAY_JMOL = "J";
     private static final String ACTION_DISPLAY_PEXESO = "P";
     private static final String ACTION_DISPLAY_QUESTION = "Q";
-    private static final String ACTION_DISPLAY_WEB = "W";    
+    private static final String ACTION_DISPLAY_QUESTION_MULTI = "M";
+    private static final String ACTION_DISPLAY_WEB = "W";
     private final List<QuestItem> data;
     private final HelpQuest help;
     private final FinalQuest finalQuest;
@@ -48,6 +49,9 @@ public class Quest extends Item {
             if (rest.startsWith(ACTION_DISPLAY_QUESTION)) {
                 final String number = rest.replace(ACTION_DISPLAY_QUESTION, "");
                 displayQuestion(extractQuestItem(Question.class, Integer.valueOf(number)));
+            } else if (rest.startsWith(ACTION_DISPLAY_QUESTION_MULTI)) {
+                final String number = rest.replace(ACTION_DISPLAY_QUESTION_MULTI, "");
+                displayQuestionMulti(extractQuestItem(MultiAnswerQuestion.class, Integer.valueOf(number)));
             } else if (rest.startsWith(ACTION_DISPLAY_JMOL)) {
                 final String number = rest.replace(ACTION_DISPLAY_JMOL, "");
                 displayJmolQuestion(extractQuestItem(JmolQuestion.class, Integer.valueOf(number)));
@@ -88,6 +92,9 @@ public class Quest extends Item {
         if (rest.startsWith(ACTION_DISPLAY_QUESTION)) {
             final String number = rest.replace(ACTION_DISPLAY_QUESTION, "");
             result = extractQuestItem(Question.class, Integer.valueOf(number));
+        } else if (rest.startsWith(ACTION_DISPLAY_QUESTION_MULTI)) {
+            final String number = rest.replace(ACTION_DISPLAY_QUESTION_MULTI, "");
+            result = extractQuestItem(MultiAnswerQuestion.class, Integer.valueOf(number));
         } else if (rest.startsWith(ACTION_DISPLAY_JMOL)) {
             final String number = rest.replace(ACTION_DISPLAY_JMOL, "");
             result = extractQuestItem(JmolQuestion.class, Integer.valueOf(number));
@@ -142,6 +149,10 @@ public class Quest extends Item {
 
     private void displayQuestion(Question question) {
         FlowManager.getInstance().displayQuestion(question);
+    }
+
+    private void displayQuestionMulti(MultiAnswerQuestion question) {
+        FlowManager.getInstance().displayQuestionMulti(question);
     }
 
     private void displayJmolQuestion(final JmolQuestion question) {
