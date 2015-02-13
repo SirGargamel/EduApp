@@ -38,7 +38,7 @@ public class EduApp extends SimpleApplication {
             settings.setDepthBits(16);
             settings.setBitsPerPixel(16);
             settings.setFrequency(30);
-            settings.setVSync(true);            
+            settings.setVSync(true);
             settings.setAudioRenderer(null);
             settings.setIcons(new BufferedImage[]{ImageIO.read(new File("data/icon.png"))});
 
@@ -53,7 +53,7 @@ public class EduApp extends SimpleApplication {
 
             app.start();
 
-            JmolUtils.initializeJmolPanel();            
+            JmolUtils.initializeJmolPanel();
         } catch (Exception ex) {
             System.err.println(ex);
         }
@@ -85,6 +85,7 @@ public class EduApp extends SimpleApplication {
         } catch (AssetNotFoundException e) {
             // do nothing
         }
+        levelState = 4;
         FlowManager.getInstance().setLevelState(levelState);
         FlowManager.getInstance().gotoMainMenu();
 
