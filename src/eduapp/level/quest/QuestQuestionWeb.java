@@ -1,10 +1,10 @@
 package eduapp.level.quest;
 
-public class WebQuestion extends Question {
+public class QuestQuestionWeb extends QuestQuestion {
 
     private final String web;
 
-    public WebQuestion(String question, String answer, String web, String reward) {
+    public QuestQuestionWeb(String question, String answer, String web, String reward) {
         super(question, answer, reward, false, false);
 
         this.web = web;

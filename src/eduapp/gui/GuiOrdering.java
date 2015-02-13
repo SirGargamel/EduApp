@@ -15,7 +15,7 @@ import de.lessvoid.nifty.elements.render.PanelRenderer;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import de.lessvoid.nifty.tools.Color;
-import eduapp.level.quest.OrderingQuest;
+import eduapp.level.quest.QuestOrdering;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -27,11 +27,11 @@ import java.util.List;
  */
 public class GuiOrdering implements ScreenController, DroppableDropFilter {
 
-    private OrderingQuest quest;
+    private QuestOrdering quest;
     private Element panelValues;
     private Nifty nifty;
 
-    public void setData(OrderingQuest gq) {
+    public void setData(QuestOrdering gq) {
         this.quest = gq;
     }
 

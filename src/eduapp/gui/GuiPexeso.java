@@ -18,7 +18,7 @@ import de.lessvoid.nifty.tools.Color;
 import eduapp.AppContext;
 import eduapp.Utils;
 import eduapp.level.item.ItemParameter;
-import eduapp.level.quest.PexesoQuest;
+import eduapp.level.quest.QuestPexeso;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,11 +36,11 @@ public class GuiPexeso implements ScreenController {
     private static final int SIZE_GAP = 1;
     private Nifty nifty;
     private Element panelPexeso;
-    private PexesoQuest pq;
+    private QuestPexeso pq;
     private Element selectedElement;
     private int correct;
 
-    public void setData(PexesoQuest pq) {
+    public void setData(QuestPexeso pq) {
         this.pq = pq;
     }
 

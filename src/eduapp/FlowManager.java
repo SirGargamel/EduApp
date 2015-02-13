@@ -20,17 +20,17 @@ import eduapp.gui.GuiQuestInput;
 import eduapp.level.item.Item;
 import eduapp.level.Light;
 import eduapp.level.item.ItemParameter;
-import eduapp.level.quest.ConversionQuest;
-import eduapp.level.quest.EquationQuest;
-import eduapp.level.quest.GroupingQuest;
-import eduapp.level.quest.HelpQuest;
-import eduapp.level.quest.JmolQuestion;
-import eduapp.level.quest.MultiAnswerQuestion;
-import eduapp.level.quest.OrderingQuest;
-import eduapp.level.quest.PexesoQuest;
+import eduapp.level.quest.QuestConversion;
+import eduapp.level.quest.QuestEquation;
+import eduapp.level.quest.QuestGrouping;
+import eduapp.level.quest.QuestHelp;
+import eduapp.level.quest.QuestQuestionJmol;
+import eduapp.level.quest.QuestQuestionMultiAnswer;
+import eduapp.level.quest.QuestOrdering;
+import eduapp.level.quest.QuestPexeso;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
-import eduapp.level.quest.Question;
+import eduapp.level.quest.QuestQuestion;
 import eduapp.level.trigger.Trigger;
 import eduapp.loaders.LevelLoader;
 import eduapp.screen.StartScreen;
@@ -185,7 +185,7 @@ public class FlowManager implements Observer {
         currentState = startScreen;
     }
 
-    public void displayGroupScreen(final GroupingQuest group) {
+    public void displayGroupScreen(final QuestGrouping group) {
         enableState(false);
 
         final GuiGroups control = (GuiGroups) nifty.getScreen(SCREEN_GROUPS).getScreenController();
@@ -226,7 +226,7 @@ public class FlowManager implements Observer {
         }
     }
 
-    public void displayQuestion(final Question question) {
+    public void displayQuestion(final QuestQuestion question) {
         enableState(false);
         final GuiQuestInput control = (GuiQuestInput) nifty.getScreen(SCREEN_QUEST_INPUT).getScreenController();
         control.setQuestion(question);
@@ -235,7 +235,7 @@ public class FlowManager implements Observer {
         nifty.gotoScreen(SCREEN_QUEST_INPUT);
     }
     
-    public void displayQuestionMulti(final MultiAnswerQuestion question) {
+    public void displayQuestionMulti(final QuestQuestionMultiAnswer question) {
         enableState(false);
         final GuiMultiAnswer control = (GuiMultiAnswer) nifty.getScreen(SCREEN_QUEST_MULTI).getScreenController();
         control.setQuestion(question);
@@ -244,19 +244,19 @@ public class FlowManager implements Observer {
         nifty.gotoScreen(SCREEN_QUEST_MULTI);
     }
 
-    public void displayJmolQuestion(final JmolQuestion question) {
+    public void displayJmolQuestion(final QuestQuestionJmol question) {
         enableState(false);
 
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 final GuiQuestInput control = (GuiQuestInput) nifty.getScreen(SCREEN_QUEST_INPUT).getScreenController();
-                Question q;
+                QuestQuestion q;
                 int correctCounter = 0;
                 ItemRegistry ir = AppContext.getItemRegistry();
                 for (String model : question.getModelNames()) {
                     if (JmolUtils.displayModel(model)) {
-                        q = new Question("Zadejte vzorec molekuly.", ir.get(model).getParam(ItemParameter.FORMULA_ORIG), null, false, true);
+                        q = new QuestQuestion("Zadejte vzorec molekuly.", ir.get(model).getParam(ItemParameter.FORMULA_ORIG), null, false, true);
                         control.setQuestion(q);
                         storeActualScreen();
                         nifty.gotoScreen(SCREEN_QUEST_INPUT);
@@ -283,7 +283,7 @@ public class FlowManager implements Observer {
         t.start();
     }
 
-    public void displayConversionScreen(final ConversionQuest quest) {
+    public void displayConversionScreen(final QuestConversion quest) {
         enableState(false);
         final GuiConversion control = (GuiConversion) nifty.getScreen(SCREEN_CONVERSION).getScreenController();
         control.setQuest(quest);
@@ -292,7 +292,7 @@ public class FlowManager implements Observer {
         nifty.gotoScreen(SCREEN_CONVERSION);
     }
 
-    public void displayEquationScreen(final EquationQuest quest) {
+    public void displayEquationScreen(final QuestEquation quest) {
         enableState(false);
         final GuiEquation control = (GuiEquation) nifty.getScreen(SCREEN_DRAG).getScreenController();
         control.setData(quest);
@@ -301,7 +301,7 @@ public class FlowManager implements Observer {
         nifty.gotoScreen(SCREEN_DRAG);
     }
 
-    public void displayPexesoScreen(final PexesoQuest quest) {
+    public void displayPexesoScreen(final QuestPexeso quest) {
         enableState(false);
         final GuiPexeso control = (GuiPexeso) nifty.getScreen(SCREEN_PEXESO).getScreenController();
         control.setData(quest);
@@ -310,7 +310,7 @@ public class FlowManager implements Observer {
         nifty.gotoScreen(SCREEN_PEXESO);
     }
     
-    public void displayOrderingScreen(final OrderingQuest quest) {
+    public void displayOrderingScreen(final QuestOrdering quest) {
         enableState(false);
         final GuiOrdering control = (GuiOrdering) nifty.getScreen(SCREEN_ORDERING).getScreenController();
         control.setData(quest);
@@ -386,9 +386,9 @@ public class FlowManager implements Observer {
                 player.addItemToInventory(qi.getReward());
             } else if (qi.isFailed()) {
                 FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi.getTask()).concat("\" nebyl splněn."));
-            } else if (qi instanceof HelpQuest) {
-                final HelpQuest hp = (HelpQuest) qi;
-                final Question q = hp.getLastQuestion();
+            } else if (qi instanceof QuestHelp) {
+                final QuestHelp hp = (QuestHelp) qi;
+                final QuestQuestion q = hp.getLastQuestion();
                 if (q != null && q.isFinished()) {
                     final QuestItem qi2 = currentQuest.getFailedQuestItem();
                     qi2.setFinished(true);

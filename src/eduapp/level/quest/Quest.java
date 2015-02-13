@@ -27,11 +27,11 @@ public class Quest extends Item {
     private static final String ACTION_DISPLAY_QUESTION_MULTI = "M";
     private static final String ACTION_DISPLAY_WEB = "W";
     private final List<QuestItem> data;
-    private final HelpQuest help;
-    private final FinalQuest finalQuest;
+    private final QuestHelp help;
+    private final QuestFinal finalQuest;
     private final String description, ending;
 
-    public Quest(List<QuestItem> data, HelpQuest help, FinalQuest finalQuest, final String description, final String ending) {
+    public Quest(List<QuestItem> data, QuestHelp help, QuestFinal finalQuest, final String description, final String ending) {
         this.data = data;
         this.help = help;
         this.finalQuest = finalQuest;
@@ -49,31 +49,31 @@ public class Quest extends Item {
 
             if (rest.startsWith(ACTION_DISPLAY_QUESTION)) {
                 final String number = rest.replace(ACTION_DISPLAY_QUESTION, "");
-                displayQuestion(extractQuestItem(Question.class, Integer.valueOf(number)));
+                displayQuestion(extractQuestItem(QuestQuestion.class, Integer.valueOf(number)));
             } else if (rest.startsWith(ACTION_DISPLAY_QUESTION_MULTI)) {
                 final String number = rest.replace(ACTION_DISPLAY_QUESTION_MULTI, "");
-                displayQuestionMulti(extractQuestItem(MultiAnswerQuestion.class, Integer.valueOf(number)));
+                displayQuestionMulti(extractQuestItem(QuestQuestionMultiAnswer.class, Integer.valueOf(number)));
             } else if (rest.startsWith(ACTION_DISPLAY_JMOL)) {
                 final String number = rest.replace(ACTION_DISPLAY_JMOL, "");
-                displayJmolQuestion(extractQuestItem(JmolQuestion.class, Integer.valueOf(number)));
+                displayJmolQuestion(extractQuestItem(QuestQuestionJmol.class, Integer.valueOf(number)));
             } else if (rest.startsWith(ACTION_DISPLAY_WEB)) {
                 final String number = rest.replace(ACTION_DISPLAY_WEB, "");
-                displayWebQuestion(extractQuestItem(WebQuestion.class, Integer.valueOf(number)));
+                displayWebQuestion(extractQuestItem(QuestQuestionWeb.class, Integer.valueOf(number)));
             } else if (rest.startsWith(ACTION_DISPLAY_GROUP)) {
                 final String number = rest.replace(ACTION_DISPLAY_GROUP, "");
-                displayGroups(extractQuestItem(GroupingQuest.class, Integer.valueOf(number)));
+                displayGroups(extractQuestItem(QuestGrouping.class, Integer.valueOf(number)));
             } else if (rest.startsWith(ACTION_DISPLAY_CONVERSION)) {
                 final String number = rest.replace(ACTION_DISPLAY_CONVERSION, "");
-                displayConversion(extractQuestItem(ConversionQuest.class, Integer.valueOf(number)));
+                displayConversion(extractQuestItem(QuestConversion.class, Integer.valueOf(number)));
             } else if (rest.startsWith(ACTION_DISPLAY_DRAG)) {
                 final String number = rest.replace(ACTION_DISPLAY_DRAG, "");
-                displayEquation(extractQuestItem(EquationQuest.class, Integer.valueOf(number)));
+                displayEquation(extractQuestItem(QuestEquation.class, Integer.valueOf(number)));
             } else if (rest.startsWith(ACTION_DISPLAY_PEXESO)) {
                 final String number = rest.replace(ACTION_DISPLAY_PEXESO, "");
-                displayPexeso(extractQuestItem(PexesoQuest.class, Integer.valueOf(number)));
+                displayPexeso(extractQuestItem(QuestPexeso.class, Integer.valueOf(number)));
             } else if (rest.startsWith(ACTION_DISPLAY_ORDERING)) {
                 final String number = rest.replace(ACTION_DISPLAY_ORDERING, "");
-                displayOrdering(extractQuestItem(OrderingQuest.class, Integer.valueOf(number)));
+                displayOrdering(extractQuestItem(QuestOrdering.class, Integer.valueOf(number)));
             } else if (rest.startsWith(ACTION_DISPLAY_HELP)) {
                 if (getFailedQuestItem() != null) {
                     displayQuestion(help.getNextQuestion());
@@ -95,31 +95,31 @@ public class Quest extends Item {
         QuestItem result = null;
         if (rest.startsWith(ACTION_DISPLAY_QUESTION)) {
             final String number = rest.replace(ACTION_DISPLAY_QUESTION, "");
-            result = extractQuestItem(Question.class, Integer.valueOf(number));
+            result = extractQuestItem(QuestQuestion.class, Integer.valueOf(number));
         } else if (rest.startsWith(ACTION_DISPLAY_QUESTION_MULTI)) {
             final String number = rest.replace(ACTION_DISPLAY_QUESTION_MULTI, "");
-            result = extractQuestItem(MultiAnswerQuestion.class, Integer.valueOf(number));
+            result = extractQuestItem(QuestQuestionMultiAnswer.class, Integer.valueOf(number));
         } else if (rest.startsWith(ACTION_DISPLAY_JMOL)) {
             final String number = rest.replace(ACTION_DISPLAY_JMOL, "");
-            result = extractQuestItem(JmolQuestion.class, Integer.valueOf(number));
+            result = extractQuestItem(QuestQuestionJmol.class, Integer.valueOf(number));
         } else if (rest.startsWith(ACTION_DISPLAY_WEB)) {
             final String number = rest.replace(ACTION_DISPLAY_WEB, "");
-            result = extractQuestItem(WebQuestion.class, Integer.valueOf(number));
+            result = extractQuestItem(QuestQuestionWeb.class, Integer.valueOf(number));
         } else if (rest.startsWith(ACTION_DISPLAY_GROUP)) {
             final String number = rest.replace(ACTION_DISPLAY_GROUP, "");
-            result = extractQuestItem(GroupingQuest.class, Integer.valueOf(number));
+            result = extractQuestItem(QuestGrouping.class, Integer.valueOf(number));
         } else if (rest.startsWith(ACTION_DISPLAY_CONVERSION)) {
             final String number = rest.replace(ACTION_DISPLAY_CONVERSION, "");
-            result = extractQuestItem(ConversionQuest.class, Integer.valueOf(number));
+            result = extractQuestItem(QuestConversion.class, Integer.valueOf(number));
         } else if (rest.startsWith(ACTION_DISPLAY_DRAG)) {
             final String number = rest.replace(ACTION_DISPLAY_DRAG, "");
-            result = extractQuestItem(EquationQuest.class, Integer.valueOf(number));
+            result = extractQuestItem(QuestEquation.class, Integer.valueOf(number));
         } else if (rest.startsWith(ACTION_DISPLAY_PEXESO)) {
             final String number = rest.replace(ACTION_DISPLAY_PEXESO, "");
-            result = extractQuestItem(PexesoQuest.class, Integer.valueOf(number));
+            result = extractQuestItem(QuestPexeso.class, Integer.valueOf(number));
         } else if (rest.startsWith(ACTION_DISPLAY_ORDERING)) {
             final String number = rest.replace(ACTION_DISPLAY_ORDERING, "");
-            result = extractQuestItem(OrderingQuest.class, Integer.valueOf(number));
+            result = extractQuestItem(QuestOrdering.class, Integer.valueOf(number));
         } else if (rest.startsWith(ACTION_DISPLAY_HELP)) {
             result = help;
         } else if (rest.startsWith(ACTION_DISPLAY_FINAL)) {
@@ -154,19 +154,19 @@ public class Quest extends Item {
         return (T) result;
     }
 
-    private void displayQuestion(Question question) {
+    private void displayQuestion(QuestQuestion question) {
         FlowManager.getInstance().displayQuestion(question);
     }
 
-    private void displayQuestionMulti(MultiAnswerQuestion question) {
+    private void displayQuestionMulti(QuestQuestionMultiAnswer question) {
         FlowManager.getInstance().displayQuestionMulti(question);
     }
 
-    private void displayJmolQuestion(final JmolQuestion question) {
+    private void displayJmolQuestion(final QuestQuestionJmol question) {
         FlowManager.getInstance().displayJmolQuestion(question);
     }
 
-    private void displayWebQuestion(WebQuestion question) {
+    private void displayWebQuestion(QuestQuestionWeb question) {
         try {
             java.awt.Desktop.getDesktop().browse(new URI(question.getWeb()));
             FlowManager.getInstance().displayQuestion(question);
@@ -175,23 +175,23 @@ public class Quest extends Item {
         }
     }
 
-    private void displayGroups(GroupingQuest group) {
+    private void displayGroups(QuestGrouping group) {
         FlowManager.getInstance().displayGroupScreen(group);
     }
 
-    private void displayConversion(ConversionQuest conversion) {
+    private void displayConversion(QuestConversion conversion) {
         FlowManager.getInstance().displayConversionScreen(conversion);
     }
 
-    private void displayEquation(EquationQuest quest) {
+    private void displayEquation(QuestEquation quest) {
         FlowManager.getInstance().displayEquationScreen(quest);
     }
 
-    private void displayPexeso(PexesoQuest quest) {
+    private void displayPexeso(QuestPexeso quest) {
         FlowManager.getInstance().displayPexesoScreen(quest);
     }
 
-    private void displayOrdering(OrderingQuest quest) {
+    private void displayOrdering(QuestOrdering quest) {
         FlowManager.getInstance().displayOrderingScreen(quest);
     }
 
@@ -199,11 +199,11 @@ public class Quest extends Item {
         return data;
     }
 
-    public HelpQuest getHelp() {
+    public QuestHelp getHelp() {
         return help;
     }
 
-    public FinalQuest getFinalQuest() {
+    public QuestFinal getFinalQuest() {
         return finalQuest;
     }
 

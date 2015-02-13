@@ -11,7 +11,7 @@ import de.lessvoid.nifty.elements.render.PanelRenderer;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import de.lessvoid.nifty.tools.Color;
-import eduapp.level.quest.MultiAnswerQuestion;
+import eduapp.level.quest.QuestQuestionMultiAnswer;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,10 +22,10 @@ import java.util.List;
 public class GuiMultiAnswer implements ScreenController {
 
     private Nifty nifty;
-    private MultiAnswerQuestion quest;
+    private QuestQuestionMultiAnswer quest;
     private Element panelValues;
 
-    public void setQuestion(MultiAnswerQuestion quest) {
+    public void setQuestion(QuestQuestionMultiAnswer quest) {
         this.quest = quest;
     }
 

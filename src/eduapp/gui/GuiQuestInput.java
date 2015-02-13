@@ -14,7 +14,7 @@ import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import de.lessvoid.nifty.tools.Color;
 import eduapp.FlowManager;
-import eduapp.level.quest.Question;
+import eduapp.level.quest.QuestQuestion;
 import java.util.Stack;
 
 /**
@@ -26,12 +26,12 @@ public class GuiQuestInput implements ScreenController {
     private static final String NAME_QUESTION_PANEL = "panelQuest";
     private static final String NAME_QUESTION_TEXT = "questText";
     private static final String NAME_QUESTION_INPUT = "questInput";
-    private Question question;
+    private QuestQuestion question;
     private Element questionText;
     private TextField questionInput;
     private Element panelQuest, inputField;
 
-    public void setQuestion(Question question) {
+    public void setQuestion(QuestQuestion question) {
         this.question = question;
     }
 

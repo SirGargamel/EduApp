@@ -7,11 +7,11 @@ import java.util.*;
  *
  * @author Petr Ječmen
  */
-public class JmolQuestion extends QuestItem {
+public class QuestQuestionJmol extends QuestItem {
 
     private final List<String> modelNames;
 
-    public JmolQuestion(String[] models, String reward) {
+    public QuestQuestionJmol(String[] models, String reward) {
         super(reward);
 
         this.modelNames = Arrays.asList(models);

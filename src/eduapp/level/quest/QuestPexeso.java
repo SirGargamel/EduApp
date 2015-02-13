@@ -6,11 +6,11 @@ import java.util.*;
  *
  * @author Petr Ječmen
  */
-public class PexesoQuest extends QuestItem {
+public class QuestPexeso extends QuestItem {
 
     private final List<String> items;
 
-    public PexesoQuest(String[] items, String reward) {
+    public QuestPexeso(String[] items, String reward) {
         super(reward);
 
         this.items = Arrays.asList(items);

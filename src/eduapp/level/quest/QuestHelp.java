@@ -4,16 +4,16 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-public class HelpQuest extends QuestItem implements Observer {
+public class QuestHelp extends QuestItem implements Observer {
 
-    final List<Question> questions;
-    Question lastQuestion;
+    final List<QuestQuestion> questions;
+    QuestQuestion lastQuestion;
 
-    public HelpQuest(List<Question> questions) {
+    public QuestHelp(List<QuestQuestion> questions) {
         super(null);
 
         this.questions = questions;
-        for (Question q : questions) {
+        for (QuestQuestion q : questions) {
             q.addObserver(this);
         }
 
@@ -21,8 +21,8 @@ public class HelpQuest extends QuestItem implements Observer {
         lastQuestion = null;
     }
 
-    public Question getNextQuestion() {
-        for (Question q : questions) {
+    public QuestQuestion getNextQuestion() {
+        for (QuestQuestion q : questions) {
             if (!q.isFinished()) {
                 lastQuestion = q;
                 break;
@@ -31,7 +31,7 @@ public class HelpQuest extends QuestItem implements Observer {
         return lastQuestion;
     }
 
-    public Question getLastQuestion() {
+    public QuestQuestion getLastQuestion() {
         return lastQuestion;
     }
 

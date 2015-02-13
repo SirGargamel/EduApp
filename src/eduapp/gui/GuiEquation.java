@@ -19,9 +19,9 @@ import eduapp.AppContext;
 import eduapp.ItemRegistry;
 import eduapp.Utils;
 import eduapp.level.item.ItemParameter;
-import eduapp.level.quest.EquationQuest;
-import eduapp.level.quest.EquationQuest.Equation;
-import eduapp.level.quest.EquationQuest.Mode;
+import eduapp.level.quest.QuestEquation;
+import eduapp.level.quest.QuestEquation.Equation;
+import eduapp.level.quest.QuestEquation.Mode;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,11 +44,11 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
     private static final String ADD = "+";
     private static final String SPLITTER = "===";
     private Nifty nifty;
-    private EquationQuest quest;
+    private QuestEquation quest;
     private Element panelDrag, panelDrop;
     private int itemWidth = 32, itemHeight = 32, itemsPerLine = 5;
 
-    public void setData(EquationQuest quest) {
+    public void setData(QuestEquation quest) {
         this.quest = quest;
     }
 

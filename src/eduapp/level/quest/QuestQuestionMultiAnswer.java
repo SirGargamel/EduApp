@@ -2,13 +2,13 @@ package eduapp.level.quest;
 
 import java.util.Arrays;
 
-public class MultiAnswerQuestion extends QuestItem {
+public class QuestQuestionMultiAnswer extends QuestItem {
 
     private final String question;
     private final String[] answers, correctAnswers;    
     private String[] userInput;
 
-    public MultiAnswerQuestion(String question, String[] correctAnswers, String[] answers, String reward) {
+    public QuestQuestionMultiAnswer(String question, String[] correctAnswers, String[] answers, String reward) {
         super(reward);
 
         this.question = question;

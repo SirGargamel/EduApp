@@ -1,14 +1,14 @@
 package eduapp.level.trigger;
 
 import com.jme3.scene.Spatial;
-import eduapp.level.quest.ConversionQuest;
-import eduapp.level.quest.EquationQuest;
-import eduapp.level.quest.GroupingQuest;
-import eduapp.level.quest.JmolQuestion;
+import eduapp.level.quest.QuestConversion;
+import eduapp.level.quest.QuestEquation;
+import eduapp.level.quest.QuestGrouping;
+import eduapp.level.quest.QuestQuestionJmol;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
-import eduapp.level.quest.Question;
-import eduapp.level.quest.WebQuestion;
+import eduapp.level.quest.QuestQuestion;
+import eduapp.level.quest.QuestQuestionWeb;
 
 public class QuestActionTrigger extends ActionTrigger<Quest> {
     

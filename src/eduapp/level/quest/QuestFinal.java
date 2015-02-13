@@ -6,11 +6,11 @@ import eduapp.FlowManager;
  *
  * @author Petr Ječmen
  */
-public class FinalQuest extends EquationQuest {  
+public class QuestFinal extends QuestEquation {  
     
     private int itemCount;
 
-    public FinalQuest() {
+    public QuestFinal() {
         super(Mode.text, null);           
         finished = false;
     }

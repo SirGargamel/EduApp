@@ -18,7 +18,7 @@ import de.lessvoid.nifty.spi.render.RenderFont;
 import de.lessvoid.nifty.tools.Color;
 import eduapp.level.item.ItemParameter;
 import eduapp.level.item.Item;
-import eduapp.level.quest.ConversionQuest;
+import eduapp.level.quest.QuestConversion;
 
 /**
  *
@@ -27,10 +27,10 @@ import eduapp.level.quest.ConversionQuest;
 public class GuiConversion implements ScreenController {
 
     private Nifty nifty;
-    private ConversionQuest quest;
+    private QuestConversion quest;
     private Element panelValues;
 
-    public void setQuest(ConversionQuest quest) {
+    public void setQuest(QuestConversion quest) {
         this.quest = quest;
     }
 

@@ -3,14 +3,14 @@ package eduapp.level.quest;
 import eduapp.level.item.ItemParameter;
 import eduapp.level.item.Item;
 
-public class GroupingQuest extends QuestItem {
+public class QuestGrouping extends QuestItem {
     
     private final String groupId;
     private final String[] itemList;
     private Item group;
     private Item[] items;
 
-    public GroupingQuest(String groupId, String data, String reward) {
+    public QuestGrouping(String groupId, String data, String reward) {
         super(reward);
 
         this.groupId = groupId;

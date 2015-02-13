@@ -8,14 +8,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class ConversionQuest extends QuestItem {
+public class QuestConversion extends QuestItem {
     
     private final String conversionId;
     private final String[] itemList;
     private Item conversion;
     private List<Item> items;    
 
-    public ConversionQuest(String conversionId, String data, String reward) {
+    public QuestConversion(String conversionId, String data, String reward) {
         super(reward);
 
         this.conversionId = conversionId;

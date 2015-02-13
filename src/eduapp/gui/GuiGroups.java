@@ -20,7 +20,7 @@ import eduapp.AppContext;
 import eduapp.ItemRegistry;
 import eduapp.level.item.Item;
 import eduapp.level.item.ItemParameter;
-import eduapp.level.quest.GroupingQuest;
+import eduapp.level.quest.QuestGrouping;
 import java.util.List;
 
 /**
@@ -33,11 +33,11 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
     private static final int SIZE_GAP = 5;
     private static final int COUNT_ITEMS_PER_LINE = 4;
     private static final int SIZE_ITEM_HEIGHT = 32;
-    private GroupingQuest gq;
+    private QuestGrouping gq;
     private Element groups, items, panelData;
     private Nifty nifty;
 
-    public void setData(GroupingQuest gq) {
+    public void setData(QuestGrouping gq) {
         this.gq = gq;
     }
 

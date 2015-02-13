@@ -7,13 +7,13 @@ import java.util.List;
  *
  * @author Petr Ječmen
  */
-public class EquationQuest extends QuestItem {
+public class QuestEquation extends QuestItem {
 
     private final List<Equation> equations;
     private final List<String> extra;
     private final Mode mode;
 
-    public EquationQuest(Mode mode, String reward) {
+    public QuestEquation(Mode mode, String reward) {
         super(reward);
 
         equations = new LinkedList<>();

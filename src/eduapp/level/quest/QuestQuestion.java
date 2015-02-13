@@ -1,12 +1,12 @@
 package eduapp.level.quest;
 
-public class Question extends QuestItem {
+public class QuestQuestion extends QuestItem {
 
     private final String question, answer;
     private final boolean mustBeCorrect, mustMatchCase;
     private String userInput;
 
-    public Question(String question, String answer, String reward, boolean mustBeCorrect, boolean mustMatchCase) {
+    public QuestQuestion(String question, String answer, String reward, boolean mustBeCorrect, boolean mustMatchCase) {
         super(reward);
 
         this.question = question;

@@ -1,21 +1,21 @@
 package eduapp.level.xml;
 
-import eduapp.level.quest.ConversionQuest;
-import eduapp.level.quest.EquationQuest;
-import eduapp.level.quest.EquationQuest.Equation;
-import eduapp.level.quest.EquationQuest.Mode;
-import eduapp.level.quest.FinalQuest;
-import eduapp.level.quest.GroupingQuest;
-import eduapp.level.quest.HelpQuest;
+import eduapp.level.quest.QuestConversion;
+import eduapp.level.quest.QuestEquation;
+import eduapp.level.quest.QuestEquation.Equation;
+import eduapp.level.quest.QuestEquation.Mode;
+import eduapp.level.quest.QuestFinal;
+import eduapp.level.quest.QuestGrouping;
+import eduapp.level.quest.QuestHelp;
 import eduapp.loaders.LevelLoader;
-import eduapp.level.quest.JmolQuestion;
-import eduapp.level.quest.MultiAnswerQuestion;
-import eduapp.level.quest.OrderingQuest;
-import eduapp.level.quest.PexesoQuest;
+import eduapp.level.quest.QuestQuestionJmol;
+import eduapp.level.quest.QuestQuestionMultiAnswer;
+import eduapp.level.quest.QuestOrdering;
+import eduapp.level.quest.QuestPexeso;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
-import eduapp.level.quest.Question;
-import eduapp.level.quest.WebQuestion;
+import eduapp.level.quest.QuestQuestion;
+import eduapp.level.quest.QuestQuestionWeb;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,21 +32,20 @@ public class XmlQuest extends XmlEntity<Quest> {
     private static final String EQUATION_EXTRA = "Extra";
     private static final String ITEM_ANSWER = "Odpoved";
     private static final String ITEM_CHILD = "Dite";
-    private static final String ITEM_CONVERSION = "Prevod";
-    private static final String ITEM_COUNT = "Pocet";
     private static final String ITEM_DATA = "Data";
     private static final String ITEM_DESCRIPTION = "Popis";
-    private static final String ITEM_EQUATION = "Rovnice";
     private static final String ITEM_ENDING = "Konec";
-    private static final String ITEM_FINAL = "Final";
-    private static final String ITEM_GROUPS = "Skupiny";
     private static final String ITEM_MODE = "Mod";
-    private static final String ITEM_ORDER = "Order";
-    private static final String ITEM_PEXESO = "Pexeso";
-    private static final String ITEM_QUESTION = "Otazka";
-    private static final String ITEM_QUESTION_JMOL = "Jmol";
-    private static final String ITEM_QUESTION_MULTI = "Multi";
-    private static final String ITEM_QUESTION_WEB = "Web";
+    private static final String ITEM_QUEST_CONVERSION = "Prevod";
+    private static final String ITEM_QUEST_EQUATION = "Rovnice";
+    private static final String ITEM_QUEST_FINAL = "Final";
+    private static final String ITEM_QUEST_GROUPS = "Skupiny";
+    private static final String ITEM_QUEST_ORDER = "Order";
+    private static final String ITEM_QUEST_PEXESO = "Pexeso";
+    private static final String ITEM_QUEST_QUESTION = "Otazka";
+    private static final String ITEM_QUEST_QUESTION_JMOL = "Jmol";
+    private static final String ITEM_QUEST_QUESTION_MULTI = "Multi";
+    private static final String ITEM_QUEST_QUESTION_WEB = "Web";
     private static final String ITEM_REWARD = "Odmena";
     private static final String ITEM_HELP = "Pomocne";
     private static final String SEPARATOR_BASIC = ";";
@@ -72,8 +71,8 @@ public class XmlQuest extends XmlEntity<Quest> {
                 }
             }
         }
-        final HelpQuest hq = generateHelpQuest(element.getElementsByTagName(ITEM_HELP).item(0));
-        final FinalQuest fq = generateFinalQuest(element.getElementsByTagName(ITEM_FINAL).item(0));
+        final QuestHelp hq = generateHelpQuest(element.getElementsByTagName(ITEM_HELP).item(0));
+        final QuestFinal fq = generateFinalQuest(element.getElementsByTagName(ITEM_QUEST_FINAL).item(0));
         final Quest result = new Quest(
                 lines, hq, fq,
                 extractNodeText(element, ITEM_DESCRIPTION),
@@ -86,52 +85,52 @@ public class XmlQuest extends XmlEntity<Quest> {
         String[] split;
         final Element e = (Element) node;
         switch (e.getNodeName()) {
-            case ITEM_CONVERSION:
-                result = new ConversionQuest(
-                        extractNodeText(e, ITEM_QUESTION),
+            case ITEM_QUEST_CONVERSION:
+                result = new QuestConversion(
+                        extractNodeText(e, ITEM_QUEST_QUESTION),
                         extractNodeText(e, ITEM_DATA),
                         extractNodeText(e, ITEM_REWARD));
                 break;
-            case ITEM_GROUPS:
-                result = new GroupingQuest(
-                        extractNodeText(e, ITEM_QUESTION),
+            case ITEM_QUEST_GROUPS:
+                result = new QuestGrouping(
+                        extractNodeText(e, ITEM_QUEST_QUESTION),
                         extractNodeText(e, ITEM_DATA),
                         extractNodeText(e, ITEM_REWARD));
                 break;
-            case ITEM_QUESTION:
-                result = new Question(
-                        extractNodeText(e, ITEM_QUESTION),
+            case ITEM_QUEST_QUESTION:
+                result = new QuestQuestion(
+                        extractNodeText(e, ITEM_QUEST_QUESTION),
                         extractNodeText(e, ITEM_ANSWER),
                         extractNodeText(e, ITEM_REWARD), false, false);
                 break;
-            case ITEM_QUESTION_JMOL:
-                result = new JmolQuestion(
+            case ITEM_QUEST_QUESTION_JMOL:
+                result = new QuestQuestionJmol(
                         extractNodeText(e, ITEM_DATA).split(SEPARATOR_BASIC),
                         extractNodeText(e, ITEM_REWARD));
                 break;
-            case ITEM_QUESTION_WEB:
-                result = new WebQuestion(
-                        extractNodeText(e, ITEM_QUESTION),
+            case ITEM_QUEST_QUESTION_WEB:
+                result = new QuestQuestionWeb(
+                        extractNodeText(e, ITEM_QUEST_QUESTION),
                         extractNodeText(e, ITEM_ANSWER),
                         extractNodeText(e, ITEM_DATA),
                         extractNodeText(e, ITEM_REWARD));
                 break;
-            case ITEM_QUESTION_MULTI:
-                result = new MultiAnswerQuestion(
-                        extractNodeText(e, ITEM_QUESTION),
+            case ITEM_QUEST_QUESTION_MULTI:
+                result = new QuestQuestionMultiAnswer(
+                        extractNodeText(e, ITEM_QUEST_QUESTION),
                         extractNodeText(e, ITEM_ANSWER).split(SEPARATOR_BASIC),
                         extractNodeText(e, ITEM_DATA).split(SEPARATOR_BASIC),
                         extractNodeText(e, ITEM_REWARD));
                 break;
-            case ITEM_ORDER:
-                result = new OrderingQuest(
-                        extractNodeText(e, ITEM_QUESTION),                        
+            case ITEM_QUEST_ORDER:
+                result = new QuestOrdering(
+                        extractNodeText(e, ITEM_QUEST_QUESTION),
                         extractNodeText(e, ITEM_DATA).split(SEPARATOR_BASIC),
                         extractNodeText(e, ITEM_REWARD));
                 break;
-            case ITEM_EQUATION:
-                final EquationQuest dq = new EquationQuest(Mode.valueOf(extractNodeText(e, ITEM_MODE).toLowerCase()), extractNodeText(e, ITEM_REWARD));
-                final NodeList nl = e.getElementsByTagName(ITEM_EQUATION);
+            case ITEM_QUEST_EQUATION:
+                final QuestEquation dq = new QuestEquation(Mode.valueOf(extractNodeText(e, ITEM_MODE).toLowerCase()), extractNodeText(e, ITEM_REWARD));
+                final NodeList nl = e.getElementsByTagName(ITEM_QUEST_EQUATION);
                 Equation eq;
                 String text;
                 for (int i = 0; i < nl.getLength(); i++) {
@@ -167,13 +166,13 @@ public class XmlQuest extends XmlEntity<Quest> {
                 }
                 result = dq;
                 break;
-            case ITEM_PEXESO:
-                result = new PexesoQuest(
+            case ITEM_QUEST_PEXESO:
+                result = new QuestPexeso(
                         extractNodeText(e, ITEM_DATA).split(SEPARATOR_BASIC),
                         extractNodeText(e, ITEM_REWARD));
                 break;
             case ITEM_HELP:
-            case ITEM_FINAL:
+            case ITEM_QUEST_FINAL:
             case ITEM_DESCRIPTION:
             case ITEM_ENDING:
                 result = null;
@@ -191,8 +190,8 @@ public class XmlQuest extends XmlEntity<Quest> {
         return result;
     }
 
-    private HelpQuest generateHelpQuest(final Node node) {
-        final List<Question> questions = new LinkedList<>();
+    private QuestHelp generateHelpQuest(final Node node) {
+        final List<QuestQuestion> questions = new LinkedList<>();
         String question = null;
 
         final NodeList nl = node.getChildNodes();
@@ -205,19 +204,19 @@ public class XmlQuest extends XmlEntity<Quest> {
                 if (question == null) {
                     question = text;
                 } else {
-                    questions.add(new Question(question, text, null, true, false));
+                    questions.add(new QuestQuestion(question, text, null, true, false));
                     question = null;
                 }
             }
         }
-        return new HelpQuest(questions);
+        return new QuestHelp(questions);
     }
 
-    private FinalQuest generateFinalQuest(final Node node) {
+    private QuestFinal generateFinalQuest(final Node node) {
         final Element e = (Element) node;
-        FinalQuest result = new FinalQuest();
+        QuestFinal result = new QuestFinal();
 
-        final NodeList nl = e.getElementsByTagName(ITEM_EQUATION);
+        final NodeList nl = e.getElementsByTagName(ITEM_QUEST_EQUATION);
         int itemCount = 0;
         Equation eq;
         String text;

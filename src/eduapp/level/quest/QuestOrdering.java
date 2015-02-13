@@ -1,11 +1,11 @@
 package eduapp.level.quest;
 
-public class OrderingQuest extends QuestItem {
+public class QuestOrdering extends QuestItem {
 
     private final String question;
     private final String[] data;
 
-    public OrderingQuest(String question, String[] data, String reward) {
+    public QuestOrdering(String question, String[] data, String reward) {
         super(reward);
 
         this.question = question;
