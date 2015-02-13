@@ -12,6 +12,7 @@ import eduapp.gui.GuiEquation;
 import eduapp.gui.GuiGroups;
 import eduapp.gui.GuiMainMenu;
 import eduapp.gui.GuiMultiAnswer;
+import eduapp.gui.GuiOrdering;
 import eduapp.gui.GuiPexeso;
 import eduapp.gui.GuiWorld;
 import eduapp.gui.GuiQuest;
@@ -25,6 +26,7 @@ import eduapp.level.quest.GroupingQuest;
 import eduapp.level.quest.HelpQuest;
 import eduapp.level.quest.JmolQuestion;
 import eduapp.level.quest.MultiAnswerQuestion;
+import eduapp.level.quest.OrderingQuest;
 import eduapp.level.quest.PexesoQuest;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
@@ -54,6 +56,7 @@ public class FlowManager implements Observer {
     private static final String SCREEN_DICTIONARY = "dictionary";
     private static final String SCREEN_DRAG = "drag";
     private static final String SCREEN_GROUPS = "groups";
+    private static final String SCREEN_ORDERING = "ordering";
     private static final String SCREEN_PAUSE = "pause";
     private static final String SCREEN_PEXESO = "pexeso";
     private static final String SCREEN_QUEST = "quest";
@@ -64,11 +67,11 @@ public class FlowManager implements Observer {
     private static final FlowManager instance;
     private final WorldScreen worldScreen;
     private final StartScreen startScreen;
+    private final Stack<String> lastScreens;
     private Player player;
     private Nifty nifty;
     private Quest currentQuest;
-    private AppState currentState;
-    private Stack<String> lastScreens;
+    private AppState currentState;    
     private int finishedLevelCount;
     private String levelName;
 
@@ -305,6 +308,15 @@ public class FlowManager implements Observer {
 
         storeActualScreen();
         nifty.gotoScreen(SCREEN_PEXESO);
+    }
+    
+    public void displayOrderingScreen(final OrderingQuest quest) {
+        enableState(false);
+        final GuiOrdering control = (GuiOrdering) nifty.getScreen(SCREEN_ORDERING).getScreenController();
+        control.setData(quest);
+
+        storeActualScreen();
+        nifty.gotoScreen(SCREEN_ORDERING);
     }
 
     public void dictionaryAction() {

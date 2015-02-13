@@ -22,6 +22,7 @@ public class Quest extends Item {
     private static final String ACTION_DISPLAY_HELP = "H";
     private static final String ACTION_DISPLAY_JMOL = "J";
     private static final String ACTION_DISPLAY_PEXESO = "P";
+    private static final String ACTION_DISPLAY_ORDERING = "O";
     private static final String ACTION_DISPLAY_QUESTION = "Q";
     private static final String ACTION_DISPLAY_QUESTION_MULTI = "M";
     private static final String ACTION_DISPLAY_WEB = "W";
@@ -70,6 +71,9 @@ public class Quest extends Item {
             } else if (rest.startsWith(ACTION_DISPLAY_PEXESO)) {
                 final String number = rest.replace(ACTION_DISPLAY_PEXESO, "");
                 displayPexeso(extractQuestItem(PexesoQuest.class, Integer.valueOf(number)));
+            } else if (rest.startsWith(ACTION_DISPLAY_ORDERING)) {
+                final String number = rest.replace(ACTION_DISPLAY_ORDERING, "");
+                displayOrdering(extractQuestItem(OrderingQuest.class, Integer.valueOf(number)));
             } else if (rest.startsWith(ACTION_DISPLAY_HELP)) {
                 if (getFailedQuestItem() != null) {
                     displayQuestion(help.getNextQuestion());
@@ -113,6 +117,9 @@ public class Quest extends Item {
         } else if (rest.startsWith(ACTION_DISPLAY_PEXESO)) {
             final String number = rest.replace(ACTION_DISPLAY_PEXESO, "");
             result = extractQuestItem(PexesoQuest.class, Integer.valueOf(number));
+        } else if (rest.startsWith(ACTION_DISPLAY_ORDERING)) {
+            final String number = rest.replace(ACTION_DISPLAY_ORDERING, "");
+            result = extractQuestItem(OrderingQuest.class, Integer.valueOf(number));
         } else if (rest.startsWith(ACTION_DISPLAY_HELP)) {
             result = help;
         } else if (rest.startsWith(ACTION_DISPLAY_FINAL)) {
@@ -182,6 +189,10 @@ public class Quest extends Item {
 
     private void displayPexeso(PexesoQuest quest) {
         FlowManager.getInstance().displayPexesoScreen(quest);
+    }
+
+    private void displayOrdering(OrderingQuest quest) {
+        FlowManager.getInstance().displayOrderingScreen(quest);
     }
 
     public List<QuestItem> getData() {

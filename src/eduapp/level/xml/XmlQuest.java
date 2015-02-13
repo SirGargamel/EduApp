@@ -10,6 +10,7 @@ import eduapp.level.quest.HelpQuest;
 import eduapp.loaders.LevelLoader;
 import eduapp.level.quest.JmolQuestion;
 import eduapp.level.quest.MultiAnswerQuestion;
+import eduapp.level.quest.OrderingQuest;
 import eduapp.level.quest.PexesoQuest;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
@@ -39,7 +40,8 @@ public class XmlQuest extends XmlEntity<Quest> {
     private static final String ITEM_ENDING = "Konec";
     private static final String ITEM_FINAL = "Final";
     private static final String ITEM_GROUPS = "Skupiny";
-    private static final String ITEM_MODE = "Mod";    
+    private static final String ITEM_MODE = "Mod";
+    private static final String ITEM_ORDER = "Order";
     private static final String ITEM_PEXESO = "Pexeso";
     private static final String ITEM_QUESTION = "Otazka";
     private static final String ITEM_QUESTION_JMOL = "Jmol";
@@ -119,7 +121,13 @@ public class XmlQuest extends XmlEntity<Quest> {
                         extractNodeText(e, ITEM_QUESTION),
                         extractNodeText(e, ITEM_ANSWER).split(SEPARATOR_BASIC),
                         extractNodeText(e, ITEM_DATA).split(SEPARATOR_BASIC),
-                        extractNodeText(e, ITEM_REWARD));                
+                        extractNodeText(e, ITEM_REWARD));
+                break;
+            case ITEM_ORDER:
+                result = new OrderingQuest(
+                        extractNodeText(e, ITEM_QUESTION),                        
+                        extractNodeText(e, ITEM_DATA).split(SEPARATOR_BASIC),
+                        extractNodeText(e, ITEM_REWARD));
                 break;
             case ITEM_EQUATION:
                 final EquationQuest dq = new EquationQuest(Mode.valueOf(extractNodeText(e, ITEM_MODE).toLowerCase()), extractNodeText(e, ITEM_REWARD));
@@ -223,24 +231,24 @@ public class XmlQuest extends XmlEntity<Quest> {
                 eq.addInput(s);
             }
             final int index = text.indexOf(SEPARATOR_BASIC);
-                    if (index >= 0) {
-                        split = text.substring(text.indexOf(SEPARATOR_QUESTION_OUT) + 1, index).split(SEPARATOR_QUESTION_ITEM);
-                        for (String s : split) {
-                            eq.addOutput(s);
-                            itemCount++;
-                        }
-                        split = text.substring(text.indexOf(SEPARATOR_BASIC) + 1).split(SEPARATOR_BASIC);
-                        for (String s : split) {
-                            eq.addCatalyst(s);
-                            itemCount++;
-                        }
-                    } else {
-                        split = text.substring(text.indexOf(SEPARATOR_QUESTION_OUT) + 1).split(SEPARATOR_QUESTION_ITEM);
-                        for (String s : split) {
-                            eq.addOutput(s);
-                            itemCount++;
-                        }
-                    }
+            if (index >= 0) {
+                split = text.substring(text.indexOf(SEPARATOR_QUESTION_OUT) + 1, index).split(SEPARATOR_QUESTION_ITEM);
+                for (String s : split) {
+                    eq.addOutput(s);
+                    itemCount++;
+                }
+                split = text.substring(text.indexOf(SEPARATOR_BASIC) + 1).split(SEPARATOR_BASIC);
+                for (String s : split) {
+                    eq.addCatalyst(s);
+                    itemCount++;
+                }
+            } else {
+                split = text.substring(text.indexOf(SEPARATOR_QUESTION_OUT) + 1).split(SEPARATOR_QUESTION_ITEM);
+                for (String s : split) {
+                    eq.addOutput(s);
+                    itemCount++;
+                }
+            }
             result.addEquation(eq);
         }
         result.setItemCount(itemCount);

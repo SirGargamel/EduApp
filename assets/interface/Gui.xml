@@ -142,7 +142,7 @@
             </panel>            
         </layer>       
     </screen>
-    <screen id="conversion" controller="eduapp.gui.GuiConversion">        
+    <screen id="multiAnswer" controller="eduapp.gui.GuiMultiAnswer">        
         <layer id="onlyLayer" childLayout="vertical">   
             <panel height="10%"/>                                 
             <panel height="75%" width="80%" align="center" backgroundColor="#3b5998aa" id="panelValues" childLayout="vertical">
@@ -161,9 +161,9 @@
                     <text id="text" text="Ok" align="center" valign="center" style="base"/>
                 </panel>                
             </panel>            
-        </layer>       
+        </layer>
     </screen>
-    <screen id="multiAnswer" controller="eduapp.gui.GuiMultiAnswer">        
+    <screen id="ordering" controller="eduapp.gui.GuiOrdering">        
         <layer id="onlyLayer" childLayout="vertical">   
             <panel height="10%"/>                                 
             <panel height="75%" width="80%" align="center" backgroundColor="#3b5998aa" id="panelValues" childLayout="vertical">
