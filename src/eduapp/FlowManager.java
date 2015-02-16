@@ -11,6 +11,7 @@ import eduapp.gui.GuiDictionary;
 import eduapp.gui.GuiEquation;
 import eduapp.gui.GuiGroups;
 import eduapp.gui.GuiMainMenu;
+import eduapp.gui.GuiMatching;
 import eduapp.gui.GuiMultiAnswer;
 import eduapp.gui.GuiOrdering;
 import eduapp.gui.GuiPexeso;
@@ -30,6 +31,7 @@ import eduapp.level.quest.QuestOrdering;
 import eduapp.level.quest.QuestPexeso;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
+import eduapp.level.quest.QuestMatching;
 import eduapp.level.quest.QuestQuestion;
 import eduapp.level.trigger.Trigger;
 import eduapp.loaders.LevelLoader;
@@ -62,6 +64,7 @@ public class FlowManager implements Observer {
     private static final String SCREEN_QUEST = "quest";
     private static final String SCREEN_QUEST_INPUT = "questInput";
     private static final String SCREEN_QUEST_MULTI = "multiAnswer";
+    private static final String SCREEN_QUEST_MATCHING = "matching";
     private static final String SCREEN_START = "start";
     private static final String SCREEN_WORLD = "game";
     private static final FlowManager instance;
@@ -71,7 +74,7 @@ public class FlowManager implements Observer {
     private Player player;
     private Nifty nifty;
     private Quest currentQuest;
-    private AppState currentState;    
+    private AppState currentState;
     private int finishedLevelCount;
     private String levelName;
 
@@ -234,7 +237,7 @@ public class FlowManager implements Observer {
         storeActualScreen();
         nifty.gotoScreen(SCREEN_QUEST_INPUT);
     }
-    
+
     public void displayQuestionMulti(final QuestQuestionMultiAnswer question) {
         enableState(false);
         final GuiMultiAnswer control = (GuiMultiAnswer) nifty.getScreen(SCREEN_QUEST_MULTI).getScreenController();
@@ -309,7 +312,7 @@ public class FlowManager implements Observer {
         storeActualScreen();
         nifty.gotoScreen(SCREEN_PEXESO);
     }
-    
+
     public void displayOrderingScreen(final QuestOrdering quest) {
         enableState(false);
         final GuiOrdering control = (GuiOrdering) nifty.getScreen(SCREEN_ORDERING).getScreenController();
@@ -317,6 +320,15 @@ public class FlowManager implements Observer {
 
         storeActualScreen();
         nifty.gotoScreen(SCREEN_ORDERING);
+    }
+
+    public void displayMatchingScreen(final QuestMatching quest) {
+        enableState(false);
+        final GuiMatching control = (GuiMatching) nifty.getScreen(SCREEN_QUEST_MATCHING).getScreenController();
+        control.setQuest(quest);
+
+        storeActualScreen();
+        nifty.gotoScreen(SCREEN_QUEST_MATCHING);
     }
 
     public void dictionaryAction() {

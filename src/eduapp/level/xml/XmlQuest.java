@@ -14,6 +14,7 @@ import eduapp.level.quest.QuestOrdering;
 import eduapp.level.quest.QuestPexeso;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
+import eduapp.level.quest.QuestMatching;
 import eduapp.level.quest.QuestQuestion;
 import eduapp.level.quest.QuestQuestionWeb;
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class XmlQuest extends XmlEntity<Quest> {
     private static final String ITEM_QUEST_PEXESO = "Pexeso";
     private static final String ITEM_QUEST_QUESTION = "Otazka";
     private static final String ITEM_QUEST_QUESTION_JMOL = "Jmol";
+    private static final String ITEM_QUEST_QUESTION_MATCH = "Match";
     private static final String ITEM_QUEST_QUESTION_MULTI = "Multi";
     private static final String ITEM_QUEST_QUESTION_WEB = "Web";
     private static final String ITEM_REWARD = "Odmena";
@@ -113,6 +115,11 @@ public class XmlQuest extends XmlEntity<Quest> {
                         extractNodeText(e, ITEM_QUEST_QUESTION),
                         extractNodeText(e, ITEM_ANSWER),
                         extractNodeText(e, ITEM_DATA),
+                        extractNodeText(e, ITEM_REWARD));
+                break;
+            case ITEM_QUEST_QUESTION_MATCH:
+                result = new QuestMatching(
+                        extractNodeText(e, ITEM_DATA).split(SEPARATOR_BASIC),
                         extractNodeText(e, ITEM_REWARD));
                 break;
             case ITEM_QUEST_QUESTION_MULTI:

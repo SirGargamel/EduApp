@@ -22,9 +22,10 @@ public class Quest extends Item {
     private static final String ACTION_DISPLAY_HELP = "H";
     private static final String ACTION_DISPLAY_JMOL = "J";
     private static final String ACTION_DISPLAY_PEXESO = "P";
+    private static final String ACTION_DISPLAY_MATCHING = "M";
     private static final String ACTION_DISPLAY_ORDERING = "O";
     private static final String ACTION_DISPLAY_QUESTION = "Q";
-    private static final String ACTION_DISPLAY_QUESTION_MULTI = "M";
+    private static final String ACTION_DISPLAY_QUESTION_MULTI = "QM";
     private static final String ACTION_DISPLAY_WEB = "W";
     private final List<QuestItem> data;
     private final QuestHelp help;
@@ -68,6 +69,9 @@ public class Quest extends Item {
             } else if (rest.startsWith(ACTION_DISPLAY_DRAG)) {
                 final String number = rest.replace(ACTION_DISPLAY_DRAG, "");
                 displayEquation(extractQuestItem(QuestEquation.class, Integer.valueOf(number)));
+            } else if (rest.startsWith(ACTION_DISPLAY_MATCHING)) {
+                final String number = rest.replace(ACTION_DISPLAY_MATCHING, "");
+                displayMatching(extractQuestItem(QuestMatching.class, Integer.valueOf(number)));
             } else if (rest.startsWith(ACTION_DISPLAY_PEXESO)) {
                 final String number = rest.replace(ACTION_DISPLAY_PEXESO, "");
                 displayPexeso(extractQuestItem(QuestPexeso.class, Integer.valueOf(number)));
@@ -120,6 +124,9 @@ public class Quest extends Item {
         } else if (rest.startsWith(ACTION_DISPLAY_ORDERING)) {
             final String number = rest.replace(ACTION_DISPLAY_ORDERING, "");
             result = extractQuestItem(QuestOrdering.class, Integer.valueOf(number));
+        } else if (rest.startsWith(ACTION_DISPLAY_MATCHING)) {
+            final String number = rest.replace(ACTION_DISPLAY_MATCHING, "");
+            result = extractQuestItem(QuestMatching.class, Integer.valueOf(number));
         } else if (rest.startsWith(ACTION_DISPLAY_HELP)) {
             result = help;
         } else if (rest.startsWith(ACTION_DISPLAY_FINAL)) {
@@ -193,6 +200,10 @@ public class Quest extends Item {
 
     private void displayOrdering(QuestOrdering quest) {
         FlowManager.getInstance().displayOrderingScreen(quest);
+    }
+
+    private void displayMatching(QuestMatching quest) {
+        FlowManager.getInstance().displayMatchingScreen(quest);
     }
 
     public List<QuestItem> getData() {

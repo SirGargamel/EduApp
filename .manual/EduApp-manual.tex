@@ -131,6 +131,9 @@ Uživatel dostane k dispozici sadu kroků, které po správném seřazení repre
 \end{figure}
 \subsection{Přiřazení název popis}
 Uživatel musí připojit správný popis k danému slovu.
+\begin{figure}[H]
+\center{\includegraphics[width=0.5\textwidth]{questMatching.png}\\Úkol přiřazení}
+\end{figure}
 \subsection{Výběr odpovědi dle otázky}
 Klasický výběr odpovědi z více možností na základě zadané otázky.
 \begin{figure}[H]
@@ -140,11 +143,11 @@ Klasický výběr odpovědi z více možností na základě zadané otázky.
 Pomocné úkoly jsou ve formě otázek. Měly by představovat jakousi záchranu v případě, že se hráči nepodaří splnit nějaký úkol. Typicky by se mělo  jednat o otázku, na kterou musí hráč odpověď dohledat někde "dále" (např. ji lze nalézt na stránce uvedené v odkazech k danému předmětu ve slovníčku). Tento úkol nelze nesplnit (při přerušení se nic neděje, hráč se k ní může vrátit kdykoliv později).
 \newpage
 \section{Data úrovně}
-V případě, že by jste chtěli vytvářet vlastní úroveň, je nutné dodat následující data.\\
+V případě, že by jste chtěli vytvářet vlastní úroveň, je nutné dodat následující data:\\
 \begin{description}
 \item[Design úrovně] Alespoň hrubý nárys, jak si představujete prostředí (rozložení předmětů a úkolů, vzhled úrovně apod.)
 \item[Texty] úvodní text (zobrazí se po načtení úrovně), závěrečný text (zobrazí se po dokončení všech úkolů)
-\item[Úkoly] seznam úkolů - typ úkolu a data úkolu (možnosti úkolů viz. seznam) 
-\item[Slovníček] "strukturovaná" data, která chcete, aby se hráč mohl naučit (např. vlastnosti jako hořlavost, toxicita apod., které se dají prezentovat za pomoci ikon, popisný text a odkazy na web, kde lze nalézt další informace)
+\item[Úkoly] seznam úkolů - typ úkolu a data úkolu (možnosti úkolů viz. seznam), je potřeba také dodat pomocné otázky, které umožní opravení úkolů, které hráč pokazil 
+\item[Slovníček] "strukturovaná" data, která chcete, aby se hráč mohl naučit (např. vlastnosti jako hořlavost, toxicita apod., které se dají prezentovat za pomoci ikon, popisný text a odkazy na web, kde lze nalézt další informace), kromě "komplexních" dat lze také prezentovat pouhá hesla - slovo plus jeho popis / vysvětelní
 \end{description}
 \end{document}

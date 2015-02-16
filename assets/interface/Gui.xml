@@ -142,6 +142,27 @@
             </panel>            
         </layer>       
     </screen>
+    <screen id="matching" controller="eduapp.gui.GuiMatching">        
+        <layer id="onlyLayer" childLayout="vertical">   
+            <panel height="10%"/>                                 
+            <panel height="75%" width="80%" align="center" backgroundColor="#3b5998aa" id="panelValues" childLayout="vertical">
+                <effect>                    
+                    <onCustom customKey="Ok" name="fade" start="#ff" end="#00" length="5000" inherit="true"/>                    
+                </effect>
+            </panel>
+            <panel height="5%"/> 
+            <panel id="panelOk" width="100%" height="5%" backgroundColor="#00000000" childLayout="horizontal" visibleToMouse="true">                                
+                <panel width="45%" />                                          
+                <panel id="buttonOk" align="center" width="10%" height="95%" backgroundColor="#3b5998ff" childLayout="center" visibleToMouse="true">
+                    <interact onClick="ok()"/>
+                    <effect>                                       
+                        <onHover name="border" color="#dfe3ee" border="2px"/>
+                    </effect>
+                    <text id="text" text="Ok" align="center" valign="center" style="base"/>
+                </panel>                
+            </panel>            
+        </layer>       
+    </screen>
     <screen id="multiAnswer" controller="eduapp.gui.GuiMultiAnswer">        
         <layer id="onlyLayer" childLayout="vertical">   
             <panel height="10%"/>                                 
