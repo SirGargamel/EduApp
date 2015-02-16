@@ -22,6 +22,7 @@ public class Quest extends Item {
     private static final String ACTION_DISPLAY_HELP = "H";
     private static final String ACTION_DISPLAY_JMOL = "J";
     private static final String ACTION_DISPLAY_PEXESO = "P";
+    private static final String ACTION_DISPLAY_PICKING = "PC";
     private static final String ACTION_DISPLAY_MATCHING = "M";
     private static final String ACTION_DISPLAY_ORDERING = "O";
     private static final String ACTION_DISPLAY_QUESTION = "Q";
@@ -48,15 +49,15 @@ public class Quest extends Item {
         if (action.startsWith(ACTION_DISPLAY)) {
             final String rest = action.replace(ACTION_DISPLAY, "");
 
-            if (rest.startsWith(ACTION_DISPLAY_QUESTION)) {
-                final String number = rest.replace(ACTION_DISPLAY_QUESTION, "");
-                displayQuestion(extractQuestItem(QuestQuestion.class, Integer.valueOf(number)));
+            if (rest.startsWith(ACTION_DISPLAY_JMOL)) {
+                final String number = rest.replace(ACTION_DISPLAY_JMOL, "");
+                displayJmolQuestion(extractQuestItem(QuestQuestionJmol.class, Integer.valueOf(number)));
             } else if (rest.startsWith(ACTION_DISPLAY_QUESTION_MULTI)) {
                 final String number = rest.replace(ACTION_DISPLAY_QUESTION_MULTI, "");
                 displayQuestionMulti(extractQuestItem(QuestQuestionMultiAnswer.class, Integer.valueOf(number)));
-            } else if (rest.startsWith(ACTION_DISPLAY_JMOL)) {
-                final String number = rest.replace(ACTION_DISPLAY_JMOL, "");
-                displayJmolQuestion(extractQuestItem(QuestQuestionJmol.class, Integer.valueOf(number)));
+            } else if (rest.startsWith(ACTION_DISPLAY_QUESTION)) {
+                final String number = rest.replace(ACTION_DISPLAY_QUESTION, "");
+                displayQuestion(extractQuestItem(QuestQuestion.class, Integer.valueOf(number)));
             } else if (rest.startsWith(ACTION_DISPLAY_WEB)) {
                 final String number = rest.replace(ACTION_DISPLAY_WEB, "");
                 displayWebQuestion(extractQuestItem(QuestQuestionWeb.class, Integer.valueOf(number)));
@@ -72,6 +73,9 @@ public class Quest extends Item {
             } else if (rest.startsWith(ACTION_DISPLAY_MATCHING)) {
                 final String number = rest.replace(ACTION_DISPLAY_MATCHING, "");
                 displayMatching(extractQuestItem(QuestMatching.class, Integer.valueOf(number)));
+            } else if (rest.startsWith(ACTION_DISPLAY_PICKING)) {
+                final String number = rest.replace(ACTION_DISPLAY_PICKING, "");
+                displayPicking(extractQuestItem(QuestPicking.class, Integer.valueOf(number)));
             } else if (rest.startsWith(ACTION_DISPLAY_PEXESO)) {
                 final String number = rest.replace(ACTION_DISPLAY_PEXESO, "");
                 displayPexeso(extractQuestItem(QuestPexeso.class, Integer.valueOf(number)));
@@ -97,15 +101,15 @@ public class Quest extends Item {
     public QuestItem findQuestItem(final String description) {
         String rest = description.replace(ACTION_DISPLAY, "");
         QuestItem result = null;
-        if (rest.startsWith(ACTION_DISPLAY_QUESTION)) {
-            final String number = rest.replace(ACTION_DISPLAY_QUESTION, "");
-            result = extractQuestItem(QuestQuestion.class, Integer.valueOf(number));
+        if (rest.startsWith(ACTION_DISPLAY_JMOL)) {
+            final String number = rest.replace(ACTION_DISPLAY_JMOL, "");
+            result = extractQuestItem(QuestQuestionJmol.class, Integer.valueOf(number));
         } else if (rest.startsWith(ACTION_DISPLAY_QUESTION_MULTI)) {
             final String number = rest.replace(ACTION_DISPLAY_QUESTION_MULTI, "");
             result = extractQuestItem(QuestQuestionMultiAnswer.class, Integer.valueOf(number));
-        } else if (rest.startsWith(ACTION_DISPLAY_JMOL)) {
-            final String number = rest.replace(ACTION_DISPLAY_JMOL, "");
-            result = extractQuestItem(QuestQuestionJmol.class, Integer.valueOf(number));
+        } else if (rest.startsWith(ACTION_DISPLAY_QUESTION)) {
+            final String number = rest.replace(ACTION_DISPLAY_QUESTION, "");
+            result = extractQuestItem(QuestQuestion.class, Integer.valueOf(number));
         } else if (rest.startsWith(ACTION_DISPLAY_WEB)) {
             final String number = rest.replace(ACTION_DISPLAY_WEB, "");
             result = extractQuestItem(QuestQuestionWeb.class, Integer.valueOf(number));
@@ -118,6 +122,9 @@ public class Quest extends Item {
         } else if (rest.startsWith(ACTION_DISPLAY_DRAG)) {
             final String number = rest.replace(ACTION_DISPLAY_DRAG, "");
             result = extractQuestItem(QuestEquation.class, Integer.valueOf(number));
+        } else if (rest.startsWith(ACTION_DISPLAY_PICKING)) {
+            final String number = rest.replace(ACTION_DISPLAY_PICKING, "");
+            result = extractQuestItem(QuestPicking.class, Integer.valueOf(number));
         } else if (rest.startsWith(ACTION_DISPLAY_PEXESO)) {
             final String number = rest.replace(ACTION_DISPLAY_PEXESO, "");
             result = extractQuestItem(QuestPexeso.class, Integer.valueOf(number));
@@ -196,6 +203,10 @@ public class Quest extends Item {
 
     private void displayPexeso(QuestPexeso quest) {
         FlowManager.getInstance().displayPexesoScreen(quest);
+    }
+
+    private void displayPicking(QuestPicking quest) {
+        FlowManager.getInstance().displayPickingScreen(quest);
     }
 
     private void displayOrdering(QuestOrdering quest) {

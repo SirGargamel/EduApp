@@ -15,6 +15,7 @@ import eduapp.gui.GuiMatching;
 import eduapp.gui.GuiMultiAnswer;
 import eduapp.gui.GuiOrdering;
 import eduapp.gui.GuiPexeso;
+import eduapp.gui.GuiPicking;
 import eduapp.gui.GuiWorld;
 import eduapp.gui.GuiQuest;
 import eduapp.gui.GuiQuestInput;
@@ -32,6 +33,7 @@ import eduapp.level.quest.QuestPexeso;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
 import eduapp.level.quest.QuestMatching;
+import eduapp.level.quest.QuestPicking;
 import eduapp.level.quest.QuestQuestion;
 import eduapp.level.trigger.Trigger;
 import eduapp.loaders.LevelLoader;
@@ -65,6 +67,7 @@ public class FlowManager implements Observer {
     private static final String SCREEN_QUEST_INPUT = "questInput";
     private static final String SCREEN_QUEST_MULTI = "multiAnswer";
     private static final String SCREEN_QUEST_MATCHING = "matching";
+    private static final String SCREEN_QUEST_PICKING = "picking";
     private static final String SCREEN_START = "start";
     private static final String SCREEN_WORLD = "game";
     private static final FlowManager instance;
@@ -311,6 +314,15 @@ public class FlowManager implements Observer {
 
         storeActualScreen();
         nifty.gotoScreen(SCREEN_PEXESO);
+    }
+
+    public void displayPickingScreen(final QuestPicking quest) {
+        enableState(false);
+        final GuiPicking control = (GuiPicking) nifty.getScreen(SCREEN_QUEST_PICKING).getScreenController();
+        control.setData(quest);
+
+        storeActualScreen();
+        nifty.gotoScreen(SCREEN_QUEST_PICKING);
     }
 
     public void displayOrderingScreen(final QuestOrdering quest) {
