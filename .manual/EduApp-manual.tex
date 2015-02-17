@@ -88,6 +88,7 @@ V seznamu se vypisují pouze nedokončené úkoly (ať už ty, ke kterým hráč
 \begin{figure}[H]
 \center{\includegraphics[width=0.5\textwidth]{dictionary.png}\\Slovníček pro chemii}
 \end{figure}
+Kromě komplexních informací o nějakém hesle (ikony, vzorec, popis, odkazy) je k dispozici také jednoduchá varianta, kdy se k heslu zobrazí pouze popisný text (vhodné např. pro popsání významu nějakého slova nebo fráze).
 \newpage
 \section{Úkoly}
 U většiny úkolů se uživatel kromě finálního výsledku úkolu (splněno / nesplněno) dozví i to, co bylo špatně a co správně (typicky prezentováno zeleným / červeným podbarvením). Na každý úkol je pouze jeden pokus, v případě špatné odpovědi nebo přerušení otázky za pomoci klávesy Esc je nutno úkol splnit za pomoci pomocné otázky.
@@ -127,13 +128,16 @@ Uživatel musí zadat hodnotu vybraných vlastností dané látky.
 \end{figure}
 \subsection{Doplnění textu slovy}
 Zobrazí se text, ve kterém jsou vynechány některá slova. Uživatel dostane k dispozici několik slov, která musí správně umístit do textu.
+\begin{figure}[H]
+\center{\includegraphics[width=0.5\textwidth]{questAdding.png}\\Úkol doplňování textu}
+\end{figure}
 \subsection{Sestavení postupu}
 Uživatel dostane k dispozici sadu kroků, které po správném seřazení reprezentují postup něčeho.
 \begin{figure}[H]
 \center{\includegraphics[width=0.5\textwidth]{questOrder.png}\\Úkol seřazení}
 \end{figure}
-\subsection{Přiřazení název popis}
-Uživatel musí připojit správný popis k danému slovu.
+\subsection{Přiřazení název-popis}
+Uživatel musí připojit správný popis k daným slovům.
 \begin{figure}[H]
 \center{\includegraphics[width=0.5\textwidth]{questMatching.png}\\Úkol přiřazení}
 \end{figure}
@@ -144,15 +148,19 @@ Klasický výběr odpovědi z více možností na základě zadané otázky.
 \end{figure}
 \subsection{Pomocné úkoly}
 Pomocné úkoly jsou ve formě otázek. Měly by představovat jakousi záchranu v případě, že se hráči nepodaří splnit nějaký úkol. Typicky by se mělo  jednat o otázku, na kterou musí hráč odpověď dohledat někde "dále" (např. ji lze nalézt na stránce uvedené v odkazech k danému předmětu ve slovníčku). Tento úkol nelze nesplnit (při přerušení se nic neděje, hráč se k ní může vrátit kdykoliv později).\subsection{Finální úkol}
-Posledním úkolem je vždy sestavení nějaké rovnice za pomoci předmětů, které hráč dostává za splnění úkolů.
+Posledním úkolem je vždy sestavení nějaké rovnice za pomoci předmětů, které hráč dostává za splnění úkolů. Graficky to je prezentováno jako sestavení chemické rovnice, jednotlivé prvky ale mohou být i slova, takže lze sestavovat i "nechemické" záležitosti.
+\begin{figure}[H]
+\center{\includegraphics[width=0.5\textwidth]{questFinal.png}\\Finální úkol}
+\end{figure}
 \newpage
 \section{Data úrovně}
 V případě, že by jste chtěli vytvářet vlastní úroveň, je nutné dodat následující data:\\
 \begin{description}
-\item[Design úrovně] Alespoň hrubý nárys, jak si představujete prostředí (rozložení předmětů a úkolů, vzhled úrovně apod.)
+\item[Design úrovně] Alespoň hrubý nárys, jak si představujete prostředí (téma, hrubé rozložení předmětů a úkolů apod.)
 \item[Texty] úvodní text (zobrazí se po načtení úrovně), závěrečný text (zobrazí se po dokončení všech úkolů)
-\item[Úkoly] seznam úkolů - typ úkolu a data úkolu (možnosti úkolů viz. seznam), je potřeba také dodat pomocné otázky, které umožní opravení úkolů, které hráč pokazil 
-\item[Slovníček] "strukturovaná" data, která chcete, aby se hráč mohl naučit (např. vlastnosti jako hořlavost, toxicita apod., které se dají prezentovat za pomoci ikon, popisný text a odkazy na web, kde lze nalézt další informace), kromě "komplexních" dat lze také prezentovat pouhá hesla - slovo plus jeho popis / vysvětelní
-\item[Odměny] hráč za každý splnění úkol (případně po opravě za pomoci opravné otázky) dostavá předměty, které pak využije pro finální úkol
+\item[Úkoly] seznam úkolů - typ úkolu a data úkolu (možnosti úkolů viz. seznam)
+\item[Pomocné úkoly] je potřeba také dodat pomocné otázky, které umožní opravení úkolů, které hráč pokazil (je vhodné předpokládat nejhorší případ student, který nezodpoví ani jeden úkol správně, takže je potřeba dodat stejný počet otázek jako úkolů)
+\item[Slovníček] "strukturovaná" data, která chcete, aby se hráč mohl naučit (např. vlastnosti jako hořlavost, toxicita apod., které se dají prezentovat za pomoci ikon, popisný text a odkazy na web, kde lze nalézt další informace), také lze také prezentovat pouhá hesla - slovo plus jeho popis / vysvětelní
+\item[Odměny] hráč za každý splnění úkol (případně po opravě za pomoci opravné otázky) dostavá předměty, které pak využije pro finální úkol (např. v chemické variantě hráč získává prvky, ze kterých na konci sestaví chemickou rovnici typickou pro danou úroveň)
 \end{description}
 \end{document}

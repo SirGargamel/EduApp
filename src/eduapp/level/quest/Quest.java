@@ -14,9 +14,10 @@ import java.util.List;
  */
 public class Quest extends Item {
 
-    private static final String ACTION_DISPLAY = "Display";
-    private static final String ACTION_DISPLAY_DRAG = "D";
+    private static final String ACTION_DISPLAY = "Display";    
+    private static final String ACTION_DISPLAY_ADDING = "A";
     private static final String ACTION_DISPLAY_CONVERSION = "C";
+    private static final String ACTION_DISPLAY_DRAG = "D";
     private static final String ACTION_DISPLAY_FINAL = "F";
     private static final String ACTION_DISPLAY_GROUP = "G";
     private static final String ACTION_DISPLAY_HELP = "H";
@@ -52,6 +53,9 @@ public class Quest extends Item {
             if (rest.startsWith(ACTION_DISPLAY_JMOL)) {
                 final String number = rest.replace(ACTION_DISPLAY_JMOL, "");
                 displayJmolQuestion(extractQuestItem(QuestQuestionJmol.class, Integer.valueOf(number)));
+            } else if (rest.startsWith(ACTION_DISPLAY_ADDING)) {
+                final String number = rest.replace(ACTION_DISPLAY_ADDING, "");
+                displayAdding(extractQuestItem(QuestAdding.class, Integer.valueOf(number)));
             } else if (rest.startsWith(ACTION_DISPLAY_QUESTION_MULTI)) {
                 final String number = rest.replace(ACTION_DISPLAY_QUESTION_MULTI, "");
                 displayQuestionMulti(extractQuestItem(QuestQuestionMultiAnswer.class, Integer.valueOf(number)));
@@ -104,6 +108,9 @@ public class Quest extends Item {
         if (rest.startsWith(ACTION_DISPLAY_JMOL)) {
             final String number = rest.replace(ACTION_DISPLAY_JMOL, "");
             result = extractQuestItem(QuestQuestionJmol.class, Integer.valueOf(number));
+        } else if (rest.startsWith(ACTION_DISPLAY_ADDING)) {
+            final String number = rest.replace(ACTION_DISPLAY_ADDING, "");
+            result = extractQuestItem(QuestAdding.class, Integer.valueOf(number));
         } else if (rest.startsWith(ACTION_DISPLAY_QUESTION_MULTI)) {
             final String number = rest.replace(ACTION_DISPLAY_QUESTION_MULTI, "");
             result = extractQuestItem(QuestQuestionMultiAnswer.class, Integer.valueOf(number));
@@ -168,6 +175,10 @@ public class Quest extends Item {
         return (T) result;
     }
 
+    private void displayAdding(QuestAdding quest) {
+        FlowManager.getInstance().displayAddingScreen(quest);
+    }
+    
     private void displayQuestion(QuestQuestion question) {
         FlowManager.getInstance().displayQuestion(question);
     }

@@ -13,6 +13,7 @@ import eduapp.level.quest.QuestQuestionMultiAnswer;
 import eduapp.level.quest.QuestOrdering;
 import eduapp.level.quest.QuestPexeso;
 import eduapp.level.quest.Quest;
+import eduapp.level.quest.QuestAdding;
 import eduapp.level.quest.QuestItem;
 import eduapp.level.quest.QuestMatching;
 import eduapp.level.quest.QuestPicking;
@@ -38,6 +39,7 @@ public class XmlQuest extends XmlEntity<Quest> {
     private static final String ITEM_DESCRIPTION = "Popis";
     private static final String ITEM_ENDING = "Konec";
     private static final String ITEM_MODE = "Mod";
+    private static final String ITEM_QUEST_ADDING = "Add";
     private static final String ITEM_QUEST_CONVERSION = "Prevod";
     private static final String ITEM_QUEST_EQUATION = "Rovnice";
     private static final String ITEM_QUEST_FINAL = "Final";
@@ -99,6 +101,12 @@ public class XmlQuest extends XmlEntity<Quest> {
                 result = new QuestGrouping(
                         extractNodeText(e, ITEM_QUEST_QUESTION),
                         extractNodeText(e, ITEM_DATA),
+                        extractNodeText(e, ITEM_REWARD));
+                break;
+            case ITEM_QUEST_ADDING:
+                result = new QuestAdding(
+                        extractNodeText(e, ITEM_DATA).split(SEPARATOR_BASIC),
+                        extractNodeText(e, ITEM_ANSWER).split(SEPARATOR_BASIC),
                         extractNodeText(e, ITEM_REWARD));
                 break;
             case ITEM_QUEST_QUESTION:

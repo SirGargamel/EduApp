@@ -5,6 +5,7 @@ import com.jme3.app.state.AppState;
 import com.jme3.asset.AssetManager;
 import com.jme3.asset.plugins.ZipLocator;
 import de.lessvoid.nifty.Nifty;
+import eduapp.gui.GuiAdding;
 import eduapp.gui.GuiConversion;
 import eduapp.gui.GuiDescription;
 import eduapp.gui.GuiDictionary;
@@ -31,6 +32,7 @@ import eduapp.level.quest.QuestQuestionMultiAnswer;
 import eduapp.level.quest.QuestOrdering;
 import eduapp.level.quest.QuestPexeso;
 import eduapp.level.quest.Quest;
+import eduapp.level.quest.QuestAdding;
 import eduapp.level.quest.QuestItem;
 import eduapp.level.quest.QuestMatching;
 import eduapp.level.quest.QuestPicking;
@@ -54,7 +56,7 @@ import java.util.logging.Logger;
  * @author Petr Ječmen
  */
 public class FlowManager implements Observer {
-
+    
     private static final String SCREEN_CONVERSION = "conversion";
     private static final String SCREEN_DESCRIPTION = "description";
     private static final String SCREEN_DICTIONARY = "dictionary";
@@ -64,6 +66,7 @@ public class FlowManager implements Observer {
     private static final String SCREEN_PAUSE = "pause";
     private static final String SCREEN_PEXESO = "pexeso";
     private static final String SCREEN_QUEST = "quest";
+    private static final String SCREEN_QUEST_ADDING = "add";
     private static final String SCREEN_QUEST_INPUT = "questInput";
     private static final String SCREEN_QUEST_MULTI = "multiAnswer";
     private static final String SCREEN_QUEST_MATCHING = "matching";
@@ -232,6 +235,15 @@ public class FlowManager implements Observer {
         }
     }
 
+    public void displayAddingScreen(final QuestAdding quest) {
+        enableState(false);
+        final GuiAdding control = (GuiAdding) nifty.getScreen(SCREEN_QUEST_ADDING).getScreenController();
+        control.setQuest(quest);
+
+        storeActualScreen();
+        nifty.gotoScreen(SCREEN_QUEST_ADDING);
+    }
+    
     public void displayQuestion(final QuestQuestion question) {
         enableState(false);
         final GuiQuestInput control = (GuiQuestInput) nifty.getScreen(SCREEN_QUEST_INPUT).getScreenController();
