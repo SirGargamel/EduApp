@@ -4,7 +4,7 @@ import eduapp.level.item.ItemParameter;
 import eduapp.level.item.Item;
 
 public class QuestGrouping extends QuestItem {
-    
+
     private final String groupId;
     private final String[] itemList;
     private Item group;
@@ -40,7 +40,7 @@ public class QuestGrouping extends QuestItem {
         return groupId;
     }
 
-    public void setResult(int correct) {        
+    public void setResult(int correct) {
         if (itemList.length - correct <= MAX_ERROR_COUNT) {
             finished = true;
         } else {
@@ -55,13 +55,8 @@ public class QuestGrouping extends QuestItem {
         if (group != null) {
             return group.getParam(ItemParameter.DESCRIPTION);
         } else {
-            return "Rozřaďtě prvky podle toho, jestli danou vlastnost mají nebo ne - " + itemRegistry.get("description").getParam(groupId);
+            return "Rozřaďtě prvky dle toho, jestli danou vlastnost mají nebo ne - " + itemRegistry.get("description").getParam(groupId);
         }
-    }
-
-    @Override
-    public String getTask() {
-        return toNiftyString();
     }
 
     private void initGroup() {

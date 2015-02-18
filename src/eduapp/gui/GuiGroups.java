@@ -1,6 +1,5 @@
 package eduapp.gui;
 
-import de.lessvoid.nifty.EndNotify;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.builder.EffectBuilder;
 import de.lessvoid.nifty.builder.PanelBuilder;
@@ -81,14 +80,14 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
 
         TextBuilder tb = new TextBuilder();
         tb.style("baseB");
-        tb.text(quest.getTask());
-        tb.textHAlignCenter();  
-        tb.alignCenter();        
+        tb.text(quest.toNiftyString());
+        tb.textHAlignCenter();
+        tb.alignCenter();
         tb.color(Color.WHITE);
         tb.build(nifty, currentScreen, text);
-        
+
         DroppableBuilder db;
-        PanelBuilder pb;        
+        PanelBuilder pb;
         EffectBuilder eb;
         Element p = null, e;
         pb = new PanelBuilder("gap");
@@ -106,7 +105,7 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
             tb.alignCenter();
             pb.text(tb);
             p = pb.build(nifty, currentScreen, groups);
-            
+
             pb = new PanelBuilder("pG1".concat(s));
             pb.height("1%");
             pb.build(nifty, currentScreen, p);
@@ -241,7 +240,7 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
             }
         }
         for (Element e : items.getElements()) {
-            for (Element el : e.getElements()) {                
+            for (Element el : e.getElements()) {
                 if (el.getElements().size() > 1) {
                     el.getElements().get(0).getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#ff0000"));
                 }
@@ -249,11 +248,8 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
         }
 
         final int fCorrectCount = correctCount;
-        panelData.startEffect(EffectEventId.onCustom, new EndNotify() {
-            @Override
-            public void perform() {
-                quest.setResult(fCorrectCount);
-            }
+        panelData.startEffect(EffectEventId.onCustom, () -> {
+            quest.setResult(fCorrectCount);
         }, "Ok");
     }
 

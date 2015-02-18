@@ -37,9 +37,7 @@ public abstract class QuestItem extends Item {
         this.failed = failed;
     }
 
-    public abstract String toNiftyString();
-
-    public abstract String getTask();
+    public abstract String toNiftyString();    
 
     public void setLevel(final Level level) {
         this.level = level;

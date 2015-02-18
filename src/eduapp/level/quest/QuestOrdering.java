@@ -32,10 +32,5 @@ public class QuestOrdering extends QuestItem {
     @Override
     public String toNiftyString() {
         return "Seřaďte kroky tak, aby vytvořili daný technologický postup - " + question;
-    }
-
-    @Override
-    public String getTask() {
-        return toNiftyString();
-    }    
+    }  
 }

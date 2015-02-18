@@ -51,11 +51,6 @@ public class QuestEquation extends QuestItem {
         return "Seřaďte předměty tak, aby rovnice platila.";
     }
 
-    @Override
-    public String getTask() {
-        return toNiftyString();
-    }
-
     public Mode getMode() {
         return mode;
     }
@@ -83,7 +78,7 @@ public class QuestEquation extends QuestItem {
         public void addOutput(final String item) {
             out.add(item);
         }
-        
+
         public void addCatalyst(final String item) {
             catalysts.add(item);
         }
@@ -91,7 +86,7 @@ public class QuestEquation extends QuestItem {
         public List<String> getInputs() {
             return in;
         }
-        
+
         public List<String> getOutputs() {
             return out;
         }

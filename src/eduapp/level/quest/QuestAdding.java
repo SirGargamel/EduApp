@@ -34,9 +34,4 @@ public class QuestAdding extends QuestItem {
     public String toNiftyString() {
         return "Dopňte daná slova na správné pozice.";
     }
-
-    @Override
-    public String getTask() {
-        return toNiftyString();
-    }
 }

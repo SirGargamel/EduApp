@@ -51,9 +51,4 @@ public class QuestPicking extends QuestItem {
     public String toNiftyString() {
         return question;
     }
-
-    @Override
-    public String getTask() {
-        return toNiftyString();
-    }
 }

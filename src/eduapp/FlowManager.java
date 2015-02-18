@@ -418,17 +418,17 @@ public class FlowManager implements Observer {
             final QuestItem qi = (QuestItem) o;
 
             if (qi.isFinished()) {
-                FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi.getTask()).concat("\" byl splněn."));
+                FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi.toNiftyString()).concat("\" byl splněn."));
                 player.addItemToInventory(qi.getReward());
             } else if (qi.isFailed()) {
-                FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi.getTask()).concat("\" nebyl splněn."));
+                FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi.toNiftyString()).concat("\" nebyl splněn."));
             } else if (qi instanceof QuestHelp) {
                 final QuestHelp hp = (QuestHelp) qi;
                 final QuestQuestion q = hp.getLastQuestion();
                 if (q != null && q.isFinished()) {
                     final QuestItem qi2 = currentQuest.getFailedQuestItem();
                     qi2.setFinished(true);
-                    FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi2.getTask()).concat("\" byl splněn za pomoci bonusové otázky."));
+                    FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi2.toNiftyString()).concat("\" byl splněn za pomoci bonusové otázky."));
                     player.addItemToInventory(qi2.getReward());
                 }
             }

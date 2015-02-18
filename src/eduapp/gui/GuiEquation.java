@@ -77,7 +77,7 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
         }
 
         int widthWithoutGaps = width - maxItemCount * 2 * SIZE_GAP;
-        itemWidth = widthWithoutGaps / (maxItemCount*2);
+        itemWidth = widthWithoutGaps / (maxItemCount * 2);
         itemHeight = quest.getMode().equals(Mode.text) ? 32 : itemWidth;
         itemsPerLine = width / (itemWidth + SIZE_GAP) - 1;
 
@@ -97,7 +97,7 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
 
         TextBuilder tb = new TextBuilder();
         tb.style("baseB");
-        tb.text(quest.getTask());
+        tb.text(quest.toNiftyString());
         tb.alignCenter();
         tb.valignCenter();
         tb.color(Color.WHITE);
@@ -164,7 +164,7 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
                 counter = 0;
             }
             counter++;
-            
+
             pb = new PanelBuilder(PANEL_ID.concat(Integer.toString(counter)));
             pb.width(buildSize(SIZE_GAP * 2));
             pb.build(nifty, current, p);

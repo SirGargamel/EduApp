@@ -35,9 +35,4 @@ public class QuestQuestionJmol extends QuestItem {
     public String toNiftyString() {
         return "Dle modelu napište vzorec molekuly.";
     }
-
-    @Override
-    public String getTask() {
-        return toNiftyString();
-    }
 }

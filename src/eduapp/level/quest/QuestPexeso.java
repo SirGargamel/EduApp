@@ -25,9 +25,4 @@ public class QuestPexeso extends QuestItem {
     public String toNiftyString() {
         return "Vyhrajte pexeso.";
     }
-
-    @Override
-    public String getTask() {
-        return toNiftyString();
-    }
 }

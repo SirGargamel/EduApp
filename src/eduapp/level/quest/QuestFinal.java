@@ -6,15 +6,15 @@ import eduapp.FlowManager;
  *
  * @author Petr Ječmen
  */
-public class QuestFinal extends QuestEquation {  
-    
+public class QuestFinal extends QuestEquation {
+
     private int itemCount;
 
     public QuestFinal() {
-        super(Mode.text, null);           
+        super(Mode.text, null);
         finished = false;
     }
-    
+
     @Override
     public void setResult(boolean finished) {
         if (finished) {
@@ -27,11 +27,6 @@ public class QuestFinal extends QuestEquation {
     public String toNiftyString() {
         return "Seřaďte nasbírané předměty tak, aby rovnice platila.";
     }
-
-    @Override
-    public String getTask() {
-        return toNiftyString();
-    }    
 
     public void setItemCount(int itemCount) {
         this.itemCount = itemCount;

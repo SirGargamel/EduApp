@@ -1,12 +1,9 @@
 package eduapp.level.quest;
 
-import java.util.Arrays;
-
 public class QuestQuestionMultiAnswer extends QuestItem {
 
     private final String question;
     private final String[] answers, correctAnswers;    
-    private String[] userInput;
 
     public QuestQuestionMultiAnswer(String question, String[] correctAnswers, String[] answers, String reward) {
         super(reward);
@@ -14,7 +11,6 @@ public class QuestQuestionMultiAnswer extends QuestItem {
         this.question = question;
         this.correctAnswers = correctAnswers;
         this.answers = answers;
-        userInput = null;
     }
 
     public String getQuestion() {
@@ -27,11 +23,9 @@ public class QuestQuestionMultiAnswer extends QuestItem {
 
     public String[] getCorrectAnswers() {
         return correctAnswers;
-    }    
+    }
 
-    public void setUserInput(String[] input, boolean result) {
-        this.userInput = input;        
-
+    public void setResult(boolean result) {
         finished = result;
         failed = !result;
 
@@ -40,17 +34,6 @@ public class QuestQuestionMultiAnswer extends QuestItem {
 
     @Override
     public String toNiftyString() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append(question);
-        if (isFinished()) {
-            sb.append(" - ");
-            sb.append(Arrays.toString(userInput));
-        }
-        return sb.toString();
-    }
-
-    @Override
-    public String getTask() {
         return question;
     }
 }

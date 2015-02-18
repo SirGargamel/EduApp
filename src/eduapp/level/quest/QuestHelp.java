@@ -41,11 +41,6 @@ public class QuestHelp extends QuestItem implements Observer {
     }
 
     @Override
-    public String getTask() {
-        return "Toto by nemelo byt videt...";
-    }
-
-    @Override
     public void update(Observable o, Object arg) {
         setChanged();
         notifyObservers();

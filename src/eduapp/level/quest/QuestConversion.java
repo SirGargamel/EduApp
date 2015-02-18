@@ -9,11 +9,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class QuestConversion extends QuestItem {
-    
+
     private final String conversionId;
     private final String[] itemList;
     private Item conversion;
-    private List<Item> items;    
+    private List<Item> items;
 
     public QuestConversion(String conversionId, String data, String reward) {
         super(reward);
@@ -42,7 +42,7 @@ public class QuestConversion extends QuestItem {
         return items;
     }
 
-    public void setResult(int correct) {        
+    public void setResult(int correct) {
         if (itemList.length - correct <= MAX_ERROR_COUNT) {
             finished = true;
         } else {
@@ -56,11 +56,6 @@ public class QuestConversion extends QuestItem {
         initConversion();
 
         return conversion.getParam(ItemParameter.DESCRIPTION);
-    }
-
-    @Override
-    public String getTask() {
-        return toNiftyString();
     }
 
     private void initConversion() {

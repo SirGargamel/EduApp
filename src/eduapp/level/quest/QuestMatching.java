@@ -34,9 +34,4 @@ public class QuestMatching extends QuestItem {
     public String toNiftyString() {
         return "Přiřadtě ke každé položce správný popis.";
     }
-
-    @Override
-    public String getTask() {
-        return toNiftyString();
-    }
 }

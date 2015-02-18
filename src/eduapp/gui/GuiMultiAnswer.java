@@ -12,8 +12,6 @@ import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import de.lessvoid.nifty.tools.Color;
 import eduapp.level.quest.QuestQuestionMultiAnswer;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  *
@@ -98,11 +96,9 @@ public class GuiMultiAnswer implements ScreenController {
         boolean result = true;
         final String[] correctAnswers = quest.getCorrectAnswers();
         Color c;
-        final List<String> userInput = new LinkedList<>();
         for (String s : quest.getAnswers()) {
             chb = nifty.getCurrentScreen().findNiftyControl("chb".concat(s), CheckBox.class);
             if (chb.isChecked()) {
-                userInput.add(s);
                 if (!contains(s, correctAnswers)) {
                     result = false;
                     c = new Color("#ff0000");
@@ -125,7 +121,7 @@ public class GuiMultiAnswer implements ScreenController {
         final int fCounter = counter;
         final boolean fResult = result;
         panelValues.startEffect(EffectEventId.onCustom, () -> {
-            quest.setUserInput(userInput.toArray(new String[0]), fCounter == correctAnswers.length && fResult);
+            quest.setResult(fCounter == correctAnswers.length && fResult);
         }, "Ok");
 
     }
