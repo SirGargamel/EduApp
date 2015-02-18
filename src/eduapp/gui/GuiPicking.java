@@ -74,6 +74,10 @@ public class GuiPicking implements ScreenController, DroppableDropFilter {
         tb.color(Color.WHITE);
         tb.build(nifty, current, panelValues);
 
+        pb = new PanelBuilder("pGap");
+        pb.height("2%");
+        pb.build(nifty, current, panelValues);
+
         int counter = COUNT_ITEMS_ROW;
         for (Entry<String, List<String>> en : data.entrySet()) {
             key = en.getKey();
@@ -85,7 +89,7 @@ public class GuiPicking implements ScreenController, DroppableDropFilter {
                 e = pb.build(nifty, current, panelValues);
                 counter = 0;
 
-                pb = new PanelBuilder("pGap1".concat(key));
+                pb = new PanelBuilder("pGap".concat(key));
                 pb.height("3%");
                 pb.build(nifty, current, panelValues);
             }
@@ -111,7 +115,7 @@ public class GuiPicking implements ScreenController, DroppableDropFilter {
             db.alignCenter();
             db.childLayoutCenter();
             eb = new EffectBuilder("border");
-            eb.effectParameter("color", "#000000");
+            eb.effectParameter("color", "#ffffff");
             eb.effectParameter("border", "1px");
             db.onActiveEffect(eb);
             db.build(nifty, current, el).getNiftyControl(Droppable.class).addFilter(this);
@@ -134,6 +138,7 @@ public class GuiPicking implements ScreenController, DroppableDropFilter {
                 tb = new TextBuilder("text" + s2);
                 tb.text(s2);
                 tb.style("base");
+                tb.color(Color.BLACK);
                 dgb.text(tb);
                 dgb.childLayoutCenter();
                 dgb.alignCenter();

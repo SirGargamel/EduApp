@@ -33,17 +33,18 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
     private static final int SIZE_GAP = 5;
     private static final int COUNT_ITEMS_PER_LINE = 4;
     private static final int SIZE_ITEM_HEIGHT = 32;
-    private QuestGrouping gq;
-    private Element groups, items, panelData;
+    private QuestGrouping quest;
+    private Element groups, items, panelData, text;
     private Nifty nifty;
 
-    public void setData(QuestGrouping gq) {
-        this.gq = gq;
+    public void setQuest(QuestGrouping gq) {
+        this.quest = gq;
     }
 
     @Override
     public void bind(Nifty nifty, Screen screen) {
         this.nifty = nifty;
+        text = nifty.getCurrentScreen().findElementByName("panelText");
         groups = nifty.getCurrentScreen().findElementByName("panelGroups");
         items = nifty.getCurrentScreen().findElementByName("panelItems");
         panelData = nifty.getCurrentScreen().findElementByName("panelData");
@@ -62,25 +63,32 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
         final Screen currentScreen = nifty.getCurrentScreen();
 
         String[] groupNames;
-        if (gq.getGroup() == null) {
+        if (quest.getGroup() == null) {
             final ItemRegistry ir = AppContext.getItemRegistry();
-            final String groupName = ir.get("description").getParam(gq.getGroupId()).toLowerCase();
+            final String groupName = ir.get("description").getParam(quest.getGroupId()).toLowerCase();
             groupNames = new String[]{
                 "Je " + groupName,
                 "Není " + groupName};
         } else {
-            groupNames = gq.getGroup().getParam(gq.getGroupId()).split(";");
+            groupNames = quest.getGroup().getParam(quest.getGroupId()).split(";");
         }
-        final int itemCount = gq.getItems().length;
+        final int itemCount = quest.getItems().length;
         final int groupCount = groupNames.length;
         final int groupWidth = (groups.getWidth() - (groupCount + 1) * SIZE_GAP) / groupCount;
         final int itemWidth = (items.getWidth() - (COUNT_ITEMS_PER_LINE + 1) * SIZE_GAP) / COUNT_ITEMS_PER_LINE;
         final int itemLineCount = (int) Math.ceil(itemCount / (double) COUNT_ITEMS_PER_LINE);
         final int itemPanelHeight = (items.getHeight() - (itemLineCount + 1) * SIZE_GAP) / itemLineCount;
 
+        TextBuilder tb = new TextBuilder();
+        tb.style("baseB");
+        tb.text(quest.getTask());
+        tb.textHAlignCenter();  
+        tb.alignCenter();        
+        tb.color(Color.WHITE);
+        tb.build(nifty, currentScreen, text);
+        
         DroppableBuilder db;
-        PanelBuilder pb;
-        TextBuilder tb;
+        PanelBuilder pb;        
         EffectBuilder eb;
         Element p = null, e;
         pb = new PanelBuilder("gap");
@@ -94,14 +102,19 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
             tb = new TextBuilder("text" + s);
             tb.text(s);
             tb.style("base");
+            tb.color(Color.BLACK);
             tb.alignCenter();
             pb.text(tb);
             p = pb.build(nifty, currentScreen, groups);
+            
+            pb = new PanelBuilder("pG1".concat(s));
+            pb.height("1%");
+            pb.build(nifty, currentScreen, p);
 
             for (int i = 0; i < itemCount; i++) {
                 db = new DroppableBuilder(s + "-" + Integer.toString(i));
                 eb = new EffectBuilder("border");
-                eb.effectParameter("color", "#000000");
+                eb.effectParameter("color", "#ffffff");
                 eb.effectParameter("border", "1px");
                 db.onActiveEffect(eb);
 
@@ -126,7 +139,7 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
         pb = new PanelBuilder("gap2");
         pb.width(buildSize(SIZE_GAP));
         pb.build(nifty, currentScreen, items);
-        for (Item i : gq.getItems()) {
+        for (Item i : quest.getItems()) {
             id = i.getId();
             if (counter >= COUNT_ITEMS_PER_LINE) {
                 pb = new PanelBuilder("itemPanel" + id);
@@ -154,6 +167,7 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
             tb = new TextBuilder("text" + id);
             tb.text(i.getParam(ItemParameter.NAME));
             tb.style("base");
+            tb.color(Color.BLACK);
             dgb.text(tb);
             dgb.childLayoutCenter();
             dgb.build(nifty, currentScreen, e);
@@ -171,12 +185,12 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
     public void ok() {
         final ItemRegistry ir = AppContext.getItemRegistry();
         final List<Element> elements = groups.getElements();
-        final String paramId = gq.getGroupId();
+        final String paramId = quest.getGroupId();
         int correctCount = 0;
         String itemId, groupId, val;
         Item item;
         Element element;
-        if (gq.getGroup() != null) {
+        if (quest.getGroup() != null) {
             for (Element e : elements) {
                 groupId = e.getId();
                 for (Element el : e.getElements()) {
@@ -238,7 +252,7 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
         panelData.startEffect(EffectEventId.onCustom, new EndNotify() {
             @Override
             public void perform() {
-                gq.setResult(fCorrectCount);
+                quest.setResult(fCorrectCount);
             }
         }, "Ok");
     }

@@ -77,7 +77,7 @@ public class GuiDictionary implements ScreenController {
         }
         Collections.sort(displayedItems);
 
-        for (Item it : displayedItems) {            
+        for (Item it : displayedItems) {
             tree.addItem(new Line(it.getParam(ItemParameter.NAME)));
         }
 
@@ -89,7 +89,6 @@ public class GuiDictionary implements ScreenController {
             e.markForRemoval();
         }
         nifty.executeEndOfFrameElementActions();
-
 
         if (selectedItem != null) {
             if (TAG_DICTIONARY.equals(selectedItem.getParam(ItemParameter.SOURCE))) {
@@ -112,6 +111,11 @@ public class GuiDictionary implements ScreenController {
         String[] split;
         ImageBuilder ib;
         // icons
+        pb = new PanelBuilder("gapTop");
+        pb.childLayoutVertical();
+        pb.height("2%");
+        pb.build(nifty, current, panelContent);
+
         pb = new PanelBuilder("p".concat("Icons"));
         pb.childLayoutHorizontal();
         pb.height("10%");
@@ -124,7 +128,7 @@ public class GuiDictionary implements ScreenController {
 
                 pb = new PanelBuilder("p".concat(s));
                 pb.childLayoutCenter();
-                pb.width("10%");
+                pb.width("15%");
                 pb.image(ib);
                 pb.build(nifty, current, p);
             }
@@ -133,14 +137,14 @@ public class GuiDictionary implements ScreenController {
         for (String s : DISPLAY_ELEMENT) {
             val = selectedItem.getParam(s);
             if (val != null) {
+                pb = new PanelBuilder("gap".concat(s));
+                pb.childLayoutVertical();
+                pb.height("2%");
+                pb.build(nifty, current, panelContent);
+
                 pb = new PanelBuilder("p".concat(s));
                 pb.childLayoutVertical();
                 p = pb.build(nifty, current, panelContent);
-
-                pb = new PanelBuilder("gap".concat(s));
-                pb.childLayoutVertical();
-                pb.height("5%");
-                pb.build(nifty, current, p);
 
                 tb = new TextBuilder("t1".concat(s));
                 tb.style("baseB");
@@ -226,7 +230,7 @@ public class GuiDictionary implements ScreenController {
             tb.height(SIZE_LINE_HEIGHT);
             tb.build(nifty, current, p);
         }
-        
+
         JmolUtils.displayModel(selectedItem.getId());
     }
 

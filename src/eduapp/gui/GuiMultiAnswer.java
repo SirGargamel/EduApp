@@ -58,8 +58,7 @@ public class GuiMultiAnswer implements ScreenController {
         tb.alignCenter();
         tb.valignCenter();
         tb.color(Color.WHITE);
-        e = tb.build(nifty, current, panelValues);
-        panelValues.add(e);
+        tb.build(nifty, current, panelValues);
 
         for (String s : quest.getAnswers()) {
             pb = new PanelBuilder("p".concat(s));
@@ -119,9 +118,9 @@ public class GuiMultiAnswer implements ScreenController {
                     c = new Color("#00ff00");
                 }
             }
-            chb.getElement().getRenderer(PanelRenderer.class).setBackgroundColor(c);            
-            chb.setEnabled(false);            
-        }        
+            chb.getElement().getRenderer(PanelRenderer.class).setBackgroundColor(c);
+            chb.setEnabled(false);
+        }
 
         final int fCounter = counter;
         final boolean fResult = result;

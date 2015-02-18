@@ -60,14 +60,7 @@
                 </effect>
                 <text id="textBack" text="Zpět do hry" align="center" valign="center" style="base"/>
             </panel>
-            <panel width="100%" height="5%" childLayout="vertical" /> 
-            <panel id="buttonMenu" height="10%" width="20%" align="center" backgroundColor="#3b5998aa" childLayout="center" visibleToMouse="true">
-                <interact onClick="backToMenu()"/>
-                <effect>                                       
-                    <onHover name="border" color="#dfe3ee" border="2px"/>
-                </effect>
-                <text id="textMenu" text="Zpět do menu" align="center" valign="center" style="base"/>
-            </panel>
+            <panel width="100%" height="5%" childLayout="vertical" />             
             <panel width="100%" height="5%" childLayout="vertical" /> 
             <panel id="buttonExit" height="10%" width="20%" align="center" backgroundColor="#3b5998aa" childLayout="center" visibleToMouse="true">
                 <interact onClick="exit()"/>
@@ -84,26 +77,32 @@
             <panel id="panelQuest" height="80%" width="80%" align="center" backgroundColor="#3b5998aa" childLayout="vertical" visibleToMouse="false" />            
         </layer>       
     </screen>
-    <screen id="questInput" controller="eduapp.gui.GuiQuestInput">        
-        <layer id="centerColumn" childLayout="vertical">
-            <panel height="70%" />            
-            <panel id="panelQuest" width="80%" height="10%"  align="center" backgroundColor="#3b5998ff" childLayout="vertical" visibleToMouse="true">                                
-                <text id="questText" height="50%" align="center" text=".." style="base"/>
-                <control id="questInput" height="50%" name="textfield" />
-                <effect>
-                    <onCustom customKey="Start" name="move" mode="in" direction="bottom" length="300" startDelay="0" inherit="true" />
-                    <onCustom customKey="Ok" name="move" mode="out" direction="bottom" length="500" startDelay="0" inherit="true"/>
-                    <onCustom customKey="Wrong" name="shake" distance="5.0" global="true" />
-                </effect>
-            </panel>
-        </layer>       
+    <screen id="dictionary" controller="eduapp.gui.GuiDictionary">  
+        <layer id="complete" childLayout="center">      
+            <panel height="95%" width="95%" align="center" backgroundColor="#3b5998aa" childLayout="horizontal" visibleToMouse="true">                
+                <control id="tree" name="listBox" valign="center" vertical="optional" horizontal="off" width="30%" displayItems="25" style="base" inherit="true"
+                         viewConverterClass="eduapp.gui.listbox.LineListBoxViewConverter">
+                    <control name="line" controller="de.lessvoid.nifty.controls.listbox.ListBoxItemController" margin="2px">
+                        <interact onClick="listBoxItemClicked()" />
+                        <effect>                            
+                            <onCustom customKey="select" name="colorBar" post="false" color="#dfe3ee" neverStopRendering="true" timeType="infinite" />
+                            <onCustom customKey="select" name="textColor" post="false" color="#000000" neverStopRendering="true" timeType="infinite" />
+                            <onHover name="border" color="#dfe3ee" border="2px"/>
+                            <onClick name="focus" targetElement="#parent#parent"/>
+                        </effect>
+                    </control>
+                </control>                
+                <panel width="2%"/>
+                <panel id="content" childLayout="vertical">
+                </panel>  
+            </panel> 
+        </layer>
     </screen>
-    <screen id="groups" controller="eduapp.gui.GuiGroups">    
-        <layer id="onlyLayer" childLayout="vertical">    
+    <!-- quest screens -->
+    <screen id="add" controller="eduapp.gui.GuiAdding">        
+        <layer id="onlyLayer" childLayout="vertical">   
             <panel height="10%"/>                                 
-            <panel id="panelData" height="75%" width="80%" align="center" backgroundColor="#3b5998aa" childLayout="vertical">
-                <panel height="75%" id="panelGroups" childLayout="horizontal"/>
-                <panel height="*" id="panelItems" childLayout="vertical" padding="5px"/>
+            <panel height="75%" width="80%" align="center" backgroundColor="#3b5998aa" id="panelValues" childLayout="vertical">
                 <effect>                    
                     <onCustom customKey="Ok" name="fade" start="#ff" end="#00" length="5000" inherit="true"/>                    
                 </effect>
@@ -118,8 +117,8 @@
                     </effect>
                     <text id="text" text="Ok" align="center" valign="center" style="base"/>
                 </panel>                
-            </panel>   
-        </layer>    
+            </panel>            
+        </layer>       
     </screen>
     <screen id="conversion" controller="eduapp.gui.GuiConversion">        
         <layer id="onlyLayer" childLayout="vertical">   
@@ -142,6 +141,49 @@
             </panel>            
         </layer>       
     </screen>
+    <screen id="drag" controller="eduapp.gui.GuiEquation">        
+        <layer id="onlyLayer" childLayout="vertical">            
+            <panel height="10%"/>            
+            <panel id="panelDrop" width="80%" align="center" height="45%" backgroundColor="#3b5998aa" childLayout="vertical" visibleToMouse="true" />                                                                                                                   
+            <panel height="5%"/>
+            <panel id="panelDrag" width="80%" align="center" height="30%" backgroundColor="#3b5998aa" childLayout="vertical" visibleToMouse="true" />            
+            <panel height="5%"/> 
+            <panel id="panelOk" width="100%" height="5%" backgroundColor="#00000000" childLayout="horizontal" visibleToMouse="true">                                
+                <panel width="45%" />                                          
+                <panel id="buttonOk" align="center" width="10%" height="95%" backgroundColor="#3b5998ff" childLayout="center" visibleToMouse="true">
+                    <interact onClick="ok()"/>
+                    <effect>                                       
+                        <onHover name="border" color="#dfe3ee" border="2px"/>
+                    </effect>
+                    <text id="text" text="Ok" align="center" valign="center" style="base"/>
+                </panel>                
+            </panel> 
+        </layer>       
+    </screen>
+    <screen id="groups" controller="eduapp.gui.GuiGroups">    
+        <layer id="onlyLayer" childLayout="vertical">    
+            <panel height="10%"/>                                 
+            <panel id="panelData" height="75%" width="80%" align="center" backgroundColor="#3b5998aa" childLayout="vertical">
+                <panel height="5%" id="panelText" align="center" childLayout="center"/>
+                <panel height="75%" id="panelGroups" childLayout="horizontal"/>
+                <panel height="*" id="panelItems" childLayout="vertical" padding="5px"/>
+                <effect>                    
+                    <onCustom customKey="Ok" name="fade" start="#ff" end="#00" length="5000" inherit="true"/>                    
+                </effect>
+            </panel>
+            <panel height="5%"/> 
+            <panel id="panelOk" width="100%" height="5%" backgroundColor="#00000000" childLayout="horizontal" visibleToMouse="true">                                
+                <panel width="45%" />                                          
+                <panel id="buttonOk" align="center" width="10%" height="95%" backgroundColor="#3b5998ff" childLayout="center" visibleToMouse="true">
+                    <interact onClick="ok()"/>
+                    <effect>                                       
+                        <onHover name="border" color="#dfe3ee" border="2px"/>
+                    </effect>
+                    <text id="text" text="Ok" align="center" valign="center" style="base"/>
+                </panel>                
+            </panel>   
+        </layer>    
+    </screen>    
     <screen id="matching" controller="eduapp.gui.GuiMatching">        
         <layer id="onlyLayer" childLayout="vertical">   
             <panel height="10%"/>                                 
@@ -205,27 +247,12 @@
             </panel>            
         </layer>
     </screen>
-    <screen id="add" controller="eduapp.gui.GuiAdding">        
-        <layer id="onlyLayer" childLayout="vertical">   
-            <panel height="10%"/>                                 
-            <panel height="75%" width="80%" align="center" backgroundColor="#3b5998aa" id="panelValues" childLayout="vertical">
-                <effect>                    
-                    <onCustom customKey="Ok" name="fade" start="#ff" end="#00" length="5000" inherit="true"/>                    
-                </effect>
-            </panel>
-            <panel height="5%"/> 
-            <panel id="panelOk" width="100%" height="5%" backgroundColor="#00000000" childLayout="horizontal" visibleToMouse="true">                                
-                <panel width="45%" />                                          
-                <panel id="buttonOk" align="center" width="10%" height="95%" backgroundColor="#3b5998ff" childLayout="center" visibleToMouse="true">
-                    <interact onClick="ok()"/>
-                    <effect>                                       
-                        <onHover name="border" color="#dfe3ee" border="2px"/>
-                    </effect>
-                    <text id="text" text="Ok" align="center" valign="center" style="base"/>
-                </panel>                
-            </panel>            
-        </layer>       
-    </screen>
+    <screen id="pexeso" controller="eduapp.gui.GuiPexeso">
+        <layer id="centerColumn" childLayout="vertical">
+            <panel width="100%" height="10%" childLayout="vertical" />            
+            <panel id="panelPexeso" height="80%" width="80%" align="center" backgroundColor="#3b5998aa" childLayout="vertical" visibleToMouse="false" />            
+        </layer>
+    </screen>    
     <screen id="picking" controller="eduapp.gui.GuiPicking">        
         <layer id="onlyLayer" childLayout="vertical">   
             <panel height="10%"/>                                 
@@ -246,54 +273,25 @@
                 </panel>                
             </panel>            
         </layer>       
+    </screen>    
+    <screen id="questInput" controller="eduapp.gui.GuiQuestInput">        
+        <layer id="centerColumn" childLayout="vertical">
+            <panel height="70%" />            
+            <panel id="panelQuest" width="80%" height="10%"  align="center" backgroundColor="#3b5998ff" childLayout="vertical" visibleToMouse="true">                                
+                <text id="questText" height="50%" align="center" text=".." style="base"/>
+                <control id="questInput" height="50%" name="textfield" />
+                <effect>
+                    <onCustom customKey="Start" name="move" mode="in" direction="bottom" length="300" startDelay="0" inherit="true" />
+                    <onCustom customKey="Ok" name="move" mode="out" direction="bottom" length="500" startDelay="0" inherit="true"/>
+                    <onCustom customKey="Wrong" name="shake" distance="5.0" global="true" />
+                </effect>
+            </panel>
+        </layer>       
     </screen>
+    <!-- misc -->
     <controlDefinition name="line">
         <panel childLayout="horizontal" width="20%" align="center">
             <control id="#line-text" name="label" align="left" textHAlign="left" height="23px" width="*" wrap="true" style="base"/>
         </panel>
-    </controlDefinition> 
-    <screen id="dictionary" controller="eduapp.gui.GuiDictionary">  
-        <layer id="complete" childLayout="center">      
-            <panel height="95%" width="95%" align="center" backgroundColor="#3b5998aa" childLayout="horizontal" visibleToMouse="true">                
-                <control id="tree" name="listBox" valign="center" vertical="optional" horizontal="off" width="30%" displayItems="25" style="base" inherit="true"
-                         viewConverterClass="eduapp.gui.listbox.LineListBoxViewConverter">
-                    <control name="line" controller="de.lessvoid.nifty.controls.listbox.ListBoxItemController" margin="2px">
-                        <interact onClick="listBoxItemClicked()" />
-                        <effect>                            
-                            <onCustom customKey="select" name="colorBar" post="false" color="#dfe3ee" neverStopRendering="true" timeType="infinite" />
-                            <onCustom customKey="select" name="textColor" post="false" color="#000000" neverStopRendering="true" timeType="infinite" />
-                            <onHover name="border" color="#dfe3ee" border="2px"/>
-                            <onClick name="focus" targetElement="#parent#parent"/>
-                        </effect>
-                    </control>
-                </control>                
-                <panel width="1%"/>
-                <panel id="content" childLayout="vertical">
-                </panel>  
-            </panel> 
-        </layer>
-    </screen>
-    <screen id="drag" controller="eduapp.gui.GuiEquation">        
-        <layer id="onlyLayer" childLayout="vertical">            
-            <panel height="5%"/>            
-            <panel id="panelDrop" width="100%" height="50%" backgroundColor="#3b5998aa" childLayout="vertical" visibleToMouse="true" />                                                                                                                   
-            <panel height="5%"/>
-            <panel id="panelDrag" width="100%" height="35%" backgroundColor="#f7f7f7aa" childLayout="vertical" visibleToMouse="true" />            
-            <panel height="*" childLayout="center">
-                <panel id="buttonOk" align="center" width="10%" height="90%" backgroundColor="#3b5998ff" childLayout="center" visibleToMouse="true">
-                    <interact onClick="ok()"/>
-                    <effect>                                       
-                        <onHover name="border" color="#dfe3ee" border="2px"/>
-                    </effect>
-                    <text id="text" text="Ok" align="center" valign="center" style="base"/>
-                </panel>                
-            </panel>
-        </layer>       
-    </screen>
-    <screen id="pexeso" controller="eduapp.gui.GuiPexeso">
-        <layer id="centerColumn" childLayout="vertical">
-            <panel width="100%" height="10%" childLayout="vertical" />            
-            <panel id="panelPexeso" height="80%" width="80%" align="center" backgroundColor="#3b5998aa" childLayout="vertical" visibleToMouse="false" />            
-        </layer>
-    </screen>
+    </controlDefinition>         
 </nifty>

@@ -1,8 +1,8 @@
 package eduapp.gui;
 
-import de.lessvoid.nifty.EndNotify;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.builder.EffectBuilder;
+import de.lessvoid.nifty.builder.PanelBuilder;
 import de.lessvoid.nifty.builder.TextBuilder;
 import de.lessvoid.nifty.controls.Draggable;
 import de.lessvoid.nifty.controls.Droppable;
@@ -17,7 +17,6 @@ import de.lessvoid.nifty.screen.ScreenController;
 import de.lessvoid.nifty.tools.Color;
 import eduapp.level.quest.QuestOrdering;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -55,6 +54,7 @@ public class GuiOrdering implements ScreenController, DroppableDropFilter {
 
         DroppableBuilder db;
         DraggableBuilder dgb;
+        PanelBuilder pb;
         EffectBuilder eb;
         TextBuilder tb;
         Element e;
@@ -66,7 +66,11 @@ public class GuiOrdering implements ScreenController, DroppableDropFilter {
         tb.valignCenter();
         tb.color(Color.WHITE);
         tb.build(nifty, current, panelValues);
-        
+
+        pb = new PanelBuilder("pGap");
+        pb.height("2%");
+        pb.build(nifty, current, panelValues);
+
         final List<String> data = new ArrayList<>();
         for (String s : quest.getData()) {
             data.add(s);
@@ -80,32 +84,43 @@ public class GuiOrdering implements ScreenController, DroppableDropFilter {
             db.alignCenter();
             db.childLayoutCenter();
             eb = new EffectBuilder("border");
-            eb.effectParameter("color", "#000000");
+            eb.effectParameter("color", "#ffffff");
             eb.effectParameter("border", "1px");
             db.onActiveEffect(eb);
-            e = db.build(nifty, current, panelValues);
-            e.getNiftyControl(Droppable.class).addFilter(this);
+            db.build(nifty, current, panelValues).getNiftyControl(Droppable.class).addFilter(this);
+        }
 
+        pb = new PanelBuilder("pGap2");
+        pb.height("2%");
+        pb.build(nifty, current, panelValues);
+
+        pb = new PanelBuilder("pData");        
+        pb.childLayoutHorizontal();
+        e = pb.build(nifty, current, panelValues);
+
+        pb = new PanelBuilder("pGap3");
+        pb.width("2%");
+        pb.build(nifty, current, e);
+
+        for (String s : data) {
             dgb = new DraggableBuilder(s);
             tb = new TextBuilder("text" + s);
             tb.text(s);
             tb.style("base");
+            tb.color(Color.BLACK);
+            tb.margin("2px");
             dgb.text(tb);
+            eb = new EffectBuilder("border");
+            eb.effectParameter("color", "#ffffff");
+            eb.effectParameter("border", "1px");
+            dgb.onActiveEffect(eb);            
             dgb.childLayoutCenter();
-            dgb.build(nifty, current, e.getElements().get(0));
-        }
+            dgb.build(nifty, current, e);
 
-        db = new DroppableBuilder("drop");
-        db.width("50%");
-        db.height("10%");
-        db.alignCenter();
-        db.childLayoutCenter();
-        eb = new EffectBuilder("border");
-        eb.effectParameter("color", "#000000");
-        eb.effectParameter("border", "1px");
-        db.onActiveEffect(eb);
-        e = db.build(nifty, current, panelValues);
-        e.getNiftyControl(Droppable.class).addFilter(this);
+            pb = new PanelBuilder("pGap" + s);
+            pb.width("1%");
+            pb.build(nifty, current, e);
+        }
 
         panelValues.layoutElements();
     }

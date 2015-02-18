@@ -66,42 +66,37 @@ public class GuiConversion implements ScreenController {
         tb.alignCenter();
         tb.valignCenter();
         tb.color(Color.WHITE);
-        e = tb.build(nifty, current, panelValues);
-        panelValues.add(e);
+        tb.build(nifty, current, panelValues);        
 
-        final RenderFont rf = nifty.createFont("interface/Fonts/Base20.fnt");
+        final RenderFont rf = nifty.createFont("interface/Fonts/Base20.fnt");        
         for (Item it : quest.getItems()) {
             pb = new PanelBuilder("p".concat(it.getId()));
             pb.childLayoutHorizontal();
             e = pb.build(nifty, current, panelValues);
 
             pb = new PanelBuilder("pG1".concat(it.getId()));
-            pb.width("1%");
+            pb.width("2%");
             pb.build(nifty, current, e);
 
             tb = new TextBuilder("t".concat(it.getId()));
             tb.textHAlignLeft();
             tb.style("base");
             tb.text(it.getParam(from));
-            tb.color(Color.WHITE);
+            tb.color(Color.BLACK);
             tb.width("30%");
             tb.build(nifty, current, e);
 
             pb = new PanelBuilder("pG2".concat(it.getId()));
-            pb.width("29%");
+            pb.width("28%");
             pb.build(nifty, current, e);
 
             tfb = new TextFieldBuilder("tf".concat(it.getId()));
             tfb.alignRight();
-            tfb.width("40%");
+            tfb.width("38%");
             text = tfb.build(nifty, current, e);
-            text.addInputHandler(new KeyInputHandler() {
-                @Override
-                public boolean keyEvent(NiftyInputEvent nie) {
-                    return true;
-                }
-            });
+            text.addInputHandler((NiftyInputEvent nie) -> true);
             text.getElements().get(0).getElements().get(0).getRenderer(TextRenderer.class).setFont(rf);
+            text.getElements().get(0).getElements().get(0).getRenderer(TextRenderer.class).setColor(Color.BLACK);
         }
 
         panelValues.layoutElements();

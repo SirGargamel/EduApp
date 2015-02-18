@@ -5,6 +5,7 @@ import de.lessvoid.nifty.builder.TextBuilder;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
+import de.lessvoid.nifty.tools.Color;
 import eduapp.level.quest.Quest;
 import eduapp.level.quest.QuestItem;
 
@@ -18,14 +19,15 @@ public class GuiQuest implements ScreenController {
     private Quest quest;
     private boolean descr, ending;
     private Element panelQuest;
-    private String descriptionControls;
+    private String controlsDescription, controlsTitle;
 
     public void setQuest(Quest quest) {
         this.quest = quest;
     }
 
-    public void setDescriptionControls(String descriptionControls) {
-        this.descriptionControls = descriptionControls;
+    public void setDescriptionControls(String controlsTitle, String descriptionControls) {
+        this.controlsDescription = descriptionControls;
+        this.controlsTitle = controlsTitle;
     }
 
     public void displayDescription() {
@@ -45,7 +47,7 @@ public class GuiQuest implements ScreenController {
     @Override
     public void onStartScreen() {
         if (descr) {
-            buildSimpleText(quest.getDescription() + "\n\n" + descriptionControls);
+            buildSimpleText(quest.getDescription().concat("\n"), controlsTitle, controlsDescription);
             descr = false;
         } else if (ending) {
             buildSimpleText(quest.getEnding());
@@ -66,7 +68,7 @@ public class GuiQuest implements ScreenController {
         tb.text("-- Seznam úkolů --");
         tb.style("baseB");
         tb.alignCenter();
-        tb.color("#ffffffff");
+        tb.color(Color.WHITE);
         tb.build(nifty, current, panelQuest);
         for (QuestItem qi : quest.getData()) {
             if (!qi.isFinished()) {
@@ -78,9 +80,9 @@ public class GuiQuest implements ScreenController {
                 tb.textHAlignLeft();
                 tb.wrap(true);
                 if (qi.isFailed()) {
-                    tb.color("#ff0000ff");
+                    tb.color("#ff0000");
                 } else {
-                    tb.color("#ffffffff");
+                    tb.color("#000000");
                 }
 
                 tb.build(nifty, current, panelQuest);
@@ -90,21 +92,30 @@ public class GuiQuest implements ScreenController {
         panelQuest.layoutElements();
     }
 
-    private void buildSimpleText(final String text) {
+    private void buildSimpleText(final String... text) {
         for (Element e : panelQuest.getElements()) {
             e.markForRemoval();
         }
 
-        TextBuilder tb;
-        tb = new TextBuilder();
-        tb.text(text);
-        tb.style("base");
-        tb.alignCenter();
-        tb.wrap(true);
-        tb.width("100%");
-        tb.marginLeft("5px");
-        tb.color("#ffffffff");
-        tb.build(nifty, nifty.getCurrentScreen(), panelQuest);
+        Color c = Color.WHITE;
+        for (String s : text) {
+            TextBuilder tb;
+            tb = new TextBuilder();
+            tb.text(s);
+            if (c == Color.BLACK) {
+                tb.style("baseB");
+            } else {
+                tb.style("base");
+            }
+            tb.alignCenter();
+            tb.wrap(true);
+            tb.width("100%");
+            tb.marginLeft("5px");
+            tb.color(c);
+            tb.build(nifty, nifty.getCurrentScreen(), panelQuest);
+
+            c = c == Color.WHITE ? Color.BLACK : Color.WHITE;
+        }
     }
 
     @Override

@@ -21,11 +21,7 @@ public class GuiPause implements ScreenController {
 
     @Override
     public void onEndScreen() {
-    }
-
-    public void backToMenu() {       
-        FlowManager.getInstance().gotoMainMenu();
-    }
+    }    
 
     public void backToGame() {        
         FlowManager.getInstance().handlePause();

@@ -88,6 +88,10 @@ public class GuiAdding implements ScreenController, DroppableDropFilter {
             pb.height("15%");
             e = pb.build(nifty, current, panelValues);
 
+            pb = new PanelBuilder("pG" + row + ":");
+            pb.width("1%");
+            pb.build(nifty, current, e);
+
             split = data[row].split(SPLITTER_INNER);
             for (int i = 0; i < split.length; i++) {
                 s = split[i];
@@ -100,7 +104,7 @@ public class GuiAdding implements ScreenController, DroppableDropFilter {
                 tb.valignCenter();
                 tb.style("base");
                 tb.text(s);
-                tb.color(Color.WHITE);
+                tb.color(Color.BLACK);
                 tb.build(nifty, current, e);
 
                 if (i < split.length - 1) {
@@ -117,7 +121,7 @@ public class GuiAdding implements ScreenController, DroppableDropFilter {
                     db.valignCenter();
                     db.childLayoutCenter();
                     eb = new EffectBuilder("border");
-                    eb.effectParameter("color", "#000000");
+                    eb.effectParameter("color", "#ffffff");
                     eb.effectParameter("border", "1px");
                     db.onActiveEffect(eb);
                     el = db.build(nifty, current, e);
@@ -135,24 +139,27 @@ public class GuiAdding implements ScreenController, DroppableDropFilter {
         Collections.shuffle(fillList);
 
         pb = new PanelBuilder("pItems");
-        pb.childLayoutHorizontal();
+        pb.childLayoutHorizontal();        
         e = pb.build(nifty, current, panelValues);
         for (String item : fillList) {
+            pb = new PanelBuilder("pGap".concat(item));
+            pb.width("2%");
+            pb.build(nifty, current, e);
+
             dgb = new DraggableBuilder(item);
             tb = new TextBuilder("text" + item);
             tb.text(item);
             tb.style("base");
+            tb.color(Color.BLACK);
+            tb.margin("2px");
             eb = new EffectBuilder("border");
             eb.effectParameter("color", "#ffffff");
             eb.effectParameter("border", "1px");
             dgb.onActiveEffect(eb);
             dgb.text(tb);
             dgb.childLayoutCenter();
+            dgb.valignCenter();
             dgb.build(nifty, current, e);
-
-            pb = new PanelBuilder("pGap".concat(item));
-            pb.width("2%");
-            pb.build(nifty, current, e);
         }
 
         panelValues.layoutElements();

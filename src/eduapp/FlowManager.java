@@ -56,7 +56,7 @@ import java.util.logging.Logger;
  * @author Petr Ječmen
  */
 public class FlowManager implements Observer {
-    
+
     private static final String SCREEN_CONVERSION = "conversion";
     private static final String SCREEN_DESCRIPTION = "description";
     private static final String SCREEN_DICTIONARY = "dictionary";
@@ -136,9 +136,9 @@ public class FlowManager implements Observer {
 
         gotoWorldScreen();
         final GuiQuest control = (GuiQuest) nifty.getScreen(SCREEN_QUEST).getScreenController();
-        control.setDescriptionControls(""
-                + "-- Ovládání --\n"
-                + "Šipky - pohyb\n"
+        control.setDescriptionControls(
+                "-- Ovládání --",
+                "Šipky - pohyb\n"
                 + "Mezerník - akce\n"
                 + "S - slovník pojmů\n"
                 + "Q - seznam úkol\n"
@@ -198,7 +198,7 @@ public class FlowManager implements Observer {
         enableState(false);
 
         final GuiGroups control = (GuiGroups) nifty.getScreen(SCREEN_GROUPS).getScreenController();
-        control.setData(group);
+        control.setQuest(group);
 
         storeActualScreen();
         nifty.gotoScreen(SCREEN_GROUPS);
@@ -243,7 +243,7 @@ public class FlowManager implements Observer {
         storeActualScreen();
         nifty.gotoScreen(SCREEN_QUEST_ADDING);
     }
-    
+
     public void displayQuestion(final QuestQuestion question) {
         enableState(false);
         final GuiQuestInput control = (GuiQuestInput) nifty.getScreen(SCREEN_QUEST_INPUT).getScreenController();
@@ -313,7 +313,7 @@ public class FlowManager implements Observer {
     public void displayEquationScreen(final QuestEquation quest) {
         enableState(false);
         final GuiEquation control = (GuiEquation) nifty.getScreen(SCREEN_DRAG).getScreenController();
-        control.setData(quest);
+        control.setQuest(quest);
 
         storeActualScreen();
         nifty.gotoScreen(SCREEN_DRAG);

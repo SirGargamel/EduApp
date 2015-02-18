@@ -1,6 +1,5 @@
 package eduapp.gui;
 
-import de.lessvoid.nifty.EndNotify;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.builder.EffectBuilder;
 import de.lessvoid.nifty.builder.PanelBuilder;
@@ -58,7 +57,7 @@ public class GuiMatching implements ScreenController, DroppableDropFilter {
 
         final Map<String, String> data = quest.getData();
         final List<String> items = new ArrayList<>(data.keySet());
-        final List<String> descr = new ArrayList<>(data.values());        
+        final List<String> descr = new ArrayList<>(data.values());
 
         PanelBuilder pb;
         TextBuilder tb;
@@ -74,11 +73,10 @@ public class GuiMatching implements ScreenController, DroppableDropFilter {
         tb.valignCenter();
         tb.color(Color.WHITE);
         tb.build(nifty, current, panelValues);
-        
+
         pb = new PanelBuilder("pGap");
-        pb.height("1%");
+        pb.height("2%");
         pb.build(nifty, current, panelValues);
-        
 
         String s;
         for (int i = 0; i < items.size(); i++) {
@@ -89,7 +87,7 @@ public class GuiMatching implements ScreenController, DroppableDropFilter {
             e = pb.build(nifty, current, panelValues);
 
             pb = new PanelBuilder("pG1".concat(s));
-            pb.width("1%");
+            pb.width("2%");
             pb.build(nifty, current, e);
 
             db = new DroppableBuilder(TAG_DESCR + s);
@@ -97,23 +95,23 @@ public class GuiMatching implements ScreenController, DroppableDropFilter {
             db.alignCenter();
             db.childLayoutCenter();
             eb = new EffectBuilder("border");
-            eb.effectParameter("color", "#000000");
+            eb.effectParameter("color", "#ffffff");
             eb.effectParameter("border", "1px");
             db.onActiveEffect(eb);
             el = db.build(nifty, current, e);
             el.getNiftyControl(Droppable.class).addFilter(this);
 
             pb = new PanelBuilder("pG2".concat(s));
-            pb.width("2%");
+            pb.width("1%");
             pb.build(nifty, current, e);
 
             tb = new TextBuilder("t".concat(s));
-            tb.textHAlignLeft();
+            tb.valignCenter();
             tb.wrap(true);
             tb.alignRight();
-            tb.style("base");
+            tb.style("base");            
             tb.text(descr.get(i));
-            tb.color(Color.WHITE);
+            tb.color(Color.BLACK);
             tb.width("65%");
             tb.build(nifty, current, e);
         }
@@ -121,17 +119,24 @@ public class GuiMatching implements ScreenController, DroppableDropFilter {
         pb = new PanelBuilder("pGap2");
         pb.height("2%");
         pb.build(nifty, current, panelValues);
-        
+
         Collections.shuffle(items);
 
         pb = new PanelBuilder("pItems");
         pb.childLayoutHorizontal();
         e = pb.build(nifty, current, panelValues);
+        
+        pb = new PanelBuilder("pGap2");
+        pb.width("2%");
+        pb.build(nifty, current, e);
+        
         for (String item : items) {
             dgb = new DraggableBuilder(item);
             tb = new TextBuilder("text" + item);
             tb.text(item);
             tb.style("base");
+            tb.color(Color.BLACK);
+            tb.margin("2px");
             eb = new EffectBuilder("border");
             eb.effectParameter("color", "#ffffff");
             eb.effectParameter("border", "1px");
@@ -141,7 +146,7 @@ public class GuiMatching implements ScreenController, DroppableDropFilter {
             dgb.build(nifty, current, e);
 
             pb = new PanelBuilder("pGap".concat(item));
-            pb.width("2%");
+            pb.width("1%");
             pb.build(nifty, current, e);
         }
 
@@ -155,18 +160,18 @@ public class GuiMatching implements ScreenController, DroppableDropFilter {
     public void ok() {
         int counter = 0;
         final Map<String, String> data = quest.getData();
-        
+
         Element el, el2;
         for (Entry<String, String> e : data.entrySet()) {
             el = nifty.getCurrentScreen().findElementByName(TAG_DESCR.concat(e.getKey()));
-            el2 = extractElement(el);            
+            el2 = extractElement(el);
             if (el2.getId().equals(e.getKey())) {
                 counter++;
                 el2.getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#00ff00"));
             } else {
                 el2.getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#ff0000"));
             }
-            
+
         }
 
         final int fCounter = counter;
@@ -179,7 +184,7 @@ public class GuiMatching implements ScreenController, DroppableDropFilter {
     public boolean accept(Droppable dropSource, Draggable draggedItem, Droppable droppedAt) {
         return droppedAt.getElement().getElements().get(0).getElements().isEmpty();
     }
-    
+
     private Element extractElement(final Element container) {
         Element result = null;
         if (!container.getElements().isEmpty() && !container.getElements().get(0).getElements().isEmpty()) {
