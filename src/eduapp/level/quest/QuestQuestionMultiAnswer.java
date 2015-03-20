@@ -3,22 +3,22 @@ package eduapp.level.quest;
 public class QuestQuestionMultiAnswer extends QuestItem {
 
     private final String question;
-    private final String[] answers, correctAnswers;    
+    private final String[] wrongAnswers, correctAnswers;    
 
-    public QuestQuestionMultiAnswer(String question, String[] correctAnswers, String[] answers, String reward) {
+    public QuestQuestionMultiAnswer(String question, String[] correctAnswers, String[] wrongAnswers, String reward) {
         super(reward);
 
         this.question = question;
         this.correctAnswers = correctAnswers;
-        this.answers = answers;
+        this.wrongAnswers = wrongAnswers;
     }
 
     public String getQuestion() {
         return question;
     }
 
-    public String[] getAnswers() {
-        return answers;
+    public String[] getWrongAnswers() {
+        return wrongAnswers;
     }
 
     public String[] getCorrectAnswers() {

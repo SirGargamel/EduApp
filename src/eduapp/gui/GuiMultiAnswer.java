@@ -12,6 +12,10 @@ import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import de.lessvoid.nifty.tools.Color;
 import eduapp.level.quest.QuestQuestionMultiAnswer;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -58,7 +62,12 @@ public class GuiMultiAnswer implements ScreenController {
         tb.color(Color.WHITE);
         tb.build(nifty, current, panelValues);
 
-        for (String s : quest.getAnswers()) {
+        final List<String> answers = new LinkedList<>();
+        answers.addAll(Arrays.asList(quest.getCorrectAnswers()));
+        answers.addAll(Arrays.asList(quest.getWrongAnswers()));
+        Collections.shuffle(answers);
+        
+        for (String s : answers) {
             pb = new PanelBuilder("p".concat(s));
             pb.childLayoutHorizontal();
             e = pb.build(nifty, current, panelValues);
@@ -96,7 +105,7 @@ public class GuiMultiAnswer implements ScreenController {
         boolean result = true;
         final String[] correctAnswers = quest.getCorrectAnswers();
         Color c;
-        for (String s : quest.getAnswers()) {
+        for (String s : quest.getWrongAnswers()) {
             chb = nifty.getCurrentScreen().findNiftyControl("chb".concat(s), CheckBox.class);
             if (chb.isChecked()) {
                 if (!contains(s, correctAnswers)) {
