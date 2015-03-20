@@ -9,20 +9,30 @@ import java.util.*;
  */
 public class QuestQuestionJmol extends QuestItem {
 
-    private final List<String> modelNames;
+    private final String question;
+    private final List<String> modelNames, answers;
 
-    public QuestQuestionJmol(String[] models, String reward) {
+    public QuestQuestionJmol(String question, String[] models, String[] answers, String reward) {
         super(reward);
 
+        this.question = question;
         this.modelNames = Arrays.asList(models);
-        Collections.shuffle(modelNames);
+        this.answers = Arrays.asList(answers);
     }
 
-    public Collection<String> getModelNames() {
+    public String getQuestion() {
+        return question;
+    }
+
+    public List<String> getModelNames() {
         return modelNames;
     }
     
-    public void setResult(int correct) {        
+    public List<String> getAnswers() {
+        return answers;
+    }
+
+    public void setResult(int correct) {
         if (modelNames.size() - correct <= MAX_ERROR_COUNT) {
             finished = true;
         } else {
@@ -33,6 +43,6 @@ public class QuestQuestionJmol extends QuestItem {
 
     @Override
     public String toNiftyString() {
-        return "Dle modelu napište vzorec molekuly.";
+        return question;
     }
 }

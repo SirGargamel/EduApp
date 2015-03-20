@@ -22,7 +22,6 @@ import eduapp.gui.GuiQuest;
 import eduapp.gui.GuiQuestInput;
 import eduapp.level.item.Item;
 import eduapp.level.Light;
-import eduapp.level.item.ItemParameter;
 import eduapp.level.quest.QuestConversion;
 import eduapp.level.quest.QuestEquation;
 import eduapp.level.quest.QuestGrouping;
@@ -45,6 +44,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Stack;
@@ -265,38 +265,40 @@ public class FlowManager implements Observer {
     public void displayJmolQuestion(final QuestQuestionJmol question) {
         enableState(false);
 
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final GuiQuestInput control = (GuiQuestInput) nifty.getScreen(SCREEN_QUEST_INPUT).getScreenController();
-                QuestQuestion q;
-                int correctCounter = 0;
-                ItemRegistry ir = AppContext.getItemRegistry();
-                for (String model : question.getModelNames()) {
-                    if (JmolUtils.displayModel(model)) {
-                        q = new QuestQuestion("Zadejte vzorec molekuly.", ir.get(model).getParam(ItemParameter.FORMULA_ORIG), null, false, true);
-                        control.setQuestion(q);
-                        storeActualScreen();
-                        nifty.gotoScreen(SCREEN_QUEST_INPUT);
-
-                        while (!q.isFinished() && !q.isFailed()) {
-                            synchronized (FlowManager.this) {
-                                try {
-                                    FlowManager.this.wait(100);
-                                } catch (InterruptedException ex) {
-                                    Logger.getLogger(FlowManager.class.getName()).log(Level.SEVERE, null, ex);
-                                }
+        Thread t = new Thread(() -> {
+            final GuiQuestInput control = (GuiQuestInput) nifty.getScreen(SCREEN_QUEST_INPUT).getScreenController();
+            QuestQuestion q;
+            int correctCounter = 0;            
+            final String questionText = question.getQuestion();
+            final List<String> models = question.getModelNames();
+            final List<String> answers = question.getAnswers();
+            String model;
+            for (int i = 0; i < models.size(); i++) {
+                model = models.get(i);
+                
+                if (JmolUtils.displayModel(model)) {
+                    q = new QuestQuestion(questionText, answers.get(i), null, false, true);
+                    control.setQuestion(q);
+                    storeActualScreen();
+                    nifty.gotoScreen(SCREEN_QUEST_INPUT);
+                    
+                    while (!q.isFinished() && !q.isFailed()) {
+                        synchronized (FlowManager.this) {
+                            try {
+                                FlowManager.this.wait(100);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(FlowManager.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
-                        if (!q.isFailed()) {
-                            correctCounter++;
-                        }
+                    }
+                    if (!q.isFailed()) {
+                        correctCounter++;
                     }
                 }
-                JmolUtils.hideViewer();
-                question.setResult(correctCounter);
-                gotoWorldScreen();
             }
+            JmolUtils.hideViewer();
+            question.setResult(correctCounter);
+            gotoWorldScreen();
         });
         t.start();
     }
