@@ -13,7 +13,6 @@ import eduapp.FlowManager;
 import eduapp.Utils;
 import eduapp.loaders.LevelLoader;
 import java.io.File;
-import java.io.FilenameFilter;
 
 /**
  *
@@ -25,6 +24,7 @@ public class GuiMainMenu implements ScreenController {
     private Nifty nifty;
     private ListBox<String> listBox;
     private Element rewards;
+    private int finishedLevelCount = 0;
 
     @Override
     public void bind(Nifty nifty, Screen screen) {
@@ -47,17 +47,13 @@ public class GuiMainMenu implements ScreenController {
     }
 
     public void setLevelCount(int finishedLevelCount) {
+        this.finishedLevelCount = finishedLevelCount;
         final File f = new File("data");
         int counter = 0;
         if (listBox.itemCount() > 0) {
             listBox.clear();
         }
-        for (String s : f.list(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.endsWith(LevelLoader.EXTENSION_PACKAGE);
-            }
-        })) {
+        for (String s : f.list((File dir, String name) -> name.endsWith(LevelLoader.EXTENSION_PACKAGE))) {
             listBox.addItem(s.replace(".".concat(LevelLoader.EXTENSION_PACKAGE), ""));
             counter++;
             if (counter > finishedLevelCount) {
@@ -78,7 +74,11 @@ public class GuiMainMenu implements ScreenController {
             final Screen current = nifty.getCurrentScreen();
             PanelBuilder pb;
             ImageBuilder ib;
-            for (int i = 0; i < listBox.itemCount() - 1; i++) {
+            for (int i = 0; i < finishedLevelCount; i++) {
+                pb = new PanelBuilder("gap" + i);
+                pb.width("4%");
+                pb.build(nifty, current, rewards);
+                
                 pb = new PanelBuilder("rew" + i);
                 pb.width("15%");
 //                pb.backgroundColor("#8b9dc388");
@@ -90,11 +90,7 @@ public class GuiMainMenu implements ScreenController {
                 ib.width("100%");
                 pb.image(ib);
 
-                pb.build(nifty, current, rewards);
-
-                pb = new PanelBuilder("gap" + i);
-                pb.width("10%");
-                pb.build(nifty, current, rewards);
+                pb.build(nifty, current, rewards);                
             }
         }
     }

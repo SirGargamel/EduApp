@@ -15,6 +15,9 @@ import eduapp.loaders.LevelLoader;
 import eduapp.loaders.StateLoader;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 /**
@@ -28,6 +31,14 @@ public class EduApp extends SimpleApplication {
     public static final int HEIGHT = 600;
 
     public static void main(String[] args) {
+        final Logger l = Logger.getGlobal();
+        l.addHandler(new ConsoleHandler());
+        if (DEBUG) {
+            l.setLevel(Level.ALL);
+        } else {
+            l.setLevel(Level.INFO);
+        }
+
         try {
             final SimpleApplication app = new EduApp();
             final AppSettings settings = new AppSettings(true);
@@ -85,7 +96,7 @@ public class EduApp extends SimpleApplication {
         } catch (AssetNotFoundException e) {
             // do nothing
         }
-        levelState = 4;
+        levelState = 5;
         FlowManager.getInstance().setLevelState(levelState);
         FlowManager.getInstance().gotoMainMenu();
 
