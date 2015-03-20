@@ -22,6 +22,7 @@ import eduapp.level.quest.QuestQuestionWeb;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Logger;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -57,6 +58,7 @@ public class XmlQuest extends XmlEntity<Quest> {
     private static final String SEPARATOR_BASIC = ";";
     private static final String SEPARATOR_QUESTION_OUT = "=";
     private static final String SEPARATOR_QUESTION_ITEM = "\\+";
+    private static final String WARN_MISSING = "MISSING !!!";
 
     public XmlQuest(Element node) {
         super(node);
@@ -273,11 +275,21 @@ public class XmlQuest extends XmlEntity<Quest> {
             }
             result.addEquation(eq);
         }
+        if (nl.getLength() == 0) {
+            final String count = e.getElementsByTagName(ITEM_DATA).item(0).getTextContent();
+            itemCount = Integer.valueOf(count);
+        }
         result.setItemCount(itemCount);
         return result;
     }
 
     private static String extractNodeText(Element e, String nodeName) {
-        return e.getElementsByTagName(nodeName).item(0).getTextContent().replace("\\n", "\n");
+        NodeList n = e.getElementsByTagName(nodeName);
+        if (n == null || n.getLength() == 0) {
+            Logger.getLogger(XmlQuest.class.getCanonicalName()).warning("Missing node - " + nodeName);
+            return WARN_MISSING;
+        }
+        
+        return n.item(0).getTextContent().replace("\\n", "\n");
     }
 }
