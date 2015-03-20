@@ -19,8 +19,8 @@ public class Item extends Observable implements Comparable<Item> {
     private static final String FIELD_COMPARE = ItemParameter.NAME;
     private static final List<String> NO_ESCAPE;
     protected ItemRegistry itemRegistry;
-    private String id;
-    private Map<String, String> params;
+    protected String id;
+    private final Map<String, String> params;
     private final Set<String> children;
 
     static {
