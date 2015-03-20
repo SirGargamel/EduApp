@@ -6,11 +6,13 @@ import java.util.Map;
 
 public class QuestMatching extends QuestItem {
 
+    private final String question;
     private final Map<String, String> data;
 
-    public QuestMatching(String[] data, String reward) {
+    public QuestMatching(final String question, String[] data, String reward) {
         super(reward);
 
+        this.question = question;
         this.data = new LinkedHashMap<>(data.length / 2);
         for (int i = 0; i < data.length; i += 2) {
             this.data.put(data[i], data[i + 1]);
@@ -32,6 +34,6 @@ public class QuestMatching extends QuestItem {
 
     @Override
     public String toNiftyString() {
-        return "Přiřadtě ke každé položce správný popis.";
+        return question;
     }
 }

@@ -131,6 +131,7 @@ public class XmlQuest extends XmlEntity<Quest> {
                 break;
             case ITEM_QUEST_QUESTION_MATCH:
                 result = new QuestMatching(
+                        extractNodeText(e, ITEM_QUEST_QUESTION),
                         extractNodeText(e, ITEM_DATA).split(SEPARATOR_BASIC),
                         extractNodeText(e, ITEM_REWARD));
                 break;
