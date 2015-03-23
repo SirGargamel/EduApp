@@ -44,10 +44,11 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
     private static final int SIZE_GAP = 5;
     private static final String ADD = "+";
     private static final String SPLITTER = "===";
+    private static final int ITEM_HEIGHT = 26;
     private Nifty nifty;
     private QuestEquation quest;
     private Element panelDrag, panelDrop;
-    private int itemWidth = 32, itemHeight = 32, itemsPerLine = 5;
+    private int itemWidth = 32, itemHeight = ITEM_HEIGHT, itemsPerLine = 5;
 
     public void setQuest(QuestEquation quest) {
         this.quest = quest;
@@ -78,7 +79,7 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
 
         int widthWithoutGaps = width - maxItemCount * 2 * SIZE_GAP;
         itemWidth = widthWithoutGaps / (maxItemCount * 2);
-        itemHeight = quest.getMode().equals(Mode.text) ? 32 : itemWidth;
+        itemHeight = quest.getMode().equals(Mode.text) ? ITEM_HEIGHT : itemWidth;
         itemsPerLine = width / (itemWidth + SIZE_GAP) - 1;
 
         buildDrag();
@@ -95,7 +96,7 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
         final Screen current = nifty.getCurrentScreen();
         final Mode mode = quest.getMode();
 
-        TextBuilder tb = new TextBuilder();
+        TextBuilder tb = new TextBuilder("title");
         tb.style("baseB");
         tb.text(quest.toNiftyString());
         tb.alignCenter();
@@ -221,6 +222,10 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
         int counter = 0;
         Equation eq;
         for (Element elm : panelDrop.getElements()) {
+            if (elm == null || elm.getId() == null || !elm.getId().startsWith(PANEL_ID)) {
+                continue;
+            }
+            
             eq = quest.getEquations().get(counter);
             counter++;
 

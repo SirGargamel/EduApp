@@ -144,10 +144,10 @@
     <screen id="drag" controller="eduapp.gui.GuiEquation">        
         <layer id="onlyLayer" childLayout="vertical">            
             <panel height="10%"/>            
-            <panel id="panelDrop" width="80%" align="center" height="45%" backgroundColor="#3b5998aa" childLayout="vertical" visibleToMouse="true" />                                                                                                                   
-            <panel height="5%"/>
+            <panel id="panelDrop" width="80%" align="center" height="50%" backgroundColor="#3b5998aa" childLayout="vertical" visibleToMouse="true" />                                                                                                                   
+            <panel height="3%"/>
             <panel id="panelDrag" width="80%" align="center" height="30%" backgroundColor="#3b5998aa" childLayout="vertical" visibleToMouse="true" />            
-            <panel height="5%"/> 
+            <panel height="2%"/> 
             <panel id="panelOk" width="100%" height="5%" backgroundColor="#00000000" childLayout="horizontal" visibleToMouse="true">                                
                 <panel width="45%" />                                          
                 <panel id="buttonOk" align="center" width="10%" height="95%" backgroundColor="#3b5998ff" childLayout="center" visibleToMouse="true">
