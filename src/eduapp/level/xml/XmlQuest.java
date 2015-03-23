@@ -120,8 +120,8 @@ public class XmlQuest extends XmlEntity<Quest> {
             case ITEM_QUEST_QUESTION_JMOL:
                 result = new QuestQuestionJmol(
                         extractNodeText(e, ITEM_QUEST_QUESTION),
-                        extractNodeText(e, ITEM_ANSWER).split(SEPARATOR_BASIC),
                         extractNodeText(e, ITEM_DATA).split(SEPARATOR_BASIC),
+                        extractNodeText(e, ITEM_ANSWER).split(SEPARATOR_BASIC),                        
                         extractNodeText(e, ITEM_REWARD));
                 break;
             case ITEM_QUEST_QUESTION_WEB:
