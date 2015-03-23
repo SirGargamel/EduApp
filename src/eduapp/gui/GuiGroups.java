@@ -58,6 +58,9 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
         for (Element e : items.getElements()) {
             e.markForRemoval();
         }
+        for (Element e : text.getElements()) {
+            e.markForRemoval();
+        }
         nifty.executeEndOfFrameElementActions();
 
         final Screen currentScreen = nifty.getCurrentScreen();
@@ -191,7 +194,7 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
         String itemId, groupId, val;
         Item item;
         Element element;
-        if (quest.getGroup() != null) {
+        if (quest.getGroup() != null && !(quest.getGroup() instanceof VirtualItem)) {
             for (Element e : elements) {
                 groupId = e.getId();
                 for (Element el : e.getElements()) {
