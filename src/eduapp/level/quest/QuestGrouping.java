@@ -2,6 +2,7 @@ package eduapp.level.quest;
 
 import eduapp.level.item.ItemParameter;
 import eduapp.level.item.Item;
+import eduapp.level.item.VirtualItem;
 
 public class QuestGrouping extends QuestItem {
 
@@ -52,10 +53,10 @@ public class QuestGrouping extends QuestItem {
     @Override
     public String toNiftyString() {
         initGroup();
-        if (group != null) {
+        if (group != null && !(group instanceof VirtualItem)) {
             return group.getParam(ItemParameter.DESCRIPTION);
         } else {
-            return "Rozřaďtě prvky dle toho, jestli danou vlastnost mají nebo ne - " + itemRegistry.get("description").getParam(groupId);
+            return "Rozřaďtě prvky dle toho, jestli mají danou vlastnost - " + itemRegistry.get("description").getParam(groupId);
         }
     }
 

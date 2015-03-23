@@ -19,6 +19,7 @@ import eduapp.AppContext;
 import eduapp.ItemRegistry;
 import eduapp.level.item.Item;
 import eduapp.level.item.ItemParameter;
+import eduapp.level.item.VirtualItem;
 import eduapp.level.quest.QuestGrouping;
 import java.util.List;
 
@@ -61,15 +62,16 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
 
         final Screen currentScreen = nifty.getCurrentScreen();
 
+        final Item group = quest.getGroup();
         String[] groupNames;
-        if (quest.getGroup() == null) {
+        if (group == null || group instanceof VirtualItem) {
             final ItemRegistry ir = AppContext.getItemRegistry();
             final String groupName = ir.get("description").getParam(quest.getGroupId()).toLowerCase();
             groupNames = new String[]{
                 "Je " + groupName,
                 "Není " + groupName};
         } else {
-            groupNames = quest.getGroup().getParam(quest.getGroupId()).split(";");
+            groupNames = group.getParam(quest.getGroupId()).split(";");
         }
         final int itemCount = quest.getItems().length;
         final int groupCount = groupNames.length;
