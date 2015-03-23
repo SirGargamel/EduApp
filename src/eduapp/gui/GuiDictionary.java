@@ -225,6 +225,9 @@ public class GuiDictionary implements ScreenController {
 
             tb = new TextBuilder("t".concat(ItemParameter.DESCRIPTION));
             tb.style("base");
+            tb.width("100%");
+            tb.textHAlignLeft();
+            tb.wrap(true);
             tb.text(val);
             tb.color(Color.BLACK);
             tb.height(SIZE_LINE_HEIGHT);
