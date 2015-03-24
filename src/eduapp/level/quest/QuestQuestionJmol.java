@@ -9,31 +9,29 @@ import java.util.*;
  */
 public class QuestQuestionJmol extends QuestItem {
 
-    private final String question;
-    private final List<String> modelNames, answers;
+    private final String question;    
+    private final Map<String, String> data;
 
     public QuestQuestionJmol(String question, String[] models, String[] answers, String reward) {
         super(reward);
 
         this.question = question;
-        this.modelNames = Arrays.asList(models);
-        this.answers = Arrays.asList(answers);
+        data = new HashMap<>(models.length);
+        for (int i = 0; i < models.length; i++) {
+            data.put(models[i], answers[i]);
+        }
     }
 
     public String getQuestion() {
         return question;
     }
 
-    public List<String> getModelNames() {
-        return modelNames;
-    }
-    
-    public List<String> getAnswers() {
-        return answers;
+    public Map<String, String> getData() {
+        return data;
     }
 
     public void setResult(int correct) {
-        if (modelNames.size() - correct <= MAX_ERROR_COUNT) {
+        if (data.size() - correct <= MAX_ERROR_COUNT) {
             finished = true;
         } else {
             failed = true;

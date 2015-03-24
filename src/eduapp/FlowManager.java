@@ -44,7 +44,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
+import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Stack;
@@ -268,20 +268,15 @@ public class FlowManager implements Observer {
         Thread t = new Thread(() -> {
             final GuiQuestInput control = (GuiQuestInput) nifty.getScreen(SCREEN_QUEST_INPUT).getScreenController();
             QuestQuestion q;
-            int correctCounter = 0;            
+            int correctCounter = 0;
             final String questionText = question.getQuestion();
-            final List<String> models = question.getModelNames();
-            final List<String> answers = question.getAnswers();
-            String model;
-            for (int i = 0; i < models.size(); i++) {
-                model = models.get(i);
-                
-                if (JmolUtils.displayModel(model)) {
-                    q = new QuestQuestion(questionText, answers.get(i), null, false, true);
+            for (Entry<String, String> e : question.getData().entrySet()) {
+                if (JmolUtils.displayModel(e.getKey())) {
+                    q = new QuestQuestion(questionText, e.getValue(), null, false, true);
                     control.setQuestion(q);
                     storeActualScreen();
                     nifty.gotoScreen(SCREEN_QUEST_INPUT);
-                    
+
                     while (!q.isFinished() && !q.isFailed()) {
                         synchronized (FlowManager.this) {
                             try {
@@ -422,7 +417,7 @@ public class FlowManager implements Observer {
             if (qi.isFinished()) {
                 FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi.toNiftyString()).concat("\" byl splněn."));
                 player.addItemToInventory(qi.getReward());
-            } else if (qi.isFailed()) {                
+            } else if (qi.isFailed()) {
                 FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi.toNiftyString()).concat("\" nebyl splněn."));
             } else if (qi instanceof QuestHelp) {
                 final QuestHelp hp = (QuestHelp) qi;
@@ -434,7 +429,7 @@ public class FlowManager implements Observer {
                     player.addItemToInventory(qi2.getReward());
                 }
             }
-            
+
             if (currentQuest.isFinished()) {
                 displayQuestFinish();
             }
