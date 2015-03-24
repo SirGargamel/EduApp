@@ -12,17 +12,20 @@
         <attributes font="interface/Fonts/Base20.fnt" backgroundColor="#ff0000" inherit="true"/>     
     </style>         
     <screen id="start" controller="eduapp.gui.GuiMainMenu">
+        <layer id="back" childLayout="center">
+            <image id="back" filename="interface/background.jpg" align="center"/>    
+        </layer>
         <layer id="centerColumn" childLayout="vertical">
-            <panel id="rewards" height="20%" childLayout="horizontal" />            
+            <panel id="rewards" height="20%" childLayout="horizontal" />                                    
             <panel height="30%" />                  
             <control id="LevelList" name="listBox" width="40%" align="center" vertical="optional" horizontal="optional" displayItems="4" selection="Single"/>
             <panel height="10%" /> 
             <panel id="button" height="10%" width="15%" align="center" childLayout="center" visibleToMouse="true" backgroundColor="#3b5998ff">
                 <interact onClick="startGame()"/>
                 <effect>                                        
-                    <onHover name="border" color="#dfe3ee" border="2px"/>
+                    <onHover name="border" color="#000000" border="2px"/>
                 </effect>
-                <text id="text"  text="Začni hru!" align="center" valign="center" style="base"/>
+                <text id="text" text="Začni hru!" color="#000000" align="center" valign="center" style="base"/>
             </panel>
         </layer>
     </screen>
