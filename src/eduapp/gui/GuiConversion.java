@@ -1,6 +1,5 @@
 package eduapp.gui;
 
-import de.lessvoid.nifty.EndNotify;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.builder.PanelBuilder;
 import de.lessvoid.nifty.builder.TextBuilder;
@@ -11,7 +10,6 @@ import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.elements.render.PanelRenderer;
 import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.input.NiftyInputEvent;
-import de.lessvoid.nifty.screen.KeyInputHandler;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import de.lessvoid.nifty.spi.render.RenderFont;
@@ -113,6 +111,7 @@ public class GuiConversion implements ScreenController {
         String user, answer;
         for (Item it : quest.getItems()) {
             tf = nifty.getCurrentScreen().findNiftyControl("tf".concat(it.getId()), TextField.class);
+            tf.disable();            
             user = tf.getRealText().trim();
             answer = it.getParam(to);
             if (user.equalsIgnoreCase(answer)) {
@@ -122,14 +121,16 @@ public class GuiConversion implements ScreenController {
                 tf.getElement().getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#ff0000"));
             }
         }
+        
+        for (Item it : quest.getItems()) {
+            tf = nifty.getCurrentScreen().findNiftyControl("tf".concat(it.getId()), TextField.class);
+            tf.enable();
+        }
 
 
         final int fCounter = counter;
-        panelValues.startEffect(EffectEventId.onCustom, new EndNotify() {
-            @Override
-            public void perform() {
-                quest.setResult(fCounter);
-            }
+        panelValues.startEffect(EffectEventId.onCustom, () -> {
+            quest.setResult(fCounter);
         }, "Ok");
 
     }
