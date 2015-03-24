@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Quest extends Item {
 
-    private static final String ACTION_DISPLAY = "Display";    
+    private static final String ACTION_DISPLAY = "Display";
     private static final String ACTION_DISPLAY_ADDING = "A";
     private static final String ACTION_DISPLAY_CONVERSION = "C";
     private static final String ACTION_DISPLAY_DRAG = "D";
@@ -93,8 +93,8 @@ public class Quest extends Item {
                     FlowManager.getInstance().displayMessage("Nemáte žádné špatně zodpovězené úkoly.", null);
                 }
             } else if (rest.startsWith(ACTION_DISPLAY_FINAL)) {
-                if (isFinished()) {
-                    displayEquation(finalQuest);
+                if (isReadyForFinalQuest()) {
+                    executeAction(ACTION_DISPLAY.concat(finalQuest.getQuestId().toUpperCase()));
                 } else {
                     FlowManager.getInstance().displayMessage("Nejdříve musíte dokončit všechny základní úkoly.", null);
                 }
@@ -178,7 +178,7 @@ public class Quest extends Item {
     private void displayAdding(QuestAdding quest) {
         FlowManager.getInstance().displayAddingScreen(quest);
     }
-    
+
     private void displayQuestion(QuestQuestion question) {
         FlowManager.getInstance().displayQuestion(question);
     }
@@ -256,6 +256,16 @@ public class Quest extends Item {
             }
         }
         return result;
+    }
+
+    public boolean isReadyForFinalQuest() {
+        int counter = 0;
+        for (QuestItem qi : data) {
+            if (qi.isFinished()) {
+                counter++;
+            }
+        }
+        return counter >= data.size() - 1;
     }
 
     public String getDescription() {

@@ -1,36 +1,29 @@
 package eduapp.level.quest;
 
-import eduapp.FlowManager;
-
 /**
  *
  * @author Petr Ječmen
  */
-public class QuestFinal extends QuestEquation {
+public class QuestFinal extends QuestItem {
 
-    private int itemCount;
+    private final String questId;
+    private final int itemCount;
 
-    public QuestFinal() {
-        super(Mode.text, null);
+    public QuestFinal(final String[] data) {
+        super(null);
         finished = false;
-    }
+        this.questId = data[0];
+        this.itemCount = Integer.valueOf(data[1]);
+    }    
 
-    @Override
-    public void setResult(boolean finished) {
-        if (finished) {
-            setFinished(true);
-            FlowManager.getInstance().displayQuestFinish();
-        }
+    public String getQuestId() {
+        return questId;
     }
 
     @Override
     public String toNiftyString() {
         return "Seřaďte nasbírané předměty tak, aby rovnice platila.";
-    }
-
-    public void setItemCount(int itemCount) {
-        this.itemCount = itemCount;
-    }
+    }    
 
     public int getItemCount() {
         return itemCount;

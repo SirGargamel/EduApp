@@ -12,14 +12,16 @@ public class QuestEquation extends QuestItem {
     private final List<Equation> equations;
     private final List<String> extra;
     private final Mode mode;
+    private final boolean mustBeCorrect;
 
-    public QuestEquation(Mode mode, String reward) {
+    public QuestEquation(Mode mode, String reward, final boolean mustBeCorrect) {
         super(reward);
 
         equations = new LinkedList<>();
         extra = new LinkedList<>();
         finished = false;
         this.mode = mode;
+        this.mustBeCorrect = mustBeCorrect;
     }
 
     public void addExtra(final String item) {
@@ -39,11 +41,13 @@ public class QuestEquation extends QuestItem {
     }
 
     public void setResult(boolean finished) {
-        this.finished = finished;
-        if (!finished) {
-            failed = true;
+        if (!(mustBeCorrect && !finished)) {                    
+            this.finished = finished;
+            if (!finished) {
+                failed = true;
+            }
+            finish();
         }
-        finish();
     }
 
     @Override

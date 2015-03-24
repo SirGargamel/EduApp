@@ -22,6 +22,7 @@ import eduapp.level.quest.QuestQuestionWeb;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -80,7 +81,8 @@ public class XmlQuest extends XmlEntity<Quest> {
             }
         }
         final QuestHelp hq = generateHelpQuest(element.getElementsByTagName(ITEM_HELP).item(0));
-        final QuestFinal fq = generateFinalQuest(element.getElementsByTagName(ITEM_QUEST_FINAL).item(0));
+        final Element eF = (Element) element.getElementsByTagName(ITEM_QUEST_FINAL).item(0);
+        final QuestFinal fq = new QuestFinal(extractNodeText(eF, ITEM_DATA).split(SEPARATOR_BASIC));
         final Quest result = new Quest(
                 lines, hq, fq,
                 extractNodeText(element, ITEM_DESCRIPTION),
@@ -151,7 +153,8 @@ public class XmlQuest extends XmlEntity<Quest> {
                         extractNodeText(e, ITEM_REWARD));
                 break;
             case ITEM_QUEST_EQUATION:
-                final QuestEquation dq = new QuestEquation(Mode.valueOf(extractNodeText(e, ITEM_MODE).toLowerCase()), extractNodeText(e, ITEM_REWARD));
+                final String reward = extractNodeText(e, ITEM_REWARD);
+                final QuestEquation dq = new QuestEquation(Mode.valueOf(extractNodeText(e, ITEM_MODE).toLowerCase()), reward, reward.isEmpty());
                 final NodeList nl = e.getElementsByTagName(ITEM_QUEST_EQUATION);
                 Equation eq;
                 String text;
@@ -182,7 +185,7 @@ public class XmlQuest extends XmlEntity<Quest> {
                 }
                 split = extractNodeText(e, EQUATION_EXTRA).split(SEPARATOR_BASIC);
                 for (String s : split) {
-                    if (!s.isEmpty()) {
+                    if (!s.isEmpty() && !s.equals(WARN_MISSING)) {
                         dq.addExtra(s);
                     }
                 }
@@ -238,58 +241,12 @@ public class XmlQuest extends XmlEntity<Quest> {
             }
         }
         return new QuestHelp(questions);
-    }
-
-    private QuestFinal generateFinalQuest(final Node node) {
-        final Element e = (Element) node;
-        QuestFinal result = new QuestFinal();
-
-        final NodeList nl = e.getElementsByTagName(ITEM_QUEST_EQUATION);
-        int itemCount = 0;
-        Equation eq;
-        String text;
-        String[] split;
-        for (int i = 0; i < nl.getLength(); i++) {
-            eq = new Equation();
-            text = nl.item(i).getTextContent();
-            split = text.substring(0, text.indexOf(SEPARATOR_QUESTION_OUT)).split(SEPARATOR_QUESTION_ITEM);
-            for (String s : split) {
-                itemCount++;
-                eq.addInput(s);
-            }
-            final int index = text.indexOf(SEPARATOR_BASIC);
-            if (index >= 0) {
-                split = text.substring(text.indexOf(SEPARATOR_QUESTION_OUT) + 1, index).split(SEPARATOR_QUESTION_ITEM);
-                for (String s : split) {
-                    eq.addOutput(s);
-                    itemCount++;
-                }
-                split = text.substring(text.indexOf(SEPARATOR_BASIC) + 1).split(SEPARATOR_BASIC);
-                for (String s : split) {
-                    eq.addCatalyst(s);
-                    itemCount++;
-                }
-            } else {
-                split = text.substring(text.indexOf(SEPARATOR_QUESTION_OUT) + 1).split(SEPARATOR_QUESTION_ITEM);
-                for (String s : split) {
-                    eq.addOutput(s);
-                    itemCount++;
-                }
-            }
-            result.addEquation(eq);
-        }
-        if (nl.getLength() == 0) {
-            final String count = e.getElementsByTagName(ITEM_DATA).item(0).getTextContent();
-            itemCount = Integer.valueOf(count);
-        }
-        result.setItemCount(itemCount);
-        return result;
-    }
+    }   
 
     private static String extractNodeText(Element e, String nodeName) {
         NodeList n = e.getElementsByTagName(nodeName);
         if (n == null || n.getLength() == 0) {
-            Logger.getLogger(XmlQuest.class.getCanonicalName()).warning("Missing node - " + nodeName);
+            Logger.getLogger(XmlQuest.class.getCanonicalName()).log(Level.WARNING, "Missing node - {0}", nodeName);
             return WARN_MISSING;
         }
         

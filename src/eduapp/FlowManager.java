@@ -422,7 +422,7 @@ public class FlowManager implements Observer {
             if (qi.isFinished()) {
                 FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi.toNiftyString()).concat("\" byl splněn."));
                 player.addItemToInventory(qi.getReward());
-            } else if (qi.isFailed()) {
+            } else if (qi.isFailed()) {                
                 FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi.toNiftyString()).concat("\" nebyl splněn."));
             } else if (qi instanceof QuestHelp) {
                 final QuestHelp hp = (QuestHelp) qi;
@@ -433,6 +433,10 @@ public class FlowManager implements Observer {
                     FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi2.toNiftyString()).concat("\" byl splněn za pomoci bonusové otázky."));
                     player.addItemToInventory(qi2.getReward());
                 }
+            }
+            
+            if (currentQuest.isFinished()) {
+                displayQuestFinish();
             }
 
             JmolUtils.closeViewer();

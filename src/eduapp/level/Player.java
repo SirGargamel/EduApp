@@ -89,7 +89,9 @@ public class Player extends Item {
     public void addItemToInventory(final String itemIds) {
         final String[] split = itemIds.split(SPLITTER);
         for (String s : split) {
-            inventory.add(s.trim());
+            if (!s.isEmpty()) {
+                inventory.add(s.trim());
+            }
         }
 
         setChanged();
