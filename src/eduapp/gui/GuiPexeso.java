@@ -22,8 +22,6 @@ import eduapp.level.quest.QuestPexeso;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -39,6 +37,7 @@ public class GuiPexeso implements ScreenController {
     private QuestPexeso pq;
     private Element selectedElement;
     private int correct;
+    private Hider h;
 
     public void setData(QuestPexeso pq) {
         this.pq = pq;
@@ -153,10 +152,15 @@ public class GuiPexeso implements ScreenController {
     }
 
     private void handleElementAction(final Element e) {
+        if (h != null) {
+            h.hide();
+        }
+
         if (selectedElement == null) {
             selectedElement = e;
         } else {
             final Element e2 = selectedElement;
+            selectedElement = null;
 
             final String name1 = digName(e.getId());
             final String name2 = digName(e2.getId());
@@ -169,27 +173,9 @@ public class GuiPexeso implements ScreenController {
                     pq.finish();
                 }
             } else {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        synchronized (GuiPexeso.this) {
-                            try {
-                                GuiPexeso.this.wait(1000);
-                            } catch (InterruptedException ex) {
-                                Logger.getLogger(GuiPexeso.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-
-                        final NiftyImage img = nifty.getRenderEngine().createImage(nifty.getCurrentScreen(), "interface/pexeso.png", false);
-                        e.getRenderer(ImageRenderer.class).setImage(img);
-                        e.show();
-                        e2.getRenderer(ImageRenderer.class).setImage(img);
-                        e2.show();
-                    }
-                }).start();
+                h = new Hider(e, e2, nifty);
+                h.start();
             }
-
-            selectedElement = null;
         }
     }
 
@@ -221,6 +207,38 @@ public class GuiPexeso implements ScreenController {
 
         public boolean isText() {
             return text;
+        }
+    }
+
+    private static class Hider extends Thread {
+
+        private final Element e1, e2;
+        private final Nifty nifty;
+
+        public Hider(Element e1, Element e2, Nifty nifty) {
+            this.e1 = e1;
+            this.e2 = e2;
+            this.nifty = nifty;
+        }
+
+        @Override
+        public void run() {
+            synchronized (this) {
+                try {
+                    this.wait(2000);
+                } catch (InterruptedException ex) {
+                }
+            }
+
+            final NiftyImage img = nifty.getRenderEngine().createImage(nifty.getCurrentScreen(), "interface/pexeso.png", false);
+            e1.getRenderer(ImageRenderer.class).setImage(img);
+            e1.show();
+            e2.getRenderer(ImageRenderer.class).setImage(img);
+            e2.show();
+        }
+
+        synchronized void hide() {
+            notify();
         }
     }
 }
