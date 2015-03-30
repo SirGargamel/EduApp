@@ -424,9 +424,11 @@ public class FlowManager implements Observer {
                 final QuestQuestion q = hp.getLastQuestion();
                 if (q != null && q.isFinished()) {
                     final QuestItem qi2 = currentQuest.getFailedQuestItem();
-                    qi2.setFinished(true);
-                    FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi2.toNiftyString()).concat("\" byl splněn za pomoci bonusové otázky."));
-                    player.addItemToInventory(qi2.getReward());
+                    if (qi2 != null) {
+                        qi2.setFinished(true);
+                        FlowManager.getInstance().finishQuestItem("Úkol \"".concat(qi2.toNiftyString()).concat("\" byl splněn za pomoci bonusové otázky."));
+                        player.addItemToInventory(qi2.getReward());
+                    }
                 }
             }
 
