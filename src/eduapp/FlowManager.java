@@ -38,6 +38,7 @@ import eduapp.level.quest.QuestPicking;
 import eduapp.level.quest.QuestQuestion;
 import eduapp.level.trigger.Trigger;
 import eduapp.loaders.LevelLoader;
+import eduapp.loaders.StateLoader;
 import eduapp.screen.StartScreen;
 import eduapp.screen.WorldScreen;
 import java.io.BufferedOutputStream;
@@ -115,7 +116,7 @@ public class FlowManager implements Observer {
         if (levelVal > finishedLevelCount) {
             setLevelState(levelVal);
         }
-        try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File("data\\state.lvl")))) {
+        try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File("data\\" + StateLoader.STATE_FILE)))) {
             out.write(finishedLevelCount);
         } catch (IOException ex) {
             Logger.getLogger(FlowManager.class.getName()).log(Level.SEVERE, null, ex);

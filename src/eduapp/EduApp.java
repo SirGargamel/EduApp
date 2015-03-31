@@ -74,7 +74,7 @@ public class EduApp extends SimpleApplication {
     public void simpleInitApp() {
         assetManager.registerLocator("data/", FileLocator.class);
         assetManager.registerLoader(LevelLoader.class, LevelLoader.EXTENSION_DEF);
-        assetManager.registerLoader(StateLoader.class, StateLoader.EXTENSION);
+        assetManager.registerLoader(StateLoader.class, StateLoader.STATE_EXTENSION);
 
         initKeyMappings();
 
@@ -87,9 +87,8 @@ public class EduApp extends SimpleApplication {
 
         AppContext.setApp(this);
         FlowManager.getInstance().setNifty(nifty);
-
-        final String path = "state." + StateLoader.EXTENSION;
-        final AssetKey<Integer> key = new AssetKey<>(path);
+        
+        final AssetKey<Integer> key = new AssetKey<>(StateLoader.STATE_FILE);
         int levelState = 0;
         try {
             levelState = assetManager.loadAsset(key);
