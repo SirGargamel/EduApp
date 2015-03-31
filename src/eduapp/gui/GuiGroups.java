@@ -105,7 +105,7 @@ public class GuiGroups implements ScreenController, DroppableDropFilter {
             pb.width(buildSize(groupWidth));
             tb = new TextBuilder("text" + s);
             tb.text(s);
-            tb.style("base");
+            tb.style("baseB");            
             tb.color(Color.BLACK);
             tb.alignCenter();
             pb.text(tb);
