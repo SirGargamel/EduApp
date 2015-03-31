@@ -96,7 +96,7 @@ public class EduApp extends SimpleApplication {
         } catch (AssetNotFoundException e) {
             // do nothing
         }
-        levelState = 5;
+//        levelState = 5;
         FlowManager.getInstance().setLevelState(levelState);
         FlowManager.getInstance().gotoMainMenu();
 
