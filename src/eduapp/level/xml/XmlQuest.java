@@ -87,6 +87,8 @@ public class XmlQuest extends XmlEntity<Quest> {
                 lines, hq, fq,
                 extractNodeText(element, ITEM_DESCRIPTION),
                 extractNodeText(element, ITEM_ENDING));
+        
+        fq.setQuest(result.findQuestItem(fq.getQuestId()));
         return result;
     }
 

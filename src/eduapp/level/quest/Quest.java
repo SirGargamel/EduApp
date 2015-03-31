@@ -94,7 +94,7 @@ public class Quest extends Item {
                 }
             } else if (rest.startsWith(ACTION_DISPLAY_FINAL)) {
                 if (isReadyForFinalQuest()) {
-                    executeAction(ACTION_DISPLAY.concat(finalQuest.getQuestId().toUpperCase()));
+                    executeAction(ACTION_DISPLAY.concat(finalQuest.getQuestId()));
                 } else {
                     FlowManager.getInstance().displayMessage("Nejdříve musíte dokončit všechny základní úkoly.", null);
                 }
