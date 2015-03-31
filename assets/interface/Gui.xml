@@ -34,7 +34,7 @@
             <panel id="panelInv" height="10%" childLayout="horizontal" />
             <panel height="70%" childLayout="vertical" />
             <panel id="panelDescr" childLayout="center" backgroundColor="#00000000">                 
-                <text id="textDescr" style="base" align="left" text="TEST DESCR" wrap="true"/>               
+                <text id="textDescr" width="100%" style="base" align="left" text="TEST DESCR" wrap="true"/>               
             </panel>
         </layer>   
         <layer id="description" childLayout="vertical">
