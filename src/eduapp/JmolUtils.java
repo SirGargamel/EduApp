@@ -79,7 +79,7 @@ public class JmolUtils {
         frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
 
         jmolPanel = new JmolPanel();
-        jmolPanel.setPreferredSize(new Dimension(200, 200));
+        jmolPanel.setPreferredSize(new Dimension(300, 250));
 
         final Container contentPane = frame.getContentPane();
         contentPane.add(jmolPanel);
