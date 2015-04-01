@@ -93,10 +93,14 @@ public class Quest extends Item {
                     FlowManager.getInstance().displayMessage("Nemáte žádné špatně zodpovězené úkoly.", null);
                 }
             } else if (rest.startsWith(ACTION_DISPLAY_FINAL)) {
-                if (isReadyForFinalQuest()) {
+                if (eduapp.EduApp.DEBUG) {
                     executeAction(ACTION_DISPLAY.concat(finalQuest.getQuestId()));
                 } else {
-                    FlowManager.getInstance().displayMessage("Nejdříve musíte dokončit všechny základní úkoly.", null);
+                    if (isReadyForFinalQuest()) {
+                        executeAction(ACTION_DISPLAY.concat(finalQuest.getQuestId()));
+                    } else {
+                        FlowManager.getInstance().displayMessage("Nejdříve musíte dokončit všechny základní úkoly.", null);
+                    }
                 }
             }
         }
