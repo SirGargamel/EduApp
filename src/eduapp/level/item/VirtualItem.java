@@ -10,7 +10,7 @@ public class VirtualItem extends Item {
     
     @Override
     public String getParam(String id) {
-        return id;
+        return this.id;
     }
     
 }
