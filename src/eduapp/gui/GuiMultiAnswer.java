@@ -66,7 +66,7 @@ public class GuiMultiAnswer implements ScreenController {
         answers.addAll(Arrays.asList(quest.getCorrectAnswers()));
         answers.addAll(Arrays.asList(quest.getWrongAnswers()));
         Collections.shuffle(answers);
-        
+
         for (String s : answers) {
             pb = new PanelBuilder("p".concat(s));
             pb.childLayoutHorizontal();
@@ -77,6 +77,7 @@ public class GuiMultiAnswer implements ScreenController {
             pb.build(nifty, current, e);
 
             chb = new CheckboxBuilder("chb".concat(s));
+            chb.focusable(false);
             chb.build(nifty, current, e);
 
             pb = new PanelBuilder("p2".concat(s));
@@ -102,47 +103,35 @@ public class GuiMultiAnswer implements ScreenController {
     public void ok() {
         int counter = 0;
         CheckBox chb;
-        boolean result = true;
         final String[] correctAnswers = quest.getCorrectAnswers();
+        final String[] wrongAnswers = quest.getWrongAnswers();
         Color c;
-        for (String s : quest.getWrongAnswers()) {
+        for (String s : wrongAnswers) {
             chb = nifty.getCurrentScreen().findNiftyControl("chb".concat(s), CheckBox.class);
-            if (chb.isChecked()) {
-                if (!contains(s, correctAnswers)) {
-                    result = false;
-                    c = new Color("#ff0000");
-                } else {
-                    counter++;
-                    c = new Color("#00ff00");
-                }
+            if (!chb.isChecked()) {
+                counter++;
+                c = new Color("#00ff00");
             } else {
-                if (contains(s, correctAnswers)) {
-                    result = false;
-                    c = new Color("#ff0000");
-                } else {
-                    c = new Color("#00ff00");
-                }
+                counter--;
+                c = new Color("#ff0000");
             }
             chb.getElement().getRenderer(PanelRenderer.class).setBackgroundColor(c);
-            chb.setEnabled(false);
+        }
+        for (String s : correctAnswers) {
+            chb = nifty.getCurrentScreen().findNiftyControl("chb".concat(s), CheckBox.class);
+            if (chb.isChecked()) {
+                counter++;
+                c = new Color("#00ff00");
+            } else {
+                counter--;
+                c = new Color("#ff0000");
+            }
+            chb.getElement().getRenderer(PanelRenderer.class).setBackgroundColor(c);
         }
 
         final int fCounter = counter;
-        final boolean fResult = result;
         panelValues.startEffect(EffectEventId.onCustom, () -> {
-            quest.setResult(fCounter == correctAnswers.length && fResult);
+            quest.setResult(fCounter);
         }, "Ok");
-
-    }
-
-    private boolean contains(final String str, final String[] data) {
-        boolean result = false;
-        for (String s : data) {
-            if (str.equals(s)) {
-                result = true;
-                break;
-            }
-        }
-        return result;
     }
 }

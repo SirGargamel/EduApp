@@ -25,7 +25,8 @@ public class QuestQuestionMultiAnswer extends QuestItem {
         return correctAnswers;
     }
 
-    public void setResult(boolean result) {
+    public void setResult(int correctCount) {
+        boolean result = correctCount >= (correctAnswers.length + wrongAnswers.length) - MAX_ERROR_COUNT;
         finished = result;
         failed = !result;
 
