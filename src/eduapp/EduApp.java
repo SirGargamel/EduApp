@@ -19,6 +19,7 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -46,16 +47,16 @@ public class EduApp extends SimpleApplication {
             settings.setWidth(WIDTH);
             settings.setHeight(HEIGHT);
             settings.setTitle("EduApp");
-            settings.setDepthBits(16);
-            settings.setBitsPerPixel(16);
-            settings.setFrequency(30);
-            settings.setVSync(true);
+//            settings.setDepthBits(16);
+//            settings.setBitsPerPixel(16);
+//            settings.setFrequency(30);
+//            settings.setVSync(true);
             settings.setAudioRenderer(null);
             settings.setIcons(new BufferedImage[]{ImageIO.read(new File("data/icon.png"))});
 
             app.setShowSettings(false);
             app.setSettings(settings);
-            app.setPauseOnLostFocus(true);
+//            app.setPauseOnLostFocus(true);                        
 
             if (!DEBUG) {
                 app.setDisplayStatView(false);
@@ -66,7 +67,7 @@ public class EduApp extends SimpleApplication {
 
             JmolUtils.initializeJmolPanel();
         } catch (Exception ex) {
-            System.err.println(ex);
+            JOptionPane.showMessageDialog(null, "Nastala chyba při spouštění programu:\n" + ex.toString(), "Nastala chyba", JOptionPane.WARNING_MESSAGE);            
         }
     }
 
