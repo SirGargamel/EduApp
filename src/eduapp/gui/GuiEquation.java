@@ -64,7 +64,7 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
     @Override
     public void onStartScreen() {
         //calculate sizes
-        final int width = nifty.getRenderEngine().getWidth() * 9 / 10;
+        final int width = nifty.getRenderEngine().getWidth() * 78 / 100;
 
         int maxItemCount = 0;
         int counter;
@@ -77,10 +77,10 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
             }
         }
 
-        int widthWithoutGaps = width - maxItemCount * 2 * SIZE_GAP;
-        itemWidth = widthWithoutGaps / (maxItemCount * 2);
+        final int widthWithoutGaps = width - (maxItemCount * 2 - 1) * 2 * SIZE_GAP;
+        itemWidth = (int) (widthWithoutGaps / (maxItemCount + ((maxItemCount - 1) / 2.0)));
         itemHeight = quest.getMode().equals(Mode.text) ? ITEM_HEIGHT : itemWidth;
-        itemsPerLine = width / (itemWidth + SIZE_GAP) - 1;
+        itemsPerLine = width / (itemWidth + 2 * SIZE_GAP);
 
         buildDrag();
     }
@@ -173,7 +173,6 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
             dgb = new DraggableBuilder(s);
             dgb.width(buildSize(itemWidth));
             dgb.height(buildSize(itemHeight));
-            dgb.padding(buildSize(SIZE_GAP));
             dgb.valignCenter();
             dgb.childLayoutCenter();
             eb = new EffectBuilder("border");
@@ -225,7 +224,7 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
             if (elm == null || elm.getId() == null || !elm.getId().startsWith(PANEL_ID)) {
                 continue;
             }
-            
+
             eq = quest.getEquations().get(counter);
             counter++;
 
@@ -293,7 +292,6 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
             }
             db.width(buildSize(itemWidth));
             db.height(buildSize(itemHeight));
-            db.padding(buildSize(SIZE_GAP));
             db.margin(buildSize(SIZE_GAP));
             db.valignCenter();
             db.childLayoutCenter();
@@ -302,16 +300,14 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
             eb.effectParameter("border", "1px");
             db.onActiveEffect(eb);
             db.build(nifty, current, panel).getNiftyControl(Droppable.class).addFilter(this);
-
+            // item divider
             pb = new PanelBuilder(SUB_PANEL_ID.concat(text));
-            pb.width(buildSize(itemWidth));
+            pb.width(buildSize(itemWidth / 2));
             pb.height(buildSize(itemHeight));
-            pb.padding(buildSize(SIZE_GAP));
             pb.margin(buildSize(SIZE_GAP));
             pb.valignCenter();
             pb.childLayoutCenter();
             p = pb.build(nifty, current, panel);
-
             tb = new TextBuilder(TEXT_ID.concat(ADD).concat(text).concat(Integer.toString(i)));
             tb.text(ADD);
             tb.style("base");
@@ -326,7 +322,6 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
         }
         db.width(buildSize(itemWidth));
         db.height(buildSize(itemHeight));
-        db.padding(buildSize(SIZE_GAP));
         db.margin(buildSize(SIZE_GAP));
         db.valignCenter();
         db.childLayoutCenter();
@@ -348,8 +343,7 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
         EffectBuilder eb;
 
         pb = new PanelBuilder(SUB_PANEL_ID.concat(SPLITTER));
-        pb.width(buildSize(itemWidth));
-        pb.padding(buildSize(SIZE_GAP));
+        pb.width(buildSize(itemWidth / 2));
         pb.margin(buildSize(SIZE_GAP));
         pb.valignCenter();
         pb.childLayoutVertical();
@@ -360,7 +354,6 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
             db = new DroppableBuilder(DROP_ID_CAT.concat(data.get(0)));
             db.width(buildSize(itemWidth));
             db.height(buildSize(itemHeight));
-            db.padding(buildSize(SIZE_GAP));
             db.margin(buildSize(SIZE_GAP));
             db.childLayoutCenter();
             eb = new EffectBuilder("border");
@@ -370,10 +363,6 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
             db.build(nifty, current, e).getNiftyControl(Droppable.class).addFilter(this);
         } else {
             pb = new PanelBuilder(SUB_PANEL_ID.concat(SPLITTER));
-            pb.width(buildSize(itemWidth));
-            pb.height(buildSize(itemHeight));
-            pb.padding(buildSize(SIZE_GAP));
-            pb.margin(buildSize(SIZE_GAP));
             pb.build(nifty, current, e);
         }
 
@@ -382,15 +371,12 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
         tb.alignCenter();
         tb.style("base");
         tb.color("#000000");
-        tb.padding(buildSize(SIZE_GAP));
-        tb.margin(buildSize(SIZE_GAP));
         tb.build(nifty, current, e);
 
         if (data.size() == 2) {
             db = new DroppableBuilder(DROP_ID_CAT.concat(data.get(1)));
             db.width(buildSize(itemWidth));
             db.height(buildSize(itemHeight));
-            db.padding(buildSize(SIZE_GAP));
             db.margin(buildSize(SIZE_GAP));
             eb = new EffectBuilder("border");
             eb.effectParameter("color", "#ffffff");
@@ -399,10 +385,6 @@ public class GuiEquation implements ScreenController, DroppableDropFilter {
             db.build(nifty, current, e).getNiftyControl(Droppable.class).addFilter(this);
         } else {
             pb = new PanelBuilder(SUB_PANEL_ID.concat(SPLITTER).concat("2"));
-            pb.width(buildSize(itemWidth));
-            pb.height(buildSize(itemHeight));
-            pb.padding(buildSize(SIZE_GAP));
-            pb.margin(buildSize(SIZE_GAP));
             pb.build(nifty, current, e);
         }
     }
