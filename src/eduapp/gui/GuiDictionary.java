@@ -41,7 +41,7 @@ public class GuiDictionary implements ScreenController {
     private ItemRegistry ir;
     private Element panelContent;
     private ListBox tree;
-    private List<Item> displayedItems;
+    private final List<Item> displayedItems;
     private Item selectedItem;
 
     public GuiDictionary() {
@@ -71,7 +71,9 @@ public class GuiDictionary implements ScreenController {
         String val;
         for (Item it : ir.listItems()) {
             val = it.getParam(ItemParameter.SOURCE);
-            if ((TAG_DICTIONARY.equals(val) || TAG_WORDBOOK.equals(val)) && it.getParam(ItemParameter.NAME) != null) {
+            if (it.getParam(ItemParameter.NAME) != null
+                    && ((TAG_DICTIONARY.equals(val) && it.getParam(ItemParameter.FORMULA) != null)
+                    || (TAG_WORDBOOK.equals(val) && it.getParam(ItemParameter.DESCRIPTION) != null))) {
                 displayedItems.add(it);
             }
         }
