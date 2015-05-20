@@ -89,6 +89,9 @@ public class EduApp extends SimpleApplication {
         AppContext.setApp(this);
         FlowManager.getInstance().setNifty(nifty);
         
+        // DEBUG
+//        FlowManager.getInstance().saveLevelState("04 ...");
+        
         final AssetKey<Integer> key = new AssetKey<>(StateLoader.STATE_FILE);
         int levelState = 0;
         try {
@@ -96,7 +99,11 @@ public class EduApp extends SimpleApplication {
         } catch (AssetNotFoundException e) {
             // do nothing
         }
-//        levelState = 5;
+        
+        // DEBUG
+//        levelState = 4;        
+        
+        // Display menu
         FlowManager.getInstance().setLevelState(levelState);
         FlowManager.getInstance().gotoMainMenu();
 
