@@ -2,10 +2,8 @@ package eduapp.level.item;
 
 import eduapp.ItemRegistry;
 import eduapp.Utils;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Set;
@@ -17,16 +15,10 @@ import java.util.Set;
 public class Item extends Observable implements Comparable<Item> {
 
     private static final String FIELD_COMPARE = ItemParameter.NAME;
-    private static final List<String> NO_ESCAPE;
     protected ItemRegistry itemRegistry;
     protected String id;
     private final Map<String, String> params;
     private final Set<String> children;
-
-    static {
-        NO_ESCAPE = new ArrayList<>();        
-        NO_ESCAPE.add(ItemParameter.LINKS);
-    }
 
     public Item() {
         params = new HashMap<>();
@@ -46,13 +38,9 @@ public class Item extends Observable implements Comparable<Item> {
     }
 
     public void setParam(String id, String param) {
-        if (!NO_ESCAPE.contains(id)) {
-            params.put(id, Utils.convertNumbersToLowerIndexes(param));
-            if (id.equals(ItemParameter.FORMULA)) {
-                params.put(ItemParameter.FORMULA_ORIG, param);
-            }
-        } else {
-            params.put(id, param);
+        params.put(id, Utils.convertNumbersToLowerIndexes(param).replaceAll("\\\\n", "\n"));
+        if (id.equals(ItemParameter.FORMULA)) {
+            params.put(ItemParameter.FORMULA_ORIG, param.replaceAll(Utils.ATOM_COUNT_PREFIX, ""));
         }
     }
 

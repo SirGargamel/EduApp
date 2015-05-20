@@ -1,6 +1,7 @@
 package eduapp.level.quest;
 
 import eduapp.FlowManager;
+import eduapp.Utils;
 import eduapp.level.item.Item;
 import eduapp.level.Level;
 import java.io.IOException;
@@ -38,8 +39,8 @@ public class Quest extends Item {
         this.data = data;
         this.help = help;
         this.finalQuest = finalQuest;
-        this.description = description;
-        this.ending = ending;
+        this.description = Utils.convertNumbersToLowerIndexes(description);
+        this.ending = Utils.convertNumbersToLowerIndexes(ending);
     }
 
     public void makeActive() {
