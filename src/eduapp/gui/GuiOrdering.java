@@ -64,6 +64,8 @@ public class GuiOrdering implements ScreenController, DroppableDropFilter {
         tb.text(quest.getQuestion());
         tb.alignCenter();
         tb.valignCenter();
+        tb.wrap(true);
+        tb.width("100%");
         tb.color(Color.WHITE);
         tb.build(nifty, current, panelValues);
 
