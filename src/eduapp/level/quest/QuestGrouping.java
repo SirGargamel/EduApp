@@ -3,6 +3,10 @@ package eduapp.level.quest;
 import eduapp.level.item.ItemParameter;
 import eduapp.level.item.Item;
 import eduapp.level.item.VirtualItem;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class QuestGrouping extends QuestItem {
 
@@ -11,7 +15,7 @@ public class QuestGrouping extends QuestItem {
     private Item group;
     private Item[] items;
 
-    public QuestGrouping(String groupId, String data, String reward) {
+    public QuestGrouping(final String groupId, final String data, final String reward) {
         super(reward);
 
         this.groupId = groupId;
@@ -33,6 +37,9 @@ public class QuestGrouping extends QuestItem {
             for (int i = 0; i < items.length; i++) {
                 items[i] = itemRegistry.get(itemList[i]);
             }
+            final List<Item> itemsInList = new ArrayList(Arrays.asList(items));
+            Collections.shuffle(itemsInList);
+            items = itemsInList.toArray(new Item[] {});
         }
         return items;
     }
@@ -41,7 +48,7 @@ public class QuestGrouping extends QuestItem {
         return groupId;
     }
 
-    public void setResult(int correct) {
+    public void setResult(final int correct) {
         if (itemList.length - correct <= MAX_ERROR_COUNT) {
             finished = true;
         } else {
