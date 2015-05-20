@@ -109,7 +109,7 @@ public class GuiMatching implements ScreenController, DroppableDropFilter {
             tb.valignCenter();
             tb.wrap(true);
             tb.alignRight();
-            tb.style("base");            
+            tb.style("base");
             tb.text(descr.get(i));
             tb.color(Color.BLACK);
             tb.width("65%");
@@ -125,11 +125,11 @@ public class GuiMatching implements ScreenController, DroppableDropFilter {
         pb = new PanelBuilder("pItems");
         pb.childLayoutHorizontal();
         e = pb.build(nifty, current, panelValues);
-        
+
         pb = new PanelBuilder("pGap2");
         pb.width("2%");
         pb.build(nifty, current, e);
-        
+
         for (String item : items) {
             dgb = new DraggableBuilder(item);
             tb = new TextBuilder("text" + item);
@@ -165,10 +165,13 @@ public class GuiMatching implements ScreenController, DroppableDropFilter {
         for (Entry<String, String> e : data.entrySet()) {
             el = nifty.getCurrentScreen().findElementByName(TAG_DESCR.concat(e.getKey()));
             el2 = extractElement(el);
-            if (el2.getId().equals(e.getKey())) {
+            if (el2 != null && el2.getId().equals(e.getKey())) {
                 counter++;
                 el2.getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#00ff00"));
             } else {
+                if (el2 == null) {
+                    el2 = nifty.getCurrentScreen().findElementByName(e.getKey());
+                }
                 el2.getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#ff0000"));
             }
 
