@@ -18,7 +18,7 @@
         <layer id="centerColumn" childLayout="vertical">
             <panel id="rewards" height="20%" childLayout="horizontal" />                                    
             <panel height="30%" />                  
-            <control id="LevelList" name="listBox" width="40%" align="center" vertical="optional" horizontal="optional" displayItems="4" selection="Single"/>
+            <control id="LevelList" name="listBox" width="40%" align="center" vertical="optional" horizontal="optional" displayItems="5" selection="Single"/>
             <panel height="10%" /> 
             <panel id="button" height="10%" width="15%" align="center" childLayout="center" visibleToMouse="true" backgroundColor="#3b5998ff">
                 <interact onClick="startGame()"/>
